@@ -1,0 +1,38 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Category;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class CategoryTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DB::table('categories')->delete();
+
+        $categories = [
+            [
+            'id' => 1,
+            'name' => 'ملايس', 
+            'parent_id'=>null
+            ],
+            [
+            'id' => 2,
+            'name' => 'ملابس اطفال', 
+            'parent_id'=>1
+            ]
+
+        ];
+
+        foreach($categories as $category){
+            Category::create($category);
+        }
+    }
+}
