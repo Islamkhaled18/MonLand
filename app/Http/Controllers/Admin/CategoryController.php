@@ -79,6 +79,4 @@ class CategoryController extends Controller
         
     }//end of destroy
 
-
-
 }
