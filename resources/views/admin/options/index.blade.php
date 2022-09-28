@@ -13,9 +13,11 @@
                 <li class="breadcrumb-item active"><a href="{{ route('options.index') }}">خصائص الصفات</a></li>
             </ul>
         </div>
-        <div>
-            <a class="btn btn-primary btn-sm" href="{{ route('options.create') }}">انشاء خصائص صفه جديده</a>
-        </div>
+        @can('options.create')
+            <div>
+                <a class="btn btn-primary btn-sm" href="{{ route('options.create') }}">انشاء خصائص صفه جديده</a>
+            </div>
+        @endcan
 
         <div class="row">
             <div class="col-md-12">
@@ -44,16 +46,20 @@
                                         <td>{{ $option->attribute->name }}</td>
                                         <td>
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="{{ route('options.edit', $option->id) }}"
-                                                    class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل</a>
-                                                <form action="{{ route('options.destroy', $option->id) }}"
-                                                    method="post" style="display: inline-block">
-                                                    @csrf
-                                                    @method('GET')
-                                                    <button type="'submit" class="btn btn-danger delete btn-sm"><i
-                                                            class="fa fa-trash"></i>حذف</button>
+                                                @can('options.edit')
+                                                    <a href="{{ route('options.edit', $option->id) }}"
+                                                        class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل</a>
+                                                @endcan
+                                                @can('options.destroy')
+                                                    <form action="{{ route('options.destroy', $option->id) }}" method="post"
+                                                        style="display: inline-block">
+                                                        @csrf
+                                                        @method('GET')
+                                                        <button type="'submit" class="btn btn-danger delete btn-sm"><i
+                                                                class="fa fa-trash"></i>حذف</button>
 
-                                                </form>
+                                                    </form>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>

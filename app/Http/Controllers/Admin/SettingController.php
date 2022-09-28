@@ -5,11 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class SettingController extends Controller
 {
     public function index()
     {
+        if(!Gate::allows('settings')){
+            return view('admin.errors.notAllowed');
+        }
 
         $collection = Setting::all();
         $setting['setting'] = $collection->flatMap(function ($collection) {

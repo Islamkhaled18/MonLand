@@ -13,10 +13,12 @@
                 <li class="breadcrumb-item active"><a href="{{ route('attributes.index') }}">الصفات</a></li>
             </ul>
         </div>
-        <div>
-            <a class="btn btn-primary btn-sm" href="{{route('attributes.create')}}">انشاء صفة جديده</a>
-        </div>
-        
+        @can('attributes.create')
+            <div>
+                <a class="btn btn-primary btn-sm" href="{{ route('attributes.create') }}">انشاء صفة جديده</a>
+            </div>
+        @endcan
+
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
@@ -37,14 +39,21 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $attribute->name }}</td>
                                         <td>
-                                            <a class="btn btn-sm btn-dark" href="{{ route('attributes.edit',['id'=>$attribute->id]) }}">تعديل</a>
-                                            <form action="{{route('attributes.destroy', $attribute->id)}}" method="post" style="display: inline-block">
-                                                @csrf
-                                                @method('GET')
-                                                <button type="'submit" class="btn btn-danger delete btn-sm"><i class="fa fa-trash"></i>حذف</button>
+                                            @can('attributes.edit')
+                                                <a class="btn btn-sm btn-dark"
+                                                    href="{{ route('attributes.edit', ['id' => $attribute->id]) }}">تعديل</a>
+                                            @endcan
+                                            @can('attributes.destroy')
+                                                <form action="{{ route('attributes.destroy', $attribute->id) }}" method="post"
+                                                    style="display: inline-block">
+                                                    @csrf
+                                                    @method('GET')
+                                                    <button type="'submit" class="btn btn-danger delete btn-sm"><i
+                                                            class="fa fa-trash"></i>حذف</button>
 
-                                            </form>
-                                            
+                                                </form>
+                                            @endcan
+
                                         </td>
                                     </tr>
                                 @endforeach

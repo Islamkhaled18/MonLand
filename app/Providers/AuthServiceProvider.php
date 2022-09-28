@@ -25,6 +25,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        foreach (config('permissions') as $code => $label){
+
+            Gate::define($code,function($admin) use ($code){
+                return $admin->role->permissions()->where('permission','=',$code)->exists();
+            });
+        }
+
     }
 }

@@ -5,11 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Delivery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class DeliveryController extends Controller
 {
     public function index()
     {
+        if(!Gate::allows('delivery')){
+            return view('admin.errors.notAllowed');
+        }
         $deliveries = Delivery::all();
         return view('admin.delivery.index',compact('deliveries'));
     }//end of index
@@ -17,6 +21,9 @@ class DeliveryController extends Controller
    
     public function create()
     {
+        if(!Gate::allows('delivery.create')){
+            return view('admin.errors.notAllowed');
+        }
         return view('admin.delivery.create');
     }//end of create
 
@@ -42,6 +49,9 @@ class DeliveryController extends Controller
    
     public function edit($id)
     {
+        if(!Gate::allows('delivery.edit')){
+            return view('admin.errors.notAllowed');
+        }
         $delivery = Delivery::findOrFail($id);
         
         return view('admin.delivery.edit',[
@@ -73,6 +83,9 @@ class DeliveryController extends Controller
    
     public function destroy($id)
     {
+        if(!Gate::allows('delivery.destroy')){
+            return view('admin.errors.notAllowed');
+        }
         $delivery = Delivery::findOrFail($id);
         $delivery->delete();
 

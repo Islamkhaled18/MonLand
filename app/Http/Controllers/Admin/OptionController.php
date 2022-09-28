@@ -8,11 +8,15 @@ use App\Models\Option;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class OptionController extends Controller
 {
     public function index()
     {
+        if(!Gate::allows('options')){
+            return view('admin.errors.notAllowed');
+        }
         $options = Option::with(['product' => function ($prod) {
             $prod->select('id','name');
         }, 'attribute' => function ($attr) {
@@ -24,23 +28,28 @@ class OptionController extends Controller
 
     public function create()
     {
+        if(!Gate::allows('options.create')){
+            return view('admin.errors.notAllowed');
+        }
         $data = [];
-        $data['products'] = Product::active()->select('name')->get();
-        $data['attributes'] = Attribute::select('name')->get();
+        $data['products'] = Product::select('id','name')->get();
+        $data['attributes'] = Attribute::select('id','name')->get();
 
         return view('admin.options.create', $data);
     }
 
     public function store(Request $request)
     {
+        
         DB::beginTransaction();
 
-        $option = new Option();
-        $option->name = $request->name;
-        $option->attribute_id = $request->attribute_id;
-        $option->product_id = $request->product_id;
-        $option->price = $request->price;
-        $option->save();
+        Option::create([
+            'attribute_id' => $request->attribute_id,
+            'product_id' => $request->product_id,
+            'price' => $request->price,
+            'name' => $request->name,
+        ]);
+
         DB::commit();
 
         Toastr()->success('تم إضافة خصائص صفه بنجاح');
@@ -51,6 +60,9 @@ class OptionController extends Controller
     public function edit($optionId)
     {
 
+        if(!Gate::allows('options.edit')){
+            return view('admin.errors.notAllowed');
+        }
         $data = [];
         $data['option'] = Option::findOrFail($optionId);
         $data['products'] = Product::select('name')->get();
@@ -78,6 +90,9 @@ class OptionController extends Controller
 
     public function destroy($id)
     {
+        if(!Gate::allows('options.destroy')){
+            return view('admin.errors.notAllowed');
+        }
        
         $option = Option::findOrFail($id);
         $option->delete();

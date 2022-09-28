@@ -13,10 +13,12 @@
                 <li class="breadcrumb-item active"><a href="{{ route('brands.index') }}">الماركات</a></li>
             </ul>
         </div>
-        <div>
-            <a class="btn btn-primary btn-sm" href="{{route('brands.create')}}">انشاء ماركه جديده</a>
-        </div>
-        
+        @can('brands.create')
+            <div>
+                <a class="btn btn-primary btn-sm" href="{{ route('brands.create') }}">انشاء ماركه جديده</a>
+            </div>
+        @endcan
+
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
@@ -37,17 +39,25 @@
 
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $brand->name }}</td>
-                                        <td><img src="{{ $brand->image_url }}" width="60" height="60" alt=""></td>
+                                        <td><img src="{{ $brand->image_url }}" width="60" height="60" alt="">
+                                        </td>
 
                                         <td>
-                                            <a class="btn btn-sm btn-dark" href="{{ route('brands.edit',['id'=>$brand->id]) }}">تعديل</a>
-                                            <form action="{{route('brands.destroy', $brand->id)}}" method="post" style="display: inline-block">
-                                                @csrf
-                                                @method('GET')
-                                                <button type="'submit" class="btn btn-danger delete btn-sm"><i class="fa fa-trash"></i>حذف</button>
+                                            @can('brands.edit')
+                                                <a class="btn btn-sm btn-dark"
+                                                    href="{{ route('brands.edit', ['id' => $brand->id]) }}">تعديل</a>
+                                            @endcan
+                                            @can('brands.edit')
+                                                <form action="{{ route('brands.destroy', $brand->id) }}" method="post"
+                                                    style="display: inline-block">
+                                                    @csrf
+                                                    @method('GET')
+                                                    <button type="'submit" class="btn btn-danger delete btn-sm"><i
+                                                            class="fa fa-trash"></i>حذف</button>
 
-                                            </form>
-                                            
+                                                </form>
+                                            @endcan
+
                                         </td>
                                     </tr>
                                 @endforeach

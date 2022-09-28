@@ -5,11 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class AttributeController extends Controller
 {
     public function index()
     {
+        if(!Gate::allows('attributes')){
+            return view('admin.errors.notAllowed');
+        }
         $attributes = Attribute::all();
         return view('admin.attributes.index',compact('attributes'));
     }//end of index
@@ -17,6 +21,9 @@ class AttributeController extends Controller
    
     public function create()
     {
+        if(!Gate::allows('attributes.create')){
+            return view('admin.errors.notAllowed');
+        }
         return view('admin.attributes.create');
     }//end of create
 
@@ -40,6 +47,9 @@ class AttributeController extends Controller
    
     public function edit($id)
     {
+        if(!Gate::allows('attributes.edit')){
+            return view('admin.errors.notAllowed');
+        }
         $attribute = Attribute::findOrFail($id);
         
         return view('admin.attributes.edit',[
@@ -69,6 +79,9 @@ class AttributeController extends Controller
    
     public function destroy(Request $request, $id)
     {
+        if(!Gate::allows('attributes.destroy')){
+            return view('admin.errors.notAllowed');
+        }
         $attribute = Attribute::findOrFail($id);
         $attribute->delete();
 

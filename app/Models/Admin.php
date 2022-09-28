@@ -12,5 +12,9 @@ class Admin extends Authenticatable
     use HasFactory;
     protected $table = "admins";
     
-    protected $fillable = ['name','email','password','phone'];
+    protected $fillable = ['name','email','password','phone','role_id'];
+
+    public function role(){
+        return $this->belongsTo(Role::class)->withDefault();
+    }
 }

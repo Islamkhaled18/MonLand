@@ -70,10 +70,9 @@ class Product extends Model
         return $total =  $this->special_price ?? $this -> price;
 
     }
-
-    
+        
     public function options()
     {
-        return $this->hasMany(Option::class, 'product_id');
+        return $this->hasMany(Option::class, 'product_id')->withDefault();
     }
 }

@@ -13,10 +13,12 @@
                 <li class="breadcrumb-item active"><a href="{{ route('admins.index') }}">المشرفين</a></li>
             </ul>
         </div>
-        <div>
-            <a class="btn btn-primary btn-sm" href="{{route('admins.create')}}">انشاء مشرف جديد</a>
-        </div>
-        
+        @can('admins.create')
+            <div>
+                <a class="btn btn-primary btn-sm" href="{{ route('admins.create') }}">انشاء مشرف جديد</a>
+            </div>
+        @endcan
+
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
@@ -28,6 +30,7 @@
                                     <th>الاسم</th>
                                     <th>البريد الالكتروني</th>
                                     <th>الهاتف</th>
+                                    <th>الدور</th>
                                     <th>تاريخ انشاء الحساب</th>
                                     <th>العمليات</th>
 
@@ -41,16 +44,23 @@
                                         <td>{{ $admin->name }}</td>
                                         <td>{{ $admin->email }}</td>
                                         <td>{{ $admin->phone }}</td>
+                                        <td>{{ $admin->role->name }}</td>
                                         <td>{{ $admin->created_at }}</td>
                                         <td>
-                                            <a class="btn btn-sm btn-dark" href="{{ route('admins.edit',['id'=>$admin->id]) }}">تعديل</a>
-                                            <form action="{{route('admins.destroy', $admin->id)}}" method="post" style="display: inline-block">
-                                                @csrf
-                                                @method('GET')
-                                                <button type="'submit" class="btn btn-danger delete btn-sm"><i class="fa fa-trash"></i>حذف</button>
+                                            @can('admins.edit')
+                                                <a class="btn btn-sm btn-dark"
+                                                    href="{{ route('admins.edit', ['id' => $admin->id]) }}">تعديل</a>
+                                            @endcan
+                                            @can('admins.destroy')
+                                                <form action="{{ route('admins.destroy', $admin->id) }}" method="post"
+                                                    style="display: inline-block">
+                                                    @csrf
+                                                    @method('GET')
+                                                    <button type="'submit" class="btn btn-danger delete btn-sm"><i
+                                                            class="fa fa-trash"></i>حذف</button>
+                                                </form>
+                                            @endcan
 
-                                            </form>
-                                            
                                         </td>
                                     </tr>
                                 @endforeach
