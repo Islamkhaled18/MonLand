@@ -5,18 +5,30 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequest;
 use App\Models\Admin;
+use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Yoeunes\Toastr\Toastr;
 
 class AdminController extends Controller
 {
     public function index(){
+
+        if(!Gate::allows('admins')){
+            return view('admin.errors.notAllowed');
+        }
+
         $admins = Admin::all();
         return view('admin.admins.index',compact('admins'));
     }//end of index
 
     public function create(){
-        return view('admin.admins.create');
+        
+        if(!Gate::allows('admins.create')){
+            return view('admin.errors.notAllowed');
+        }
+        $roles = Role::all();
+        return view('admin.admins.create',compact('roles'));
     }//end of create
 
     public function store(AdminRequest $request)
@@ -27,6 +39,7 @@ class AdminController extends Controller
         $admin->email = $request->email;
         $admin->phone = $request->phone;
         $admin->password = bcrypt($request->password);
+        $admin->role_id = $request->role_id;
         $admin->save();
 
         Toastr()->success('تم إضافة مشرف بنجاح');
@@ -34,15 +47,14 @@ class AdminController extends Controller
     }//end of store
 
     public function edit($id){
-    
-        $admin = Admin::findOrFail($id);
-        if(!$admin){
-            Toastr()->error('لا يوجد مشرف بهذا الاسم');
-            return redirect()->route('admins.index');
+        if(!Gate::allows('admins.edit')){
+            return view('admin.errors.notAllowed');
         }
-
+        $admin = Admin::findOrFail($id);
+        $roles = Role::all();
         return view('admin.admins.edit',[
             'admin'=> $admin,
+            'roles'=>$roles
         ]);
 
     }//end of Ediit
@@ -60,12 +72,9 @@ class AdminController extends Controller
         ]);
 
         $admin = Admin::findOrFail($id);
-        $admin->update([
-            'name'  => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'password' => bcrypt($request->password),
-            ]);
+        $admin->update($request->only(['email','phone','password','role_id']));
+        $admin->name = $request->name;
+        $admin->save();
 
         Toastr()->success('تم التعديل على المشرف بنجاح');
         return redirect()->route('admins.index');
@@ -75,6 +84,9 @@ class AdminController extends Controller
     
     public function destroy($id)
     {
+        if(!Gate::allows('admins.destroy')){
+            return view('admin.errors.notAllowed');
+        }
         $admin = Admin::findOrFail($id);
         $admin->delete();
         Toastr()->success('تم الحذف بنجاح');

@@ -13,10 +13,12 @@
                 <li class="breadcrumb-item active"><a href="{{ route('categories.index') }}">الاقسام</a></li>
             </ul>
         </div>
-        <div>
-            <a class="btn btn-primary btn-sm" href="{{route('categories.create')}}">انشاء قسم جديد</a>
-        </div>
-        
+        @can ('categories.create')
+            <div>
+                <a class="btn btn-primary btn-sm" href="{{ route('categories.create') }}">انشاء قسم جديد</a>
+            </div>
+        @endcan
+
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
@@ -37,17 +39,24 @@
 
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $category->name }}</td>
-                                        <td>{{ $category ->_parent ->name ?? '--'}}</td>
-                                  
-                                        <td>
-                                            <a class="btn btn-sm btn-dark" href="{{ route('categories.edit',['id'=>$category->id]) }}">تعديل</a>
-                                            <form action="{{route('categories.destroy', $category->id)}}" method="post" style="display: inline-block">
-                                                @csrf
-                                                @method('GET')
-                                                <button type="'submit" class="btn btn-danger delete btn-sm"><i class="fa fa-trash"></i>حذف</button>
+                                        <td>{{ $category->_parent->name ?? '--' }}</td>
 
-                                            </form>
-                                            
+                                        <td>
+                                            @can ('categories.edit')
+                                                <a class="btn btn-sm btn-dark"
+                                                    href="{{ route('categories.edit', ['id' => $category->id]) }}">تعديل</a>
+                                            @endcan
+                                            @can ('categories.destroy')
+                                                <form action="{{ route('categories.destroy', $category->id) }}"
+                                                    method="post" style="display: inline-block">
+                                                    @csrf
+                                                    @method('GET')
+                                                    <button type="'submit" class="btn btn-danger delete btn-sm"><i
+                                                            class="fa fa-trash"></i>حذف</button>
+
+                                                </form>
+                                            @endcan
+
                                         </td>
                                     </tr>
                                 @endforeach

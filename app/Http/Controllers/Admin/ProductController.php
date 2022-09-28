@@ -9,34 +9,40 @@ use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
     public function index()
     {
+        if(!Gate::allows('products')){
+            return view('admin.errors.notAllowed');
+        }
+
         $products = Product::select('id','name','price', 'created_at')->paginate(5);
-        return view('admin.products.general.index', compact('products'));
+        return view('admin.products.general.index')->with([
+            'products'=>$products
+        ]);
     }//end of index
 
 
     public function create()
     {
-        $data = [];
-        $brands = Brand::select('id')->get();
-        $categories = Category::select('id')->get();
+        if(!Gate::allows('products.create')){
+            return view('admin.errors.notAllowed');
+        }
+
+        $brands = Brand::select('id','name')->get();
+        $categories = Category::select('id','name')->get();
         return view('admin.products.general.create', compact('brands','categories'));
     }//end of create
 
 
     public function store(Request $request)
     {
-
-
         DB::beginTransaction();
-
         //validation
-
         if (!$request->has('is_active'))
             $request->request->add(['is_active' => 0]);
         else
@@ -61,6 +67,9 @@ class ProductController extends Controller
 
     public function getPrice($product_id){
 
+        if(!Gate::allows('products.create')){
+            return view('admin.errors.notAllowed');
+        }
         return view('admin.products.prices.create') -> with('id',$product_id) ;
     }//end of price
 
@@ -76,6 +85,10 @@ class ProductController extends Controller
 
     public function getStock($product_id){
 
+        if(!Gate::allows('products.create')){
+            return view('admin.errors.notAllowed');
+        }
+
         return view('admin.products.stock.create') ->with('id',$product_id) ;
     }//end of getStock
 
@@ -88,6 +101,9 @@ class ProductController extends Controller
 
 
     public function addImages($product_id){
+        if(!Gate::allows('products.create')){
+            return view('admin.errors.notAllowed');
+        }
         return view('admin.products.images.create')->with('id',$product_id) ;
     }
 
@@ -118,5 +134,23 @@ class ProductController extends Controller
         toastr()->success('تمت اضافة صور بنجاح');
         return redirect()->route('products.index');
     }
+
+
+    public function destroy($id)
+    {
+        if(!Gate::allows('products.destroy')){
+            return view('admin.errors.notAllowed');
+        }
+
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        if($product->image){
+            Storage::disk('images')->delete($product->photo);
+        }
+        Toastr()->success('تم حذف المنتج بنجاح');
+        return redirect()->route('products.index');
+    
+    }//end of destroy
 
 }

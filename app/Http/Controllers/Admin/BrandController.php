@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Brand;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
@@ -12,6 +13,9 @@ class BrandController extends Controller
     
     public function index()
     {
+        if(!Gate::allows('brands')){
+            return view('admin.errors.notAllowed');
+        }
         $brands = Brand::all();
         return view('admin.brands.index',compact('brands'));
     }//end of index
@@ -19,15 +23,19 @@ class BrandController extends Controller
    
     public function create()
     {
+        if(!Gate::allows('brands.create')){
+            return view('admin.errors.notAllowed');
+        }
         return view('admin.brands.create');
     }//end of create
 
     
     public function store(Request $request)
     {
+        
         $request->validate([
             'name'=>'required|max:255',
-            'image'=>'mimes:png,jpg,bmp,jpeg|max:1024000',
+            'image'=>'mimes:png,jpg,bmp,jpeg',
         ]);
 
         $data = $request->except('image');
@@ -37,7 +45,8 @@ class BrandController extends Controller
             $data['image'] = $image->store('brands','images');
         }
 
-        $brand = Brand::create($data);
+
+        Brand::create($data);
         Toastr()->success('تم إضافة ماركة جديدة بنجاح');
         return redirect()->route('brands.index');
 
@@ -46,6 +55,9 @@ class BrandController extends Controller
    
     public function edit($id)
     {
+        if(!Gate::allows('brands.edit')){
+            return view('admin.errors.notAllowed');
+        }
         $brand = Brand::findOrFail($id);
         
         return view('admin.brands.edit',[
@@ -82,6 +94,9 @@ class BrandController extends Controller
    
     public function destroy(Request $request, $id)
     {
+        if(!Gate::allows('brands.destroy')){
+            return view('admin.errors.notAllowed');
+        }
         $brand = Brand::findOrFail($id);
         $brand->delete();
 

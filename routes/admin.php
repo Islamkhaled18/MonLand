@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\DeliveryController;
 use App\Http\Controllers\Admin\OptionController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -73,11 +74,9 @@ use Illuminate\Support\Facades\Auth;
             Route::post('images',  [ProductController::class,'saveProductImages'])->name('products.images.store');
             Route::post('images/db',  [ProductController::class,'saveProductImagesDB'])->name('products.images.store.db');
 
-            Route::get('delete/{id}' , [ProductController::class,'destroy'])->name('products.destroy');
+            Route::post('delete/{id}' , [ProductController::class,'destroy'])->name('products.destroy');
 
         });
-
-
               ///////////////attributes Controller/////////////////////
               Route::group (['prefix'=>'attributes'], function()
               {
@@ -117,6 +116,20 @@ use Illuminate\Support\Facades\Auth;
                 Route::get('delete/{id}', [DeliveryController::class,'destroy']) -> name('delivery.destroy');
 
             });
+
+            ///////////////roles Controller/////////////////////
+        Route::group (['prefix'=>'roles'], function()
+        {
+            Route::get('/'           , [RoleController::class,'index'])->name('roles.index');
+            Route::get('create'      , [RoleController::class,'create'])->name('roles.create');
+            Route::post('store'      , [RoleController::class,'store'])->name('roles.store');
+            Route::get('edit/{id}'   , [RoleController::class,'edit'])->name('roles.edit');
+            Route::post('update/{id}', [RoleController::class,'update'])->name('roles.update');
+            Route::get('delete/{id}' , [RoleController::class,'destroy'])->name('roles.destroy');
+
+        });
+
+
     }); // routes for authenticated admins
 
     Route::group(['namespace' => 'Admin' , 'middleware' => 'guest:admin','prefix' => 'admin'], function () {

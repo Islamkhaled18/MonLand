@@ -25,16 +25,11 @@
               <li><a class="treeview-item" href="{{route('attributes.index')}}"><i class="icon fa fa-circle-o"></i>صفات المنتجات</a></li>
               <li><a class="treeview-item" href="{{route('options.index')}}"><i class="icon fa fa-circle-o"></i> خصائص الصفات </a></li>
             </ul>
-          </li>
+        </li>
 
-
-{{-- 
-        <li><a class="app-menu__item" href="{{route('products.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">المنتجات</span></a></li>
-        <li><a class="app-menu__item" href="{{route('attributes.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">الصفات</span></a></li>
-        <li><a class="app-menu__item" href="{{route('options.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">خصائص الصفات</span></a></li>
-         --}}
         <li><a class="app-menu__item" href="{{route('delivery.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">المحافظات & اسعار الشحن</span></a></li>
         <li><a class="app-menu__item" href="{{route('settings.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">الاعدادات</span></a></li>
+        <li><a class="app-menu__item" href="{{route('roles.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">اوامر وصلاحيات</span></a></li>
         
 
     </ul>

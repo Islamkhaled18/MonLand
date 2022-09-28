@@ -13,10 +13,12 @@
                 <li class="breadcrumb-item active"><a href="{{ route('products.index') }}">المنتجات</a></li>
             </ul>
         </div>
-        <div>
-            <a class="btn btn-primary btn-sm" href="{{route('products.general.create')}}">انشاء منتج جديد</a>
-        </div>
-        
+        @can('products.create')
+            <div>
+                <a class="btn btn-primary btn-sm" href="{{ route('products.general.create') }}">انشاء منتج جديد</a>
+            </div>
+        @endcan
+
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
@@ -34,27 +36,33 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($products  as $product)
+                                @foreach ($products as $product)
                                     <tr>
-
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{$product ->name}}</td>
-                                       <td>{{$product ->getActive()}}</td>
-                                       <td>{{$product ->price}}</td>
-                                        <td>
-                                            <a class="btn btn-sm btn-dark" href="{{route('products.price',$product ->id)}}">السعر</a>
-                                            <a class="btn btn-sm btn-dark" href="{{route('products.images',$product ->id)}}">الصور</a>
-                                            <a class="btn btn-sm btn-dark" href="{{route('products.stock',$product ->id)}}">المخزن</a>
-                                           
-                                        </td>
-                                        <td>
-                                            <form action="{{route('products.destroy', $product->id)}}" method="post" style="display: inline-block">
-                                                @csrf
-                                                @method('GET')
-                                                <button type="'submit" class="btn btn-danger delete btn-sm"><i class="fa fa-trash"></i>حذف</button>
+                                        <td>{{ $product->name }}</td>
+                                        <td>{{ $product->getActive() }}</td>
+                                        <td>{{ $product->price }}</td>
+                                        @can('products.create')
+                                            <td>
+                                                <a class="btn btn-sm btn-dark"
+                                                    href="{{ route('products.price', $product->id) }}">السعر</a>
+                                                <a class="btn btn-sm btn-dark"
+                                                    href="{{ route('products.images', $product->id) }}">الصور</a>
+                                                <a class="btn btn-sm btn-dark"
+                                                    href="{{ route('products.stock', $product->id) }}">المخزن</a>
 
-                                            </form>
-                                        </td>
+                                            </td>
+                                        @endcan
+                                        @can('products.destroy')
+                                            <td>
+                                                <form action="{{ route('products.destroy', $product->id) }}" method="post"
+                                                    style="display: inline-block">
+                                                    @csrf
+                                                    <button type="'submit" class="btn btn-danger delete btn-sm"><i
+                                                            class="fa fa-trash"></i>حذف</button>
+                                                </form>
+                                            </td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                             </tbody>
