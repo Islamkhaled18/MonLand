@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -88,13 +89,13 @@ class ProductController extends Controller
         if(!Gate::allows('products.create')){
             return view('admin.errors.notAllowed');
         }
-
-        return view('admin.products.stock.create') ->with('id',$product_id) ;
+        $vendors = Vendor::all();
+        return view('admin.products.stock.create',compact('vendors')) ->with('id',$product_id) ;
     }//end of getStock
 
     public function saveProductStock (Request $request)
     {
-        Product::whereId($request -> product_id) -> update($request -> except(['_token','product_id']));
+        Product::whereId($request -> product_id) -> update($request-> except(['_token','product_id']));
         toastr()->success('تمت اضافة بيانات على المنتج بنجاح');
         return redirect()->route('products.index');
     }//end of saveProductStock

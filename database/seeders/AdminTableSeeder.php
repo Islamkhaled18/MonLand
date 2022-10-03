@@ -24,6 +24,7 @@ class AdminTableSeeder extends Seeder
             'email' => 'super_admin@gmail.com',
             'password' => bcrypt('123456789'),
             'phone' => '01015949894',
+            'role_id'=>1
             ],
             [
             'id' => 2,
@@ -31,6 +32,7 @@ class AdminTableSeeder extends Seeder
             'email' => 'islam.khaled13a@gmail.com',
             'password' => bcrypt('123456789'),
             'phone' => '01015949894',
+            'role_id'=>null
             ]
 
         ];

@@ -17,4 +17,8 @@ class Admin extends Authenticatable
     public function role(){
         return $this->belongsTo(Role::class)->withDefault();
     }
+
+    public function profile(){
+        return $this->hasOne(AdminProfile::class,'admin_id','id')->withDefault();
+    }
 }
