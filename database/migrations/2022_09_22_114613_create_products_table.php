@@ -34,6 +34,8 @@ class CreateProductsTable extends Migration
             $table->longText('short_description')->nullable();
             $table->bigInteger('brand_id')->unsigned()->nullable();
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('set null');
+            $table->bigInteger('vendor_id')->unsigned()->nullable();
+            $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('set null');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -95,6 +95,23 @@
 
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="projectinput1"> اختر البائع
+                                    </label>
+                                    <select name="vendor_id" class="select2 form-control">
+                                        <optgroup label="من فضلك أختر البائع ">
+                                            @if ($vendors && $vendors->count() > 0)
+                                                @foreach ($vendors as $vendor)
+                                                    <option value="{{ $vendor->id }}">{{ $vendor->vendor_name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </optgroup>
+                                    </select>
+                                    @error('vendor_id')
+                                        <span class="text-danger"> {{ $message }}</span>
+                                    @enderror
+                                </div>
+
 
                                 <div class="tile-footer">
                                     <button class="btn btn-primary" type="submit">حفظ</button>

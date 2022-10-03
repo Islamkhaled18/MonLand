@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Admin\DeliveryController;
 use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\VendorController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -106,14 +108,14 @@ use Illuminate\Support\Facades\Auth;
 
             });
 
-              ################################## delivery options ######################################
-              Route::group(['prefix' => 'delivery'], function () {
-                Route::get('/',  [DeliveryController::class,'index'])->name('delivery.index');
-                Route::get('create',  [DeliveryController::class,'create'])->name('delivery.create');
-                Route::post('store',  [DeliveryController::class,'store'])->name('delivery.store');
-                Route::get('edit/{id}',  [DeliveryController::class,'edit'])->name('delivery.edit');
-                Route::post('update/{id}',  [DeliveryController::class,'update'])->name('delivery.update');
-                Route::get('delete/{id}', [DeliveryController::class,'destroy']) -> name('delivery.destroy');
+            ################################## delivery options ######################################
+            Route::group(['prefix' => 'delivery'], function () {
+            Route::get('/',  [DeliveryController::class,'index'])->name('delivery.index');
+            Route::get('create',  [DeliveryController::class,'create'])->name('delivery.create');
+            Route::post('store',  [DeliveryController::class,'store'])->name('delivery.store');
+            Route::get('edit/{id}',  [DeliveryController::class,'edit'])->name('delivery.edit');
+            Route::post('update/{id}',  [DeliveryController::class,'update'])->name('delivery.update');
+            Route::get('delete/{id}', [DeliveryController::class,'destroy']) -> name('delivery.destroy');
 
             });
 
@@ -126,6 +128,24 @@ use Illuminate\Support\Facades\Auth;
             Route::get('edit/{id}'   , [RoleController::class,'edit'])->name('roles.edit');
             Route::post('update/{id}', [RoleController::class,'update'])->name('roles.update');
             Route::get('delete/{id}' , [RoleController::class,'destroy'])->name('roles.destroy');
+
+        });
+
+          ################################## profile ######################################
+          Route::group(['prefix' => 'profiles'], function () {
+            Route::get('edit/{id}',  [AdminProfileController::class,'edit'])->name('adminsProfile.edit');
+            Route::post('update/{id}',  [AdminProfileController::class,'update'])->name('adminsProfile.update');
+
+        });
+
+        ################################## delivery options ######################################
+        Route::group(['prefix' => 'vendors'], function () {
+            Route::get('/',  [VendorController::class,'index'])->name('vendors.index');
+            Route::get('create',  [VendorController::class,'create'])->name('vendors.create');
+            Route::post('store',  [VendorController::class,'store'])->name('vendors.store');
+            Route::get('edit/{id}',  [VendorController::class,'edit'])->name('vendors.edit');
+            Route::post('update/{id}',  [VendorController::class,'update'])->name('vendors.update');
+            Route::get('delete/{id}', [VendorController::class,'destroy']) -> name('vendors.destroy');
 
         });
 

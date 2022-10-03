@@ -75,4 +75,9 @@ class Product extends Model
     {
         return $this->hasMany(Option::class, 'product_id')->withDefault();
     }
+
+    public function vendor()
+    {
+        return $this->belongsTo(vendor::class,'vendor_id')->withDefault();
+    }
 }

@@ -30,6 +30,7 @@
         <li><a class="app-menu__item" href="{{route('delivery.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">المحافظات & اسعار الشحن</span></a></li>
         <li><a class="app-menu__item" href="{{route('settings.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">الاعدادات</span></a></li>
         <li><a class="app-menu__item" href="{{route('roles.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">اوامر وصلاحيات</span></a></li>
+        <li><a class="app-menu__item" href="{{route('vendors.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">البائعين واسعار الشحن </span></a></li>
         
 
     </ul>
