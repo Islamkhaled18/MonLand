@@ -111,6 +111,16 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                
+                                <div class="form-group">
+                                    <label for="photo" class="form-label">صور المنتج</label>
+                                    
+                                    <input type="file" class="form-control @error('photo') is-invalid @enderror"
+                                        value="{{ old('photo') }}" id="photo" name="photo[]" multiple accept="image/*">
+                                    @error('file')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
 
                                 <div class="form-group mt-1">
                                     <input type="checkbox" value="1" name="is_active" id="switcheryColor4"

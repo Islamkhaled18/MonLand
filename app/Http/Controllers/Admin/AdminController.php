@@ -9,6 +9,8 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Yoeunes\Toastr\Toastr;
+use App\Rules\MatchOldPassword;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -66,16 +68,18 @@ class AdminController extends Controller
         $this->validate($request, [
 
             'name' => 'required|max:255',
-            'email' => 'required|max:255|unique:admins,email',
+            'email' => 'required|email|unique:admins,email,'.$id,
             'phone' => 'required',
-            'password' => 'required',
+            'old_password' => ['required', new MatchOldPassword],
+            'password' => ['required'],
+            "role_id" => 'required|numeric|exists:roles,id',
         ]);
 
-        $admin = Admin::findOrFail($id);
-        $admin->update($request->only(['email','phone','password','role_id']));
-        $admin->name = $request->name;
-        $admin->save();
 
+        $admin = Admin::findOrFail($id);
+        $request->merge(['password'=>bcrypt($request->password)]);
+        $admin->update($request->all());
+        
         Toastr()->success('تم التعديل على المشرف بنجاح');
         return redirect()->route('admins.index');
 

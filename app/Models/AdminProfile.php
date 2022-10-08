@@ -12,7 +12,7 @@ class AdminProfile extends Model
     public $incementing = false;
     protected $primaryKey ="admin_id";
 
-    protected $fillable=['admin_id'];
+    protected $guarded =[];
 
     public function admin(){
         return $this->belongsTo(Admin::class , 'admin_id','id')->withDefault();

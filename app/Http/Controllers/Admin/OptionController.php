@@ -43,6 +43,9 @@ class OptionController extends Controller
         
         DB::beginTransaction();
 
+        $request->validate([
+            'name'=>'required|max:255',
+        ]);
         Option::create([
             'attribute_id' => $request->attribute_id,
             'product_id' => $request->product_id,
@@ -76,7 +79,9 @@ class OptionController extends Controller
 
     public function update($id, Request $request)
     {
-       
+        $request->validate([
+            'name'=>'required|max:255',
+        ]);
 
         $option = Option::findOrFail($id);
         $option->update($request->only(['price','product_id','attribute_id']));
