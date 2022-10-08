@@ -72,9 +72,8 @@ use Illuminate\Support\Facades\Auth;
             Route::get('stock/{id}',  [ProductController::class,'getStock'])->name('products.stock');
             Route::post('stock',  [ProductController::class,'saveProductStock'])->name('products.stock.store');
 
-            Route::get('images/{id}',  [ProductController::class,'addImages'])->name('products.images');
-            Route::post('images',  [ProductController::class,'saveProductImages'])->name('products.images.store');
-            Route::post('images/db',  [ProductController::class,'saveProductImagesDB'])->name('products.images.store.db');
+            Route::get('edit/{id}'   , [ProductController::class,'edit'])->name('products.edit');
+            Route::post('update/{id}', [ProductController::class,'update'])->name('products.update');
 
             Route::post('delete/{id}' , [ProductController::class,'destroy'])->name('products.destroy');
 

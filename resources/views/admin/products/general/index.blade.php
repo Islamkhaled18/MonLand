@@ -47,22 +47,26 @@
                                                 <a class="btn btn-sm btn-dark"
                                                     href="{{ route('products.price', $product->id) }}">السعر</a>
                                                 <a class="btn btn-sm btn-dark"
-                                                    href="{{ route('products.images', $product->id) }}">الصور</a>
-                                                <a class="btn btn-sm btn-dark"
                                                     href="{{ route('products.stock', $product->id) }}">المخزن</a>
 
                                             </td>
                                         @endcan
-                                        @can('products.destroy')
-                                            <td>
+                                        <td>
+                                           @can('products.edit')
+                                               
+                                           <a class="btn btn-sm btn-dark"
+                                           href="{{ route('products.edit', ['id' => $product->id]) }}">تعديل</a>
+                                           @endcan
+                                            
+                                            @can('products.destroy')
                                                 <form action="{{ route('products.destroy', $product->id) }}" method="post"
                                                     style="display: inline-block">
                                                     @csrf
                                                     <button type="'submit" class="btn btn-danger delete btn-sm"><i
                                                             class="fa fa-trash"></i>حذف</button>
                                                 </form>
-                                            </td>
-                                        @endcan
+                                            @endcan
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

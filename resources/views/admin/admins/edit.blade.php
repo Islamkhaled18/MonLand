@@ -44,9 +44,17 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">الرقم السري</label>
-                                    <input class="form-control" id="exampleInputPassword1" name="password"
-                                        value="**************" type="password" placeholder="الرقم السري">
+                                    <label for="old_password">الرقم السري القديم</label>
+                                    <input class="form-control" id="old_password"  name="old_password"
+                                        type="password">
+                                    @error('password')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">الرقم السري الجديد</label>
+                                    <input class="form-control" id="password"  name="password"
+                                        type="password">
                                     @error('password')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
