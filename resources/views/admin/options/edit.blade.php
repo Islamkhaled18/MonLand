@@ -10,8 +10,8 @@
             </div>
             <ul class="app-breadcrumb breadcrumb side">
                 <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-                <li class="breadcrumb-item"><a href="{{ route('options.index') }}">خصائص الصفات</a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('options.edit', $option->id) }}">تعديل على خاصية صفه -
+                <li class="breadcrumb-item"><a href="{{ route('options.index') }}" title="خصائص الصفات">خصائص الصفات</a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('options.edit', $option->id) }}" title="تعديل على خصائص صفات">تعديل على خاصية صفه -
                         {{ $option->name }}</a></li>
             </ul>
         </div>

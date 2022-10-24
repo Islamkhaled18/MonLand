@@ -9,13 +9,13 @@
                 <h1><i class="fa fa-th-list"></i> المشرفين </h1>
             </div>
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('admins.index') }}">المشرفين</a></li>
+                <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}" title="الرئيسية"></a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('admins.index') }}" title="المشرفين" >المشرفين</a></li>
             </ul>
         </div>
         @can('admins.create')
             <div>
-                <a class="btn btn-primary btn-sm" href="{{ route('admins.create') }}">انشاء مشرف جديد</a>
+                <a class="btn btn-primary btn-sm" href="{{ route('admins.create') }}" title="انشاء مشرف جديد">انشاء مشرف جديد</a>
             </div>
         @endcan
 
@@ -49,10 +49,10 @@
                                         <td>
                                             @can('admins.edit')
                                                 <a class="btn btn-sm btn-dark"
-                                                    href="{{ route('admins.edit', ['id' => $admin->id]) }}">تعديل</a>
+                                                    href="{{ route('admins.edit', ['id' => $admin->id]) }}" title="تعديل">تعديل</a>
                                             @endcan
                                             @can('admins.destroy')
-                                                <form action="{{ route('admins.destroy', $admin->id) }}" method="post"
+                                                <form action="{{ route('admins.destroy', $admin->id) }}" title="حذف" method="post"
                                                     style="display: inline-block">
                                                     @csrf
                                                     @method('GET')

@@ -10,12 +10,12 @@
             </div>
             <ul class="app-breadcrumb breadcrumb side">
                 <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('roles.index') }}">الاوامر والصلاحيات</a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('roles.index') }}" title="الاوامر والصلاحيات">الاوامر والصلاحيات</a></li>
             </ul>
         </div>
         @can('roles.create')
             <div>
-                <a class="btn btn-primary btn-sm" href="{{ route('roles.create') }}">انشاء اوامر وصلاحيات جديده</a>
+                <a class="btn btn-primary btn-sm" href="{{ route('roles.create') }}" title="انشاء اوامر وصلاحيات جديده">انشاء اوامر وصلاحيات جديده</a>
             </div>
         @endcan
 
@@ -41,11 +41,11 @@
                                         <td>
                                             @can('roles.edit')
                                                 <a class="btn btn-sm btn-dark"
-                                                    href="{{ route('roles.edit', ['id' => $role->id]) }}">تعديل</a>
+                                                    href="{{ route('roles.edit', ['id' => $role->id]) }}" title="تعديل">تعديل</a>
                                             @endcan
                                             @can('roles.destroy')
-                                                <form action="{{ route('roles.destroy', $role->id) }}" method="post"
-                                                    style="display: inline-block">
+                                                <form action="{{ route('roles.destroy', $role->id) }}" title="حذف" method="post"
+                                                    style="display: inline-block"> 
                                                     @csrf
                                                     @method('GET')
                                                     <button type="'submit" class="btn btn-danger delete btn-sm"><i

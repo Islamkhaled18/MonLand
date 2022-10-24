@@ -10,12 +10,12 @@
             </div>
             <ul class="app-breadcrumb breadcrumb side">
                 <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('products.index') }}">المنتجات</a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('products.index') }} " title="المنتجات">المنتجات</a></li>
             </ul>
         </div>
         @can('products.create')
             <div>
-                <a class="btn btn-primary btn-sm" href="{{ route('products.general.create') }}">انشاء منتج جديد</a>
+                <a class="btn btn-primary btn-sm" title="انشاء منتج جديد" href="{{ route('products.general.create') }}">انشاء منتج جديد</a>
             </div>
         @endcan
 
@@ -45,9 +45,9 @@
                                         @can('products.create')
                                             <td>
                                                 <a class="btn btn-sm btn-dark"
-                                                    href="{{ route('products.price', $product->id) }}">السعر</a>
+                                                    href="{{ route('products.price', $product->id) }}" title="سعر المنتج">السعر</a>
                                                 <a class="btn btn-sm btn-dark"
-                                                    href="{{ route('products.stock', $product->id) }}">المخزن</a>
+                                                    href="{{ route('products.stock', $product->id) }}" title="المخزن">المخزن</a>
 
                                             </td>
                                         @endcan
@@ -55,11 +55,11 @@
                                            @can('products.edit')
                                                
                                            <a class="btn btn-sm btn-dark"
-                                           href="{{ route('products.edit', ['id' => $product->id]) }}">تعديل</a>
+                                           href="{{ route('products.edit', ['id' => $product->id]) }}" title="تعديل">تعديل</a>
                                            @endcan
                                             
                                             @can('products.destroy')
-                                                <form action="{{ route('products.destroy', $product->id) }}" method="post"
+                                                <form action="{{ route('products.destroy', $product->id) }}" title="حذف" method="post"
                                                     style="display: inline-block">
                                                     @csrf
                                                     <button type="'submit" class="btn btn-danger delete btn-sm"><i
