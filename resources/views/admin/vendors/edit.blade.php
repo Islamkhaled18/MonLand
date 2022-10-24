@@ -10,8 +10,8 @@
             </div>
             <ul class="app-breadcrumb breadcrumb side">
                 <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-                <li class="breadcrumb-item"><a href="{{ route('vendors.index') }}">البائعين واسعار الشحن</a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('vendors.edit', $vendor->id) }}">تعديل على بائع او سعر الشحن -
+                <li class="breadcrumb-item"><a href="{{ route('vendors.index') }}" title="البائعين واسعار الشحن">البائعين واسعار الشحن</a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('vendors.edit', $vendor->id) }}" title="تعديل على بائع وسعر الشحن الخاص به">تعديل على بائع او سعر الشحن -
                         {{ $vendor->vendor_name }}</a></li>
             </ul>
         </div>

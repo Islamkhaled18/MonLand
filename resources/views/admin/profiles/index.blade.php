@@ -10,7 +10,7 @@
             </div>
             <ul class="app-breadcrumb breadcrumb side">
                 <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-                <li class="breadcrumb-item"><a href="{{ route('adminsProfile.edit',$profileId->id) }}">الصفحة الشخصيه</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('adminsProfile.edit',$profileId->id) }}" title="الصفحه الشخصيه">الصفحة الشخصيه</a></li>
             </ul>
         </div>
         <div class="row">

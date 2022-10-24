@@ -10,7 +10,7 @@
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css"
         href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title> إعادة تعيين كلمة مرور جديده - مونـ لاند</title>
+    <title> إعادة تعيين كلمة مرور جديده - كيان</title>
 </head>
 
 <body>
@@ -19,10 +19,10 @@
     </section>
     <section class="login-content">
         <div class="logo">
-            <h1>مونـ لاند</h1>
+            <h1>كيان</h1>
         </div>
        
-        <h1>اعادة تعيين كلمة مرور جديده/h1>
+        <h1>اعادة تعيين كلمة مرور جديده</h1>
    
         <h2>يمكنك تعيين كلمة مرور جديده هنا بالاسفل: </h2>
         <a href="{{ route('admin.reset.password.get', $token) }}">Reset Password</a>

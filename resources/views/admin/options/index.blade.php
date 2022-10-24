@@ -9,13 +9,13 @@
                 <h1><i class="fa fa-th-list"></i> خصائص الصفات </h1>
             </div>
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('options.index') }}">خصائص الصفات</a></li>
+                <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}" ></a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('options.index') }}" title="خصائص الصفات">خصائص الصفات</a></li>
             </ul>
         </div>
         @can('options.create')
             <div>
-                <a class="btn btn-primary btn-sm" href="{{ route('options.create') }}">انشاء خصائص صفه جديده</a>
+                <a class="btn btn-primary btn-sm" href="{{ route('options.create') }}" title="اضافة خصائص صفه جديده">انشاء خصائص صفه جديده</a>
             </div>
         @endcan
 
@@ -30,7 +30,7 @@
                                     <th>الاسم</th>
                                     <th>السعر</th>
                                     <th>المنتج</th>
-                                    <th>اخصائص</th>
+                                    <th>الخصائص</th>
                                     <th>العمليات</th>
 
                                 </tr>
@@ -47,7 +47,7 @@
                                         <td>
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 @can('options.edit')
-                                                    <a href="{{ route('options.edit', $option->id) }}"
+                                                    <a href="{{ route('options.edit', $option->id) }}" title="تعديل"
                                                         class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل</a>
                                                 @endcan
                                                 @can('options.destroy')
@@ -55,7 +55,7 @@
                                                         style="display: inline-block">
                                                         @csrf
                                                         @method('GET')
-                                                        <button type="'submit" class="btn btn-danger delete btn-sm"><i
+                                                        <button type="'submit" title="حذف" class="btn btn-danger delete btn-sm"><i
                                                                 class="fa fa-trash"></i>حذف</button>
 
                                                     </form>

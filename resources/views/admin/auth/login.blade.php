@@ -10,7 +10,7 @@
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css"
         href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>تسجيل الدخول - مونـ لاند</title>
+    <title>تسجيل الدخول - كيان</title>
 </head>
 
 <body>
@@ -73,7 +73,7 @@
                     @endif
                 </div>
                 <div class="form-group btn-container">
-                    <button type="submit" class="btn btn-primary btn-block" > 
+                    <button type="submit"  title=" إعادة ضبط كلمة المرور" class="btn btn-primary btn-block" > 
                         <i class="fa fa-unlock fa-lg fa-fw"></i>
                         إعادة ضبط كلمة المرور
                     </button>

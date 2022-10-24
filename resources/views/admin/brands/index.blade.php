@@ -10,12 +10,12 @@
             </div>
             <ul class="app-breadcrumb breadcrumb side">
                 <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('brands.index') }}">الماركات</a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('brands.index') }}" title="الماركات">الماركات</a></li>
             </ul>
         </div>
         @can('brands.create')
             <div>
-                <a class="btn btn-primary btn-sm" href="{{ route('brands.create') }}">انشاء ماركه جديده</a>
+                <a class="btn btn-primary btn-sm" href="{{ route('brands.create') }}" title="انشاء ماركه جديده">انشاء ماركه جديده</a>
             </div>
         @endcan
 
@@ -39,12 +39,12 @@
 
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $brand->name }}</td>
-                                        <td><img src="{{ $brand->image_url }}" width="60" height="60" alt="">
+                                        <td><img src="{{ $brand->image_url }}" title="{{ $brand->name }}" alt="{{ $brand->name }}"  width="60" height="60" alt="">
                                         </td>
 
                                         <td>
                                             @can('brands.edit')
-                                                <a class="btn btn-sm btn-dark"
+                                                <a class="btn btn-sm btn-dark" title="تعديل"
                                                     href="{{ route('brands.edit', ['id' => $brand->id]) }}">تعديل</a>
                                             @endcan
                                             @can('brands.edit')
@@ -52,7 +52,7 @@
                                                     style="display: inline-block">
                                                     @csrf
                                                     @method('GET')
-                                                    <button type="'submit" class="btn btn-danger delete btn-sm"><i
+                                                    <button type="'submit" title="حذف" class="btn btn-danger delete btn-sm"><i
                                                             class="fa fa-trash"></i>حذف</button>
 
                                                 </form>

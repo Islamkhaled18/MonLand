@@ -10,12 +10,12 @@
             </div>
             <ul class="app-breadcrumb breadcrumb side">
                 <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('vendors.index') }}">البائعين واسعار الشحن</a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('vendors.index') }}" title="البائعين واسعار الشحن">البائعين واسعار الشحن</a></li>
             </ul>
         </div>
         @can('vendors.create')
             <div>
-                <a class="btn btn-primary btn-sm" href="{{ route('vendors.create') }}">انشاء بائع وسعر شحن جديد</a>
+                <a class="btn btn-primary btn-sm" href="{{ route('vendors.create') }}" title="انشاء بائع وسعر شحن جديد">انشاء بائع وسعر شحن جديد</a>
             </div>
         @endcan
 
@@ -42,7 +42,7 @@
                                         <td>{{ $vendor->vendor_price }}</td>
                                         <td>
                                             @can('vendors.edit')
-                                                <a class="btn btn-sm btn-dark"
+                                                <a class="btn btn-sm btn-dark" title="تعديل"
                                                     href="{{ route('vendors.edit', ['id' => $vendor->id]) }}">تعديل</a>
                                             @endcan
                                             @can('vendors.destroy')
@@ -50,7 +50,7 @@
                                                     style="display: inline-block">
                                                     @csrf
                                                     @method('GET')
-                                                    <button type="'submit" class="btn btn-danger delete btn-sm"><i
+                                                    <button type="'submit" title="حذف" class="btn btn-danger delete btn-sm"><i
                                                             class="fa fa-trash"></i>حذف</button>
 
                                                 </form>

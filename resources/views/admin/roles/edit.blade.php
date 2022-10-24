@@ -10,8 +10,8 @@
             </div>
             <ul class="app-breadcrumb breadcrumb side">
                 <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-                <li class="breadcrumb-item"><a href="{{ route('roles.index') }}">الاوامر والصلاحيات</a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('roles.edit', $role->id) }}">تعديل على محافظه او سعر
+                <li class="breadcrumb-item"><a href="{{ route('roles.index') }}" title="الاوامر والصلاحيات">الاوامر والصلاحيات</a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('roles.edit', $role->id) }}" title="تعديل على اوامر وصلاحيات">تعديل على محافظه او سعر
                         الشحن -
                         {{ $role->name }}</a></li>
             </ul>
