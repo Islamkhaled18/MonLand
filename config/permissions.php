@@ -38,6 +38,8 @@ return [
     'vendors.create'=>'انشاء بائع وسعر شحن جديد',
     'vendors.edit'=>' تعديل على بائعين',
     'vendors.destroy'=>'حذف بائعين',
+    'contactus'=>'مشاهدة رسائل الزوار او المستخدمين',
+    'contactus.destroy'=>'حذف رسائل المستخدمين او الزوار',
     
 ]
 

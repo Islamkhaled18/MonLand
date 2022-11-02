@@ -1,0 +1,16 @@
+body{
+    background-color: #980e2f;
+}
+
+.modal-dialog select{
+    width: auto;
+}
+
+button[type="submit"]{
+    background-color: #7f0924;
+}
+
+input[type='text']{
+    width: 18%;
+    text-align: center;
+}

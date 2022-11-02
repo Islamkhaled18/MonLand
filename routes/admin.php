@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\AttributeController;
+use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\DeliveryController;
 use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\RoleController;
@@ -145,6 +146,13 @@ use Illuminate\Support\Facades\Auth;
             Route::get('edit/{id}',  [VendorController::class,'edit'])->name('vendors.edit');
             Route::post('update/{id}',  [VendorController::class,'update'])->name('vendors.update');
             Route::get('delete/{id}', [VendorController::class,'destroy']) -> name('vendors.destroy');
+
+        });
+        ################################## Contact Us ######################################
+        Route::group(['prefix' => 'ContactUs'], function () {
+            Route::get('/',  [ContactUsController::class,'index'])->name('ContactUs.index');
+            Route::post('store',  [ContactUsController::class,'store'])->name('ContactUs.store');
+            Route::get('delete/{id}', [ContactUsController::class,'destroy']) -> name('ContactUs.destroy');
 
         });
 
