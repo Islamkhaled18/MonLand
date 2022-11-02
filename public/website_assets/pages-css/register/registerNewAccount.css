@@ -1,0 +1,56 @@
+body{
+    background-color: #980e2f;
+}
+
+.modal-header select{
+    width: auto ;
+}
+
+.forget-pass{
+    text-decoration: underline;
+    color: #262626;
+    font-weight: 600;
+}
+
+.reg-new-user ul.social a{
+    width: 75%;
+    margin: 12px auto;
+    display: block;
+    text-align: center;
+    padding: 8px 0;
+    border-radius: 5px;
+    color: #FFF;
+    font-weight: 600;
+}
+
+.reg-new-user ul.social a:hover{
+    text-decoration: none;
+}
+.reg-new-user ul.social li:nth-child(1) a{
+    background-color: #ffb300;
+}
+
+.reg-new-user ul.social li:nth-child(2) a{
+    background-color: #2664fb;
+}
+
+.reg-new-user ul.social li:nth-child(3) a{
+    background-color: #262626;
+}
+
+
+@media(max-width: 992px){
+    .reg-new-user ul.social a{
+        width: 100%;
+        font-size: 14px !important;
+    }
+}
+@media(max-width: 768px){
+    .wrapper {
+        flex-direction: column;
+    }
+    .wrapper > div{
+        width: 100% !important;
+    
+    }
+}

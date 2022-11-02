@@ -1,0 +1,15 @@
+body{
+    background-color: #980e2f;
+}
+
+.modal-dialog select{
+    width: auto;
+}
+
+a.diff-color{
+    color: #980e2f
+}
+
+button[type="submit"]{
+    background-color: #7f0924;
+}

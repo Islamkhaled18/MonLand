@@ -1,0 +1,15 @@
+.info {
+    border-top-width: 4px !important;
+    border-top-color: #980e2f !important;
+}
+
+input,
+select {
+    background-color: transparent !important;
+}
+
+input.form-control:focus,
+select:focus {
+    outline: 0 !important;
+    box-shadow: none !important;
+}

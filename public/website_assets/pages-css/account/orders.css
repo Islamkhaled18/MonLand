@@ -1,0 +1,234 @@
+.page-nav {
+    font-weight: 600;
+
+}
+
+body {
+    position: relative;
+}
+
+.titles {
+    font-size: x-large;
+    font-weight: bolder;
+}
+
+#account {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: column;
+    text-align: start;
+
+}
+
+.navbutton.active {
+
+    border: 5px black;
+}
+
+.tab li {
+    display: block;
+    width: 100%;
+}
+
+/* Style the buttons inside the tab */
+.tab li button {
+    display: block;
+    background-color: transparent;
+    color: black;
+    padding: 10px 0px;
+    margin-bottom: 5px;
+    border: transparent;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: large;
+    font-weight: bold;
+    border-radius: 10%;
+    align-self: center;
+    width: 100%;
+}
+
+.tabcontent {
+    display: none;
+}
+
+/* Change background color of buttons on hover */
+.tab li button:hover {
+    background-color: rgba(254, 245, 239, 1);
+
+}
+
+/* Create an active/current "tab button" class */
+.tab li button.active {
+    background-color: rgba(254, 245, 239, 1);
+    border: 2px #980e2f !important;
+
+}
+
+.tab li button.active i {
+    transform: scale(1.2);
+}
+
+.order-img {
+    width: 55px;
+    height: 55px;
+    text-align: center;
+    background-color: #e0b6c0;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #9d1939;
+    font-size: xx-large;
+    border: 1px #9d1939 solid;
+}
+
+.card {
+    border: 1px #9d1939 solid;
+    border-radius: 10px;
+}
+
+
+
+
+.btn {
+    border-radius: 7px;
+    color: white !important;
+}
+
+.card .active-btn {
+    background-color: #007a58;
+}
+
+.card .recived-btn {
+    background-color: #ff6e40;
+}
+
+.card .cancelled-btn {
+    background-color: #2664fb;
+}
+
+/* .card .details-btn {
+    background-color: transparent;
+    border: 1px #980e2f solid;
+    color: black !important;
+    display: none;
+} */
+
+.details-btn {
+    background-color: transparent !important;
+    border: 1px #980e2f solid;
+    color: black !important;
+
+}
+
+.card .details-btn {
+    display: none;
+}
+
+.card-content {
+    font-weight: bold;
+}
+
+.card-body {
+    justify-content: space-between;
+}
+
+.card:hover .details-btn {
+    display: block;
+    margin: 0 20px;
+}
+
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+form {
+    font-weight: 500;
+}
+
+form input {
+    border-radius: 7px !important;
+    background-color: #f9f7fc !important;
+    border: 0 !important;
+}
+
+form button {
+    background-color: #980e2f !important;
+    margin: 0.8rem;
+    padding: 11px 11px !important;
+    border-radius: 7px !important;
+}
+
+.add-address i {
+    color: #7f0924;
+    font-size: 1.2rem;
+}
+
+.add-address div {
+    font-weight: bolder;
+    font-size: larger;
+}
+
+.address-card {
+
+    /* flex-direction: row; */
+
+    border: 1px #9d1939 solid;
+    border-radius: 10px;
+}
+
+.address-card .title {
+    display: flex;
+    align-items: baseline;
+    font-weight: bolder;
+    font-size: larger;
+    border-bottom: 1px #9d1939 solid !important;
+}
+
+.address-card .title i {
+    color: #7f0924;
+    font-size: 1.2rem;
+}
+.modal-header p{
+    font-weight: 500;
+}
+.modal-body form {
+    text-align: start;
+}
+.modal-body form input{
+    background-color: transparent !important;
+}
+.modal-body form .password-input{
+    border-radius: 7px !important;
+    background-color: #f9f7fc !important;
+}
+.form-control:focus{
+    box-shadow:none;
+}
+.modal-header {
+    border: 0;
+}
+
+
+@media(max-width: 992px) {
+
+    .card-body {
+        justify-content: center;
+    }
+}
+
+@media(max-width: 768px) {
+    .tab {
+        width: 80%;
+        margin: auto;
+    }
+
+    .card-body {
+        justify-content: space-between;
+    }
+
+}
+
+@media(max-width: 576px) {}

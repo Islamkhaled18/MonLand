@@ -166,6 +166,14 @@ class RolePermissionTableSeeder extends Seeder
             'role_id' => 1,
             'permission' => 'vendors.destroy', 
             ],
+            [
+            'role_id' => 1,
+            'permission' => 'contactus', 
+            ],
+            [
+            'role_id' => 1,
+            'permission' => 'contactus.destroy', 
+            ],
            
 
         ];

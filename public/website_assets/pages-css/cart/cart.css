@@ -1,0 +1,129 @@
+.product-img {
+  object-fit: cover;
+  height: 168px;
+  width: 100%;
+  align-self: self-start;
+}
+
+.quantity-count {
+  background-color: #f9f7fc;
+  text-align: center;
+  margin-left: 0.25rem;
+  margin-right: 0 25rem;
+}
+.cart-item i {
+  color: #7f0924;
+  cursor: pointer;
+}
+
+.cart hr {
+  width: 75%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: #7f0924;
+}
+
+.alert {
+  background-color: #fef5ef;
+  border: solid 1px;
+  border-color: #f15e6d;
+}
+
+.wizard-row {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+/* .wizard :before {
+  content: "";
+  position: absolute;
+  background-color: #7f0924;
+  height: 2px;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+} */
+
+/* .wizard-bar {
+  position: absolute;
+  background-color: #1e4dba;
+  height: 2px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  transition: 0.3s ease;
+} */
+
+.wizard-list {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  width: 75%;
+}
+.wizard-circle {
+  width: 65px;
+  height: 65px;
+  border: 2px solid #7f0924;
+  color: #7f0924;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+/* .wizard-item {
+  z-index: 3;
+  transition: 0.4s ease;
+  min-width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #7f0924;
+  color: #7f0924;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+} */
+.wizard-circle.active {
+  background-color: #c6d3cb;
+  color: #7f0924;
+}
+.payment-bg {
+  background-color: #f9f7fc;
+}
+.wizard-circle.active.with-image:after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M20 8.9087L17.1443 6L9.97468 13.191L6.8557 10.0399L4 12.888L8.53671 17.4126C8.91618 17.7888 9.4295 18 9.96456 18C10.4996 18 11.0129 17.7888 11.3924 17.4126L20 8.9087Z' fill='%23ffffff'/%3E%3C/svg%3E");
+}
+
+.wizard-circle.with-image:after {
+  content: "";
+  width: 24px;
+  height: 24px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M20 8.9087L17.1443 6L9.97468 13.191L6.8557 10.0399L4 12.888L8.53671 17.4126C8.91618 17.7888 9.4295 18 9.96456 18C10.4996 18 11.0129 17.7888 11.3924 17.4126L20 8.9087Z' fill='%231E4DBA'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+}
+.terms-check {
+  height: 23px;
+  width: 23px;
+  margin-left: 10px;
+}
+.terms-check:checked {
+  background-color: #a77e2d !important;
+  color: #ffffff !important;
+}
+
+@media (max-width: 992px) {
+  .product-img {
+    object-fit: fill;
+    height: 168px;
+    width: 50%;
+    margin: auto;
+  }
+  .quantity-counter a {
+    font-size: x-large;
+  }
+}

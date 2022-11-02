@@ -15,9 +15,24 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::group(['namespace' => 'Site' , 'middleware' => 'auth:web' , 'prefix' => 'Site'], function () {
+
+
+
+});// routes for authenticated users
+
+Route::group(['namespace' => 'Site' , 'middleware' => 'guest:web','prefix' => 'Site'], function () {
+
+
+
+  
+
+});// routes for un-authenticated users
