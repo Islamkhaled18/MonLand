@@ -39,7 +39,7 @@
 
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $brand->name }}</td>
-                                        <td><img src="{{ $brand->image_url }}" title="{{ $brand->name }}" alt="{{ $brand->name }}"  width="60" height="60" alt="">
+                                        <td><img src="{{ $brand->image_url }}" title="{{ $brand->name }}" alt="{{ $brand->name }}"  width="60" height="60" >
                                         </td>
 
                                         <td>

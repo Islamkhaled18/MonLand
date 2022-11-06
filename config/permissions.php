@@ -40,7 +40,18 @@ return [
     'vendors.destroy'=>'حذف بائعين',
     'contactus'=>'مشاهدة رسائل الزوار او المستخدمين',
     'contactus.destroy'=>'حذف رسائل المستخدمين او الزوار',
-    
+
+    'DeliveryPolicy'=>'مشاهدة سياسة الشحن',
+    'DeliveryPolicy.create'=>'انشاء سياسة شحن جديده',
+    'DeliveryPolicy.edit'=>' تعديل على سياسة شحن',
+    'DeliveryPolicy.destroy'=>'حذف سياسة شحن',
+
+
+    'ads'=>'مشاهدة صور الاعلانات',
+    'ads.create'=>'انشاء صور اعلانات جديده',
+    'ads.edit'=>' تعديل على صور اعلانات',
+    'ads.destroy'=>'حذف صور اعلانات',
+
 ]
 
 
