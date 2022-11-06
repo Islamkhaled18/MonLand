@@ -17,14 +17,23 @@
 
                 <div class="bg-light py-3 px-2 text-right">
                     <ul class="list-unstyled">
+                        @foreach ($category_slides as $category_slide )
                         <li class="my-2">
                             <a href="#" class="text-dark">
+                                {{$category_slide->name}}
+                                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        @endforeach
+
+                        {{--<li class="my-2">
+                            <a href="#" class="text-dark">
                                 فئة
                                 <i class="fa fa-chevron-left" aria-hidden="true"></i>
                             </a>
                         </li>
 
-                        <li class="my-3">
+                         <li class="my-3">
                             <a href="#" class="text-dark">
                                 فئة
                                 <i class="fa fa-chevron-left" aria-hidden="true"></i>
@@ -109,7 +118,7 @@
                                 فئة
                                 <i class="fa fa-chevron-left" aria-hidden="true"></i>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
             </div>
@@ -117,62 +126,74 @@
             <div class="col-9">
                 <div id="carouselExampleControls" style="height: auto !important" class="carousel slide">
                     <div class="carousel-inner h-100">
-                        <div class="carousel-item active">
+                        @foreach ($brand_slides as $brand_slide )
+
+                        <div class="carousel-item @if ($loop->first) active @endif">
+                            <img class="d-block w-100" width="1200" height="800" src="{{ $brand_slide->image_url }}" title="{{ $brand_slide->name }}" alt="{{ $brand_slide->name }}">
+                        </div>
+                        @endforeach
+                        {{-- <div class="carousel-item active">
                             <img class="d-block w-100" src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" alt="First slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" alt="Second slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" alt="Third slide">
-                        </div>
                     </div>
-                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" alt="Second slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" alt="Third slide">
+                    </div> --}}
                 </div>
-
-                <div id="owl-demo" class="owl-carousel owl-theme position-relative">
-
-                    <div class="item">
-                        <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100 h-100" />
-                        <h5 class="mt-2">ملابس</h5>
-                    </div>
-                    <div class="item">
-                        <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100 h-100" />
-                        <h5 class="mt-2">ملابس</h5>
-                    </div>
-                    <div class="item">
-                        <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100 h-100" />
-                        <h5 class="mt-2">ملابس</h5>
-                    </div>
-                    <div class="item">
-                        <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100 h-100" />
-                        <h5 class="mt-2">ملابس</h5>
-                    </div>
-                    <div class="item">
-                        <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100 h-100" />
-                        <h5 class="mt-2">ملابس</h5>
-                    </div>
-                    <div class="item">
-                        <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100 h-100" />
-                        <h5 class="mt-2">ملابس</h5>
-                    </div>
-                    <div class="item">
-                        <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100 h-100" />
-                        <h5 class="mt-2">ملابس</h5>
-                    </div>
-                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
 
+            <div id="owl-demo" class="owl-carousel owl-theme position-relative">
+                @foreach ($category_slides as $category_slide )
+                <div class="item">
+                    <img width="100" height="100" src="{{ $category_slide->image_url }}" title="{{ $category_slide->name }}" alt="{{ $category_slide->name }}" class="w-100 h-100" />
+                    <h5 class="mt-2">{{ $category_slide->name }}</h5>
+                </div>
+                @endforeach
 
+                {{-- <div class="item">
+                    <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100 h-100" />
+                <h5 class="mt-2">ملابس</h5>
+            </div>
+            <div class="item">
+                <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100 h-100" />
+                <h5 class="mt-2">ملابس</h5>
+            </div>
+            <div class="item">
+                <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100 h-100" />
+                <h5 class="mt-2">ملابس</h5>
+            </div>
+            <div class="item">
+                <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100 h-100" />
+                <h5 class="mt-2">ملابس</h5>
+            </div>
+            <div class="item">
+                <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100 h-100" />
+                <h5 class="mt-2">ملابس</h5>
+            </div>
+            <div class="item">
+                <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100 h-100" />
+                <h5 class="mt-2">ملابس</h5>
+            </div>
+            <div class="item">
+                <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100 h-100" />
+                <h5 class="mt-2">ملابس</h5>
+            </div> --}}
         </div>
     </div>
+
+
+</div>
+</div>
 </div>
 <!-- End Slider And Aside -->
 
@@ -180,21 +201,28 @@
 <div class="ads py-5">
     <div class="container">
         <div class="grid">
-            <div>
-                <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100" />
-                <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100" />
-            </div>
+            @foreach ( $ad_images as $ad_img )
 
             <div>
-                <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100 h-100" />
+                <img src="{{ $ad_img->image_url }}" title="{{ $ad_img->name }}" alt="{{ $ad_img->name }}" class="w-100" />
             </div>
+            @endforeach
 
-            <div>
+            {{-- <div>
                 <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100" />
-                <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100" />
-            </div>
+            <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100" />
         </div>
+
+        <div>
+            <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100 h-100" />
+        </div>
+
+        <div>
+            <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100" />
+            <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100" />
+        </div> --}}
     </div>
+</div>
 </div>
 <!-- End Ads -->
 
@@ -2383,12 +2411,12 @@
                     عروض فلاش
                 </p>
                 <p>
-                <div id="countdown" class="d-flex flex-row-reverse">
-                    <div id="days" class="timer mx-1 px-3 py-2 text-white rounded font-weight-bold"> </div>
-                    <div id="hours" class="timer mx-1 px-3 py-2 text-white rounded font-weight-bold"> </div>
-                    <div id="minutes" class="timer mx-1 px-3 py-2 text-white rounded font-weight-bold"> </div>
-                    <div id="seconds" class="timer mx-1 px-3 py-2 text-white rounded font-weight-bold"> </div>
-                </div>
+                    <div id="countdown" class="d-flex flex-row-reverse">
+                        <div id="days" class="timer mx-1 px-3 py-2 text-white rounded font-weight-bold"> </div>
+                        <div id="hours" class="timer mx-1 px-3 py-2 text-white rounded font-weight-bold"> </div>
+                        <div id="minutes" class="timer mx-1 px-3 py-2 text-white rounded font-weight-bold"> </div>
+                        <div id="seconds" class="timer mx-1 px-3 py-2 text-white rounded font-weight-bold"> </div>
+                    </div>
                 </p>
             </div>
         </div>

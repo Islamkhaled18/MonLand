@@ -29,6 +29,7 @@
                                     <th>#</th>
                                     <th>القسم الرئيسي</th>
                                     <th>القسم التابع</th>
+                                    <th>صورة القسم</th>
                                     <th>العمليات</th>
 
                                 </tr>
@@ -40,6 +41,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $category->name }}</td>
                                         <td>{{ $category->_parent->name ?? '--' }}</td>
+                                        <td><img src="{{ $category->image_url }}" title="{{ $category->name }}" alt="{{ $category->name }}"  width="60" height="60" alt="">
 
                                         <td>
                                             @can ('categories.edit')

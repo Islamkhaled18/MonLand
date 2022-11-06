@@ -1,18 +1,23 @@
 @extends('layouts.admin.app')
 @section('title')
-رسائل المستخدمين
+سياسة الشحن
 @endsection
 @section('content')
 <main class="app sidebar-mini rtl">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-th-list"></i> رسائل المستخدمين </h1>
+            <h1><i class="fa fa-th-list"></i> سياسة الشحن </h1>
         </div>
         <ul class="app-breadcrumb breadcrumb side">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('ContactUs.index') }}" title="رسائل المستخدمين">رسائل المستخدمين</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('DeliveryPolicy.index') }}" title="سياسة الشحن">سياسة الشحن</a></li>
         </ul>
     </div>
+    @can('DeliveryPolicy.create')
+    <div>
+        <a class="btn btn-primary btn-sm" href="{{ route('DeliveryPolicy.create') }}" title="انشاء سياسة شحن جديده">انشاء سياسة شحن جديده</a>
+    </div>
+    @endcan
 
     <div class="row">
         <div class="col-md-12">
@@ -22,27 +27,23 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>الاسم</th>
-                                <th>البريد الالكتروني</th>
-                                <th>الهاتف المحمول</th>
-                                <th>الموضوع</th>
+                                <th>محتوى سياسة الشحن</th>
                                 <th>العمليات</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($contactUs as $contact)
+                            @foreach ($deliveryPolicies as $deliveryPolicy)
                             <tr>
 
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $contact->user->firstName }}</td>
-                                <td>{{ $contact->user->lastName }}</td>
-                                <td>{{ $contact->user->email }}</td>
-                                <td>{{ $contact->user->phone }}</td>
-                                <td>{{ $contact->subject }}</td>
+                                <td>{{ $deliveryPolicy->policy }}</td>
                                 <td>
-                                    @can('contactus.destroy')
-                                    <form action="{{ route('ContactUs.destroy', $contact->id) }}" title="حذف" method="post" style="display: inline-block">
+                                    @can('DeliveryPolicy.edit')
+                                    <a class="btn btn-sm btn-dark" href="{{ route('DeliveryPolicy.edit', ['id' => $deliveryPolicy->id]) }}" title="تعديل">تعديل</a>
+                                    @endcan
+                                    @can('DeliveryPolicy.destroy')
+                                    <form action="{{ route('DeliveryPolicy.destroy', $deliveryPolicy->id) }}" title="حذف" method="post" style="display: inline-block">
                                         @csrf
                                         @method('GET')
                                         <button type="'submit" class="btn btn-danger delete btn-sm"><i class="fa fa-trash"></i>حذف</button>

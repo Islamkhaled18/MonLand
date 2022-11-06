@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\BrandController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\DeliveryController;
+use App\Http\Controllers\Admin\DeliveryPolicyController;
 use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
@@ -23,7 +25,7 @@ use Illuminate\Support\Facades\Auth;
 |--------------------------------------------------------------------------
 */
 
-        
+
     Route::group(['namespace' => 'Admin' , 'middleware' => 'auth:admin' , 'prefix' => 'admin'], function () {
 
         Route::get('/',[DashboardController::class,'index'])->name('admin.dashboard');
@@ -88,7 +90,7 @@ use Illuminate\Support\Facades\Auth;
                   Route::get('edit/{id}'   , [AttributeController::class,'edit'])->name('attributes.edit');
                   Route::post('update/{id}', [AttributeController::class,'update'])->name('attributes.update');
                   Route::get('delete/{id}' , [AttributeController::class,'destroy'])->name('attributes.destroy');
-      
+
               });
 
             ################################## brands options ######################################
@@ -156,6 +158,31 @@ use Illuminate\Support\Facades\Auth;
 
         });
 
+         ################################## delivery Policy ######################################
+         Route::group(['prefix' => 'deliveryPolicy'], function () {
+            Route::get('/',  [DeliveryPolicyController::class,'index'])->name('DeliveryPolicy.index');
+            Route::get('create',  [DeliveryPolicyController::class,'create'])->name('DeliveryPolicy.create');
+            Route::post('store',  [DeliveryPolicyController::class,'store'])->name('DeliveryPolicy.store');
+            Route::get('edit/{id}',  [DeliveryPolicyController::class,'edit'])->name('DeliveryPolicy.edit');
+            Route::post('update/{id}',  [DeliveryPolicyController::class,'update'])->name('DeliveryPolicy.update');
+            Route::get('delete/{id}', [DeliveryPolicyController::class,'destroy']) -> name('DeliveryPolicy.destroy');
+
+        });
+
+
+             ///////////////roles Controller/////////////////////
+             Route::group (['prefix'=>'ads'], function()
+             {
+                 Route::get('/'           , [AdController::class,'index'])->name('ads.index');
+                 Route::get('create'      , [AdController::class,'create'])->name('ads.create');
+                 Route::post('store'      , [AdController::class,'store'])->name('ads.store');
+                 Route::get('edit/{id}'   , [AdController::class,'edit'])->name('ads.edit');
+                 Route::post('update/{id}', [AdController::class,'update'])->name('ads.update');
+                 Route::get('delete/{id}' , [AdController::class,'destroy'])->name('ads.destroy');
+
+             });
+
+
 
     }); // routes for authenticated admins
 
@@ -166,7 +193,7 @@ use Illuminate\Support\Facades\Auth;
         Route::post('login',[LoginController::class,'postlogin'])->name('admin.post.login');
 
         //forget and reset password
-        Route::post('forget-password', [LoginController::class, 'submitForgetPasswordForm'])->name('admin.forget.password.post'); 
+        Route::post('forget-password', [LoginController::class, 'submitForgetPasswordForm'])->name('admin.forget.password.post');
         Route::get('reset-password/{token}', [LoginController::class, 'showResetPasswordForm'])->name('admin.reset.password.get');
         Route::post('reset-password', [LoginController::class, 'submitResetPasswordForm'])->name('admin.reset.password.post');
 

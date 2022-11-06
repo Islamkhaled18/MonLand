@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale= 1">
     <title>
-        كيان ستور  
+        كيان ستور
 
         @yield('title')
     </title>
@@ -19,90 +19,11 @@
 </head>
 
 <body>
-    <!-- Start Upper Header -->
-    <header>
-        <div class="container d-flex justify-content-between align-items-center">
-            <ul class="list-unstyled m-0 d-none d-md-flex">
-                <li>
-                    <a href="#">عن المتجر</a>
-                </li>
-                <li>
-                    <a href="#">سياسة الشحن </a>
-                </li>
-                <li>
-                    <a href="#">سياسة الخصوصية </a>
-                </li>
-                <li>
-                    <a href="#">الشروط والأحكام </a>
-                </li>
-            </ul>
+   
+    @include('layouts.site._header')
 
-            <select class="form-control mr-auto">
-                <option>العربية</option>
-                <option>English</option>
-            </select>
-
-        </div>
-    </header>
-    <!-- End Upper Header -->
-
-    <!-- Start Navbar -->
-    <div class="navbar">
-        <div class="container d-flex flex-nowrap justify-content-between">
-            <div class="logo d-lg-flex align-items-center">
-                <a href="#">
-                    <img src="{{ asset('website_assets/imgs/logo/logo.png') }}" class="w-100" />
-                </a>
-            </div>
-
-            <div class="input-group w-50 p-0">
-                <div class="input-group-append">
-                    <select class="form-control mr-auto">
-                        <option>جميع الفئات</option>
-                    </select>
-                </div>
-                <input type="text" class="form-control" placeholder="عن ماذا تبحث ؟ ">
-                <div class="input-group-prepend">
-                    <div class="input-group-text p-0">
-                        <button class="btn px-3 border-0">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <ul class="list-unstyled d-flex special-list m-0">
-                
-                <li>
-                    <a href="#" class="d-block">
-                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" class="d-block">
-                        <i class="fa fa-user" aria-hidden="true"></i>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" class="d-block">
-                        <i class="fa fa-heart" aria-hidden="true"></i>
-                        <span>3</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" class="d-block">
-                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                        <span>5</span>
-                    </a>
-                </li>
-            </ul>
-
-        </div>
-    </div>
-    <!-- End Navbar -->
+    @include('layouts.site._navbar')
+ 
 
     @yield('content')
 

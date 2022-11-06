@@ -9,7 +9,7 @@ class Category extends Model
 {
     use HasFactory;
     protected $table ="categories";
-    protected $fillable = ['name','parent_id'];
+    protected $fillable = ['name','parent_id','image'];
     public function scopeParent($query)
     {
         return $query->where('parent_id', null);
@@ -34,6 +34,12 @@ class Category extends Model
     public function products(){
         return $this->belongsToMany(Product::class, 'product_categories');
     }
-    
+
+    public function getImageUrlAttribute(){
+        if($this->image){
+            return asset('images/' . $this->image);
+        }
+        return asset('images/default.png');
+    }
 
 }

@@ -20,161 +20,195 @@ class RolePermissionTableSeeder extends Seeder
         $rolesPermissions = [
             [
             'role_id' => 1,
-            'permission' => 'admins', 
+            'permission' => 'admins',
             ],
             [
             'role_id' => 1,
-            'permission' => 'admins.create', 
+            'permission' => 'admins.create',
             ],
             [
             'role_id' => 1,
-            'permission' => 'admins.edit', 
+            'permission' => 'admins.edit',
             ],
             [
             'role_id' => 1,
-            'permission' => 'admins.destroy', 
+            'permission' => 'admins.destroy',
             ],
             [
             'role_id' => 1,
-            'permission' => 'attributes', 
+            'permission' => 'attributes',
             ],
             [
             'role_id' => 1,
-            'permission' => 'attributes.create', 
+            'permission' => 'attributes.create',
             ],
             [
             'role_id' => 1,
-            'permission' => 'attributes.edit', 
+            'permission' => 'attributes.edit',
             ],
             [
             'role_id' => 1,
-            'permission' => 'attributes.destroy', 
+            'permission' => 'attributes.destroy',
             ],
             [
             'role_id' => 1,
-            'permission' => 'brands', 
+            'permission' => 'brands',
             ],
             [
             'role_id' => 1,
-            'permission' => 'brands.create', 
+            'permission' => 'brands.create',
             ],
             [
             'role_id' => 1,
-            'permission' => 'brands.edit', 
+            'permission' => 'brands.edit',
             ],
             [
             'role_id' => 1,
-            'permission' => 'brands.destroy', 
+            'permission' => 'brands.destroy',
             ],
             [
             'role_id' => 1,
-            'permission' => 'categories', 
+            'permission' => 'categories',
             ],
             [
             'role_id' => 1,
-            'permission' => 'categories.create', 
+            'permission' => 'categories.create',
             ],
             [
             'role_id' => 1,
-            'permission' => 'categories.edit', 
+            'permission' => 'categories.edit',
             ],
             [
             'role_id' => 1,
-            'permission' => 'categories.destroy', 
+            'permission' => 'categories.destroy',
             ],
             [
             'role_id' => 1,
-            'permission' => 'delivery', 
+            'permission' => 'delivery',
             ],
             [
             'role_id' => 1,
-            'permission' => 'delivery.create', 
+            'permission' => 'delivery.create',
             ],
             [
             'role_id' => 1,
-            'permission' => 'delivery.edit', 
+            'permission' => 'delivery.edit',
             ],
             [
             'role_id' => 1,
-            'permission' => 'delivery.destroy', 
+            'permission' => 'delivery.destroy',
             ],
             [
             'role_id' => 1,
-            'permission' => 'options', 
+            'permission' => 'options',
             ],
             [
             'role_id' => 1,
-            'permission' => 'options.create', 
+            'permission' => 'options.create',
             ],
             [
             'role_id' => 1,
-            'permission' => 'options.edit', 
+            'permission' => 'options.edit',
             ],
             [
             'role_id' => 1,
-            'permission' => 'options.destroy', 
+            'permission' => 'options.destroy',
             ],
             [
             'role_id' => 1,
-            'permission' => 'products', 
+            'permission' => 'products',
             ],
             [
             'role_id' => 1,
-            'permission' => 'products.create', 
+            'permission' => 'products.create',
             ],
             [
             'role_id' => 1,
-            'permission' => 'products.edit', 
+            'permission' => 'products.edit',
             ],
             [
             'role_id' => 1,
-            'permission' => 'products.destroy', 
+            'permission' => 'products.destroy',
             ],
             [
             'role_id' => 1,
-            'permission' => 'roles', 
+            'permission' => 'roles',
             ],
             [
             'role_id' => 1,
-            'permission' => 'roles.create', 
+            'permission' => 'roles.create',
             ],
             [
             'role_id' => 1,
-            'permission' => 'roles.edit', 
+            'permission' => 'roles.edit',
             ],
             [
             'role_id' => 1,
-            'permission' => 'roles.destroy', 
+            'permission' => 'roles.destroy',
             ],
             [
             'role_id' => 1,
-            'permission' => 'settings.edit', 
+            'permission' => 'settings.edit',
             ],
             [
             'role_id' => 1,
-            'permission' => 'vendors', 
+            'permission' => 'vendors',
             ],
             [
             'role_id' => 1,
-            'permission' => 'vendors.create', 
+            'permission' => 'vendors.create',
             ],
             [
             'role_id' => 1,
-            'permission' => 'vendors.edit', 
+            'permission' => 'vendors.edit',
             ],
             [
             'role_id' => 1,
-            'permission' => 'vendors.destroy', 
+            'permission' => 'vendors.destroy',
             ],
             [
             'role_id' => 1,
-            'permission' => 'contactus', 
+            'permission' => 'contactus',
             ],
             [
             'role_id' => 1,
-            'permission' => 'contactus.destroy', 
+            'permission' => 'contactus.destroy',
             ],
-           
+            [
+            'role_id' => 1,
+            'permission' => 'DeliveryPolicy',
+            ],
+            [
+            'role_id' => 1,
+            'permission' => 'DeliveryPolicy.create',
+            ],
+            [
+            'role_id' => 1,
+            'permission' => 'DeliveryPolicy.edit',
+            ],
+            [
+            'role_id' => 1,
+            'permission' => 'DeliveryPolicy.destroy',
+            ],
+
+            [
+            'role_id' => 1,
+            'permission' => 'ads',
+            ],
+            [
+            'role_id' => 1,
+            'permission' => 'ads.create',
+            ],
+            [
+            'role_id' => 1,
+            'permission' => 'ads.edit',
+            ],
+            [
+            'role_id' => 1,
+            'permission' => 'ads.destroy',
+            ],
+
+
 
         ];
 
