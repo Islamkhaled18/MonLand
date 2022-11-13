@@ -9,7 +9,7 @@
             <div class="col-3 ">
                 <div class="aside-header d-flex justify-content-between align-items-center py-3 px-2">
                     <h4>التصنيفات</h4>
-                    <a href="#" class="text-white text-decoration-none">
+                    <a href="{{route('Site.allCategory')}}" class="text-white text-decoration-none">
                         إظهار الكل
                         <i class="fa fa-chevron-left" aria-hidden="true"></i>
                     </a>
@@ -834,7 +834,7 @@
 
 
                                 </div>
-                                <img class="card-img-top" src="{{ asset('website_assetsv/Design/Finished/404-ar.png' ) }}" alt="Card image cap">
+                                <img class="card-img-top" src="{{ asset('website_assets/Design/Finished/404-ar.png' ) }}" alt="Card image cap">
                                 <div class="card-body text-center">
                                     <h5 class="card-title"> هذا النص هو مثال ....</h5>
                                     <h5>70 جنيه</h5>

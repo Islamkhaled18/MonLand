@@ -2,7 +2,7 @@
 <div class="navbar">
         <div class="container d-flex flex-nowrap justify-content-between">
             <div class="logo d-lg-flex align-items-center">
-                <a href="#">
+                <a href="{{route('home')}}">
                     <img src="{{ asset('website_assets/imgs/logo/logo.png') }}" class="w-100" />
                 </a>
             </div>

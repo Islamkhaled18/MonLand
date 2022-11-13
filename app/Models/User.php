@@ -49,4 +49,8 @@ class User extends Authenticatable
     public function contactUs(){
         return $this->hasOne(ContactUs::class)->withDefault();
     }
+
+    public function emailUs(){
+        return $this->hasOne(EmailUs::class)->withDefault();
+    }
 }

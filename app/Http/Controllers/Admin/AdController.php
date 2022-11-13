@@ -22,10 +22,12 @@ class AdController extends Controller
 
     public function create()
     {
+
         if(!Gate::allows('ads.create')){
             return view('admin.errors.notAllowed');
         }
-        return view('admin.ads.create');
+        $ads = Ad::all();
+        return view('admin.ads.create',compact('ads'));
     }//end of create
 
 

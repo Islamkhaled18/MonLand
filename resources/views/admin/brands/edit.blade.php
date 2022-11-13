@@ -34,8 +34,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="image" class="form-label">صورة الماركه</label>
-                                <td><img src="{{ $brand->image_url }}" class="d-block" width="60" height="60" alt=""></td>
                                 <input type="file" class="form-control @error('image') is-invalid @enderror" value="{{ old('image') }}" id="image" name="image">
+                                <td><img src="{{ $brand->image_url }}" class="d-block" width="60" height="60" alt=""></td>
                                 @error('file')
                                 <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
