@@ -15,7 +15,7 @@ class RolePermissionTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('deliveries')->delete();
+        DB::table('role_permissions')->delete();
 
         $rolesPermissions = [
             [
@@ -207,7 +207,14 @@ class RolePermissionTableSeeder extends Seeder
             'role_id' => 1,
             'permission' => 'ads.destroy',
             ],
-
+            [
+            'role_id' => 1,
+            'permission' => 'emailUs',
+            ],
+            [
+            'role_id' => 1,
+            'permission' => 'emailUs.destroy',
+            ],
 
 
         ];

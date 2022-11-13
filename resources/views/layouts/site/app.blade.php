@@ -19,11 +19,11 @@
 </head>
 
 <body>
-   
+
     @include('layouts.site._header')
 
     @include('layouts.site._navbar')
- 
+
 
     @yield('content')
 
@@ -33,19 +33,22 @@
                 <div class="col-3 text-right px-5">
                     <img src="{{ asset('website_assets/imgs/logo/logo.png') }}" class="w-100" />
                 </div>
-
-                <div class="col-7 text-right px-5">
-                    <h4 class="main-color">
-                        هل انت جديد على كيان?
-                    </h4>
-                    <h6 class="secondary-color">
-                        اشترك فى نشرتنا الاخبارية للحصول على احدث المنتجات
-                    </h6>
-                    <div class="form-group d-flex mt-4">
-                        <input type="email" class="form-control rounded-0 py-4" placeholder="ادخل بريدك الالكترونى هنا" />
-                        <button class="text-white py-2 px-4 rounded-0">اشترك</button>
-                    </div>
-                </div>
+                {{-- <form action="{{route('ContactUs.store')}}" method="post">
+                    @csrf --}}
+                    <form action="{{route('emailUs.store')}}" method="post" class="col-7 text-right px-5">
+                        @csrf
+                        <h4 class="main-color">
+                            هل انت جديد على كيان?
+                        </h4>
+                        <h6 class="secondary-color">
+                            اشترك فى نشرتنا الاخبارية للحصول على احدث المنتجات
+                        </h6>
+                        <div class="form-group d-flex mt-4">
+                            <input type="email" value="{{auth()->user()->email}}" disabled class="form-control rounded-0 py-4" placeholder="ادخل بريدك الالكترونى هنا" />
+                            <button type="submit" class="text-white py-2 px-4 rounded-0">اشترك</button>
+                        </div>
+                    </form>
+                {{-- </form> --}}
 
                 <div class="col-2 text-right">
                     <h4 class="main-color">

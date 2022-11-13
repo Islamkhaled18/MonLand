@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\DeliveryController;
 use App\Http\Controllers\Admin\DeliveryPolicyController;
+use App\Http\Controllers\Admin\EmailUsController;
 use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
@@ -170,7 +171,7 @@ use Illuminate\Support\Facades\Auth;
         });
 
 
-             ///////////////roles Controller/////////////////////
+             ///////////////ads Controller/////////////////////
              Route::group (['prefix'=>'ads'], function()
              {
                  Route::get('/'           , [AdController::class,'index'])->name('ads.index');
@@ -181,6 +182,14 @@ use Illuminate\Support\Facades\Auth;
                  Route::get('delete/{id}' , [AdController::class,'destroy'])->name('ads.destroy');
 
              });
+
+             ################################## Contact Us ######################################
+        Route::group(['prefix' => 'emailUs'], function () {
+            Route::get('/',  [EmailUsController::class,'index'])->name('emailUs.index');
+            Route::post('store',  [EmailUsController::class,'store'])->name('emailUs.store');
+            Route::get('delete/{id}', [EmailUsController::class,'destroy']) -> name('emailUs.destroy');
+
+        });
 
 
 
