@@ -26,6 +26,33 @@
 
                             <input name="id" value="{{ $category->id }}" type="hidden">
 
+
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <label for="projectinput1">
+                                            القسم الرئيسي
+                                        </label>
+                                        <select name="mainCategory_id" class="select2 form-group">
+                                            <optgroup label="القسم الرئيسي">
+                                                @if ($mainCategories && $mainCategories->count() > 0)
+                                                @foreach ($mainCategories as $mainCategory)
+                                                <option value="{{ $mainCategory->id }}" @if ($mainCategory->id == $category->mainCategory_id) selected @endif>
+                                                    {{ $mainCategory->name }}
+                                                </option>
+                                                @endforeach
+                                                @endif
+
+                                            </optgroup>
+                                        </select>
+                                        @error('mainCategory_id')
+                                        <span class="text-danger"> {{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            
                             <div class="form-group">
                                 <label for="exampleInputEmail1">الاسم</label>
                                 <input class="form-control" id="exampleInputEmail1" name="name" value="{{ $category->name }}" type="text" placeholder="الاسم">
@@ -54,6 +81,9 @@
                                     </div>
                                 </div>
                             </div>
+
+
+
                             <div class="form-group">
                                 <label for="image" class="form-label">صورة القسم</label>
                                 <td><img src="{{ $category->image_url }}" class="d-block" width="60" height="60" alt=""></td>

@@ -17,10 +17,7 @@ return [
     'categories.create'=>'انشاء قسم جديد',
     'categories.edit'=>'تعديل على قسم',
     'categories.destroy'=>'حذف قسم',
-    'delivery'=>'مشاهدة سعر التوصيل بالنسبه للمدن',
-    'delivery.create'=>'انشاء سعر توصيل جديد',
-    'delivery.edit'=>'تعديل على سعر توصيل',
-    'delivery.destroy'=>'حذف سعر توصيل',
+
     'options'=>'مشاهدة خصائص صفات المنتجات',
     'options.create'=>'انشاء خصائص صفات منتج جديده',
     'options.edit'=>'تعديل على خصائص صفات منتج',
@@ -54,7 +51,24 @@ return [
 
 
     'emailUs'=>'مشاهدة ايميلات العملاء الراغبين في النشره الاخباريه',
-    'emailUs.destroy'=>'مسح ايميلات العملاء الراغبين في النشره الاخباريه'
+    'emailUs.destroy'=>'مسح ايميلات العملاء الراغبين في النشره الاخباريه',
+
+    'governorate'=>'مشاهدة المحافظات',
+    'governorate.create'=>'انشاء محافظه جديده',
+    'governorate.edit'=>' تعديل على محافظه',
+    'governorate.destroy'=>'حذف محافظه ',
+
+
+    'coupons'=>'مشاهدة كوبونات الخصم',
+    'coupons.create'=>'انشاء كوبون خصم جديد',
+    'coupons.edit'=>' تعديل على كوبون خصم',
+    'coupons.destroy'=>'حذف كوبون الخصم ',
+
+    'mainCategories'=>'مشاهدة الاقسام الرئيسية',
+    'mainCategories.create'=>'انشاء قسم رئيسي جديد',
+    'mainCategories.edit'=>' تعديل على قسم رئيسي',
+    'mainCategories.destroy'=>'حذف قسم رئيسي ',
+
 
 ]
 

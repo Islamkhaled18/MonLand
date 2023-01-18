@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\MainCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
@@ -24,7 +25,9 @@ class CategoryController extends Controller
             return view('admin.errors.notAllowed');
         }
         $categories = Category::select('id', 'parent_id', 'name')->get();
-        return view('admin.categories.create',compact('categories'));
+        $mainCategories = MainCategory::all();
+
+        return view('admin.categories.create',compact('categories','mainCategories'));
     }//end of create
 
     public function store(Request $request, Category $category)
@@ -60,11 +63,13 @@ class CategoryController extends Controller
             return view('admin.errors.notAllowed');
         }
         $category = Category::findOrFail($id);
+        $mainCategory = MainCategory::all();
+        $mainCategories = MainCategory::all();
         $categories = Category::select('id', 'parent_id', 'name')->get();
         if (!$category)
             return redirect()->route('categories.index');
 
-        return view('admin.categories.edit', compact('category','categories'));
+        return view('admin.categories.edit', compact('category','categories','mainCategory','mainCategories'));
     }//end of edit
 
 

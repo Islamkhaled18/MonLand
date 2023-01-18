@@ -15,6 +15,7 @@
 
         <li><a class="app-menu__item" href="{{route('admins.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">المشرفين</span></a></li>
         <li><a class="app-menu__item" href="{{route('brands.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">الماركات</span></a></li>
+        <li><a class="app-menu__item" href="{{route('mainCategories.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">الاقسم الرئيسيه</span></a></li>
         <li><a class="app-menu__item" href="{{route('categories.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">الاقسام</span></a></li>
 
 
@@ -27,7 +28,6 @@
             </ul>
         </li>
 
-        <li><a class="app-menu__item" href="{{route('delivery.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">المحافظات & اسعار الشحن</span></a></li>
         <li><a class="app-menu__item" href="{{route('settings.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">الاعدادات</span></a></li>
         <li><a class="app-menu__item" href="{{route('roles.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">اوامر وصلاحيات</span></a></li>
         <li><a class="app-menu__item" href="{{route('vendors.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">البائعين واسعار الشحن </span></a></li>
@@ -38,6 +38,9 @@
         <li><a class="app-menu__item" href="{{route('DeliveryPolicy.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">سياسة الخصوصية</span></a></li>
         <li><a class="app-menu__item" href="{{route('ads.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">الاعلانات</span></a></li>
         <li><a class="app-menu__item" href="{{route('emailUs.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">ايميلات العملاء</span></a></li>
+        <li><a class="app-menu__item" href="{{route('governorate.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">المحافظات</span></a></li>
+        <li><a class="app-menu__item" href="{{route('coupon.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">كوبونات الخصم</span></a></li>
+        <li><a class="app-menu__item" href="{{route('order.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">طلبات العملاء</span></a></li>
 
 
     </ul>

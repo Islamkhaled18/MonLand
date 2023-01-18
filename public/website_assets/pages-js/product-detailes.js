@@ -1,16 +1,15 @@
-
-$(document).ready(function () {
+$(document).ready(function() {
     if ($('body').css('direction') == "rtl") {
         $(".fa-star-half-stroke").addClass("flip")
     }
-    $(".thumbnail").on('mouseover', function () {
+    $(".thumbnail").on('mouseover', function() {
 
         $(".thumbnail").removeClass('active')
         $(this).toggleClass('active')
         var src = $(this).attr("src");
         $('#featured').attr("src", src);
     });
-    $(".fa-circle-minus").on('click', function () {
+    $(".fa-circle-minus").on('click', function() {
         let quantityCcount = $('#quantity-count').text()
         if (quantityCcount > 1) {
             $('#quantity-count').text(quantityCcount - 1)
@@ -20,14 +19,14 @@ $(document).ready(function () {
     });
 
 
-    $(".available-colors > div").on('click', function () {
+    $(".available-colors > div").on('click', function() {
         $(this).siblings().html("")
 
         $(this).html("<i class='fa-solid fa-circle-check text-white text-center'></i>")
 
 
     });
-    $("#text-section .available-sizes > div").on('click', function () {
+    $("#text-section .available-sizes > div").on('click', function() {
         $(this).toggleClass("active")
         $(this).siblings().removeClass("active")
 
@@ -36,7 +35,7 @@ $(document).ready(function () {
     });
 
 
-    $(".fa-circle-plus").on('click', function () {
+    $(".fa-circle-plus").on('click', function() {
         let quantityCcount = $('#quantity-count').text()
 
         $('#quantity-count').text(parseInt(quantityCcount) + 1)
@@ -44,7 +43,7 @@ $(document).ready(function () {
 
 
     });
-    $('.add-to-fav').on('click', function () {
+    $('.add-to-fav').on('click', function() {
         $(this).toggleClass('active')
     })
 

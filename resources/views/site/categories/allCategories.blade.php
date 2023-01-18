@@ -24,22 +24,26 @@
 
                             @isset($allCategories)
 
-                                @foreach ( $allCategories as $allCategory )
+                            @foreach ( $allCategories as $allCategory )
 
-                                <div class="col-4">
-                                    <ul class="list-unstyled px-3 py-2">
-                                        <h4 class="mb-4">
+                            <div class="col-4">
+                                <ul class="list-unstyled px-3 py-2">
+                                    <h4 class="mb-4">
+                                        <a href="{{route('Site.category',$allCategory->name)}}" class="text-dark">
                                             {{ $allCategory->name }}
-                                        </h4>
-                                        @isset($allCategory ->childrens)
-                                            @foreach($allCategory->childrens as $children)
-                                            <li class="my-2">{{$children ->name}}</li>
-                                            @endforeach
+                                        </a>
+                                    </h4>
+                                    @isset($allCategory ->childrens)
+                                    @foreach($allCategory->childrens as $children)
+                                    <li class="my-2">
+                                        <a href="{{route('Site.category',$children->name)}}" class="text-dark">{{$children ->name}}</a>
+                                    </li>
+                                    @endforeach
 
-                                        @endisset
-                                    </ul>
-                                </div>
-                                @endforeach
+                                    @endisset
+                                </ul>
+                            </div>
+                            @endforeach
                             @endisset
 
                         </div>

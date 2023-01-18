@@ -19,19 +19,26 @@ class CategoryTableSeeder extends Seeder
 
         $categories = [
             [
-            'id' => 1,
-            'name' => 'ملايس', 
-            'parent_id'=>null
+                'id' => 1,
+                'name' => 'ملابس',
+                'parent_id' => null,
+                'mainCategory_id' => 1,
             ],
             [
-            'id' => 2,
-            'name' => 'ملابس اطفال', 
-            'parent_id'=>1
+                'id' => 2,
+                'name' => 'ملابس اطفال',
+                'parent_id' => 1
+            ],
+            [
+                'id' => 3,
+                'name' => 'مكيرويف',
+                'parent_id' => null,
+                'mainCategory_id' => 4,
             ]
 
         ];
 
-        foreach($categories as $category){
+        foreach ($categories as $category) {
             Category::create($category);
         }
     }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Ad;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\MainCategory;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -27,9 +29,16 @@ class HomeController extends Controller
     public function index()
     {
         $brand_slides = Brand::select('image')->get();
-        $category_slides = Category::parent()->select('name','image')->limit(7)->get();
-        $ad_images = Ad::select('name','image')->limit(5)->get();
-        return view('home',compact('brand_slides','category_slides','ad_images'));
+        $category_slides = Category::parent()->select('name', 'image')->limit(7)->get();
+        $ad_images = Ad::select('name', 'image')->limit(5)->get();
+
+        $new_products = Product::paginate(6);
+        $featured_products = Product::where('featured', true)->paginate(6);
+        $dealOfDay_products = Product::where('deal_of_the_day', true)->paginate(6);
+        $flash_products = Product::where('flash_sale', true)->paginate(6);
+        $men_products = Product::where('mainCategory_id',1)->get();
+        $electronics_products = Product::where('mainCategory_id',4)->get();
+
+        return view('home', compact('brand_slides', 'category_slides', 'ad_images', 'new_products','featured_products','dealOfDay_products','flash_products','men_products','electronics_products'));
     }
-    
 }

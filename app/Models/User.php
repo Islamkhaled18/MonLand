@@ -46,11 +46,43 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function contactUs(){
+    public function contactUs()
+    {
         return $this->hasOne(ContactUs::class)->withDefault();
     }
 
-    public function emailUs(){
+    public function emailUs()
+    {
         return $this->hasOne(EmailUs::class)->withDefault();
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class)->withDefault();
+    }
+
+    public function wishlist()
+    {
+        return $this->belongsToMany(Product::class, 'wishlists')->withTimestamps();
+    }
+
+    public function wishlistHas($productId)
+    {
+        return self::wishlist()->where('product_id', $productId)->exists();
+    }
+
+    public function comparelist()
+    {
+        return $this->belongsToMany(Product::class, 'compares')->withTimestamps();
+    }
+
+    public function comparelistHas($productId)
+    {
+        return self::comparelist()->where('product_id', $productId)->exists();
+    }
+
+
+    public function orders(){
+        return $this->hasMany(Order::class);
     }
 }
