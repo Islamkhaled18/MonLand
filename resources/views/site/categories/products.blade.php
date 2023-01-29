@@ -1538,7 +1538,3 @@
 @endpush
 
 
-{{-- <div class="d-flex align-items-center">
-    <input type="radio" name="brand" id="brandId" value="{{$brand->id}}" />
-<label for="brand-1" class="mr-2">{{$brand->name}}</label>
-</div> --}}

@@ -3,16 +3,19 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
+use App\Models\Option;
 use App\Models\Product;
+use App\Models\ProductColor;
+use App\Models\Productsize;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function productByName($name)
+    public function productByName($name, $id = null)
     {
 
-        $product = Product::where('name', $name)->first();
+        $product = Product::where('name', $name)->orwhere('id',$id)->first();
 
         $product_categories_ids =  $product->categories->pluck('id'); // [1,26,7] get all categories that product on it
 
@@ -22,9 +25,11 @@ class ProductController extends Controller
 
         $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)->get();
 
+        $product_colors = ProductColor::with('product')->where('product_id', $product->id)->get();
+        $product_sizes = Productsize::with('product')->where('product_id', $product->id)->get();
 
 
-        return view('site.categories.product', compact('product', 'related_products', 'vendors_products'));
+        return view('site.categories.product', compact('product', 'related_products', 'vendors_products','product_colors','product_sizes'));
     }
 
     public function vendorProducts($id)
@@ -35,7 +40,7 @@ class ProductController extends Controller
 
         $vendor = Vendor::where('id', $product->vendor_id)->first();
 
-        return view('site.categories.vendor_products', compact('product', 'vendors_products','vendor'));
+        return view('site.categories.vendor_products', compact('product', 'vendors_products', 'vendor'));
     }
 
 
@@ -45,6 +50,6 @@ class ProductController extends Controller
         $vendor = Vendor::where('id', $product->vendor_id)->first();
 
 
-        return view('site.categories.vendorDetails',compact('vendor'));
+        return view('site.categories.vendorDetails', compact('vendor'));
     }
 }

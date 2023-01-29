@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\MainCategory;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -39,6 +40,16 @@ class HomeController extends Controller
         $men_products = Product::where('mainCategory_id',1)->get();
         $electronics_products = Product::where('mainCategory_id',4)->get();
 
-        return view('home', compact('brand_slides', 'category_slides', 'ad_images', 'new_products','featured_products','dealOfDay_products','flash_products','men_products','electronics_products'));
+
+         // best sellings
+         $items = DB::table('carts')->select('quantity', DB::raw('COUNT(product_id) as count'))->groupBy('quantity')->orderBy('count', 'desc')->get();
+         $product_ids = [];
+         foreach ($items as $item) {
+             array_push($product_ids, $item->quantity);
+         }
+         $best_sellings = Product::whereIn('id', $product_ids)->get();
+
+
+        return view('home', compact('brand_slides', 'category_slides', 'ad_images', 'new_products','featured_products','dealOfDay_products','flash_products','men_products','electronics_products','best_sellings'));
     }
 }

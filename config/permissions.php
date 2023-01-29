@@ -5,10 +5,14 @@ return [
     'admins.create'=>'انشاء مشرف جديد',
     'admins.edit'=>'تعديل على مشرف',
     'admins.destroy'=>'حذف مشرف',
-    'attributes'=>'مشاهدة صفات المنتجات',
-    'attributes.create'=>'انشاء صفات منتج جديده',
-    'attributes.edit'=>'تعديل على صفات منتج',
-    'attributes.destroy'=>'حذف صفات منتج',
+
+
+    'productColors'=>'مشاهدة الوان المنتج',
+    'productColors.create'=>'انشاء لون منتج جديد',
+    'productColors.edit'=>'تعديل على لون منتج',
+    'productColors.destroy'=>'حذف لون منتج',
+
+
     'brands'=>'مشاهدة الماركات ',
     'brands.create'=>'انشاء ماركه جديده',
     'brands.edit'=>'تعديل على ماركه',
@@ -18,10 +22,11 @@ return [
     'categories.edit'=>'تعديل على قسم',
     'categories.destroy'=>'حذف قسم',
 
-    'options'=>'مشاهدة خصائص صفات المنتجات',
-    'options.create'=>'انشاء خصائص صفات منتج جديده',
-    'options.edit'=>'تعديل على خصائص صفات منتج',
-    'options.destroy'=>'حذف خصائص صفات منتج',
+    'productSizes'=>'مشاهدة الوان المنتجات',
+    'productSizes.create'=>'انشاء الوان منتج جديده',
+    'productSizes.edit'=>'تعديل على الوان منتج',
+    'productSizes.destroy'=>'حذف الوان منتج',
+
     'products'=>'مشاهدة المنتجات',
     'products.create'=>'انشاء منتج جديد',
     'products.edit'=>'تعديل على  منتج',

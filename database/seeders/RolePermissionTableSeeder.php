@@ -36,19 +36,19 @@ class RolePermissionTableSeeder extends Seeder
             ],
             [
                 'role_id' => 1,
-                'permission' => 'attributes',
+                'permission' => 'productColors',
             ],
             [
                 'role_id' => 1,
-                'permission' => 'attributes.create',
+                'permission' => 'productColors.create',
             ],
             [
                 'role_id' => 1,
-                'permission' => 'attributes.edit',
+                'permission' => 'productColors.edit',
             ],
             [
                 'role_id' => 1,
-                'permission' => 'attributes.destroy',
+                'permission' => 'productColors.destroy',
             ],
             [
                 'role_id' => 1,
@@ -84,19 +84,19 @@ class RolePermissionTableSeeder extends Seeder
             ],
             [
                 'role_id' => 1,
-                'permission' => 'options',
+                'permission' => 'productSizes',
             ],
             [
                 'role_id' => 1,
-                'permission' => 'options.create',
+                'permission' => 'productSizes.create',
             ],
             [
                 'role_id' => 1,
-                'permission' => 'options.edit',
+                'permission' => 'productSizes.edit',
             ],
             [
                 'role_id' => 1,
-                'permission' => 'options.destroy',
+                'permission' => 'productSizes.destroy',
             ],
             [
                 'role_id' => 1,

@@ -118,7 +118,16 @@ class Product extends Model
 
     public function options()
     {
-        return $this->hasMany(Option::class, 'product_id')->withDefault();
+        return $this->hasMany(Option::class, 'product_id');
+    }
+
+    public function colors()
+    {
+        return $this->hasMany(ProductColor::class, 'product_id');
+    }
+    public function sizes()
+    {
+        return $this->hasMany(Productsize::class, 'product_id');
     }
 
     public function vendor()

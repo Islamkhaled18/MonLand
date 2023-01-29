@@ -311,20 +311,29 @@
 
                     <div class="col-12">
                         <div class="card-deck d-flex flex-wrap">
+                            @if($best_sellings && $best_sellings != null)
+
+                            @foreach ($best_sellings as $product)
 
                             <div class="card mt-5 position-relative">
                                 <div class="position-absolute item-assets d-flex justify-content-between w-100 align-items-start p-3">
                                     <ul class="list-unstyled">
                                         <li>
-                                            <button class="add-to-fav"><i class="fa fa-heart" aria-hidden="true"></i></button>
+                                            <a class="addToWishlist  add-to-fav" href="#" data-product-id="{{$product->id}}">
+                                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                            </a>
                                         </li>
 
                                         <li>
-                                            <button><i class="fa fa-arrows-alt" aria-hidden="true"></i></button>
+                                            <button data-toggle="modal" data-target="#modal_view_5">
+                                                <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                            </button>
                                         </li>
 
                                         <li>
-                                            <button><i class="fa fa-exchange" aria-hidden="true"></i></button>
+                                            <a class="addTocomparelist" href="#" data-product-id="{{$product->id}}">
+                                                <i class="fa fa-exchange" aria-hidden="true"></i>
+                                            </a>
                                         </li>
                                     </ul>
 
@@ -337,249 +346,19 @@
 
 
                                 </div>
-                                <img class="card-img-top" src="{{ asset('website_assets/Design/Finished/404-ar.png' ) }}" alt="Card image cap">
+                                <img class="card-img-top" src="{{$product->images[0]->photo}}" alt="{{$product->name}}" />
                                 <div class="card-body text-center">
-                                    <h5 class="card-title"> هذا النص هو مثال ....</h5>
-                                    <h5>70 جنيه</h5>
+                                    <h5 class="card-title"> {{$product->short_description}}</h5>
+                                    <h5>{{$product->special_price ?? $product->price }} جنيه</h5>
 
                                 </div>
                             </div>
+                            @endforeach
 
-                            <div class="card mt-5 position-relative">
-                                <div class="position-absolute item-assets d-flex justify-content-between w-100 align-items-start p-3">
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <button class="add-to-fav"><i class="fa fa-heart" aria-hidden="true"></i></button>
-                                        </li>
+                            @endif
 
-                                        <li>
-                                            <button><i class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                        </li>
 
-                                        <li>
-                                            <button><i class="fa fa-exchange" aria-hidden="true"></i></button>
-                                        </li>
-                                    </ul>
 
-                                    <div class="w-100 align-self-end text-center">
-                                        <button class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                    </div>
-
-                                    <div class="badge badge-primary px-3 py-2 rounded-0">
-                                        متميز
-                                    </div>
-                                </div>
-                                <img class="card-img-top" src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" alt="Card image cap">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title"> هذا النص هو مثال ....</h5>
-                                    <h5>70 جنيه</h5>
-
-                                </div>
-                            </div>
-
-                            <div class="card mt-5 position-relative">
-                                <div class="position-absolute item-assets d-flex justify-content-between w-100 align-items-start p-3">
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <button class="add-to-fav"><i class="fa fa-heart" aria-hidden="true"></i></button>
-                                        </li>
-
-                                        <li>
-                                            <button><i class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                        </li>
-
-                                        <li>
-                                            <button><i class="fa fa-exchange" aria-hidden="true"></i></button>
-                                        </li>
-                                    </ul>
-
-                                    <div class="w-100 align-self-end text-center">
-                                        <button class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                    </div>
-
-                                    <div class="badge badge-success px-3 py-2 rounded-0">
-                                        الأكثر
-                                    </div>
-                                </div>
-                                <img class="card-img-top" src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" alt="Card image cap">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title"> هذا النص هو مثال ....</h5>
-                                    <h5>70 جنيه</h5>
-
-                                </div>
-                            </div>
-
-                            <div class="card mt-5 position-relative">
-                                <div class="position-absolute item-assets d-flex justify-content-between w-100 align-items-start p-3">
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <button class="add-to-fav"><i class="fa fa-heart" aria-hidden="true"></i></button>
-                                        </li>
-
-                                        <li>
-                                            <button><i class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                        </li>
-
-                                        <li>
-                                            <button><i class="fa fa-exchange" aria-hidden="true"></i></button>
-                                        </li>
-                                    </ul>
-
-                                    <div class="w-100 align-self-end text-center">
-                                        <button class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                    </div>
-
-                                    <div class="d-flex flex-column">
-                                        <div class="badge badge-diff1 text-white px-3 py-2 rounded-0">
-                                            30%
-                                        </div>
-
-                                        <div class="badge badge-diff2 text-white px-3 py-2 rounded-0 mt-3">
-                                            <i class="fa fa-exchange" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <img class="card-img-top" src="{{ asset('website_assets/Design/Finished/404-ar.png' ) }}" alt="Card image cap">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title"> هذا النص هو مثال ....</h5>
-                                    <h5>70 جنيه</h5>
-
-                                </div>
-                            </div>
-
-                            <div class="card mt-5 position-relative">
-                                <div class="position-absolute item-assets d-flex justify-content-between w-100 align-items-start p-3">
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <button class="add-to-fav"><i class="fa fa-heart" aria-hidden="true"></i></button>
-                                        </li>
-
-                                        <li>
-                                            <button><i class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                        </li>
-
-                                        <li>
-                                            <button><i class="fa fa-exchange" aria-hidden="true"></i></button>
-                                        </li>
-                                    </ul>
-
-                                    <div class="w-100 align-self-end text-center">
-                                        <button class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                    </div>
-
-                                    <div class="badge badge-success px-3 py-2 rounded-0">
-                                        جديد
-                                    </div>
-                                </div>
-                                <img class="card-img-top" src="{{ asset('website_assets/Design/Finished/404-ar.png')}}" alt="Card image cap">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title"> هذا النص هو مثال ....</h5>
-                                    <h5>70 جنيه</h5>
-
-                                </div>
-                            </div>
-
-                            <div class="card mt-5 position-relative">
-                                <div class="position-absolute item-assets d-flex justify-content-between w-100 align-items-start p-3">
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <button class="add-to-fav"><i class="fa fa-heart" aria-hidden="true"></i></button>
-                                        </li>
-
-                                        <li>
-                                            <button><i class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                        </li>
-
-                                        <li>
-                                            <button><i class="fa fa-exchange" aria-hidden="true"></i></button>
-                                        </li>
-                                    </ul>
-
-                                    <div class="w-100 align-self-end text-center">
-                                        <button class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                    </div>
-
-                                    <div class="badge badge-primary px-3 py-2 rounded-0">
-                                        متميز
-                                    </div>
-                                </div>
-                                <img class="card-img-top" src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" alt="Card image cap">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title"> هذا النص هو مثال ....</h5>
-                                    <h5>70 جنيه</h5>
-
-                                </div>
-                            </div>
-
-                            <div class="card mt-5 position-relative">
-                                <div class="position-absolute item-assets d-flex justify-content-between w-100 align-items-start p-3">
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <button class="add-to-fav"><i class="fa fa-heart" aria-hidden="true"></i></button>
-                                        </li>
-
-                                        <li>
-                                            <button><i class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                        </li>
-
-                                        <li>
-                                            <button><i class="fa fa-exchange" aria-hidden="true"></i></button>
-                                        </li>
-                                    </ul>
-
-                                    <div class="w-100 align-self-end text-center">
-                                        <button class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                    </div>
-
-                                    <div class="badge badge-success px-3 py-2 rounded-0">
-                                        الأكثر
-                                    </div>
-                                </div>
-                                <img class="card-img-top" src="{{ asset('website_assets/Design/Finished/404-ar.png ') }}" alt="Card image cap">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title"> هذا النص هو مثال ....</h5>
-                                    <h5>70 جنيه</h5>
-
-                                </div>
-                            </div>
-
-                            <div class="card mt-5 position-relative">
-                                <div class="position-absolute item-assets d-flex justify-content-between w-100 align-items-start p-3">
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <button class="add-to-fav"><i class="fa fa-heart" aria-hidden="true"></i></button>
-                                        </li>
-
-                                        <li>
-                                            <button><i class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                        </li>
-
-                                        <li>
-                                            <button><i class="fa fa-exchange" aria-hidden="true"></i></button>
-                                        </li>
-                                    </ul>
-
-                                    <div class="w-100 align-self-end text-center">
-                                        <button class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                    </div>
-
-                                    <div class="d-flex flex-column">
-                                        <div class="badge badge-diff1 text-white px-3 py-2 rounded-0">
-                                            30%
-                                        </div>
-
-                                        <div class="badge badge-diff2 text-white px-3 py-2 rounded-0 mt-3">
-                                            <i class="fa fa-exchange" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <img class="card-img-top" src="{{ asset('website_assets./Design/Finished/404-ar.png' ) }}" alt="Card image cap">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title"> هذا النص هو مثال ....</h5>
-                                    <h5>70 جنيه</h5>
-
-                                </div>
-                            </div>
 
                         </div>
                     </div>

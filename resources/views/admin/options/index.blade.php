@@ -28,7 +28,6 @@
                                 <tr>
                                     <th>#</th>
                                     <th>الاسم</th>
-                                    <th>السعر</th>
                                     <th>المنتج</th>
                                     <th>الخصائص</th>
                                     <th>العمليات</th>
@@ -41,7 +40,6 @@
 
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $option->name }}</td>
-                                        <td>{{ $option->price }}</td>
                                         <td>{{ $option->product->name }}</td>
                                         <td>{{ $option->attribute->name }}</td>
                                         <td>

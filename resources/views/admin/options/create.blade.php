@@ -32,17 +32,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="projectinput1"> السعر
-                                        </label>
-                                        <input type="text" id="price" class="form-control" placeholder=" السعر "
-                                            value="{{ old('price') }}" name="price">
-                                        @error('price')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
+                             
 
                                 <div class="col-md-6">
                                     <div class="form-group">

@@ -1,21 +1,21 @@
 @extends('layouts.admin.app')
 @section('title')
-    الصفات
+    محافظات الشحن والتوصيل
 @endsection
 @section('content')
     <main class="app sidebar-mini rtl">
         <div class="app-title">
             <div>
-                <h1><i class="fa fa-th-list"></i> الصفات </h1>
+                <h1><i class="fa fa-th-list"></i> محافظات الشحن والتوصيل </h1>
             </div>
             <ul class="app-breadcrumb breadcrumb side">
                 <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('attributes.index') }}">الصفات</a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('delivery.index') }}">محافظات الشحن والتوصيل</a></li>
             </ul>
         </div>
-        @can('attributes.create')
+        @can('delivery.create')
             <div>
-                <a class="btn btn-primary btn-sm" href="{{ route('attributes.create') }}">انشاء صفة جديده</a>
+                <a class="btn btn-primary btn-sm" href="{{ route('delivery.create') }}">انشاء محافظه وسعر توصيل جديد</a>
             </div>
         @endcan
 
@@ -27,24 +27,26 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>الاسم</th>
+                                    <th>المحافظه</th>
+                                    <th>سعر التوصيل</th>
                                     <th>العمليات</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($attributes as $attribute)
+                                @foreach ($deliveries as $delivery)
                                     <tr>
 
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $attribute->name }}</td>
+                                        <td>{{ $delivery->governorate_name }}</td>
+                                        <td>{{ $delivery->delivery_price }}</td>
                                         <td>
-                                            @can('attributes.edit')
+                                            @can('delivery.edit')
                                                 <a class="btn btn-sm btn-dark"
-                                                    href="{{ route('attributes.edit', ['id' => $attribute->id]) }}">تعديل</a>
+                                                    href="{{ route('delivery.edit', ['id' => $delivery->id]) }}">تعديل</a>
                                             @endcan
-                                            @can('attributes.destroy')
-                                                <form action="{{ route('attributes.destroy', $attribute->id) }}" method="post"
+                                            @can('delivery.destroy')
+                                                <form action="{{ route('delivery.destroy', $delivery->id) }}" method="post"
                                                     style="display: inline-block">
                                                     @csrf
                                                     @method('GET')

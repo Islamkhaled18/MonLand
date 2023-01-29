@@ -102,9 +102,11 @@
                 <div id="color-section " class="my-4">
                     <div class="normal-text my-2 subheader">الوان</div>
                     <div class="d-flex available-colors flex-nowrap">
-                        <div class="bg-danger "></div>
-                        <div class="bg-warning"></div>
-                        <div class="bg-success"></div>
+                        @foreach ($product_colors as $color )
+
+                        <div style="background:{{$color->name}}"></div>
+                        @endforeach
+
                     </div>
                 </div>
                 <!-- Sizes -->
@@ -114,9 +116,13 @@
                         <a href="#" class="under-line text-dark"><u>جدول المقاسات</u></a>
                     </div>
                     <div class="d-flex available-sizes flex-nowrap">
-                        <div class="available-size active">37</div>
-                        <div class="available-size ">38</div>
-                        <div class="available-size">40</div>
+                        @foreach ($product_sizes as $size )
+
+                        <div class="available-size active">{{$size->name}}</div>
+
+                        @endforeach
+
+
                     </div>
                 </div>
                 <!-- Add To Fav ans Compare -->

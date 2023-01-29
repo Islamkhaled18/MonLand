@@ -8,8 +8,6 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\AttributeController;
-use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DeliveryController;
@@ -22,8 +20,9 @@ use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Admin\GovernorateController;
 use App\Http\Controllers\Admin\MainCategoryController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ProductColorController;
+use App\Http\Controllers\Admin\ProductSizeController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,8 +54,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
         Route::get('delete/{id}', [BrandController::class, 'destroy'])->name('brands.destroy');
     });
 
-      ///////////////mainCategories Controller/////////////////////
-      Route::group(['prefix' => 'mainCategories'], function () {
+    ///////////////mainCategories Controller/////////////////////
+    Route::group(['prefix' => 'mainCategories'], function () {
         Route::get('/', [MainCategoryController::class, 'index'])->name('mainCategories.index');
         Route::get('create', [MainCategoryController::class, 'create'])->name('mainCategories.create');
         Route::post('store', [MainCategoryController::class, 'store'])->name('mainCategories.store');
@@ -84,25 +83,26 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
         Route::post('update/{id}', [ProductController::class, 'update'])->name('products.update');
         Route::post('delete/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
     });
-    ///////////////attributes Controller/////////////////////
-    Route::group(['prefix' => 'attributes'], function () {
-        Route::get('/', [AttributeController::class, 'index'])->name('attributes.index');
-        Route::get('create', [AttributeController::class, 'create'])->name('attributes.create');
-        Route::post('store', [AttributeController::class, 'store'])->name('attributes.store');
-        Route::get('edit/{id}', [AttributeController::class, 'edit'])->name('attributes.edit');
-        Route::post('update/{id}', [AttributeController::class, 'update'])->name('attributes.update');
-        Route::get('delete/{id}', [AttributeController::class, 'destroy'])->name('attributes.destroy');
+    ///////////////colors Controller/////////////////////
+    Route::group(['prefix' => 'colors'], function () {
+        Route::get('/', [ProductColorController::class, 'index'])->name('colors.index');
+        Route::get('create', [ProductColorController::class, 'create'])->name('colors.create');
+        Route::post('store', [ProductColorController::class, 'store'])->name('colors.store');
+        Route::get('edit/{id}', [ProductColorController::class, 'edit'])->name('colors.edit');
+        Route::post('update/{id}', [ProductColorController::class, 'update'])->name('colors.update');
+        Route::get('delete/{id}', [ProductColorController::class, 'destroy'])->name('colors.destroy');
     });
 
-    ################################## brands options ######################################
-    Route::group(['prefix' => 'options'], function () {
-        Route::get('/',  [OptionController::class, 'index'])->name('options.index');
-        Route::get('create',  [OptionController::class, 'create'])->name('options.create');
-        Route::post('store',  [OptionController::class, 'store'])->name('options.store');
-        Route::get('edit/{id}',  [OptionController::class, 'edit'])->name('options.edit');
-        Route::post('update/{id}',  [OptionController::class, 'update'])->name('options.update');
-        Route::get('delete/{id}', [OptionController::class, 'destroy'])->name('options.destroy');
+    ///////////////sizes Controller/////////////////////
+    Route::group(['prefix' => 'sizes'], function () {
+        Route::get('/', [ProductSizeController::class, 'index'])->name('sizes.index');
+        Route::get('create', [ProductSizeController::class, 'create'])->name('sizes.create');
+        Route::post('store', [ProductSizeController::class, 'store'])->name('sizes.store');
+        Route::get('edit/{id}', [ProductSizeController::class, 'edit'])->name('sizes.edit');
+        Route::post('update/{id}', [ProductSizeController::class, 'update'])->name('sizes.update');
+        Route::get('delete/{id}', [ProductSizeController::class, 'destroy'])->name('sizes.destroy');
     });
+
     ################################## settings ######################################
     Route::group(['prefix' => 'settings'], function () {
         Route::get('/',  [SettingController::class, 'index'])->name('settings.index');
@@ -199,12 +199,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
         Route::post('update/{id}', [OrderController::class, 'update'])->name('order.update');
         Route::get('delete/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
     });
-
-
-
-
-
-
 }); // routes for authenticated admins
 
 Route::group(['namespace' => 'Admin', 'middleware' => 'guest:admin', 'prefix' => 'admin'], function () {

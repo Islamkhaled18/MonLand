@@ -5,19 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Option extends Model
+class ProductColor extends Model
 {
     use HasFactory;
-    protected $table = 'options';
-    protected $fillable = ['name','product_id','attribute_id'];
+
+    protected $table = 'product_colors';
+    protected $fillable = ['name','product_id'];
 
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id')->withDefault();
     }
-
-    public function attribute(){
-        return $this -> belongsTo(Attribute::class,'attribute_id')->withDefault();
-    }
-
 }

@@ -108,7 +108,6 @@
                     ?>
                 @endforeach
 
-
                 <hr>
                 <!-- cost & shipping-->
                 <div class="d-flex flex-column justify-content-between mx-3 rounded">
@@ -235,18 +234,28 @@
 
                 <div class="text-small"> يتم التوصيل الي </div>
                 <div class="text-small main-color">
-                    {{ $addresses->address_details}} </div>
+                    {{ isset($addresses->address_details) ? $addresses->address_details : '--' }} </div>
 
-                <form action="{{ route('checkout.store') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="total" value="{{$total}}">
+                    @if (isset($addresses->address_details))
 
+                    <form action="{{ route('checkout.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="total" value="{{$total}}">
+
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class=" bg-add-to-cart defualt-raduis text-white text-larger text-center my-2 py-2 px-4 rounded justify-self-center">
+                                اتمام الشراء
+                            </button>
+                        </div>
+                    </form>
+
+                    @else
                     <div class="d-flex justify-content-center">
-                        <button type="submit" class=" bg-add-to-cart defualt-raduis text-white text-larger text-center my-2 py-2 px-4 rounded justify-self-center">
+                        <button type="submit" disabled class=" bg-add-to-cart defualt-raduis text-white text-larger text-center my-2 py-2 px-4 rounded justify-self-center">
                             اتمام الشراء
                         </button>
                     </div>
-                </form>
+                    @endif
 
             </div>
 
