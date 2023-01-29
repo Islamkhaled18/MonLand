@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     // Set Slider height
     let windowH = $(window).innerHeight(),
         header = $('header').innerHeight(),
@@ -29,7 +29,7 @@ $(document).ready(function () {
     });
 
     // Add To Fav Button
-    $('.add-to-fav').on('click', function () {
+    $('.add-to-fav').on('click', function() {
         $(this).toggleClass('active')
     })
 
@@ -79,10 +79,10 @@ $(document).ready(function () {
             var minutes = Math.floor((distance % _hour) / _minute);
             var seconds = Math.floor((distance % _minute) / _second);
 
-            document.getElementById(daysId).innerHTML = days;
-            document.getElementById(hoursId).innerHTML = hours;
-            document.getElementById(minutesId).innerHTML = minutes;
-            document.getElementById(secondsId).innerHTML = seconds;
+            // document.getElementById(daysId).innerHTML = days;
+            // document.getElementById(hoursId).innerHTML = hours;
+            // document.getElementById(minutesId).innerHTML = minutes;
+            // document.getElementById(secondsId).innerHTML = seconds;
         }
 
         timer = setInterval(showRemaining, 1000);

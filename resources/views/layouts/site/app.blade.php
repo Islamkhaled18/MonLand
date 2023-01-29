@@ -14,11 +14,60 @@
     <link rel="stylesheet" href="{{ asset('website_assets/css/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('website_assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('website_assets/pages-css/product/product-details.css') }}" />
+    <link rel="stylesheet" href="{{ asset('website_assets/pages-css/account/orders.css') }}" />
+    <link rel="stylesheet" href="{{ asset('website_assets/pages-css/fav.css') }}" />
+    <link rel="stylesheet" href="{{ asset('website_assets/pages-css/talab-estragh/talab-estragh.css') }}" />
+    <link rel="stylesheet" href="{{ asset('website_assets/pages-css/product/product-details.css') }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .rate {
+            float: left;
+            height: 46px;
+            padding: 0 10px;
+        }
+
+        .rate:not(:checked)>input {
+            position: absolute;
+            top: -9999px;
+        }
+
+        .rate:not(:checked)>label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
+
+        .rate:not(:checked)>label:before {
+            content: '★ ';
+        }
+
+        .rate>input:checked~label {
+            color: #ffc700;
+        }
+
+        .rate:not(:checked)>label:hover,
+        .rate:not(:checked)>label:hover~label {
+            color: #deb217;
+        }
+
+        .rate>input:checked+label:hover,
+        .rate>input:checked+label:hover~label,
+        .rate>input:checked~label:hover,
+        .rate>input:checked~label:hover~label,
+        .rate>label:hover~input:checked~label {
+            color: #c59b08;
+        }
+
+    </style>
 </head>
 
-<body>
+<body class="search-result">
 
     @include('layouts.site._header')
 
@@ -33,22 +82,20 @@
                 <div class="col-3 text-right px-5">
                     <img src="{{ asset('website_assets/imgs/logo/logo.png') }}" class="w-100" />
                 </div>
-                {{-- <form action="{{route('ContactUs.store')}}" method="post">
-                    @csrf --}}
-                    <form action="{{route('emailUs.store')}}" method="post" class="col-7 text-right px-5">
-                        @csrf
-                        <h4 class="main-color">
-                            هل انت جديد على كيان?
-                        </h4>
-                        <h6 class="secondary-color">
-                            اشترك فى نشرتنا الاخبارية للحصول على احدث المنتجات
-                        </h6>
-                        <div class="form-group d-flex mt-4">
-                            <input type="email" value="{{auth()->user()->email}}" disabled class="form-control rounded-0 py-4" placeholder="ادخل بريدك الالكترونى هنا" />
-                            <button type="submit" class="text-white py-2 px-4 rounded-0">اشترك</button>
-                        </div>
-                    </form>
-                {{-- </form> --}}
+
+                <form action="{{route('emailUs.store')}}" method="post" class="col-7 text-right px-5">
+                    @csrf
+                    <h4 class="main-color">
+                        هل انت جديد على كيان?
+                    </h4>
+                    <h6 class="secondary-color">
+                        اشترك فى نشرتنا الاخبارية للحصول على احدث المنتجات
+                    </h6>
+                    <div class="form-group d-flex mt-4">
+                        <input type="email" value="{{ auth()->user()->email ?? '' }}" disabled class="form-control rounded-0 py-4" placeholder="ادخل بريدك الالكترونى هنا" />
+                        <button type="submit" class="text-white py-2 px-4 rounded-0">اشترك</button>
+                    </div>
+                </form>
 
                 <div class="col-2 text-right">
                     <h4 class="main-color">
@@ -166,4 +213,129 @@
     <script src="{{ asset('website_assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('website_assets/js/script.js') }}"> </script>
     <script src="{{ asset('website_assets/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('website_assets/pages-js/orders.js') }}"></script>
+    <script src="{{ asset('website_assets/pages-js/product-detailes.js') }}"></script>
+
+    @stack('scripts')
+    <script>
+        let progressCircle = document.querySelector(".progress");
+        let radius = progressCircle.r.baseVal.value;
+        //circumference of a circle = 2πr;
+        let circumference = radius * 2 * Math.PI;
+        progressCircle.style.strokeDasharray = circumference;
+
+        //0 to 100
+        setProgress(40);
+
+        function setProgress(percent) {
+            progressCircle.style.strokeDashoffset = circumference - (percent / 100) * circumference;
+        }
+
+    </script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(document).on('click', '.addToWishlist', function(e) {
+
+            e.preventDefault();
+            @guest()
+            $('.not-loggedin-modal').css('display', 'block');
+            @endguest
+            $.ajax({
+                type: 'post'
+                , url: "{{Route('wishlist.store')}}"
+                , data: {
+                    'productId': $(this).attr('data-product-id')
+                , }
+                , success: function(data) {
+                    if (data.wished)
+
+                        $('.alert-modal').css('display', 'block');
+
+                    else
+                        $('.alert-modal2').css('display', 'block');
+
+
+                }
+            });
+        });
+        $(document).ready(function() {
+            countFav();
+
+            function countFav() {
+                $.ajax({
+                    method: 'GET'
+                    , url: "{{Route('wishlist.countFav')}}"
+                    , success: function(response) {
+                        $('.countFavProd').html('');
+                        $('.countFavProd').html(response.count);
+                    }
+                });
+            }
+        });
+
+
+        $(document).on('click', '.removeFromWishlist', function(e) {
+            e.preventDefault();
+            @guest()
+            $('.not-loggedin-modal').css('display', 'block');
+            @endguest
+            $.ajax({
+                type: 'delete'
+                , url: "{{Route('wishlist.destroy')}}"
+                , data: {
+                    'productId': $(this).attr('data-product-id')
+                , }
+                , success: function(data) {
+                    location.reload();
+                }
+            });
+        });
+
+
+        $(document).on('click', '.addTocomparelist', function(e) {
+
+            e.preventDefault();
+            @guest()
+            $('.not-loggedin-modal').css('display', 'block');
+            @endguest
+            $.ajax({
+                type: 'post'
+                , url: "{{Route('compare.store')}}"
+                , data: {
+                    'productId': $(this).attr('data-product-id')
+                , }
+                , success: function(data) {
+                    console.log('ssssss');
+                    if (data.compared)
+
+                        $('.alert-modal').css('display', 'block');
+
+                    else
+                        $('.alert-modal2').css('display', 'block');
+                }
+            });
+        });
+
+        $(document).on('click', '.removeFromcomparelist', function(e) {
+            e.preventDefault();
+            @guest()
+            $('.not-loggedin-modal').css('display', 'block');
+            @endguest
+            $.ajax({
+                type: 'delete'
+                , url: "{{Route('compare.destroy')}}"
+                , data: {
+                    'productId': $(this).attr('data-product-id')
+                , }
+                , success: function(data) {
+                    location.reload();
+                }
+            });
+        });
+
+    </script>
 </body>

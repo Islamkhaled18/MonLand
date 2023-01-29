@@ -20,13 +20,13 @@ class VendorTableSeeder extends Seeder
         $vendors = [
             [
             'id' => 1,
-            'vendor_name' => 'مصنع الكفراوى', 
-            'vendor_price' => '50 جنيه مصري', 
+            'vendor_name' => 'مصنع الكفراوى',
+            'vendor_price' => 50,
             ],
             [
             'id' => 2,
-            'vendor_name' => 'مصنع الجميزي', 
-            'vendor_price' => '40 جنيه مصري', 
+            'vendor_name' => 'مصنع الجميزي',
+            'vendor_price' => 40,
             ]
 
         ];

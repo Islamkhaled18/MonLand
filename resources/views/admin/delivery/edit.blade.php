@@ -10,8 +10,8 @@
             </div>
             <ul class="app-breadcrumb breadcrumb side">
                 <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-                <li class="breadcrumb-item"><a href="{{ route('delivery.index') }}" title="المحافظات واسعار الشحن">المحافظات واسعار الشحن</a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('delivery.edit', $delivery->id) }}" title="تعديل على محافظه وسعر شحن">تعديل على محافظه او سعر الشحن -
+                <li class="breadcrumb-item"><a href="{{ route('delivery.index') }}">المحافظات واسعار الشحن</a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('delivery.edit', $delivery->id) }}">تعديل على محافظه او سعر الشحن -
                         {{ $delivery->governorate_name }}</a></li>
             </ul>
         </div>

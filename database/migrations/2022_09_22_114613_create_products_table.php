@@ -17,13 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->decimal('price', 18, 4)->unsigned()->nullable();
-            $table->decimal('special_price', 18, 4)->unsigned()->nullable();
-            $table->string('special_price_type')->nullable();
-            $table->date('special_price_start')->nullable();
-            $table->date('special_price_end')->nullable();
-            $table->decimal('selling_price', 18, 4)->unsigned()->nullable();
-            $table->string('sku')->nullable();
+            $table->double('price', 18, 4)->unsigned()->nullable();
             $table->boolean('manage_stock')->nullable();
             $table->integer('qty')->nullable();
             $table->boolean('in_stock')->nullable();
@@ -36,6 +30,12 @@ class CreateProductsTable extends Migration
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('set null');
             $table->bigInteger('vendor_id')->unsigned()->nullable();
             $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('set null');
+            $table->bigInteger('mainCategory_id')->unsigned()->nullable();
+            $table->foreign('mainCategory_id')->references('id')->on('main_categories')->onDelete('cascade');
+            $table->boolean('featured')->default(0);
+            $table->boolean('deal_of_the_day')->default(0);
+            $table->boolean('flash_sale')->default(0);
+            $table->boolean('quick_request')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

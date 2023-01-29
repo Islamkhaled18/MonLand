@@ -40,7 +40,7 @@ class OptionController extends Controller
 
     public function store(Request $request)
     {
-        
+
         DB::beginTransaction();
 
         $request->validate([
@@ -49,7 +49,6 @@ class OptionController extends Controller
         Option::create([
             'attribute_id' => $request->attribute_id,
             'product_id' => $request->product_id,
-            'price' => $request->price,
             'name' => $request->name,
         ]);
 
@@ -84,13 +83,12 @@ class OptionController extends Controller
         ]);
 
         $option = Option::findOrFail($id);
-        $option->update($request->only(['price','product_id','attribute_id']));
-        $option->name = $request->name;
+        $option->update($request->only(['product_id','attribute_id','name']));
         $option->save();
 
         Toastr()->success('تم التحديث بنجاح');
         return redirect()->route('options.index');
-     
+
     }
 
     public function destroy($id)
@@ -98,11 +96,11 @@ class OptionController extends Controller
         if(!Gate::allows('options.destroy')){
             return view('admin.errors.notAllowed');
         }
-       
+
         $option = Option::findOrFail($id);
         $option->delete();
         Toastr()->success('تم حذف خاصية الصفه بنجاح');
         return redirect()->route('options.index');
-        
+
     }//end of destroy
 }

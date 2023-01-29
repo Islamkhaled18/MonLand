@@ -10,8 +10,8 @@
             </div>
             <ul class="app-breadcrumb breadcrumb side">
                 <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-                <li class="breadcrumb-item"><a href="{{ route('products.index') }}" title="المنتجات">المنتجات</a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('products.general.create') }}" title="انشاء منتج جديد">إانشاء منتج جديد</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('products.index') }}">المنتجات</a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('products.general.create') }}">إانشاء منتج جديد</a></li>
 
             </ul>
         </div>

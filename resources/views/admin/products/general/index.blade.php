@@ -29,8 +29,11 @@
                                     <th>#</th>
                                     <th>الاسم </th>
                                     <th>الحالة</th>
+                                    <th>مميز</th>
+                                    <th>عروض اليوم</th>
+                                    <th>فلاش</th>
+                                    <th>طلب سريع</th>
                                     <th>السعر</th>
-                                    <th>باقى تفاصيل المنتج</th>
                                     <th> الاجراءات </th>
 
                                 </tr>
@@ -41,23 +44,21 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $product->name }}</td>
                                         <td>{{ $product->getActive() }}</td>
-                                        <td>{{ $product->price }}</td>
-                                        @can('products.create')
-                                            <td>
-                                                <a class="btn btn-sm btn-dark"
-                                                    href="{{ route('products.price', $product->id) }}" title="سعر المنتج">السعر</a>
-                                                <a class="btn btn-sm btn-dark"
-                                                    href="{{ route('products.stock', $product->id) }}" title="المخزن">المخزن</a>
 
-                                            </td>
-                                        @endcan
+                                        <td>{{ $product->getFeatured() }}</td>
+                                        <td>{{ $product->getDealOfTheDay() }}</td>
+                                        <td>{{ $product->getFlashSale() }}</td>
+                                        <td>{{ $product->getQuickRequest() }}</td>
+
+                                        <td>{{ $product->price }}</td>
+
                                         <td>
                                            @can('products.edit')
-                                               
+
                                            <a class="btn btn-sm btn-dark"
                                            href="{{ route('products.edit', ['id' => $product->id]) }}" title="تعديل">تعديل</a>
                                            @endcan
-                                            
+
                                             @can('products.destroy')
                                                 <form action="{{ route('products.destroy', $product->id) }}" title="حذف" method="post"
                                                     style="display: inline-block">

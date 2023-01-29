@@ -612,3 +612,7 @@ input[type="radio"]:checked::before {
 .fa-exclamation-circle {
     color: var(--main-color)
 }
+
+.deactive-btn {
+    color: #80808057 !important
+}
