@@ -392,12 +392,211 @@
                                                     </div>
 
                                                     <button data-toggle="modal"
-                                                        data-target="#show{{ $cart->products->id }}"
-                                                        class="bg-main text-warning px-3 py-2 w-100  text-larger align-self-end">
+                                                        data-target="#showmodal"
+                                                        data-product="{{$cart->products->id}}"
+                                                        class="bg-main text-warning px-3 py-2 w-100  text-larger align-self-end product">
                                                         اكتب تقيم المنتج
                                                     </button>
 
-                                                    <div class="modal fade" id="show{{ $cart->products->id }}"
+                                                    
+
+                                                </div>
+                                            </div>
+                                            <?php
+                                            $subTotal += $cart->products->price * $cart->quantity;
+                                            ?>
+                                        @endforeach
+
+                                        <hr />
+                                        <!-- cost & shipping-->
+                                        <div class="d-flex flex-column justify-content-between mx-3 rounded">
+                                            <div class="d-flex flex-row justify-content-between text-large">
+                                                <span class="font-weight-bold d-block align-self-start">المجموع الفرعي
+                                                    اللشحنة
+                                                </span>
+                                                <div class="col col-md-2 text-start">
+                                                    <span>{{ $subTotal }}</span>
+                                                    <span>جنية</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex flex-row justify-content-between">
+                                                <div>رسوم التوصيل</div>
+                                                <div class="col col-md-2 no-gutters text-start">
+                                                    @php
+                                                        $address_fees = 0;
+                                                    @endphp
+                                                    <span>{{ $address_fees += $product->vendor_price ?? 0 }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <!-- total-->
+                                        <div class="d-flex justify-content-between align-items-center mx-3 pb-3 rounded">
+                                            <div class="d-flex flex-row">
+                                                <div class="ml-2">
+
+                                                    @php
+                                                        
+                                                        $product['total'] = $subTotal + $address_fees;
+                                                        
+                                                    @endphp
+                                                    <span class="d-flex flex-row text-large"> المجموع الكلي للشحنة
+                                                        {{ $product['total'] }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button  class="col-6 bg-main text-warning px-3 py-2 align-self-end vendor"
+                                         data-toggle="modal" data-vendorid="{{$product->id}}"  data-target="#seemodal">
+                                        اكتب تقيم للبائع
+                                    </button>
+
+                                    
+                                @endforeach
+                            @endif
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal fade" id="seemodal" tabindex="-1" role="dialog"
+                                        aria-labelledby="11" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div
+                                                    class="modal-header flex-row-reverse align-items-center bg-main text-white">
+
+                                                    <h5 class="modal-title text-center w-100" id="11">مراجعة البائع
+                                                    </h5>
+                                                    <button type="button" class="close m-0 p-0" data-dismiss="modal">
+                                                        <span class="text-white">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    <div class="row">
+                                                        <!-- ratings -->
+                                                        <div class="d-flex flex-row flex-wrap px-4 pt-3 col-12">
+
+
+                                                            <div
+                                                                class="col-12 col-lg-9 no-gutters d-flex flex-row flex-wrap my-3">
+                                                                <h3 class="w-100 text-right">
+                                                                    البائع
+                                                                </h3>
+                                                                <div class="col no-gutters">
+                                                                    <div class="d-flex">5
+                                                                        <div class="bar-container m-1 ">
+                                                                            <div class="bar-5"></div>
+                                                                        </div>
+                                                                        (127)
+                                                                    </div>
+                                                                    <div class="d-flex">4
+                                                                        <div class="bar-container m-1 ">
+                                                                            <div class="bar-4"></div>
+                                                                        </div>
+                                                                        (73)
+                                                                    </div>
+                                                                    <div class="d-flex">3
+                                                                        <div class="bar-container m-1 ">
+                                                                            <div class="bar-3"></div>
+                                                                        </div>
+                                                                        (13)
+                                                                    </div>
+                                                                    <div class="d-flex">2
+                                                                        <div class="bar-container m-1 ">
+                                                                            <div class="bar-2"></div>
+                                                                        </div>
+                                                                        (50)
+                                                                    </div>
+                                                                    <div class="d-flex">1
+                                                                        <div class="bar-container m-1 ">
+                                                                            <div class="bar-1"></div>
+                                                                        </div>
+                                                                        (43)
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div
+                                                                class="col-12 col-lg-3 no-gutters d-flex flex-column align-items-center ">
+                                                                <span class="text-larger">التقيم العام</span>
+
+
+                                                                <div class="circle-wrap">
+                                                                    <div class="circle">
+                                                                        <div class="mask full">
+                                                                            <div class="fill"></div>
+                                                                        </div>
+                                                                        <div class="mask half">
+                                                                            <div class="fill"></div>
+                                                                        </div>
+                                                                        <div class="inside-circle ">
+                                                                            <i
+                                                                                class="fa-solid fa-star position-absolute "></i>
+                                                                            <div class="position-absolute total-rate">4.2
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <form id="form-review-vendor" method="post"
+                                                            action="{{ route('review.store') }}">
+                                                            @csrf
+                                                        
+                                                            <input type="hidden" name="vendor_id"
+                                                                value="{{ $product->id }}">
+                                                            <div class="col-12 d-flex align-items-center my-4">
+                                                                <h4>
+                                                                    قييم البائع
+                                                                </h4>
+                                                                <div class="rate mx-2">
+                                                                    <input type="radio" id="star10"
+                                                                        name="star_rating" value="5" />
+                                                                    <label for="star10" title="text">5 stars</label>
+                                                                    <input type="radio" id="star9"
+                                                                        name="star_rating" value="4" />
+                                                                    <label for="star9" title="text">4 stars</label>
+                                                                    <input type="radio" id="star8"
+                                                                        name="star_rating" value="3" />
+                                                                    <label for="star8" title="text">3 stars</label>
+                                                                    <input type="radio" id="star7"
+                                                                        name="star_rating" value="2" />
+                                                                    <label for="star7" title="text">2 stars</label>
+                                                                    <input type="radio" id="star6"
+                                                                        name="star_rating" value="1" />
+                                                                    <label for="star6" title="text">1 star</label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-12">
+                                                                <textarea name="comments" class=" p-2 form-control" placeholder="أضف تعليق (اختيارى)" rows="5"></textarea>
+
+                                                               
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer border-0">
+                                                    
+                                                    <button type="button" data-dismiss="modal" class="btn btn-dark">إلغاء</button>
+                                                    <button  type="submit"
+                                                        class="btn btn-secondary BV mx-1 bg-main button-review-vendor"
+                                                        data-dismiss="modal">إرسال
+                                                    </button>
+                                                </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                            <div class="modal fade" id="showmodal"
                                                         tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog modal-lg" role="document">
@@ -488,7 +687,7 @@
                                                                         <form id="form-review" method="post"
                                                                             action="{{ route('review.store') }}">
                                                                             @csrf
-                                                                            <input type="text" name="product_id"
+                                                                            <input type="hidden" name="product_id"
                                                                                 value="{{ $cart->products->id }}">
                                                                             <div
                                                                                 class="col-12 d-flex align-items-center my-4">
@@ -542,194 +741,9 @@
                                                         </div>
                                                     </div>
 
-                                                </div>
-                                            </div>
-                                            <?php
-                                            $subTotal += $cart->products->price * $cart->quantity;
-                                            ?>
-                                        @endforeach
-
-                                        <hr />
-                                        <!-- cost & shipping-->
-                                        <div class="d-flex flex-column justify-content-between mx-3 rounded">
-                                            <div class="d-flex flex-row justify-content-between text-large">
-                                                <span class="font-weight-bold d-block align-self-start">المجموع الفرعي
-                                                    اللشحنة
-                                                </span>
-                                                <div class="col col-md-2 text-start">
-                                                    <span>{{ $subTotal }}</span>
-                                                    <span>جنية</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="d-flex flex-row justify-content-between">
-                                                <div>رسوم التوصيل</div>
-                                                <div class="col col-md-2 no-gutters text-start">
-                                                    @php
-                                                        $address_fees = 0;
-                                                    @endphp
-                                                    <span>{{ $address_fees += $product->vendor_price ?? 0 }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr />
-                                        <!-- total-->
-                                        <div class="d-flex justify-content-between align-items-center mx-3 pb-3 rounded">
-                                            <div class="d-flex flex-row">
-                                                <div class="ml-2">
-
-                                                    @php
-                                                        
-                                                        $product['total'] = $subTotal + $address_fees;
-                                                        
-                                                    @endphp
-                                                    <span class="d-flex flex-row text-large"> المجموع الكلي للشحنة
-                                                        {{ $product['total'] }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <button class="col-6 bg-main text-warning px-3 py-2 align-self-end"
-                                        data-toggle="modal" data-target="#see{{ $product->id }}">
-                                        اكتب تقيم للبائع
-                                    </button>
-
-                                    <div class="modal fade" id="see{{ $product->id }}" tabindex="-1" role="dialog"
-                                        aria-labelledby="11" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg" role="document">
-                                            <div class="modal-content">
-                                                <div
-                                                    class="modal-header flex-row-reverse align-items-center bg-main text-white">
-
-                                                    <h5 class="modal-title text-center w-100" id="11">مراجعة البائع
-                                                    </h5>
-                                                    <button type="button" class="close m-0 p-0" data-dismiss="modal">
-                                                        <span class="text-white">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-
-                                                    <div class="row">
-                                                        <!-- ratings -->
-                                                        <div class="d-flex flex-row flex-wrap px-4 pt-3 col-12">
 
 
-                                                            <div
-                                                                class="col-12 col-lg-9 no-gutters d-flex flex-row flex-wrap my-3">
-                                                                <h3 class="w-100 text-right">
-                                                                    البائع
-                                                                </h3>
-                                                                <div class="col no-gutters">
-                                                                    <div class="d-flex">5
-                                                                        <div class="bar-container m-1 ">
-                                                                            <div class="bar-5"></div>
-                                                                        </div>
-                                                                        (127)
-                                                                    </div>
-                                                                    <div class="d-flex">4
-                                                                        <div class="bar-container m-1 ">
-                                                                            <div class="bar-4"></div>
-                                                                        </div>
-                                                                        (73)
-                                                                    </div>
-                                                                    <div class="d-flex">3
-                                                                        <div class="bar-container m-1 ">
-                                                                            <div class="bar-3"></div>
-                                                                        </div>
-                                                                        (13)
-                                                                    </div>
-                                                                    <div class="d-flex">2
-                                                                        <div class="bar-container m-1 ">
-                                                                            <div class="bar-2"></div>
-                                                                        </div>
-                                                                        (50)
-                                                                    </div>
-                                                                    <div class="d-flex">1
-                                                                        <div class="bar-container m-1 ">
-                                                                            <div class="bar-1"></div>
-                                                                        </div>
-                                                                        (43)
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-
-                                                            <div
-                                                                class="col-12 col-lg-3 no-gutters d-flex flex-column align-items-center ">
-                                                                <span class="text-larger">التقيم العام</span>
-
-
-                                                                <div class="circle-wrap">
-                                                                    <div class="circle">
-                                                                        <div class="mask full">
-                                                                            <div class="fill"></div>
-                                                                        </div>
-                                                                        <div class="mask half">
-                                                                            <div class="fill"></div>
-                                                                        </div>
-                                                                        <div class="inside-circle ">
-                                                                            <i
-                                                                                class="fa-solid fa-star position-absolute "></i>
-                                                                            <div class="position-absolute total-rate">4.2
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                        <form id="form-review-vendor" method="post"
-                                                            action="{{ route('review.store') }}">
-                                                            @csrf
-                                                            <input type="text" name="vendor_id"
-                                                                value="{{ $product->id }}">
-                                                            <div class="col-12 d-flex align-items-center my-4">
-                                                                <h4>
-                                                                    قييم البائع
-                                                                </h4>
-                                                                <div class="rate mx-2">
-                                                                    <input type="radio" id="star10"
-                                                                        name="star_rating" value="5" />
-                                                                    <label for="star10" title="text">5 stars</label>
-                                                                    <input type="radio" id="star9"
-                                                                        name="star_rating" value="4" />
-                                                                    <label for="star9" title="text">4 stars</label>
-                                                                    <input type="radio" id="star8"
-                                                                        name="star_rating" value="3" />
-                                                                    <label for="star8" title="text">3 stars</label>
-                                                                    <input type="radio" id="star7"
-                                                                        name="star_rating" value="2" />
-                                                                    <label for="star7" title="text">2 stars</label>
-                                                                    <input type="radio" id="star6"
-                                                                        name="star_rating" value="1" />
-                                                                    <label for="star6" title="text">1 star</label>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-12">
-                                                                <textarea class=" p-2 form-control" placeholder="أضف تعليق (اختيارى)" rows="5"></textarea>
-                                                            </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer border-0">
-                                                    <button type="button" type="submit"
-                                                        class="btn btn-secondary mx-1 bg-main button-review-vendor"
-                                                        data-dismiss="modal">إرسال
-                                                    </button>
-                                                    <button type="button" class="btn btn-dark">إلغاء</button>
-                                                </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            @endif
-                        </div>
-
-                    </div>
-                </div>
-
+                  
 
                 <!-- cart summary  -->
                 <div class="cart-summary col-12 pr-4 col-lg-4 align-self-start align-content-start text-start ">
@@ -827,4 +841,32 @@
             $("#form-review-vendor").submit()
         })
     </script>
+
+    <script>
+       $(".vendor").on('click' , function(){
+        
+        let id =  $(this).data('vendorid');
+          
+        $("#form-review-vendor  input[name=vendor_id]").val(id);
+
+
+       })
+
+    </script>
+
+    <script>
+        
+        $(".product").on("click" , function(){
+               
+               
+               
+               $("#form-review input[name=product_id]").val($(this).data("product"));
+           })
+    </script>
+
+
+  <script>
+   
+     
+  </script>
 @endpush

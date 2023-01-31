@@ -175,7 +175,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
-        Yoeunes\Toastr\ToastrServiceProvider::class
+        Yoeunes\Toastr\ToastrServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class
 
     ],
 
@@ -211,6 +212,7 @@ return [
         'Gate' => Illuminate\Support\Facades\Gate::class,
         'Hash' => Illuminate\Support\Facades\Hash::class,
         'Http' => Illuminate\Support\Facades\Http::class,
+        'Form' => Collective\Html\FormFacade::class,
         'Js' => Illuminate\Support\Js::class,
         'Lang' => Illuminate\Support\Facades\Lang::class,
         'Log' => Illuminate\Support\Facades\Log::class,

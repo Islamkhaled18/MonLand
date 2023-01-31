@@ -32,7 +32,7 @@ class CartController extends Controller
             }]);
         }])->get();
 
-
+        
         $countProdcts = count($products);
         $addresses = Address::with('governorate')->where('user_id', auth()->user()->id)->first();
 
@@ -140,6 +140,8 @@ class CartController extends Controller
             }]);
         }])->get();
 
+           
+
         $countProdcts = count($products);
         $addresses = Address::with('governorate')->where('user_id', auth()->user()->id)->first();
 
@@ -173,6 +175,7 @@ class CartController extends Controller
             }]);
         }])->get();
         $countProdcts = count($products);
+        
 
         $addresses = Address::with('governorate')->where('user_id', auth()->user()->id)->first();
 
@@ -190,22 +193,31 @@ class CartController extends Controller
                 $products->get();
             }]);
         }])->get();
+
+       
         $countProdcts = count($products);
 
         $addresses = Address::with('governorate')->where('user_id', auth()->user()->id)->first();
         return view('site.sale.order_status', compact('user', 'products', 'addresses', 'countProdcts', 'order'));
     }
 
-    public function reviewstore(Request $request)
+    public function reviewstore(Request $request )
     {
-
+        
+    
         $review = new Review();
         $review->product_id = $request->product_id;
         $review->vendor_id = $request->vendor_id;
-        $review->comments = $request->comments;
+        $review->comments = $request->input("comments");
         $review->star_rating = $request->star_rating;
+         
+        
+        
         $review->save();
 
         return redirect()->back();
+
     }
+
+    
 }
