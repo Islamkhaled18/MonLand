@@ -7,6 +7,8 @@ use App\Models\Ad;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductColor;
+use App\Models\Productsize;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -28,6 +30,8 @@ class CategoryController extends Controller
 
          $productColors = ProductColor::distinct()->get(['name']);
 
+         $productSizes = Productsize::distinct()->get(['name']);
+
          
 
         if ($category) {
@@ -42,7 +46,7 @@ class CategoryController extends Controller
     
         $ads = Ad::paginate(1);
 
-        return view('site.categories.products', compact('category', 'productColors' ,'products', 'allCategories', 'ads'));
+        return view('site.categories.products', compact('category', 'productColors' ,'productSizes' ,'products', 'allCategories', 'ads'));
     }
 
 
@@ -152,6 +156,58 @@ class CategoryController extends Controller
 
 
         return view('site.categories.filterProducts', compact('products', 'category', 'allCategories', 'ads'))->render();
+
+    }
+
+    public function search_by_size(Request $request , $name){
+
+        $category = Category::where('name', $name)->first();
+
+        $sizes = Productsize::where('name' , $request->size)->pluck('product_id')->toArray();
+
+        
+
+        if($category) {
+
+            $products = Product::where("mainCategory_id" , $category->id)
+            ->whereIN("id" , $sizes)->paginate(4); 
+
+            
+            
+            
+        }
+         
+        $allCategories = Category::Parent()->paginate(4);
+        $ads = Ad::paginate(1);
+
+
+
+        return view('site.categories.filterProducts', compact('products', 'category', 'allCategories', 'ads'))->render();
+
+    }
+
+    public function search_by_review_products(Request $request , $name){
+          
+        $category = Category::where('name', $name)->first();
+
+         $reviews = Review::where("star_rating" , $request->rating)->pluck('product_id')->toArray();
+
+    
+         if($category) {
+
+            $products = Product::where("mainCategory_id" , $category->id)
+            ->whereIN("id" , $reviews)->paginate(4); 
+ 
+        }
+
+
+        $allCategories = Category::Parent()->paginate(4);
+        $ads = Ad::paginate(1);
+
+
+
+        return view('site.categories.filterProducts', compact('products', 'category', 'allCategories', 'ads'))->render();
+
 
     }
 

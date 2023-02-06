@@ -227,30 +227,16 @@
                         <hr />
                         <form>
                             <div class="row align-items-center">
+                                @foreach ($productSizes as $pz)
+                                    
+                                
                                 <div class="col-6 d-flex align-items-center">
-                                    <input type="radio" name="size" id="all-sizes" class="position-relative" />
-                                    <label for="all-sizes" class="mr-2 mb-0">الكل</label>
+                                    <input type="radio" value="{{$pz->name}}" name="size" id="sizes" class="position-relative size" />
+                                    <label for="sizes" class="mr-2 mb-0">{{$pz->name}}</label>
                                 </div>
-                                <div class="col-6 d-flex align-items-center">
-                                    <input type="radio" name="size" id="small" class="position-relative" />
-                                    <label for="small" class="mr-2 mb-0">s</label>
-                                </div>
-                                <div class="col-6 d-flex align-items-center mt-3">
-                                    <input type="radio" name="size" id="xl" class="position-relative" />
-                                    <label for="xl" class="mr-2 mb-0">xl</label>
-                                </div>
-                                <div class="col-6 d-flex align-items-center mt-3">
-                                    <input type="radio" name="size" id="xxl" class="position-relative" />
-                                    <label for="xxl" class="mr-2 mb-0">xxl</label>
-                                </div>
-                                <div class="col-6 d-flex align-items-center mt-3">
-                                    <input type="radio" name="size" id="41" class="position-relative" />
-                                    <label for="41" class="mr-2 mb-0">41</label>
-                                </div>
-                                <div class="col-6 d-flex align-items-center mt-3">
-                                    <input type="radio" name="size" id="43" class="position-relative" />
-                                    <label for="43" class="mr-2 mb-0">43</label>
-                                </div>
+
+                                @endforeach
+                               
                             </div>
 
                         </form>
@@ -277,11 +263,11 @@
                     </div>
 
                     <div class="my-4">
-                        <h6 class="font-weight-bold">التقييم</h6>
+                        <h6 class="font-weight-bold">تقييم المنتج</h6>
                         <hr />
                         <form>
                             <div class="d-flex align-items-center">
-                                <input type="radio" name="brand" id="four-stars" class="position-relative" />
+                                <input value="5" type="radio" name="brand" id="five-stars" class="position-relative stars" />
                                 <label for="four-stars" class="mr-2 d-flex justify-content-between">
                                     <div class="star-rating ml-3">
                                         <i class="fa-solid fa-star"></i>
@@ -294,7 +280,7 @@
                                 </label>
                             </div>
                             <div class="d-flex align-items-center">
-                                <input type="radio" name="brand" id="four-stars" class="position-relative" />
+                                <input value="4" type="radio" name="brand" id="four-stars" class="position-relative stars" />
                                 <label for="four-stars" class="mr-2 d-flex justify-content-between">
                                     <div class="star-rating ml-3">
                                         <i class="fa-solid fa-star"></i>
@@ -308,7 +294,7 @@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="radio" name="brand" id="three-stars" class="position-relative" />
+                                <input value="3" type="radio" name="brand" id="three-stars" class="position-relative stars" />
                                 <label for="three-stars" class="mr-2 d-flex justify-content-between">
                                     <div class="star-rating ml-3">
                                         <i class="fa-solid fa-star"></i>
@@ -322,7 +308,7 @@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="radio" name="brand" id="two-stars" class="position-relative" />
+                                <input value="2" type="radio" name="brand" id="two-stars" class="position-relative stars" />
                                 <label for="two-stars" class="mr-2 d-flex justify-content-between">
                                     <div class="star-rating ml-3">
                                         <i class="fa-solid fa-star"></i>
@@ -336,7 +322,7 @@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="radio" name="brand" id="one-stars" class="position-relative" />
+                                <input value="1" type="radio" name="brand" id="one-stars" class="position-relative stars" />
                                 <label for="one-stars" class="mr-2 d-flex justify-content-between">
                                     <div class="star-rating ml-3">
                                         <i class="fa-solid fa-star"></i>
@@ -355,7 +341,7 @@
                     </div>
 
                     <div class="my-4">
-                        <h6 class="font-weight-bold">التقييم</h6>
+                        <h6 class="font-weight-bold">تقييم البائع </h6>
                         <hr />
                         <form>
                             <div class="d-flex align-items-center">
@@ -614,6 +600,39 @@
 
            })
 
+        })
+
+        $('.size').on('click' , function(){
+
+            let size = $(this).val();
+
+            $.ajax({
+                url:"{{ route('search.size' , $category->name) }}",
+                method:"GET",
+                data:{size:size},
+                
+                success: function(res) {
+                        $('.search-result').empty();
+                        $('.search-result').html(res);
+                    }
+
+            })
+        })
+
+        $('.stars').on('click' , function(){
+            let star_rating = $(this).val();
+
+            $.ajax({
+                url:"{{ route('search.review.product' , $category->name) }}",
+                method:"GET",
+                data:{rating : star_rating},
+
+                success: function(res) {
+                    console.log("oer");
+                        $('.search-result').empty();
+                        $('.search-result').html(res);
+                    }
+            })
         })
     </script>
 @endpush

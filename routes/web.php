@@ -45,6 +45,9 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
     Route::get('category/{name}/flash-products', [CategoryController::class, 'get_flash_products'])->name('all_offers.search');
     Route::get('category/{name}/brands-products', [CategoryController::class, 'get_products_ByBrands'])->name('brands.sort');
     Route::get('category/{name}/colors-products' , [CategoryController::class , 'search_by_color'])->name('search.color');
+    Route::get('category/{name}/sizes-products' , [CategoryController::class , 'search_by_size'])->name('search.size');
+    Route::get('category/{name}/review-products' , [CategoryController::class , 'search_by_review_products'])->name('search.review.product');
+
 
 
 
