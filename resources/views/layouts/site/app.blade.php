@@ -67,7 +67,7 @@
     </style>
 </head>
 
-<body class="search-result">
+<body>
 
     @include('layouts.site._header')
 
