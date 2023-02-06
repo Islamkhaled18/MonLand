@@ -36,7 +36,7 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
     //categories & products
     Route::get('AllCategories', [CategoryController::class, 'allCategory'])->name('Site.allCategory');
     Route::get('category/{name}', [CategoryController::class, 'categoryProducts'])->name('Site.category');
-    Route::get('product/{name}', [ProductController::class, 'categoryProducts'])->name('Site.product');
+    Route::get('product/{name}', [ProductController::class, 'productByName'])->name('Site.product');
 
     Route::get('category/{name}/search-products', [CategoryController::class, 'search_products_by_price'])->name('search.products');
     Route::get('category/{name}/sort-products', [CategoryController::class, 'search_products_by_created_at'])->name('sort.products');

@@ -65,7 +65,7 @@ class CartController extends Controller
         }
         Toastr()->success('تم اضافة المنتج لسلة المشتريات بنجاح');
         return redirect()->back();
-    } //store items in db
+    } //store items in db to cart
 
 
     public function update_cart(Request $request)
@@ -92,7 +92,6 @@ class CartController extends Controller
         Toastr()->success('تم حذف المنتج من سلة المشتريات بنجاح');
         return redirect()->route('cart.index');
     }
-
 
     public function checkout(Request $request)
     {
@@ -127,7 +126,7 @@ class CartController extends Controller
             DB::rollBack();
             return redirect()->back()->with('error', $e->getMessage());
         }
-    } //end of checkout
+    } //end of checkout اتمام الشراء
 
     public function orders(Request $request, Order $order)
     {
@@ -203,7 +202,6 @@ class CartController extends Controller
 
     public function reviewstore(Request $request )
     {
-        
     
         $review = new Review();
         $review->product_id = $request->product_id;
@@ -211,8 +209,6 @@ class CartController extends Controller
         $review->comments = $request->input("comments");
         $review->star_rating = $request->star_rating;
          
-        
-        
         $review->save();
 
         return redirect()->back();

@@ -48,7 +48,7 @@
                 <h5 class="card-title">{{ $product->small_description }}</h5>
                 <h5>{{ $product->price }} جنيه</h5>
             </div>
-            @include('site.includes.modal_view_2', $product)
+            {{-- @include('site.includes.modal_view_2', $product) --}}
         </div>
     @endforeach
 
