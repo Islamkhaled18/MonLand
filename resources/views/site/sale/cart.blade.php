@@ -21,7 +21,10 @@
     </a>
 
 </section>
+
+
 <section id="my-cart" class=" container mt-5">
+  
     <div class="col-12 d-flex flex-wrap justify-content-center justify-content-lg-between my-2">
         @if ($countProdcts > 1)
 
@@ -31,6 +34,7 @@
             <div> <i class="fa-solid fa-circle-info main-color px-2"></i>
                 <span>المنتجات المضافة من اكثر من بائع, لذلك سيتم تجزئة الطلب اكثر من شحنة</span>
             </div>
+            
             {{-- <button class="bg-transparent text-normal px-2"> <i class="fa-solid fa-x"></i></button> --}}
         </div>
         @endif
@@ -73,8 +77,26 @@
                     </div>
                     <div class="col-12 col-lg-7 text-start cart-item-details d-flex flex-column text-large">
                         <span class="py-2 "> {{$cart->products->name}}</span>
-                        <span class="">اللون : أسود</span>
-                        <span class="">المقاس : XL</span>
+                        <span class="">اختر اللون:</span>
+                        <select  class="custom-select " onchange="getColorVal(this);" >
+                            <option disabled selected >الالوان</option>
+                            @foreach($cart->products->colors as $color)
+                            <option value="{{$color->id}}">{{$color->name}}</option>
+
+                            @endforeach
+                          
+                          </select>
+                        <span class="">اختر المقاس:</span>
+
+                        <select  class="custom-select" onchange="getSizeVal(this);">
+                            <option disabled selected>المقاسات</option>
+                            @foreach($cart->products->sizes as $size)
+                            <option value="{{$size->id}}">{{$size->name}}</option>
+
+                            @endforeach
+                          
+                          </select>
+
 
                         <form action="{{ route('cart.destroy',$cart->products->id) }}" method="POST" style="color: rgb(31, 27, 27)">
                             @csrf
@@ -163,6 +185,11 @@
         <!-- cart summary  -->
         <div class="cart-summary col-12 pr-4 col-lg-4 align-self-start align-content-start text-start ">
             <div class="payment-info p-3 border-with-raduis mb-5">
+                @if(session()->has('message'))
+    
+                <p class="text-danger">{{session()->get("message")}}...!</p>
+    
+               @endif
                 <div class="text-larger text-simi-bold mb-2">ملخص الطلبية </div>
 
 
@@ -237,11 +264,12 @@
                     {{ isset($addresses->address_details) ? $addresses->address_details : '--' }} </div>
 
                     @if (isset($addresses->address_details))
-
+                     
                     <form action="{{ route('checkout.store') }}" method="POST">
                         @csrf
                         <input type="hidden" name="total" value="{{$total}}">
-
+                         <input type="hidden" name="pickedColor[]"value="" >
+                          <input type="hidden" name="pickedSize[]" value="">
                         <div class="d-flex justify-content-center">
                             <button type="submit" class=" bg-add-to-cart defualt-raduis text-white text-larger text-center my-2 py-2 px-4 rounded justify-self-center">
                                 اتمام الشراء
@@ -364,5 +392,32 @@
             });
         });
     });
+    let colors = [];
+    let sizes = [];
+    function getColorVal(sel)
+  {
+    
+    
+    $('input[name="pickedColor[]"]').each(function(){
 
+        colors.push(sel.value);
+    });
+      
+    
+
+    $('input[name="pickedColor[]"]').val(colors);
+
+  }
+  
+
+
+  function getSizeVal(sel){
+    $('input[name="pickedSize[]"]').each(function(){
+
+      sizes.push(sel.value);
+    });
+
+    $('input[name="pickedSize[]"]').val(sizes);
+
+  }
 </script>

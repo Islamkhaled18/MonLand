@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Site\CartController;
 use App\Http\Controllers\Site\CategoryController;
@@ -26,7 +27,9 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+Route::get('social/{provider}' , [SocialAuthController::class , "redirect"])->name('auth.provider.redirect');
 
+Route::get('social/{provider}/callback' , [SocialAuthController::class , "callBack"]);
 
 Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Site'], function () {
 

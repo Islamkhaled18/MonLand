@@ -91,7 +91,7 @@
 
                     <ul class="list-unstyled social my-4">
                         <li>
-                            <a href="#">
+                            <a href="{{route('auth.provider.redirect' , 'google')}}">
                                 تسجيل الدخول
                                 <i class="fa fa-google mr-1"></i>
                             </a>

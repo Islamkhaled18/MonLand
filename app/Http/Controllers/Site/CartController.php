@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 use Yoeunes\Toastr\Facades\Toastr;
 
@@ -31,7 +32,6 @@ class CartController extends Controller
                 $products->get();
             }]);
         }])->get();
-
         
         $countProdcts = count($products);
         $addresses = Address::with('governorate')->where('user_id', auth()->user()->id)->first();
@@ -96,11 +96,24 @@ class CartController extends Controller
 
     public function checkout(Request $request)
     {
-
+        
         $products = Cart::with('products')->where('user_id', Auth::user()->id)->get();
         if (!$products) {
             return redirect()->route('cart.index');
         }
+         
+        if( strlen($request->pickedSize[0]) < count($products) || strlen($request->pickedColor[0]) < count($products)  ){
+
+            return back()->with("message" , "يجب اختيار اللون و المقاس لكل المنتجات في السلة لاتمام الطلب");
+        }
+        
+        
+        $Pickedcolors = explode(',' , $request->pickedColor[0]);
+
+        $pickedSizes = explode(',' , $request->pickedSize[0]);
+
+
+
         DB::beginTransaction();
         try {
 
@@ -109,23 +122,42 @@ class CartController extends Controller
                 'status' => 'تم استلام الطلبيه والعمل عليها',
                 'total' =>  $request->total,
             ]);
-            foreach ($products as $item) {
 
+
+
+            for($i = 0 ; $i < count($products) ; $i++){
                 $order->items()->create([
                     'order_id'   => $order->id,
-                    'product_id' => $item->product_id,
-                    'quantity'   => $item->quantity,
-                    'price'      => $item->products->price,
+                    'product_id' => $products[$i]->product_id,
+                    'quantity'   => $products[$i]->quantity,
+                    'price'      => $products[$i]->products->price,
+                    "product_color" => $Pickedcolors[$i],
+                    "product_size" => $pickedSizes[$i],
 
                 ]);
-            } //end of foreach
+
+            }
+            // foreach ($products as $item) {
+
+            //     $order->items()->create([
+            //         'order_id'   => $order->id,
+            //         'product_id' => $item->product_id,
+            //         'quantity'   => $item->quantity,
+            //         'price'      => $item->products->price,
+            //         "product_color" => $request->pickedColor,
+            //         "product_size" => $request->pickedSize,
+
+            //     ]);
+            // } //end of foreach
 
             // Cart::with('products')->where('user_id', Auth::user()->id)->delete();
             DB::commit();
             return redirect()->route('cart.orders', compact('order'));
         } catch (Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', $e->getMessage());
+             return redirect()->back()->with('error', $e->getMessage());
+
+           // return $e->getMessage();
         }
     } //end of checkout
 
