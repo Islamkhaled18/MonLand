@@ -114,7 +114,7 @@
 
                             {{-- Modal --}}
 
-                            @include('site.includes.modal_view_1', $product)
+                            {{-- @include('site.includes.modal_view_1', $product) --}}
 
 
                         </div>

@@ -90,7 +90,6 @@ class CategoryController extends Controller
 
         if ($category) {
             
-           // $products = $category->products->paginate(4);
            $products = Product::where("mainCategory_id" , $category->id)->paginate(4);
         }
         $allCategories = Category::Parent()->paginate(4);
@@ -104,12 +103,8 @@ class CategoryController extends Controller
     {
         $category = Category::where('name', $name)->first();
 
-        
-
-
-
+    
         if ($category) {
-           // $products = $category->products->where('flash_sale', 1)->all();
 
            $products = Product::where("mainCategory_id" , $category->id)
             ->where('flash_sale', 1)

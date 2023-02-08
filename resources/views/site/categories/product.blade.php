@@ -599,7 +599,7 @@
                         </div>
                         {{-- Modal --}}
 
-                        @include('site.includes.modal_view_4',$vendor_product)
+                        {{-- @include('site.includes.modal_view_4',$vendor_product) --}}
                     </div>
                     @endforeach
 
@@ -661,7 +661,7 @@
                         </div>
                         {{-- Modal --}}
 
-                        @include('site.includes.modal_view_3',$related_product)
+                        {{-- @include('site.includes.modal_view_3',$related_product) --}}
                     </div>
                     @endforeach
 
