@@ -98,7 +98,7 @@
                         </li>
 
                         <li>
-                            <a href="#">
+                            <a href="{{route('auth.provider.redirect' , 'facebook')}}">
                                 Sign in with facebook
                                 <i class="fa fa-facebook mr-1"></i>
                             </a>

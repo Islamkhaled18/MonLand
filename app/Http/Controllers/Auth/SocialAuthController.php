@@ -13,6 +13,9 @@ use Laravel\Socialite\Facades\Socialite;
 
 class SocialAuthController extends Controller
 {
+    private $firstName;
+
+    private $lastName;
     public function redirect($provider){
 
         return Socialite::driver($provider)->redirect();
@@ -22,7 +25,7 @@ class SocialAuthController extends Controller
     public function callBack($provider){
 
         $providerUser =  Socialite::driver($provider)->user();
-    
+         
        $sysUser =  $this->isUserExist($providerUser->email);
          
         if($sysUser){
@@ -43,11 +46,15 @@ class SocialAuthController extends Controller
 
         }else{
 
+             
+             $this->splitName($providerUser->name);
+             
+            
 
            $data = [
-              'firstName' => $providerUser->user['given_name'],
+              'firstName' => $this->firstName,
 
-               'lastName' =>$providerUser->user['family_name'] ,
+               'lastName' =>$this->lastName,
 
                'email' => $providerUser->email,
 
@@ -90,6 +97,26 @@ class SocialAuthController extends Controller
 
          return $user;
 
+    }
+
+    public function splitName($name){
+        $fullName = explode(' ' , $name);
+        
+         if(count($fullName) == 2){
+             
+            $this->firstName = $fullName[0];
+
+            $this->lastName = $fullName[1];
+ 
+         }else if(count($fullName) == 1){
+              
+            $this->firstName = $fullName[0];
+
+            $this->lastName = "No Name";
+
+         }
+
+         
     }
 
 
