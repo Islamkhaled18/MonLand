@@ -1,4 +1,4 @@
-<div id="show1{{ $product->id }}" class="modal fade quickview in quickview-modal-product-details-{{$product ->id}}" tabindex="-1" role="dialog">
+<div id="show9{{ $product->id }}" class="modal fade quickview in quickview-modal-product-details-{{$product ->id}}" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

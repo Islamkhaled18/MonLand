@@ -26,7 +26,7 @@
         <ul class="list-unstyled d-flex special-list m-0">
 
             <li>
-                <a href="#" class="d-block">
+                <a href="{{route('compare.products.index')}}" class="d-block">
                     <i class="fa fa-exchange" aria-hidden="true"></i>
                 </a>
             </li>
@@ -47,8 +47,9 @@
 
             <li>
                 <a href="{{route('cart.index')}}" class="d-block">
-                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                    <span>5</span>
+                    <i class="fa fa-shopping-cart " aria-hidden="true"></i>
+                    <span class="badgo productsCount">0</span>
+                    
                 </a>
             </li>
         </ul>

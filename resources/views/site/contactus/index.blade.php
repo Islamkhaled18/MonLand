@@ -32,17 +32,17 @@
 
         <ul class="list-unstyled d-flex mt-4 social-list ">
             <li>
-                <a class="p-3 facebook">
+                <a href="{{ $setting['facebook'] }}" class="p-3 facebook">
                     <i class="fab fa-facebook-f fa-lg"></i>
                 </a>
             </li>
             <li>
-                <a class="mx-3 p-3 whats">
+                <a href="{{ $setting['phone'] }}" class="mx-3 p-3 whats">
                     <i class="fab fa-whatsapp fa-lg"></i>
                 </a>
             </li>
             <li>
-                <a class="p-3 telegram">
+                <a href="{{ $setting['telegram'] }}" class="p-3 telegram">
                     <i class="fab fa-telegram fa-lg"></i>
                 </a>
             </li>

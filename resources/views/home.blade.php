@@ -145,10 +145,6 @@
                                                         class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
                                                 </form>
                                             </div>
-                                            <div class="badge badge-success px-3 py-2 rounded-0">
-                                                جديد
-                                            </div>
-
 
                                         </div>
                                         <img class="card-img-top" width="40" height="40"
@@ -161,7 +157,6 @@
                                     </div>
                                     @include('site.includes.product_detail')
                                 @endforeach
-
                             </div>
                         </div>
                     </div>
@@ -188,7 +183,8 @@
                                                 </li>
 
                                                 <li>
-                                                    <button data-toggle="modal" data-target="#show{{ $product->id }}"><i
+                                                    <button data-toggle="modal"
+                                                        data-target="#show1{{ $product->id }}"><i
                                                             class="fa fa-arrows-alt" aria-hidden="true"></i></button>
                                                 </li>
 
@@ -252,7 +248,8 @@
                                                 </li>
 
                                                 <li>
-                                                    <button data-toggle="modal" data-target="#show{{ $product->id }}"><i
+                                                    <button data-toggle="modal"
+                                                        data-target="#show2{{ $product->id }}"><i
                                                             class="fa fa-arrows-alt" aria-hidden="true"></i></button>
                                                 </li>
 
@@ -274,9 +271,6 @@
                                                         class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
                                                 </form>
                                             </div>
-                                            <div class="badge badge-success px-3 py-2 rounded-0">
-                                                جديد
-                                            </div>
 
 
                                         </div>
@@ -288,7 +282,7 @@
 
                                         </div>
                                     </div>
-                                    @include('site.includes.best_sellings')
+                                    @include('site.includes.featured_products')
                                 @endforeach
 
                             </div>
@@ -318,10 +312,10 @@
                                     </button>
                                 </li>
 
-                                <li>
-                                    <button data-toggle="modal" data-target="#show{{ $product->id }}"><i
+                                {{-- <li>
+                                    <button data-toggle="modal" data-target="#show4{{ $product->id }}"><i
                                             class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                </li>
+                                </li> --}}
 
                                 <li>
                                     <button>
@@ -353,6 +347,7 @@
 
                         </div>
                     </div>
+                    {{-- @include('site.includes.dealOfDay_products') --}}
                 @endforeach
             </div>
         </div>
@@ -387,7 +382,7 @@
                                 </li>
 
                                 <li>
-                                    <button data-toggle="modal" data-target="#show{{ $product->id }}"><i
+                                    <button data-toggle="modal" data-target="#show5{{ $product->id }}"><i
                                             class="fa fa-arrows-alt" aria-hidden="true"></i></button>
                                 </li>
 
@@ -409,8 +404,6 @@
                                         class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
                                 </form>
                             </div>
-
-
                         </div>
                         <img class="card-img-top" width="40" height="40" src="{{ $product->images[0]->photo }}"
                             alt="{{ $product->name }}">
@@ -420,9 +413,8 @@
 
                         </div>
                     </div>
+                    @include('site.includes.men_products')
                 @endforeach
-
-
 
             </div>
         </div>
@@ -459,7 +451,7 @@
                                 </li>
 
                                 <li>
-                                    <button data-toggle="modal" data-target="#show{{ $product->id }}"><i
+                                    <button data-toggle="modal" data-target="#show6{{ $product->id }}"><i
                                             class="fa fa-arrows-alt" aria-hidden="true"></i></button>
                                 </li>
 
@@ -492,6 +484,7 @@
 
                         </div>
                     </div>
+                    @include('site.includes.women_products')
                 @endforeach
 
 
@@ -513,8 +506,6 @@
         <div class="bg-light py-4 px-4">
 
             <div class="card-deck d-flex flex-wrap">
-
-
                 @foreach ($flash_products as $product)
                     <div class="card position-relative my-2">
                         <div
@@ -530,7 +521,7 @@
                                 </li>
 
                                 <li>
-                                    <button data-toggle="modal" data-target="#show{{ $product->id }}"><i
+                                    <button data-toggle="modal" data-target="#show7{{ $product->id }}"><i
                                             class="fa fa-arrows-alt" aria-hidden="true"></i></button>
                                 </li>
 
@@ -563,6 +554,7 @@
 
                         </div>
                     </div>
+                    @include('site.includes.flash_products')
                 @endforeach
 
 
@@ -610,8 +602,6 @@
                 </p>
             </div>
 
-
-
         </div>
 
         <div class="py-4 px-4 bg-light">
@@ -634,7 +624,7 @@
                                     </li>
 
                                     <li>
-                                        <button data-toggle="modal" data-target="#show{{ $product->id }}"><i
+                                        <button data-toggle="modal" data-target="#show8{{ $product->id }}"><i
                                                 class="fa fa-arrows-alt" aria-hidden="true"></i></button>
                                     </li>
 
@@ -663,6 +653,8 @@
 
                             </div>
                         </div>
+                    </div>
+                    @include('site.includes.childrens_products')
                 @endforeach
 
 
@@ -680,7 +672,7 @@
                         عروض فلاش
                     </p>
                     <p>
-                    {{-- <div id="countdown" class="d-flex flex-row-reverse">
+                        {{-- <div id="countdown" class="d-flex flex-row-reverse">
                         <div id="days" class="timer mx-1 px-3 py-2 text-white rounded font-weight-bold"> </div>
                         <div id="hours" class="timer mx-1 px-3 py-2 text-white rounded font-weight-bold"> </div>
                         <div id="minutes" class="timer mx-1 px-3 py-2 text-white rounded font-weight-bold"> </div>
@@ -708,10 +700,10 @@
                                             </button>
                                         </li>
 
-                                        <li>
+                                        {{-- <li>
                                             <button data-toggle="modal" data-target="#show{{ $product->id }}"><i
                                                     class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                        </li>
+                                        </li> --}}
 
                                         <li>
                                             <button>
@@ -791,7 +783,7 @@
                                     </li>
 
                                     <li>
-                                        <button data-toggle="modal" data-target="#show{{ $product->id }}"><i
+                                        <button data-toggle="modal" data-target="#show9{{ $product->id }}"><i
                                                 class="fa fa-arrows-alt" aria-hidden="true"></i></button>
                                     </li>
 
@@ -821,6 +813,7 @@
                             </div>
                         </div>
                     </div>
+                    @include('site.includes.electronics_products')
                 @endforeach
             </div>
         </div>
@@ -856,7 +849,7 @@
                                     </li>
 
                                     <li>
-                                        <button data-toggle="modal" data-target="#show{{ $product->id }}"><i
+                                        <button data-toggle="modal" data-target="#show10{{ $product->id }}"><i
                                                 class="fa fa-arrows-alt" aria-hidden="true"></i></button>
                                     </li>
 
@@ -886,6 +879,7 @@
                             </div>
                         </div>
                     </div>
+                    @include('site.includes.beauty_products')
                 @endforeach
             </div>
         </div>
@@ -923,7 +917,7 @@
                                     </li>
 
                                     <li>
-                                        <button data-toggle="modal" data-target="#show{{ $product->id }}"><i
+                                        <button data-toggle="modal" data-target="#show11{{ $product->id }}"><i
                                                 class="fa fa-arrows-alt" aria-hidden="true"></i></button>
                                     </li>
 
@@ -953,6 +947,7 @@
                             </div>
                         </div>
                     </div>
+                    @include('site.includes.home_products')
                 @endforeach
             </div>
         </div>
@@ -994,7 +989,9 @@
                     'productId': $(this).attr('data-product-id'),
                 },
                 success: function(data) {
+
                     console.log('ssssss');
+                    location.reload();
                     if (data.compared)
 
                         $('.alert-modal').css('display', 'block');
@@ -1016,6 +1013,7 @@
                     'productId': $(this).attr('data-product-id'),
                 },
                 success: function(data) {
+                    location.reload();
                     if (data.wished)
                         $('.alert-modal').css('display', 'block');
                     else

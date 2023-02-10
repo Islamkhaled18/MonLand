@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\EmailUs;
+use App\Models\Subcribe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -15,16 +15,23 @@ class EmailUsController extends Controller
         if(!Gate::allows('emailUs')){
             return view('admin.errors.notAllowed');
         }
-        $emailUs = EmailUs::all();
+        $emailUs = Subcribe::all();
         return view('admin.emailus.index',compact('emailUs'));
     }//end of index
 
     public function store(Request $request){
 
-        $emailUs = new EmailUs();
-        $emailUs->user_id = Auth::user()->id;
-        $emailUs->save();
+        return $request;
 
+
+        $request->validate([
+            'email'=>'nullable|max:255',
+        ]);
+
+        $emailUs = new Subcribe();
+        $emailUs->email = $request->email;
+        $emailUs->save();
+        Toastr()->success('تم الاشتراك بنجاح بنجاح');
         return redirect()->back();
     }
 
@@ -34,7 +41,7 @@ class EmailUsController extends Controller
         if(!Gate::allows('emailUs.destroy')){
             return view('admin.errors.notAllowed');
         }
-        $EmailUs = EmailUs::findOrFail($id);
+        $EmailUs = Subcribe::findOrFail($id);
         $EmailUs->delete();
 
         Toastr()->success('تم حذف المتابعه بنجاح');

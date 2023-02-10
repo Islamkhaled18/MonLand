@@ -87,6 +87,7 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
         Route::post('store', [CartController::class, 'store'])->name('cart.store');
         Route::get('delete/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
         Route::post('update_cart', [CartController::class, 'update_cart'])->name('cart.update'); //upate product in cart list
+        Route::get('count-cart-prod',  [CartController::class, 'countCart'])->name('cart.countCart');
 
         /////////////////////////////////////// coupon //////////////////////////////////////////
         Route::post('/coupon', [CouponController::class, 'store'])->name('site.coupon.store');
