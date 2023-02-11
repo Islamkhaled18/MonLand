@@ -152,4 +152,9 @@ class Product extends Model
             ->using(OrderProduct::class)
             ->withPivot('price', 'quantity');
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

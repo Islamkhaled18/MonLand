@@ -36,6 +36,9 @@ class CreateProductsTable extends Migration
             $table->boolean('deal_of_the_day')->default(0);
             $table->boolean('flash_sale')->default(0);
             $table->boolean('quick_request')->default(0);
+            $table->string('weight');
+            $table->string('dimension');
+            $table->string('material');
             $table->softDeletes();
             $table->timestamps();
         });

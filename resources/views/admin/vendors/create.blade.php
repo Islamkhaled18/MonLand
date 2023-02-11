@@ -39,6 +39,23 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1"> حالة الاستبدال او الاسترجاع </label>
+                                    <input class="form-control" id="exampleInputEmail1" name="exhange_status"
+                                        value="{{ old('exhange_status') }}" type="text" placeholder=" حالة الاستبدال او الاسترجاع">
+                                    @error('exhange_status')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1"> حالة توصيل الطلب </label>
+                                    <input class="form-control" id="exampleInputEmail1" name="delivery_status"
+                                        value="{{ old('delivery_status') }}" type="text" placeholder=" ">
+                                    @error('delivery_status')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
 
                                 <div class="tile-footer">
                                     <button class="btn btn-primary" type="submit">حفظ</button>

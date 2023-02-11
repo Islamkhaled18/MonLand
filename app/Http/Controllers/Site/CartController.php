@@ -308,6 +308,7 @@ class CartController extends Controller
     {
     
         $review = new Review();
+        $review->user_id = auth()->user()->id;
         $review->product_id = $request->product_id;
         $review->vendor_id = $request->vendor_id;
         $review->comments = $request->input("comments");

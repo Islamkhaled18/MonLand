@@ -52,7 +52,7 @@
                                     class="label-text">تذكرني</span>
                             </label>
                         </div>
-                        <p class="semibold-text mb-2"><a href="#" data-toggle="flip">هل نسيت كلمة المرور</a></p>
+                        {{-- <p class="semibold-text mb-2"><a href="#" data-toggle="flip">هل نسيت كلمة المرور</a></p> --}}
                     </div>
                 </div>
                 <div class="form-group btn-container">

@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 @section('title')
-    تعديل بائع وسعر شحن 
+    تعديل بائع وسعر شحن
 @endsection
 @section('content')
     <main class="app sidebar-mini rtl">
@@ -10,8 +10,10 @@
             </div>
             <ul class="app-breadcrumb breadcrumb side">
                 <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-                <li class="breadcrumb-item"><a href="{{ route('vendors.index') }}" title="البائعين واسعار الشحن">البائعين واسعار الشحن</a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('vendors.edit', $vendor->id) }}" title="تعديل على بائع وسعر الشحن الخاص به">تعديل على بائع او سعر الشحن -
+                <li class="breadcrumb-item"><a href="{{ route('vendors.index') }}" title="البائعين واسعار الشحن">البائعين
+                        واسعار الشحن</a></li>
+                <li class="breadcrumb-item active"><a href="{{ route('vendors.edit', $vendor->id) }}"
+                        title="تعديل على بائع وسعر الشحن الخاص به">تعديل على بائع او سعر الشحن -
                         {{ $vendor->vendor_name }}</a></li>
             </ul>
         </div>
@@ -43,6 +45,25 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1"> حالة الاستبدال او الاسترجاع </label>
+                                    <input class="form-control" id="exampleInputEmail1" name="exhange_status"
+                                        value="{{ $vendor->exhange_status }}" type="text"
+                                        placeholder=" حالة الاستبدال او الاسترجاع">
+                                    @error('exhange_status')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1"> حالة توصيل الطلب </label>
+                                    <input class="form-control" id="exampleInputEmail1" name="delivery_status"
+                                        value="{{ $vendor->delivery_status }}" type="text" placeholder=" ">
+                                    @error('delivery_status')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
                                 <div class="tile-footer">
                                     <button class="btn btn-primary" type="submit">تعديل</button>
                                 </div>

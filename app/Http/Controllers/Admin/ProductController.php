@@ -108,6 +108,9 @@ class ProductController extends Controller
         $product->qty = $request->qty;
         $product->vendor_id = $request->vendor_id;
         $product->mainCategory_id = $request->mainCategory_id;
+        $product->weight = $request->weight;
+        $product->dimension = $request->dimension;
+        $product->material = $request->material;
         $product->save();
 
 

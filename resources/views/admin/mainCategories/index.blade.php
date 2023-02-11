@@ -13,11 +13,11 @@
             <li class="breadcrumb-item active"><a href="{{ route('mainCategories.index') }}" title="الاقسام الرئيسية">الاقسام الرئيسية</a></li>
         </ul>
     </div>
-    @can('mainCategories.create')
+    {{-- @can('mainCategories.create')
     <div>
         <a class="btn btn-primary btn-sm" href="{{ route('mainCategories.create') }}" title="انشاء قسم رئيسي">انشاء قسم رئيسي</a>
     </div>
-    @endcan
+    @endcan --}}
 
     <div class="row">
         <div class="col-md-12">
@@ -28,7 +28,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>الاسم</th>
-                                <th>العمليات</th>
+                                {{-- <th>العمليات</th> --}}
 
                             </tr>
                         </thead>
@@ -38,7 +38,7 @@
 
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $mainCategory->name }}</td>
-                                <td>
+                                {{-- <td>
                                     @can('mainCategories.edit')
                                     <a class="btn btn-sm btn-dark" href="{{ route('mainCategories.edit', ['id' => $mainCategory->id]) }}" title="تعديل">تعديل</a>
                                     @endcan
@@ -51,7 +51,7 @@
                                     </form>
                                     @endcan
 
-                                </td>
+                                </td> --}}
                             </tr>
                             @endforeach
                         </tbody>
