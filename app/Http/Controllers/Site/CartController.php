@@ -148,12 +148,8 @@ class CartController extends Controller
             return back()->with("message" , "يجب اختيار اللون و المقاس لكل المنتجات في السلة لاتمام الطلب");
         }
         
-        
         $Pickedcolors = explode(',' , $request->pickedColor[0]);
-
         $pickedSizes = explode(',' , $request->pickedSize[0]);
-
-
 
         DB::beginTransaction();
         try {
@@ -163,20 +159,18 @@ class CartController extends Controller
                 'status' => 'تم استلام الطلبيه والعمل عليها',
                 'total' =>  $request->total,
             ]);
-
-
-
+            
             for($i = 0 ; $i < count($products) ; $i++){
-                $order->items()->create([
+               $order_products = $order->items()->create([
                     'order_id'   => $order->id,
                     'product_id' => $products[$i]->product_id,
                     'quantity'   => $products[$i]->quantity,
                     'price'      => $products[$i]->products->price,
                     "product_color" => $Pickedcolors[$i],
                     "product_size" => $pickedSizes[$i],
-
+                    
                 ]);
-
+                
             }
             // foreach ($products as $item) {
 
@@ -191,7 +185,7 @@ class CartController extends Controller
             //     ]);
             // } //end of foreach
 
-            Cart::with('products')->where('user_id', Auth::user()->id)->delete();
+            // Cart::with('products')->where('user_id', Auth::user()->id)->delete();
             DB::commit();
             return redirect()->route('cart.orders', compact('order'));
         } catch (Throwable $e) {
@@ -223,12 +217,9 @@ class CartController extends Controller
         })
         ->get();
 
-           
-
         $countProdcts = count($products);
         $addresses = Address::with('governorate')->where('user_id', auth()->user()->id)->first();
 
-        // $order = $user->orders;
 
         $order = Order::where('user_id', Auth::id())->first();
 

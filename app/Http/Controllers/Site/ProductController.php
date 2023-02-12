@@ -29,6 +29,7 @@ class ProductController extends Controller
         $product_colors = ProductColor::with('product')->where('product_id', $product->id)->get();
         $product_sizes = Productsize::with('product')->where('product_id', $product->id)->get();
         $reviews = Product::with('reviews')->where('id',$product->id)->get();
+
         $reviewsCount = $product->reviews()->count();
 
         $progresseData =  [];
@@ -56,10 +57,14 @@ class ProductController extends Controller
         $productsWithRatingFive = $product->reviews()->where('star_rating', 5)->count();
 
 
+        $review_details = Review::with(['product','user'])->where('product_id',$product->id)->get();
+
+     
+
+
         return view('site.categories.product', compact('product', 'related_products', 'vendors_products','product_colors','product_sizes','reviews','average','vendor','productsWithRatingOne',
-        'productsWithRatingTwo','productsWithRatingThree','productsWithRatingFour','productsWithRatingFive'
-    
-    ));
+        'productsWithRatingTwo','productsWithRatingThree','productsWithRatingFour','productsWithRatingFive','review_details'
+        ));
     }
 
     public function vendorProducts($id)

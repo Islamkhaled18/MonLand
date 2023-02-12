@@ -7,7 +7,7 @@
 @section('content')
 
     <!-- my Cart -->
-    @if ($products && $products->count() == 0)
+    @if ($products && $products->count() > 0 && $products->count() <= 1)
         <div class="container mt-4 mb-5">
             <div class="page-nav row">
                 <a href="/" class="text-dark pl-2">
@@ -55,12 +55,22 @@
                             <tr>
                                 <td>التقييم</td>
                                 <td>
+                                    <?php
+                                    $fullStars = floor($average);
+                                    $halfStar = $average - $fullStars >= 0.5;
+                                    ?>
+
                                     <div class="star-rating">
+                                        <?php for ($i = 0; $i < 5; $i++): ?>
+                                        <?php if ($i < $fullStars): ?>
+                                        <i class="fa-solid fa-star"></i>
+                                        <?php elseif ($halfStar): ?>
                                         <i class="fa-solid fa-star-half-stroke"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
+                                        <?php $halfStar = false; ?>
+                                        <?php else: ?>
+                                        <i class="fa-light fa-star"></i>
+                                        <?php endif; ?>
+                                        <?php endfor; ?>
 
                                     </div>
                                 </td>
@@ -77,7 +87,7 @@
             </div>
 
         </div>
-    @elseif ($products && $products->count() == 2)
+    @elseif ($products && $products->count() > 1 && $products->count() <= 2)
         <div class="container">
             <table class="table table-bordered font-weight-bold">
                 <thead>

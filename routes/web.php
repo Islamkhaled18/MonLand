@@ -51,9 +51,6 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
     Route::get('category/{name}/sizes-products' , [CategoryController::class , 'search_by_size'])->name('search.size');
     Route::get('category/{name}/review-products' , [CategoryController::class , 'search_by_review_products'])->name('search.review.product');
 
-
-
-
     //vendors
     Route::get('product/vendor/{id}', [ProductController::class, 'vendorProducts'])->name('Site.product.vendorProducts');
     Route::get('vendor/{id}', [ProductController::class, 'getVendor'])->name('Site.getVendor');

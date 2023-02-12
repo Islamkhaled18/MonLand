@@ -20,4 +20,8 @@ class Review extends Model
     {
         return $this->belongsTo(vendor::class);
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

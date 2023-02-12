@@ -183,7 +183,7 @@
                                 <i class="fa-solid fa-rotate-left main-color"></i>
                             </div>
                             <div class="border-top border-secondary d-block text-start px-2">
-                                <p>{{$vendor->exhange_status}}</p>
+                                <p>{{ $vendor->exhange_status }}</p>
                             </div>
                         </div>
 
@@ -193,7 +193,7 @@
                             </div>
                             <div class="border-top border-secondary d-block text-start px-2">
                                 <p class="text-large">شحن موثوق به</p>
-                                <p>{{$vendor->delivery_status}}</p>
+                                <p>{{ $vendor->delivery_status }}</p>
                                 {{-- <p>كل شحنه لها مصاريف شحن خاصة بها علي حسب عروض البائع</p> --}}
                                 {{-- <a href="#">معرفه المزيد</a> --}}
                             </div>
@@ -244,11 +244,11 @@
                             <div class=" d-flex flex-row flex-wrap py-4 text-bold text-large">
                                 <div class="col-12 my-2 col-md-6 ">
                                     <div class="px-2">وزن:</div>
-                                    <div class="weight px-2">{{$product->weight}} </div>
+                                    <div class="weight px-2">{{ $product->weight }} </div>
                                     <div class="dimensions px-2">أبعاد:</div>
-                                    <div class="px-2">{{$product->dimension}}</div>
+                                    <div class="px-2">{{ $product->dimension }}</div>
                                     <div class="materials px-2">مواد: </div>
-                                    <div class="px-2">{{$product->material}}</div>
+                                    <div class="px-2">{{ $product->material }}</div>
                                     <div class="other-info px-2">معلومات اخري:</div>
                                     <div class="px-2">{{ $product->short_description }}</div>
                                 </div>
@@ -356,38 +356,56 @@
                                     </button>
                                 @endif
                                 <!-- reviews postes -->
-                                <div class="w-100 text-normal">
-                                    
-                                        
-                                  
-                                    <div class=" d-flex flex-wrap d-flex review my-4 justify-content-center text-start  ">
+                                @foreach ($review_details as $review_detail)
+                                    <div class="w-100 text-normal">
 
-                                        <div class="col-3 col-md-1 d-flex justify-content-center align-items-center mr-3">
-                                            <img src="../imgs/productdetails/gir.jpg" alt=""
-                                                class="rounded-circle review-image">
-                                        </div>
-                                        <div class="col-12 col-md-7 px-3 align-content-center align-content-md-start">
-                                            <div class="review-customer-name py-2 ">اسم العميل</div>
-                                            <div class="star-rating">
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star-half-stroke flip"></i>
+                                        <div
+                                            class=" d-flex flex-wrap d-flex review my-4 justify-content-center text-start  ">
+
+                                            <div
+                                                class="col-3 col-md-1 d-flex justify-content-center align-items-center mr-3">
+                                                <img src="../imgs/productdetails/gir.jpg" alt=""
+                                                    class="rounded-circle review-image">
                                             </div>
-                                            <div class="review-customer-review py-1">خامة جميله بالنسبه لسعره قصة مناسبه
-                                                ومقاس مظبوط</div>
-                                            <div class="review-date text-muted text-xsmall">2021-5-22</div>
-                                        </div>
-                                        <div class="col-12 col-md d-flex justify-content-end align-items-end">
-                                            <div class="review-customer-name text-success ">
-                                                <i class="fa-solid fa-circle-check "></i>
-                                                طلبية مؤكدة
+                                            <div class="col-12 col-md-7 px-3 align-content-center align-content-md-start">
+                                                <div class="review-customer-name py-2 ">
+                                                    {{ $review_detail->user->firstName }}</div>
+                                                <div class="star-rating">
+                                                    <?php
+                                                    $star_rating = $review_detail->star_rating;
+                                                    $star_html = '<i class="fa-solid fa-star"></i>';
+                                                    $half_star_html = '<i class="fa-solid fa-star-half-stroke flip"></i>';
+                                                    
+                                                    $full_stars = intval($star_rating);
+                                                    $half_star = $star_rating - $full_stars >= 0.5;
+                                                    for ($i = 0; $i < $full_stars; $i++) {
+                                                        echo $star_html;
+                                                    }
+                                                    
+                                                    if ($half_star) {
+                                                        echo $half_star_html;
+                                                    }
+                                                    
+                                                    for ($i = 0; $i < 5 - $full_stars - intval($half_star); $i++) {
+                                                        echo '<i class="fa-regular fa-star"></i>';
+                                                    }
+                                                    ?>
+                                                </div>
+                                                <div class="review-customer-review py-1">{{ $review_detail->comments }}
+                                                </div>
+                                                <div class="review-date text-muted text-xsmall">
+                                                    {{ $review_detail->create_at }}</div>
                                             </div>
+                                            {{-- <div class="col-12 col-md d-flex justify-content-end align-items-end">
+                                                <div class="review-customer-name text-success ">
+                                                    <i class="fa-solid fa-circle-check "></i>
+                                                    طلبية مؤكدة
+                                                </div>
+                                            </div> --}}
                                         </div>
+
                                     </div>
-                                
-                                </div>
+                                @endforeach
 
 
                             </div>
