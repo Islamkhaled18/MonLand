@@ -21,9 +21,6 @@ class EmailUsController extends Controller
 
     public function store(Request $request){
 
-        return $request;
-
-
         $request->validate([
             'email'=>'nullable|max:255',
         ]);

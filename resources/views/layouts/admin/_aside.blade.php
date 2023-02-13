@@ -35,7 +35,12 @@
         <li><a class="app-menu__item" href="{{route('ContactUs.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">رسائل المستخدمين او الزوار</span></a></li>
         @endcan
 
-        <li><a class="app-menu__item" href="{{route('DeliveryPolicy.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">سياسة الخصوصية</span></a></li>
+        
+        <li><a class="app-menu__item" href="{{route('DeliveryPolicy.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">سياسة الشحن</span></a></li>
+        
+        <li><a class="app-menu__item" href="{{route('terms.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">الشروط والاحكام </span></a></li>
+
+
         <li><a class="app-menu__item" href="{{route('ads.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">الاعلانات</span></a></li>
         <li><a class="app-menu__item" href="{{route('emailUs.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">ايميلات العملاء</span></a></li>
         <li><a class="app-menu__item" href="{{route('governorate.index')}}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">المحافظات</span></a></li>

@@ -3,10 +3,10 @@
         <div class="container d-flex justify-content-between align-items-center">
             <ul class="list-unstyled m-0 d-none d-md-flex">
                 <li>
-                    <a href="#">عن المتجر</a>
+                    <a href="{{route('site.terms.index')}}">الشروط والاحكام </a>
                 </li>
                 <li>
-                    <a href="#">سياسة الشحن </a>
+                    <a href="{{route('site.DeliveryPolicy.index')}}">سياسة الشحن </a>
                 </li>
                 <li>
                     <a href="{{route('Site.contactUs')}}">تواصل معنا</a>

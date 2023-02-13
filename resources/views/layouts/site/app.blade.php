@@ -94,10 +94,10 @@
                     </h6>
                     <div class="form-group d-flex mt-4">
 
-                        <form action="{{ route('emailUs.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('emailUs.store') }}" method="POST">
                             @csrf
 
-                            <input type="email" value="{{ old('email') }}" class="form-control rounded-0 py-4"
+                            <input type="email" name="email" value="{{ old('email') }}" class="form-control rounded-0 py-4"
                                 placeholder="ادخل بريدك الالكترونى هنا" />
                             <button type="submit" class="text-white py-2 px-4 rounded-0">اشترك</button>
                         </form>
