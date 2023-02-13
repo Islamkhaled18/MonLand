@@ -76,7 +76,7 @@ class ProductController extends Controller
         $vendor = Vendor::where('id', $product->vendor_id)->first();
 
         return view('site.categories.vendor_products', compact('product', 'vendors_products', 'vendor'));
-    }
+    } // الكنترولر اللي بيجيب البائع بمنتجاته
 
 
     public function getVendor($id)
@@ -84,7 +84,7 @@ class ProductController extends Controller
         $product = Product::where('id', $id)->first();
         $vendor = Vendor::where('id', $product->vendor_id)->first();
 
-
         return view('site.categories.vendorDetails', compact('vendor'));
     }
+
 }
