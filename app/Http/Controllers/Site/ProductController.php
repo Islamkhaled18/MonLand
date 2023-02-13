@@ -84,7 +84,37 @@ class ProductController extends Controller
         $product = Product::where('id', $id)->first();
         $vendor = Vendor::where('id', $product->vendor_id)->first();
 
-        return view('site.categories.vendorDetails', compact('vendor'));
+        $reviews = Vendor::with('reviews')->where('id',$vendor->id)->get();
+
+        
+        $reviewsCount = $vendor->reviews()->count();
+        
+        $progresseData =  [];
+        if($reviewsCount > 0){
+            $progresseData =  [
+                
+                '1' => $vendor->reviews()->where('star_rating', 1)->count() / $reviewsCount *100 ,
+                '2' => $vendor->reviews()->where('star_rating', 2)->count() / $reviewsCount *100,
+                '3' => $vendor->reviews()->where('star_rating', 3)->count() / $reviewsCount *100,
+            '4' => $vendor->reviews()->where('star_rating', 4)->count() / $reviewsCount *100,
+            '5' => $vendor->reviews()->where('star_rating', 5)->count() / $reviewsCount *100,
+        ];
+        
+    }else{
+        $reviewsCount = 0;
+    }
+        
+    $average =  $reviewsCount ? (round($vendor->reviews()->sum('star_rating') / $reviewsCount ,2) ) : 0;
+
+    // $productsWithReviews = Product::whereHas('reviews')->with('reviews')->with('reviews.user')->where('vendor_id', $vendor->id)->get();
+
+    $productsWithReviews = Review::with(['product','user'])->where('product_id',$product->id)->get();
+    return $productsWithReviews;
+
+    // $productsWithReviews = Product::whereHas('reviews')->with(['reviews.user'])->where('vendor_id', $vendor->id)
+    // ->get();
+
+        return view('site.categories.vendorDetails', compact('vendor','average','reviewsCount','productsWithReviews'));
     }
 
 }
