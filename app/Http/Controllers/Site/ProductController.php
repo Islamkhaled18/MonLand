@@ -52,4 +52,6 @@ class ProductController extends Controller
 
         return view('site.categories.vendorDetails', compact('vendor'));
     }
+
+    
 }
