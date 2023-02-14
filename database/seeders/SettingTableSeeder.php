@@ -26,6 +26,7 @@ class SettingTableSeeder extends Seeder
             ['key' => 'address', 'value' => 'Dubai'],
             ['key' => 'email', 'value' => 'admin@info.com'],
             ['key' => 'phone', 'value' => '01015151515'],
+            ['key' => 'telegram', 'value' => '01015151515'],
             ['key' => 'instgram', 'value' => 'https://www.instagram.com'],
             ['key' => 'facebook', 'value' => 'https://www.facebook.com'],
             ['key' => 'youtube', 'value' => 'https://www.youtube.com'],

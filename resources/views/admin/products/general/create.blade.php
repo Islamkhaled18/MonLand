@@ -19,7 +19,7 @@
 
             <div class="tile">
                 <div class="tile-body">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <form action="{{ route('products.general.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
@@ -141,6 +141,29 @@
                                         <input type="file" class="form-control @error('photo') is-invalid @enderror" value="{{ old('photo') }}" id="photo" name="photo[]" multiple accept="image/*">
                                         @error('file')
                                         <span class="invalid-feedback">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <label for="exampleInputEmail1"> المقاس </label>
+                                        <input class="form-control" id="exampleInputEmail1" name="weight" value="{{ old('weight') }}" type="text" placeholder='المقاس '>
+                                        @error('weight')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleInputEmail1"> الابعاد </label>
+                                        <input class="form-control" id="exampleInputEmail1" name="dimension" value="{{ old('dimension') }}" type="text" placeholder='الابعاد '>
+                                        @error('dimension')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleInputEmail1"> المواد المصنوعه </label>
+                                        <input class="form-control" id="exampleInputEmail1" name="material" value="{{ old('material') }}" type="text" placeholder=' المواد المصنوعه'>
+                                        @error('material')
+                                        <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>

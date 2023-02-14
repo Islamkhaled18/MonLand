@@ -127,6 +127,14 @@
                                                 type="text" class="form-control" placeholder="Twiter">
                                         </div>
                                     </div>
+                                    <div class="form-group ">
+                                        <label class="col-lg-2 col-form-label font-weight-semibold"> تليجرام<span
+                                                class="text-danger">*</span></label>
+                                        <div class="col-lg-9">
+                                            <input name="telegram" value="{{ $setting['telegram'] }}" required
+                                                type="text" class="form-control" placeholder="Telegram">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="tile-footer">
                                     <button class="btn btn-primary" type="submit">تعديل</button>

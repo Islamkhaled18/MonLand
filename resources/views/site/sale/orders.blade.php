@@ -104,15 +104,15 @@
                             </div>
                             <div class="col-12 col-lg-7 text-start cart-item-details d-flex flex-column text-large">
                                 <span class="py-2 "> {{$cart->products->name}}</span>
-                                <span class="">اللون : أسود</span>
-                                <span class="">المقاس : XL</span>
+                                {{-- <span class="">اللون : {{$product->pro}}</span>
+                                <span class="">المقاس : XL</span> --}}
 
-                                <form action="{{ route('cart.destroy',$cart->products->id) }}" method="POST" style="color: rgb(31, 27, 27)">
+                                {{-- <form action="{{ route('cart.destroy',$cart->products->id) }}" method="POST" style="color: rgb(31, 27, 27)">
                                     @csrf
                                     @method('GET')
                                     <button type="submit" style="color: rgb(24, 20, 20)"><i class="fa-solid fa-trash-can px-1"></i>حذف</button>
 
-                                </form>
+                                </form> --}}
 
 
                                 <span class="main-color">
@@ -126,11 +126,11 @@
                                 <div class=" quantity-counter d-flex flex-nowrap justify-content-center align-items-center ">
                                     <input type="hidden" class="product_id" value="{{ $cart->product_id }}">
 
-                                    <a class="changQuantity decrement-btn {{ $cart->quantity <=1 ? 'deactive-btn' : '' }}"> <i class="fa-solid fa-circle-minus "></i></a>
+                                    {{-- <a class="changQuantity decrement-btn {{ $cart->quantity <=1 ? 'deactive-btn' : '' }}"> <i class="fa-solid fa-circle-minus "></i></a> --}}
 
                                     <div name="quantity" class="quantity-count text-large text-bold px-2" value="{{ $cart->quantity }}">{{ $cart->quantity }}</div>
 
-                                    <a class="changQuantity increment-btn {{ $cart->quantity >= 10 ? 'deactive-btn' : '' }}"> <i class="fa-solid fa-circle-plus "></i></a>
+                                    {{-- <a class="changQuantity increment-btn {{ $cart->quantity >= 10 ? 'deactive-btn' : '' }}"> <i class="fa-solid fa-circle-plus "></i></a> --}}
                                 </div>
                             </div>
                         </div>

@@ -24,10 +24,10 @@ class CreateAddressesTable extends Migration
             $table->foreign('governorate_id')->references('id')->on('governorates')->onDelete('cascade');
             $table->bigInteger('city_id')->unsigned()->nullable();
             $table->foreign('city_id')->references('id')->on('governorates')->onDelete('cascade');
-            $table->integer('building_no');
-            $table->integer('flat_no');
-            $table->integer('apartment_no');
-            $table->string('special_mark');
+            $table->integer('building_no')->nullable();
+            $table->integer('flat_no')->nullable();
+            $table->integer('apartment_no')->nullable();
+            $table->string('special_mark')->nullable();
             $table->timestamps();
         });
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\EmailUsController;
 use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Site\CartController;
@@ -7,10 +8,12 @@ use App\Http\Controllers\Site\CategoryController;
 use App\Http\Controllers\Site\CompareController;
 use App\Http\Controllers\Site\ContactUsController;
 use App\Http\Controllers\Site\CouponController;
+use App\Http\Controllers\Site\DeliveryPolicyController;
 use App\Http\Controllers\Site\ProductController;
 use App\Http\Controllers\Site\ProfileController;
 use App\Http\Controllers\Site\WishlistController;
 use App\Http\Controllers\Site\ExchangeController;
+use App\Http\Controllers\Site\TermsConditionController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,6 +34,17 @@ Route::get('social/{provider}' , [SocialAuthController::class , "redirect"])->na
 
 Route::get('social/{provider}/callback' , [SocialAuthController::class , "callBack"]);
 
+Route::group(['prefix' => 'emailUs'], function () {
+    Route::post('store',  [EmailUsController::class, 'store'])->name('emailUs.store');
+});
+
+Route::group(['prefix' => 'Site/DeliveryPolicy'], function () {
+    Route::get('/',  [DeliveryPolicyController::class, 'index'])->name('site.DeliveryPolicy.index');
+});
+Route::group(['prefix' => 'Site/Terms-Conditions'], function () {
+    Route::get('/',  [TermsConditionController::class, 'index'])->name('site.terms.index');
+});
+
 Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Site'], function () {
 
     //contact us
@@ -50,9 +64,6 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
     Route::get('category/{name}/colors-products' , [CategoryController::class , 'search_by_color'])->name('search.color');
     Route::get('category/{name}/sizes-products' , [CategoryController::class , 'search_by_size'])->name('search.size');
     Route::get('category/{name}/review-products' , [CategoryController::class , 'search_by_review_products'])->name('search.review.product');
-
-
-
 
     //vendors
     Route::get('product/vendor/{id}', [ProductController::class, 'vendorProducts'])->name('Site.product.vendorProducts');
@@ -87,6 +98,7 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
         Route::post('store', [CartController::class, 'store'])->name('cart.store');
         Route::get('delete/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
         Route::post('update_cart', [CartController::class, 'update_cart'])->name('cart.update'); //upate product in cart list
+        Route::get('count-cart-prod',  [CartController::class, 'countCart'])->name('cart.countCart');
 
         /////////////////////////////////////// coupon //////////////////////////////////////////
         Route::post('/coupon', [CouponController::class, 'store'])->name('site.coupon.store');

@@ -17,6 +17,8 @@ class CreateVendorsTable extends Migration
             $table->id();
             $table->string('vendor_name');
             $table->decimal('vendor_price');
+            $table->string('exhange_status')->nullable();
+            $table->string('delivery_status')->nullable();
             $table->timestamps();
         });
     }

@@ -38,6 +38,8 @@ class VendorController extends Controller
         $vendor = new Vendor();
         $vendor->vendor_name = $request->vendor_name;
         $vendor->vendor_price = $request->vendor_price;
+        $vendor->exhange_status = $request->exhange_status;
+        $vendor->delivery_status = $request->delivery_status;
         $vendor->save();
 
         Toastr()->success('تم إضافة بائع سعر توصيل خاص به بنجاح');
@@ -73,7 +75,8 @@ class VendorController extends Controller
         $vendor->update([
             'vendor_name'  => $request->vendor_name,
             'vendor_price'  => $request->vendor_price,
-         
+            'exhange_status'=> $request->exhange_status,
+            'delivery_status' => $request->delivery_status,
             ]);
 
         Toastr()->success('تم التعديل على بائع سعر التوصيل بنجاح');

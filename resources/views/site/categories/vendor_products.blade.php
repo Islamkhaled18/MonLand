@@ -7,6 +7,10 @@
 
 @section('content')
 
+
+{{-- منتجات البائع اللى هيتعمل فيها فلترز --}}
+
+
 <!-- samiler products -->
 <section id="semilar-products" class="container">
     <div class="row my-5 pt-5">

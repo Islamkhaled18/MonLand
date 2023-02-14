@@ -12,12 +12,12 @@
 
         {{-- notification --}}
         <li class="dropdown" id="notifications">
-            <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications"
+            {{-- <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications"
                 style="position:relative;">
                 <i class="fa fa-bell-o fa-lg"></i>
                 <span class="badge badge-danger" id="unread-notifications-count"
                     style="position:absolute; top: 10px; right: 5px;">10</span>
-            </a>
+            </a> --}}
 
             <ul class="app-notification dropdown-menu dropdown-menu-right">
 

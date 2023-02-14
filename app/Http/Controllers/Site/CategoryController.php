@@ -11,6 +11,8 @@ use App\Models\Productsize;
 use App\Models\Review;
 use Illuminate\Http\Request;
 
+
+// الفانكشنشز اللى تخص فلاتر منتجات الاقسام
 class CategoryController extends Controller
 {
     public function allCategory()

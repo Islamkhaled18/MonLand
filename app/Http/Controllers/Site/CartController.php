@@ -26,18 +26,60 @@ class CartController extends Controller
 
         $user = Auth::user();
 
-        $products = Vendor::with(['carts' => function ($query) use ($user) {
-            $query->where('carts.user_id', $user->id);
-            $query->with(['products' => function ($products) {
-                $products->get();
-            }]);
-        }])->get();
+        // $products = Vendor::with(['carts' => function ($query) use ($user) {
+        //     $query->where('carts.user_id', $user->id);
+        //     $query->with(['products' => function ($products) {
+        //         $products->get();
+        //     }]);
+        // }])->get();
+        /////////////////////////////////////////////////////
+        // $products = Product::whereExists(function ($query) use ($user) {
+            //     $query->select(DB::raw(1))
+            //           ->from('carts as c')
+            //           ->whereRaw('products.id = c.product_id')
+            //           ->where('c.user_id', $user->id);
+            // })
+            // ->with('vendor')
+            // ->get();
+            
+            // foreach ($products as $product) {
+                //     $vendor = $product->vendor;
+                //     // do something with the vendor and product information
+                // }
+                //////////////////////////////////////////
+                
+                ///////////////////////////////////////////////////
+                $products = Vendor::with(['carts' => function ($query) use ($user) {
+                    $query->where('carts.user_id', $user->id);
+                    $query->with(['products' => function ($products) {
+                        $products->get();
+                    }]);
+                }])
+                ->whereHas('carts.products', function ($query) {
+                    $query->whereNull('products.deleted_at');
+                })
+                ->get();
+
         
         $countProdcts = count($products);
         $addresses = Address::with('governorate')->where('user_id', auth()->user()->id)->first();
 
         return view('site.sale.cart', compact('products', 'countProdcts', 'addresses'));
     } //cart page
+
+    public function countCart()
+    {
+        $user = Auth::user();
+        $productsCount = Product::whereExists(function ($query) use ($user) {
+                $query->select(DB::raw(1))
+                      ->from('carts as c')
+                      ->whereRaw('products.id = c.product_id')
+                      ->where('c.user_id', $user->id);
+            })
+            ->with('vendor')
+            ->count();
+        return response()->json(['count' => $productsCount]);
+    }
 
     public function store(Request $request)
     {
@@ -106,12 +148,8 @@ class CartController extends Controller
             return back()->with("message" , "يجب اختيار اللون و المقاس لكل المنتجات في السلة لاتمام الطلب");
         }
         
-        
         $Pickedcolors = explode(',' , $request->pickedColor[0]);
-
         $pickedSizes = explode(',' , $request->pickedSize[0]);
-
-
 
         DB::beginTransaction();
         try {
@@ -121,20 +159,18 @@ class CartController extends Controller
                 'status' => 'تم استلام الطلبيه والعمل عليها',
                 'total' =>  $request->total,
             ]);
-
-
-
+            
             for($i = 0 ; $i < count($products) ; $i++){
-                $order->items()->create([
+               $order_products = $order->items()->create([
                     'order_id'   => $order->id,
                     'product_id' => $products[$i]->product_id,
                     'quantity'   => $products[$i]->quantity,
                     'price'      => $products[$i]->products->price,
                     "product_color" => $Pickedcolors[$i],
                     "product_size" => $pickedSizes[$i],
-
+                    
                 ]);
-
+                
             }
             // foreach ($products as $item) {
 
@@ -164,19 +200,26 @@ class CartController extends Controller
     {
         $user = Auth::user();
 
+        // $products = Vendor::with(['carts' => function ($query) use ($user) {
+        //     $query->where('carts.user_id', $user->id);
+        //     $query->with(['products' => function ($products) {
+        //         $products->get();
+        //     }]);
+        // }])->get();
         $products = Vendor::with(['carts' => function ($query) use ($user) {
             $query->where('carts.user_id', $user->id);
             $query->with(['products' => function ($products) {
                 $products->get();
             }]);
-        }])->get();
-
-           
+        }])
+        ->whereHas('carts.products', function ($query) {
+            $query->whereNull('products.deleted_at');
+        })
+        ->get();
 
         $countProdcts = count($products);
         $addresses = Address::with('governorate')->where('user_id', auth()->user()->id)->first();
 
-        // $order = $user->orders;
 
         $order = Order::where('user_id', Auth::id())->first();
 
@@ -199,12 +242,22 @@ class CartController extends Controller
                 'note'  => $request->note,
             ]);
         }
+        // $products = Vendor::with(['carts' => function ($query) use ($user) {
+        //     $query->where('carts.user_id', $user->id);
+        //     $query->with(['products' => function ($products) {
+        //         $products->get();
+        //     }]);
+        // }])->get();
         $products = Vendor::with(['carts' => function ($query) use ($user) {
             $query->where('carts.user_id', $user->id);
             $query->with(['products' => function ($products) {
                 $products->get();
             }]);
-        }])->get();
+        }])
+        ->whereHas('carts.products', function ($query) {
+            $query->whereNull('products.deleted_at');
+        })
+        ->get();
         $countProdcts = count($products);
         
 
@@ -218,12 +271,22 @@ class CartController extends Controller
         $order = Order::where('user_id', Auth::id())->findOrFail($id);
         $user = Auth::user();
 
+        // $products = Vendor::with(['carts' => function ($query) use ($user) {
+        //     $query->where('carts.user_id', $user->id);
+        //     $query->with(['products' => function ($products) {
+        //         $products->get();
+        //     }]);
+        // }])->get();
         $products = Vendor::with(['carts' => function ($query) use ($user) {
             $query->where('carts.user_id', $user->id);
             $query->with(['products' => function ($products) {
                 $products->get();
             }]);
-        }])->get();
+        }])
+        ->whereHas('carts.products', function ($query) {
+            $query->whereNull('products.deleted_at');
+        })
+        ->get();
 
        
         $countProdcts = count($products);
@@ -236,6 +299,7 @@ class CartController extends Controller
     {
     
         $review = new Review();
+        $review->user_id = auth()->user()->id;
         $review->product_id = $request->product_id;
         $review->vendor_id = $request->vendor_id;
         $review->comments = $request->input("comments");

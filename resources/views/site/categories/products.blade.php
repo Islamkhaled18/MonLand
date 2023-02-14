@@ -6,6 +6,7 @@
 
 @section('content')
 
+{{-- الفلاتر اللى تخص منتجات الاقسام --}}
 
     <div class="container mt-4 mb-5">
         <div class="page-nav row">

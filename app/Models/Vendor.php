@@ -10,8 +10,8 @@ class Vendor extends Model
     use HasFactory;
 
     protected $table = "vendors";
-    protected $fillable = ['vendor_name', 'vendor_price'];
-
+    protected $fillable = ['vendor_name', 'vendor_price','exhange_status','delivery_status'];
+ 
     public function products()
     {
         return $this->hasMany(Product::class);
@@ -20,5 +20,10 @@ class Vendor extends Model
     public function carts()
     {
         return $this->hasManyThrough(Cart::class, Product::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 }

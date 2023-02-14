@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\MainCategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductColorController;
 use App\Http\Controllers\Admin\ProductSizeController;
+use App\Http\Controllers\Admin\TermsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -165,10 +166,18 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
     ################################## Contact Us ######################################
     Route::group(['prefix' => 'emailUs'], function () {
         Route::get('/',  [EmailUsController::class, 'index'])->name('emailUs.index');
-        Route::post('store',  [EmailUsController::class, 'store'])->name('emailUs.store');
         Route::get('delete/{id}', [EmailUsController::class, 'destroy'])->name('emailUs.destroy');
     });
 
+    ///////////////terms Controller/////////////////////
+    Route::group(['prefix' => 'Terms-Conditions'], function () {
+        Route::get('/',  [TermsController::class, 'index'])->name('terms.index');
+        Route::get('create',  [TermsController::class, 'create'])->name('terms.create');
+        Route::post('store',  [TermsController::class, 'store'])->name('terms.store');
+        Route::get('edit/{id}',  [TermsController::class, 'edit'])->name('terms.edit');
+        Route::post('update/{id}',  [TermsController::class, 'update'])->name('terms.update');
+        Route::get('delete/{id}', [TermsController::class, 'destroy'])->name('terms.destroy');
+    });
 
     ///////////////governorates Controller/////////////////////
     Route::group(['prefix' => 'Governorates'], function () {

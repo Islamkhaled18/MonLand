@@ -104,12 +104,12 @@
                             </a>
                         </li>
 
-                        <li>
+                        {{-- <li>
                             <a href="#">
                                 Sign in with apple
                                 <i class="fa fa-apple mr-1"></i>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
             </div>
@@ -124,7 +124,7 @@
                         </p>
                     </div>
 
-                    <ul class="list-unstyled social">
+                    {{-- <ul class="list-unstyled social">
                         <li>
                             <a href="#">
                                 إنشاء حساب بالبريد الإلكترونى
@@ -145,7 +145,7 @@
                                 <i class="fa fa-apple mr-1"></i>
                             </a>
                         </li>
-                    </ul>
+                    </ul> --}}
                 </div>
             </div>
         </div>

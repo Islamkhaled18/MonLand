@@ -43,7 +43,8 @@
 
                 <li><button class="tablinks" id="tab4">
                         <i class=" fa fa-exchange px-1"></i>
-                        قارن</button></li>
+                        <a href="{{route('compare.products.index')}}">قارن</a>
+                        </button></li>
 
             </div>
         </div>

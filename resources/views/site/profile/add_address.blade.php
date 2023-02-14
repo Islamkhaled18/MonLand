@@ -9,7 +9,8 @@
 @section('content')
 
 <div class="container text-right mt-5">
-    <button type="submit" class="btn-style bg-light text-dark border">الرجوع للعناوين</button>
+
+
     <div class="titles mb-4 mt-4">
         أضف عنوان جديد
     </div>

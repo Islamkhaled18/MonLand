@@ -6,7 +6,8 @@
 
 @section('content')
     @if (
-        $order->status == 'تم استلام الطلبيه والعمل عليها' ||
+
+            $order->status == 'تم استلام الطلبيه والعمل عليها' ||
             $order->status == 'تم الالغاء بواسطتنا' ||
             $order->status == 'تم الالغاء من العميل')
 
@@ -69,7 +70,6 @@
             <div class=" d-flex flex-wrap justify-content-around py-3">
                 <!-- cart list -->
 
-
                 <div class="col-12 col-lg-8 mb-4 no-gutters cart product_data">
                     <!-- card box -->
                     <?php
@@ -104,18 +104,8 @@
                                         <div
                                             class="col-12 col-lg-7 text-start cart-item-details d-flex flex-column text-large">
                                             <span class="py-2 "> {{ $cart->products->name }}</span>
-                                            <span class="">اللون : أسود</span>
-                                            <span class="">المقاس : XL</span>
-
-                                            <form action="{{ route('cart.destroy', $cart->products->id) }}" method="POST"
-                                                style="color: rgb(31, 27, 27)">
-                                                @csrf
-                                                @method('GET')
-                                                <button type="submit" style="color: rgb(24, 20, 20)"><i
-                                                        class="fa-solid fa-trash-can px-1"></i>حذف</button>
-
-                                            </form>
-
+                                            {{-- <span class="">اللون : أسود</span>
+                                            <span class="">المقاس : XL</span> --}}
 
                                             <span class="main-color">
                                                 <i class="fa-solid fa-arrow-rotate-left px-1"></i>
@@ -155,9 +145,7 @@
                                         <div class="col col-md-2 text-start">
                                             <span>{{ $subTotal }}</span>
                                             <span>جنية</span>
-
                                         </div>
-
                                     </div>
 
                                     <div class="d-flex flex-row justify-content-between ">
@@ -171,8 +159,6 @@
                                         </div>
                                     </div>
 
-
-
                                 </div>
                                 <hr>
                                 <!-- total-->
@@ -180,11 +166,8 @@
                                     <div class="d-flex flex-row">
 
                                         <div class="ml-2">
-
                                             @php
-                                                
                                                 $product['total'] = $subTotal + $address_fees;
-                                                
                                             @endphp
                                             <span class="d-flex flex-row text-large"> المجموع الكلي للشحنة
                                                 {{ $product['total'] }}</span>
@@ -204,22 +187,6 @@
                     <div class="payment-info p-3 border-with-raduis mb-5">
                         <div class="text-larger text-simi-bold mb-2">ملخص الطلبية </div>
 
-
-
-                        {{-- @if (!session()->has('code', 'value'))
-                        <form action="{{ route('site.coupon.store') }}" method="POST">
-                @csrf
-                <div class="input-group defualt-raduis">
-                    <input type="text" class="form-control defualt-raduis-start" name="code" placeholder="اضف الكوبون هنا">
-                    <div class="input-group-prepend defualt-raduis-end">
-                        <button class="bg-main-color px-2 defualt-raduis-end" type="submit">تفعيل</button>
-                    </div>
-                </div>
-                </form>
-
-                @endif --}}
-
-
                         <div class="text-large text-bold py-1">عدد الشحنات : {{ $countProdcts }}</div>
 
                         @php
@@ -238,17 +205,10 @@
                             </div>
                         @endforeach
 
-
                         @if (session()->get('code'))
                             <div class="text-large text-bold py-1">الخصم: ({{ session()->get('value') }})
                             </div>
 
-
-                            {{-- <form action="{{ route('site.coupon.destroy') }}" method="POST" style="color: green">
-                @csrf
-                {{ method_field('delete') }}
-                <button type="submit" style="color: rgb(24, 20, 20)">حذف</button>
-                </form> --}}
                         @endif
 
                         <hr class=" ">

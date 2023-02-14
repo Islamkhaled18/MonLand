@@ -11,4 +11,17 @@ class Review extends Model
 
     protected $table = "reviews";
     protected $guarded = [];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+    public function vendor()
+    {
+        return $this->belongsTo(vendor::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

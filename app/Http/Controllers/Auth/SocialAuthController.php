@@ -83,14 +83,6 @@ class SocialAuthController extends Controller
     }
 
 
-
-
-
-
-  
-
-
-
     public function isUserExist($email){
         
          $user = User::where('email' , $email)->first();
@@ -119,19 +111,10 @@ class SocialAuthController extends Controller
          
     }
 
-
     public function createUser($data){
 
           return User::create($data);
     }
-
-
-
-
-
-
-
-
 
 
 
