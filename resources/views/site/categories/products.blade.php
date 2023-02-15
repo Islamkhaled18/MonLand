@@ -68,9 +68,9 @@
                         <div class="card mt-4">
                             <div class="position-relative">
                                 <div class="position-absolute w-100 p-3 item-assets">
-                                    <div class="badge product-label badge-success px-3 py-2 rounded-0">
+                                    {{-- <div class="badge product-label badge-success px-3 py-2 rounded-0">
                                         الأكثر
-                                    </div>
+                                    </div> --}}
                                     <ul class="list-unstyled position-absolute">
                                         <li>
                                             <button class="add-to-fav">
@@ -101,9 +101,11 @@
                                     </form>
                                 </div>
 
-                                <img class="card-img-top" src="{{ asset($product->images[0]->photo) }}"
-                                    alt="{{ $product->name }}" />
+                                <img class="card-img-top" src="{{$product ->images[0]->photo ? asset($product ->images[0]->photo) : asset('images/default.png')}}"
+                                alt="{{ $product->name }}" />
 
+
+                                    
                             </div>
 
                             <div class="card-body text-center">
@@ -341,83 +343,7 @@
                         </form>
                     </div>
 
-                    <div class="my-4">
-                        <h6 class="font-weight-bold">تقييم البائع </h6>
-                        <hr />
-                        <form>
-                            <div class="d-flex align-items-center">
-                                <input type="radio" name="brand" id="four-stars" class="position-relative" />
-                                <label for="four-stars" class="mr-2 d-flex justify-content-between">
-                                    <div class="star-rating ml-3">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
-                                    <span>أو أعلى</span>
-                                </label>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <input type="radio" name="brand" id="four-stars" class="position-relative" />
-                                <label for="four-stars" class="mr-2 d-flex justify-content-between">
-                                    <div class="star-rating ml-3">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star text-light2"></i>
-                                    </div>
-                                    <span>أو أعلى</span>
-                                </label>
-                            </div>
-
-                            <div class="d-flex align-items-center">
-                                <input type="radio" name="brand" id="three-stars" class="position-relative" />
-                                <label for="three-stars" class="mr-2 d-flex justify-content-between">
-                                    <div class="star-rating ml-3">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star text-light2"></i>
-                                        <i class="fa-solid fa-star text-light2"></i>
-                                    </div>
-                                    <span>أو أعلى</span>
-                                </label>
-                            </div>
-
-                            <div class="d-flex align-items-center">
-                                <input type="radio" name="brand" id="two-stars" class="position-relative" />
-                                <label for="two-stars" class="mr-2 d-flex justify-content-between">
-                                    <div class="star-rating ml-3">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star text-light2"></i>
-                                        <i class="fa-solid fa-star text-light2"></i>
-                                        <i class="fa-solid fa-star text-light2"></i>
-                                    </div>
-                                    <span>أو أعلى</span>
-                                </label>
-                            </div>
-
-                            <div class="d-flex align-items-center">
-                                <input type="radio" name="brand" id="one-stars" class="position-relative" />
-                                <label for="one-stars" class="mr-2 d-flex justify-content-between">
-                                    <div class="star-rating ml-3">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star text-light2"></i>
-                                        <i class="fa-solid fa-star text-light2"></i>
-                                        <i class="fa-solid fa-star text-light2"></i>
-                                        <i class="fa-solid fa-star text-light2"></i>
-                                    </div>
-                                    <span>أو أعلى</span>
-                                </label>
-                            </div>
-
-
-
-                        </form>
-                    </div>
+                    
                 </div>
 
                 <div class="col-9">

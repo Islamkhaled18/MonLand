@@ -29,8 +29,9 @@
                         <thead>
                             <tr>
                                 <td>المنتج</td>
-                                <td class="p-4"><img src="{{ $product->images[0]->photo }}" alt="{{ $product->name }}"
-                                        title="{{ $product->name }}" class="w-50" /> </td>
+                                <td class="p-4"><img
+                                        src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
+                                        alt="{{ $product->name }}" title="{{ $product->name }}" class="w-50" /> </td>
 
                             </tr>
                         </thead>
@@ -93,11 +94,13 @@
                 <thead>
                     <tr>
                         <td>المنتج</td>
-                        <td class="p-4"><img src="{{ $products[0]->images[0]->photo }}" alt="{{ $products[0]->name }}"
-                                title="{{ $products[0]->name }}" class="w-50" /> </td>
+                        <td class="p-4"><img
+                                src="{{ $products[0]->images[0]->photo ? asset($products[0]->images[0]->photo) : asset('images/default.png') }}"
+                                alt="{{ $products[0]->name }}" title="{{ $products[0]->name }}" class="w-50" /> </td>
 
-                        <td class="p-4"><img src="{{ $products[1]->images[0]->photo }}" alt="{{ $products[1]->name }}"
-                                title="{{ $products[1]->name }}" class="w-50" /> </td>
+                        <td class="p-4"><img
+                                src="{{ $products[1]->images[0]->photo ? asset($products[1]->images[0]->photo) : asset('images/default.png') }}"
+                                alt="{{ $products[1]->name }}" title="{{ $products[1]->name }}" class="w-50" /> </td>
                     </tr>
                 </thead>
                 <tbody>

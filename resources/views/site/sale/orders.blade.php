@@ -98,9 +98,9 @@
                         <?php
                     $subTotal = 0;
                     ?>
-                        @foreach($product->carts as $cart)
-                        <div class="row mt-3 mx-3 cart-item rounded">
-                            <div class="col-12 col-lg-2 no-gutters  d-flex justify-content-start"><img class="product-img" src="{{$cart->products->images[1]->photo ?? asset('images/default.png')}}" width="120" height="120" alt="{{$cart->products->name}}">
+                        @foreach($product->carts as $cart)                                                                       
+                        <div class="row mt-3 mx-3 cart-item rounded">                                                                       
+                            <div class="col-12 col-lg-2 no-gutters  d-flex justify-content-start"><img class="product-img" src="{{$cart->products->images[1]->photo ? asset($cart->products->images[1]->photo) : asset('images/default.png')}}" width="120" height="120" alt="{{$cart->products->name}}">
                             </div>
                             <div class="col-12 col-lg-7 text-start cart-item-details d-flex flex-column text-large">
                                 <span class="py-2 "> {{$cart->products->name}}</span>

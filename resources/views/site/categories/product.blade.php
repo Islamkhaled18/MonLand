@@ -25,23 +25,26 @@
                 <div id="imgs-section" class="col-md-4 no-gutters">
                     <div class="=row">
                         <img id="featured" class="w-100"
-                            src="{{ $product->images[0]->photo ?? asset('images/default.png') }}"
+                            src="{{$product ->images[0]->photo ? asset($product ->images[0]->photo) : asset('images/default.png')}}"
                             alt="{{ $product->name }}" />
                     </div>
                     <!-- Slider Nav imgs -->
                     <div id="slide" class="d-flex justify-content-between flex-wrap mt-2">
-                        <img class="thumbnail active" src="{{ $product->images[0]->photo ?? asset('images/default.png') }}"
+                        <img class="thumbnail active" src="{{$product ->images[0]->photo ? asset($product ->images[0]->photo) : asset('images/default.png')}}"
                             alt="{{ $product->name }}" />
-                        <img class="thumbnail" src="{{ $product->images[1]->photo ?? asset('images/default.png') }}"
+                        <img class="thumbnail" src="{{$product ->images[1]->photo ? asset($product ->images[1]->photo) : asset('images/default.png')}}"
                             alt="{{ $product->name }}" />
-                        <img class="thumbnail" src="{{ $product->images[2]->photo ?? asset('images/default.png') }}"
+                        <img class="thumbnail" src="{{$product ->images[2]->photo ? asset($product ->images[2]->photo) : asset('images/default.png')}}"
                             alt="{{ $product->name }}" />
-                        <img class="thumbnail" src="{{ $product->images[3]->photo ?? asset('images/default.png') }}"
+                        <img class="thumbnail" src="{{$product ->images[3]->photo ? asset($product ->images[3]->photo) : asset('images/default.png')}}"
                             alt="{{ $product->name }}" />
-                        <img class="thumbnail" src="{{ $product->images[4]->photo ?? asset('images/default.png') }}"
+                        <img class="thumbnail" src="{{$product ->images[4]->photo ? asset($product ->images[4]->photo) : asset('images/default.png')}}"
                             alt="{{ $product->name }}" />
-                        <img class="thumbnail" src="{{ $product->images[5]->photo ?? asset('images/default.png') }}"
+                        <img class="thumbnail" src="{{$product ->images[5]->photo ? asset($product ->images[5]->photo) : asset('images/default.png')}}"
                             alt="{{ $product->name }}" />
+
+
+                        
                     </div>
                     {{-- <!-- Link -->
                     <div class="d-flex flex-column text-start text-large text-bold mt-2">
@@ -506,12 +509,16 @@
                                             </button>
                                         </form>
                                     </div>
-                                    <img class="card-img-top" src="{{ $vendor_product->images[0]->photo }}"
-                                        alt="{{ $vendor_product->name }}" />
+
+                                    <img class="card-img-top" src="{{$vendor_product ->images[0]->photo ? asset($vendor_product ->images[0]->photo) : asset('images/default.png')}}"
+                                    alt="{{ $vendor_product->name }}" />
+
+                                    
                                 </div>
 
                                 <div class="card-body text-center">
-                                    <h5 class="card-title">{{ $vendor_product->name }}</h5>
+                                    <h5 class="card-title"><a
+                                        href="{{ route('Site.product', $vendor_product->name) }}">{{ $vendor_product->name }}</a></h5>
                                     <h5>{{ $vendor_product->price }} جنيه</h5>
                                 </div>
                                 {{-- Modal --}}
@@ -569,12 +576,15 @@
                                             </button>
                                         </form>
                                     </div>
-                                    <img class="card-img-top" src="{{ $related_product->images[0]->photo ?? '' }}"
-                                        alt="{{ $related_product->name }}" />
+                                  
+
+                                    <img class="card-img-top" src="{{$related_product ->images[0]->photo ? asset($related_product ->images[0]->photo) : asset('images/default.png')}}"
+                                    alt="{{ $related_product->name }}" />
                                 </div>
 
                                 <div class="card-body text-center">
-                                    <h5 class="card-title">{{ $related_product->name }}</h5>
+                                    <h5 class="card-title"><a
+                                        href="{{ route('Site.product', $related_product->name) }}">{{ $related_product->name }}</a></h5>
                                     <h5>{{ $related_product->price }} جنيه</h5>
                                 </div>
                                 {{-- Modal --}}

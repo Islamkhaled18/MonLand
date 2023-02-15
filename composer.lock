@@ -1459,28 +1459,28 @@
         },
         {
             "name": "laravelcollective/html",
-            "version": "v6.3.0",
+            "version": "v6.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LaravelCollective/html.git",
-                "reference": "78c3cb516ac9e6d3d76cad9191f81d217302dea6"
+                "reference": "ac74f580459a5120079b8def0404e5d312a09504"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/78c3cb516ac9e6d3d76cad9191f81d217302dea6",
-                "reference": "78c3cb516ac9e6d3d76cad9191f81d217302dea6",
+                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/ac74f580459a5120079b8def0404e5d312a09504",
+                "reference": "ac74f580459a5120079b8def0404e5d312a09504",
                 "shasum": ""
             },
             "require": {
-                "illuminate/http": "^6.0|^7.0|^8.0|^9.0",
-                "illuminate/routing": "^6.0|^7.0|^8.0|^9.0",
-                "illuminate/session": "^6.0|^7.0|^8.0|^9.0",
-                "illuminate/support": "^6.0|^7.0|^8.0|^9.0",
-                "illuminate/view": "^6.0|^7.0|^8.0|^9.0",
+                "illuminate/http": "^6.0|^7.0|^8.0|^9.0|^10.0",
+                "illuminate/routing": "^6.0|^7.0|^8.0|^9.0|^10.0",
+                "illuminate/session": "^6.0|^7.0|^8.0|^9.0|^10.0",
+                "illuminate/support": "^6.0|^7.0|^8.0|^9.0|^10.0",
+                "illuminate/view": "^6.0|^7.0|^8.0|^9.0|^10.0",
                 "php": ">=7.2.5"
             },
             "require-dev": {
-                "illuminate/database": "^6.0|^7.0|^8.0|^9.0",
+                "illuminate/database": "^6.0|^7.0|^8.0|^9.0|^10.0",
                 "mockery/mockery": "~1.0",
                 "phpunit/phpunit": "~8.5|^9.5.10"
             },
@@ -1527,20 +1527,20 @@
                 "issues": "https://github.com/LaravelCollective/html/issues",
                 "source": "https://github.com/LaravelCollective/html"
             },
-            "time": "2022-02-08T21:02:54+00:00"
+            "time": "2023-02-13T18:15:35+00:00"
         },
         {
             "name": "league/commonmark",
-            "version": "2.3.8",
+            "version": "2.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "c493585c130544c4e91d2e0e131e6d35cb0cbc47"
+                "reference": "c1e114f74e518daca2729ea8c4bf1167038fa4b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/c493585c130544c4e91d2e0e131e6d35cb0cbc47",
-                "reference": "c493585c130544c4e91d2e0e131e6d35cb0cbc47",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/c1e114f74e518daca2729ea8c4bf1167038fa4b5",
+                "reference": "c1e114f74e518daca2729ea8c4bf1167038fa4b5",
                 "shasum": ""
             },
             "require": {
@@ -1633,7 +1633,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-10T16:02:17+00:00"
+            "time": "2023-02-15T14:07:24+00:00"
         },
         {
             "name": "league/config",
@@ -6462,16 +6462,16 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.20.1",
+            "version": "v1.20.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "4b85dbfa3dceeaf7227e3029707562fd60297e86"
+                "reference": "5ae072b182b1efbec927409e8a3ce3b1078cc42c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/4b85dbfa3dceeaf7227e3029707562fd60297e86",
-                "reference": "4b85dbfa3dceeaf7227e3029707562fd60297e86",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/5ae072b182b1efbec927409e8a3ce3b1078cc42c",
+                "reference": "5ae072b182b1efbec927409e8a3ce3b1078cc42c",
                 "shasum": ""
             },
             "require": {
@@ -6519,7 +6519,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2023-02-08T02:08:37+00:00"
+            "time": "2023-02-08T20:22:21+00:00"
         },
         {
             "name": "mockery/mockery",

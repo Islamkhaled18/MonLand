@@ -47,6 +47,9 @@ Route::group(['prefix' => 'Site/Terms-Conditions'], function () {
 
 Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Site'], function () {
 
+
+    Route::get('search',[ProductController::class,'search'])->name('site.search');
+
     //contact us
     Route::get('contactUs', [ContactUsController::class, 'index'])->name('Site.contactUs');
 

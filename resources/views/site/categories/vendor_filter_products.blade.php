@@ -39,7 +39,8 @@
         </div>
 
         <div class="card-body text-center">
-            <h5 class="card-title">{{$product->name}}</h5>
+            <h5 class="card-title"><a
+                href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a></h5>
             <h5>{{$product->price }} جنيه</h5>
         </div>
     </div>

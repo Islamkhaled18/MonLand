@@ -53,7 +53,9 @@
                             </li>
                         </ul>
                     </div>
-                    <img src="{{ $product->images[0]->photo}}" class="card-img img-fluid" alt="{{ $product->name}}" />
+                    
+
+                    <img src="{{$product ->images[0]->photo ? asset($product ->images[0]->photo) : asset('images/default.png')}}" class="card-img img-fluid" alt="{{ $product->name}}" />
                 </div>
                 <div class="col-lg-10">
                     <div class="fav-card-body px-2 pt-2">

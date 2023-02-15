@@ -257,7 +257,19 @@ class ProductController extends Controller
 
 
     }
+    public function search(Request $request){
 
+        $product = Product::when(($request->has('name') & !empty($request->get('name'))), function ($q) use ($request) {
+            $q->where('name', 'LIKE', '%' . $request->get('name') . '%');
+        })->first();
+
+        if ($product) {
+            return view('site.search.search',compact('product'));
+        }
+
+        return redirect()->back()->with('error', 'Product not found');
+        
+    }
 
 
 

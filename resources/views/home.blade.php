@@ -150,7 +150,9 @@
                                         <img class="card-img-top" width="40" height="40"
                                             src="{{ $product->images[0]->photo }}" alt="{{ $product->name }}">
                                         <div class="card-body text-center">
-                                            <h5 class="card-title">{{ $product->short_description }}</h5>
+                                            <h5 class="card-title"><a
+                                                    href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a>
+                                            </h5>
                                             <h5>{{ $product->price }} جنيه</h5>
 
                                         </div>
@@ -215,7 +217,9 @@
                                         <img class="card-img-top" width="40" height="40"
                                             src="{{ $product->images[0]->photo }}" alt="{{ $product->name }}">
                                         <div class="card-body text-center">
-                                            <h5 class="card-title">{{ $product->short_description }}</h5>
+                                            <h5 class="card-title"><a
+                                                    href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a>
+                                            </h5>
                                             <h5>{{ $product->price }} جنيه</h5>
 
                                         </div>
@@ -277,7 +281,9 @@
                                         <img class="card-img-top" width="40" height="40"
                                             src="{{ $product->images[0]->photo }}" alt="{{ $product->name }}">
                                         <div class="card-body text-center">
-                                            <h5 class="card-title">{{ $product->short_description }}</h5>
+                                            <h5 class="card-title"><a
+                                                    href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a>
+                                            </h5>
                                             <h5>{{ $product->price }} جنيه</h5>
 
                                         </div>
@@ -342,7 +348,8 @@
                         <img class="card-img-top" width="40" height="40" src="{{ $product->images[0]->photo }}"
                             alt="{{ $product->name }}">
                         <div class="card-body text-center">
-                            <h5 class="card-title">{{ $product->short_description }}</h5>
+                            <h5 class="card-title"><a
+                                    href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a></h5>
                             <h5>{{ $product->price }} جنيه</h5>
 
                         </div>
@@ -408,7 +415,8 @@
                         <img class="card-img-top" width="40" height="40" src="{{ $product->images[0]->photo }}"
                             alt="{{ $product->name }}">
                         <div class="card-body text-center">
-                            <h5 class="card-title">{{ $product->short_description }}</h5>
+                            <h5 class="card-title"><a
+                                    href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a></h5>
                             <h5>{{ $product->price }} جنيه</h5>
 
                         </div>
@@ -479,7 +487,8 @@
                         <img class="card-img-top" width="40" height="40" src="{{ $product->images[0]->photo }}"
                             alt="{{ $product->name }}">
                         <div class="card-body text-center">
-                            <h5 class="card-title">{{ $product->short_description }}</h5>
+                            <h5 class="card-title"><a
+                                    href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a></h5>
                             <h5>{{ $product->price }} جنيه</h5>
 
                         </div>
@@ -549,7 +558,8 @@
                         <img class="card-img-top" width="40" height="40" src="{{ $product->images[0]->photo }}"
                             alt="{{ $product->name }}">
                         <div class="card-body text-center">
-                            <h5 class="card-title">{{ $product->short_description }}</h5>
+                            <h5 class="card-title"><a
+                                    href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a></h5>
                             <h5>{{ $product->price }} جنيه</h5>
 
                         </div>
@@ -648,7 +658,8 @@
                             <img class="card-img-top" width="40" height="40"
                                 src="{{ $product->images[0]->photo }}" alt="{{ $product->name }}">
                             <div class="card-body text-center">
-                                <h5 class="card-title">{{ $product->short_description }}</h5>
+                                <h5 class="card-title"><a
+                                        href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a></h5>
                                 <h5>{{ $product->price }} جنيه</h5>
 
                             </div>
@@ -725,7 +736,9 @@
                                 <img class="card-img-top" width="40" height="40"
                                     src="{{ $product->images[0]->photo }}" alt="{{ $product->name }}">
                                 <div class="card-body text-center">
-                                    <h5 class="card-title">{{ $product->short_description }}</h5>
+                                    <h5 class="card-title"><a
+                                            href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a>
+                                    </h5>
                                     <h5>{{ $product->price }} جنيه</h5>
 
                                 </div>
@@ -807,7 +820,9 @@
                             <img class="card-img-top" width="40" height="40"
                                 src="{{ $product->images[0]->photo }}" alt="{{ $product->name }}">
                             <div class="card-body text-center">
-                                <h5 class="card-title">{{ $product->short_description }}</h5>
+                                <h5 class="card-title"><a
+                                        href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a>
+                                </h5>
                                 <h5>{{ $product->price }} جنيه</h5>
 
                             </div>
@@ -873,7 +888,9 @@
                             <img class="card-img-top" width="40" height="40"
                                 src="{{ $product->images[0]->photo }}" alt="{{ $product->name }}">
                             <div class="card-body text-center">
-                                <h5 class="card-title">{{ $product->short_description }}</h5>
+                                <h5 class="card-title"><a
+                                        href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a>
+                                </h5>
                                 <h5>{{ $product->price }} جنيه</h5>
 
                             </div>
@@ -941,7 +958,9 @@
                             <img class="card-img-top" width="40" height="40"
                                 src="{{ $product->images[0]->photo }}" alt="{{ $product->name }}">
                             <div class="card-body text-center">
-                                <h5 class="card-title">{{ $product->short_description }}</h5>
+                                <h5 class="card-title"><a
+                                        href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a>
+                                </h5>
                                 <h5>{{ $product->price }} جنيه</h5>
 
                             </div>
