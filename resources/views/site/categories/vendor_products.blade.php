@@ -94,9 +94,9 @@
                     <h6 class="font-weight-bold">اللون</h6>
                     <hr />
                     <div class="d-flex available-colors flex-nowrap">
-                        <div class="bg-danger"></div>
-                        <div class="bg-warning"></div>
-                        <div class="bg-success"></div>
+                        @foreach($productColors as $pc)
+                        <div data-color="{{$pc->name}}" class="pcColor" style="background-color: {{$pc->name}}"></div>
+                        @endforeach
                     </div>
                 </div>
 
@@ -105,30 +105,15 @@
                     <hr />
                     <form>
                         <div class="row align-items-center">
+                            @foreach ($productSizes as $pz)
+                                    
+                                
                             <div class="col-6 d-flex align-items-center">
-                                <input type="radio" name="size" id="all-sizes" class="position-relative" />
-                                <label for="all-sizes" class="mr-2 mb-0">الكل</label>
+                                <input type="radio" value="{{$pz->name}}" name="size" id="sizes" class="position-relative size" />
+                                <label for="sizes" class="mr-2 mb-0">{{$pz->name}}</label>
                             </div>
-                            <div class="col-6 d-flex align-items-center">
-                                <input type="radio" name="size" id="small" class="position-relative" />
-                                <label for="small" class="mr-2 mb-0">s</label>
-                            </div>
-                            <div class="col-6 d-flex align-items-center mt-3">
-                                <input type="radio" name="size" id="xl" class="position-relative" />
-                                <label for="xl" class="mr-2 mb-0">xl</label>
-                            </div>
-                            <div class="col-6 d-flex align-items-center mt-3">
-                                <input type="radio" name="size" id="xxl" class="position-relative" />
-                                <label for="xxl" class="mr-2 mb-0">xxl</label>
-                            </div>
-                            <div class="col-6 d-flex align-items-center mt-3">
-                                <input type="radio" name="size" id="41" class="position-relative" />
-                                <label for="41" class="mr-2 mb-0">41</label>
-                            </div>
-                            <div class="col-6 d-flex align-items-center mt-3">
-                                <input type="radio" name="size" id="43" class="position-relative" />
-                                <label for="43" class="mr-2 mb-0">43</label>
-                            </div>
+
+                            @endforeach
                         </div>
 
                     </form>
@@ -137,28 +122,39 @@
                     <h6 class="font-weight-bold">الماركة</h6>
                     <hr />
                     <form>
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="all-brands" class="position-relative" />
-                            <label for="all-brands" class="mr-2">الكل </label>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="brand-1" />
-                            <label for="brand-1" class="mr-2">ماركة 1</label>
-                        </div>
+                        <?php $brands = DB::table('brands')
+                        ->orderby('name', 'ASC')
+                        ->get(); ?>
 
+                    @foreach ($brands as $brand)
                         <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="brand-2" />
-                            <label for="brand-2" class="mr-2">ماركة 2</label>
+                            <input type="radio" name="brand" id="brandId" value="{{ $brand->id }}"
+                                class="brandloop" />
+                            <label for="brand-1" class="mr-2">{{ $brand->name }}</label>
                         </div>
+                    @endforeach
                     </form>
                 </div>
 
                 <div class="my-4">
-                    <h6 class="font-weight-bold">التقييم</h6>
+                    <h6 class="font-weight-bold">تقييم المنتج</h6>
                     <hr />
                     <form>
                         <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="four-stars" class="position-relative" />
+                            <input value="5" type="radio" name="brand" id="five-stars" class="position-relative stars" />
+                            <label for="four-stars" class="mr-2 d-flex justify-content-between">
+                                <div class="star-rating ml-3">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <span>أو أعلى</span>
+                            </label>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <input value="4" type="radio" name="brand" id="four-stars" class="position-relative stars" />
                             <label for="four-stars" class="mr-2 d-flex justify-content-between">
                                 <div class="star-rating ml-3">
                                     <i class="fa-solid fa-star"></i>
@@ -172,7 +168,7 @@
                         </div>
 
                         <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="three-stars" class="position-relative" />
+                            <input value="3" type="radio" name="brand" id="three-stars" class="position-relative stars" />
                             <label for="three-stars" class="mr-2 d-flex justify-content-between">
                                 <div class="star-rating ml-3">
                                     <i class="fa-solid fa-star"></i>
@@ -186,7 +182,7 @@
                         </div>
 
                         <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="two-stars" class="position-relative" />
+                            <input value="2" type="radio" name="brand" id="two-stars" class="position-relative stars" />
                             <label for="two-stars" class="mr-2 d-flex justify-content-between">
                                 <div class="star-rating ml-3">
                                     <i class="fa-solid fa-star"></i>
@@ -200,7 +196,7 @@
                         </div>
 
                         <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="one-stars" class="position-relative" />
+                            <input value="1" type="radio" name="brand" id="one-stars" class="position-relative stars" />
                             <label for="one-stars" class="mr-2 d-flex justify-content-between">
                                 <div class="star-rating ml-3">
                                     <i class="fa-solid fa-star"></i>
@@ -214,70 +210,6 @@
                         </div>
 
 
-
-                    </form>
-                </div>
-
-                <div>
-                    <h6 class="font-weight-bold">نسبة الخصم</h6>
-                    <hr />
-                    <form>
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="all-dis" class="position-relative" />
-                            <label for="all-dis" class="mr-2">الكل </label>
-                        </div>
-
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="five-dis" class="position-relative" />
-                            <label for="five-dis" class="mr-2">50% أو أكثر </label>
-                        </div>
-
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="four-dis" class="position-relative" />
-                            <label for="four-dis" class="mr-2">40% أو أكثر </label>
-                        </div>
-
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="twenty-dis" class="position-relative" />
-                            <label for="twenty-dis" class="mr-2">20% أو أكثر </label>
-                        </div>
-
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="ten-dis" class="position-relative" />
-                            <label for="ten-dis" class="mr-2">10% أو أكثر </label>
-                        </div>
-
-                    </form>
-                </div>
-
-                <div class="my-4">
-                    <h6 class="font-weight-bold">تقييم البائع </h6>
-                    <hr />
-                    <form>
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="all-seller-rates" class="position-relative" />
-                            <label for="all-seller-rates" class="mr-2">الكل </label>
-                        </div>
-
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="eight-rates" class="position-relative" />
-                            <label for="eight-rates" class="mr-2">80% أو أكثر </label>
-                        </div>
-
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="six-rates" class="position-relative" />
-                            <label for="six-rates" class="mr-2">60% أو أكثر </label>
-                        </div>
-
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="four-rates" class="position-relative" />
-                            <label for="four-rates" class="mr-2">40% أو أكثر </label>
-                        </div>
-
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="twenty-rates" class="position-relative" />
-                            <label for="twenty-rates" class="mr-2">20% أو أكثر </label>
-                        </div>
 
                     </form>
                 </div>
@@ -303,838 +235,174 @@
                         </div>
                     </div>
                 </div>
-
-                {{-- <div class="row">
-                    <div class="col-12">
-                        <div class="card-deck2 d-flex flex-wrap">
-                            <div class="card mt-4">
-                                <div class="position-relative">
-                                    <div class="position-absolute w-100 p-3 item-assets">
-                                        <div class="badge product-label badge-success px-3 py-2 rounded-0">
-                                            الأكثر
-                                        </div>
-                                        <ul class="list-unstyled position-absolute">
-                                            <li>
-                                                <button class="add-to-fav">
-                                                    <i class="fa fa-heart" aria-hidden="true"></i>
-                                                </button>
-                                            </li>
-
-                                            <li>
-                                                <button>
-                                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                                </button>
-                                            </li>
-
-                                            <li>
-                                                <button>
-                                                    <i class="fa fa-exchange" aria-hidden="true"></i>
-                                                </button>
-                                            </li>
-                                        </ul>
-
-                                        <button class="add-to-cart btn py-1 px-2">
-                                            أضف إلى العربة
-                                        </button>
-                                    </div>
-                                    <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-            </div>
-
-            <div class="card-body text-center">
-                <h5 class="card-title">هذا النص هو مثال ....</h5>
-                <h5>70 جنيه</h5>
-            </div>
-        </div>
-
-        <div class="card mt-4">
-            <div class="position-relative">
-                <div class="position-absolute w-100 p-3 item-assets">
-                    <div class="badge product-label badge-primary px-3 py-2 rounded-0">
-                        متميز
-                    </div>
-                    <ul class="list-unstyled position-absolute">
-                        <li>
-                            <button class="add-to-fav">
-                                <i class="fa fa-heart" aria-hidden="true"></i>
-                            </button>
-                        </li>
-
-                        <li>
-                            <button>
-                                <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                            </button>
-                        </li>
-
-                        <li>
-                            <button>
-                                <i class="fa fa-exchange" aria-hidden="true"></i>
-                            </button>
-                        </li>
-                    </ul>
-
-                    <button class="add-to-cart btn py-1 px-2">
-                        أضف إلى العربة
-                    </button>
-                </div>
-                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-            </div>
-
-            <div class="card-body text-center">
-                <h5 class="card-title">هذا النص هو مثال ....</h5>
-                <h5>70 جنيه</h5>
-            </div>
-        </div>
-
-        <div class="card mt-4">
-            <div class="position-relative">
-                <div class="position-absolute w-100 p-3 item-assets">
-                    <div class="badge product-label badge-success px-3 py-2 rounded-0">
-                        الأكثر
-                    </div>
-                    <ul class="list-unstyled position-absolute">
-                        <li>
-                            <button class="add-to-fav">
-                                <i class="fa fa-heart" aria-hidden="true"></i>
-                            </button>
-                        </li>
-
-                        <li>
-                            <button>
-                                <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                            </button>
-                        </li>
-
-                        <li>
-                            <button>
-                                <i class="fa fa-exchange" aria-hidden="true"></i>
-                            </button>
-                        </li>
-                    </ul>
-
-                    <button class="add-to-cart btn py-1 px-2">
-                        أضف إلى العربة
-                    </button>
-                </div>
-                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-            </div>
-
-            <div class="card-body text-center">
-                <h5 class="card-title">هذا النص هو مثال ....</h5>
-                <h5>70 جنيه</h5>
-            </div>
-        </div>
-
-        <div class="card mt-4">
-            <div class="position-relative">
-                <div class="position-absolute w-100 p-3 item-assets">
-                    <div class="badge product-label badge-diff1 px-3 py-2 rounded-0">
-                        30%
-                    </div>
-                    <ul class="list-unstyled position-absolute">
-                        <li>
-                            <button class="add-to-fav">
-                                <i class="fa fa-heart" aria-hidden="true"></i>
-                            </button>
-                        </li>
-
-                        <li>
-                            <button>
-                                <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                            </button>
-                        </li>
-
-                        <li>
-                            <button>
-                                <i class="fa fa-exchange" aria-hidden="true"></i>
-                            </button>
-                        </li>
-                    </ul>
-
-                    <button class="add-to-cart btn py-1 px-2">
-                        أضف إلى العربة
-                    </button>
-                </div>
-                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-            </div>
-
-            <div class="card-body text-center">
-                <h5 class="card-title">هذا النص هو مثال ....</h5>
-                <h5>70 جنيه</h5>
-            </div>
-        </div>
-    </div>
-    </div>
-    </div>
-
-    <div class="row">
-        <div class="col-12">
-            <div class="card-deck2 d-flex flex-wrap">
-                <div class="card mt-4">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets">
-                            <div class="badge product-label badge-success px-3 py-2 rounded-0">
-                                الأكثر
-                            </div>
-                            <ul class="list-unstyled position-absolute">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <button class="add-to-cart btn py-1 px-2">
-                                أضف إلى العربة
-                            </button>
-                        </div>
-                        <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="card-title">هذا النص هو مثال ....</h5>
-                        <h5>70 جنيه</h5>
-                    </div>
-                </div>
-
-                <div class="card mt-4">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets">
-                            <div class="badge product-label badge-primary px-3 py-2 rounded-0">
-                                متميز
-                            </div>
-                            <ul class="list-unstyled position-absolute">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <button class="add-to-cart btn py-1 px-2">
-                                أضف إلى العربة
-                            </button>
-                        </div>
-                        <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="card-title">هذا النص هو مثال ....</h5>
-                        <h5>70 جنيه</h5>
-                    </div>
-                </div>
-
-                <div class="card mt-4">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets">
-                            <div class="badge product-label badge-success px-3 py-2 rounded-0">
-                                الأكثر
-                            </div>
-                            <ul class="list-unstyled position-absolute">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <button class="add-to-cart btn py-1 px-2">
-                                أضف إلى العربة
-                            </button>
-                        </div>
-                        <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="card-title">هذا النص هو مثال ....</h5>
-                        <h5>70 جنيه</h5>
-                    </div>
-                </div>
-
-                <div class="card mt-4">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets">
-                            <div class="badge product-label badge-diff1 px-3 py-2 rounded-0">
-                                30%
-                            </div>
-                            <ul class="list-unstyled position-absolute">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <button class="add-to-cart btn py-1 px-2">
-                                أضف إلى العربة
-                            </button>
-                        </div>
-                        <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="card-title">هذا النص هو مثال ....</h5>
-                        <h5>70 جنيه</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-12">
-            <div class="card-deck2 d-flex flex-wrap">
-                <div class="card mt-4">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets">
-                            <div class="badge product-label badge-success px-3 py-2 rounded-0">
-                                الأكثر
-                            </div>
-                            <ul class="list-unstyled position-absolute">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <button class="add-to-cart btn py-1 px-2">
-                                أضف إلى العربة
-                            </button>
-                        </div>
-                        <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="card-title">هذا النص هو مثال ....</h5>
-                        <h5>70 جنيه</h5>
-                    </div>
-                </div>
-
-                <div class="card mt-4">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets">
-                            <div class="badge product-label badge-primary px-3 py-2 rounded-0">
-                                متميز
-                            </div>
-                            <ul class="list-unstyled position-absolute">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <button class="add-to-cart btn py-1 px-2">
-                                أضف إلى العربة
-                            </button>
-                        </div>
-                        <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="card-title">هذا النص هو مثال ....</h5>
-                        <h5>70 جنيه</h5>
-                    </div>
-                </div>
-
-                <div class="card mt-4">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets">
-                            <div class="badge product-label badge-success px-3 py-2 rounded-0">
-                                الأكثر
-                            </div>
-                            <ul class="list-unstyled position-absolute">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <button class="add-to-cart btn py-1 px-2">
-                                أضف إلى العربة
-                            </button>
-                        </div>
-                        <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="card-title">هذا النص هو مثال ....</h5>
-                        <h5>70 جنيه</h5>
-                    </div>
-                </div>
-
-                <div class="card mt-4">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets">
-                            <div class="badge product-label badge-diff1 px-3 py-2 rounded-0">
-                                30%
-                            </div>
-                            <ul class="list-unstyled position-absolute">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <button class="add-to-cart btn py-1 px-2">
-                                أضف إلى العربة
-                            </button>
-                        </div>
-                        <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="card-title">هذا النص هو مثال ....</h5>
-                        <h5>70 جنيه</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-12">
-            <div class="card-deck2 d-flex flex-wrap">
-                <div class="card mt-4">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets">
-                            <div class="badge product-label badge-success px-3 py-2 rounded-0">
-                                الأكثر
-                            </div>
-                            <ul class="list-unstyled position-absolute">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <button class="add-to-cart btn py-1 px-2">
-                                أضف إلى العربة
-                            </button>
-                        </div>
-                        <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="card-title">هذا النص هو مثال ....</h5>
-                        <h5>70 جنيه</h5>
-                    </div>
-                </div>
-
-                <div class="card mt-4">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets">
-                            <div class="badge product-label badge-primary px-3 py-2 rounded-0">
-                                متميز
-                            </div>
-                            <ul class="list-unstyled position-absolute">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <button class="add-to-cart btn py-1 px-2">
-                                أضف إلى العربة
-                            </button>
-                        </div>
-                        <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="card-title">هذا النص هو مثال ....</h5>
-                        <h5>70 جنيه</h5>
-                    </div>
-                </div>
-
-                <div class="card mt-4">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets">
-                            <div class="badge product-label badge-success px-3 py-2 rounded-0">
-                                الأكثر
-                            </div>
-                            <ul class="list-unstyled position-absolute">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <button class="add-to-cart btn py-1 px-2">
-                                أضف إلى العربة
-                            </button>
-                        </div>
-                        <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="card-title">هذا النص هو مثال ....</h5>
-                        <h5>70 جنيه</h5>
-                    </div>
-                </div>
-
-                <div class="card mt-4">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets">
-                            <div class="badge product-label badge-diff1 px-3 py-2 rounded-0">
-                                30%
-                            </div>
-                            <ul class="list-unstyled position-absolute">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <button class="add-to-cart btn py-1 px-2">
-                                أضف إلى العربة
-                            </button>
-                        </div>
-                        <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="card-title">هذا النص هو مثال ....</h5>
-                        <h5>70 جنيه</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-12">
-            <div class="card-deck2 d-flex flex-wrap">
-                <div class="card mt-4">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets">
-                            <div class="badge product-label badge-success px-3 py-2 rounded-0">
-                                الأكثر
-                            </div>
-                            <ul class="list-unstyled position-absolute">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <button class="add-to-cart btn py-1 px-2">
-                                أضف إلى العربة
-                            </button>
-                        </div>
-                        <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="card-title">هذا النص هو مثال ....</h5>
-                        <h5>70 جنيه</h5>
-                    </div>
-                </div>
-
-                <div class="card mt-4">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets">
-                            <div class="badge product-label badge-primary px-3 py-2 rounded-0">
-                                متميز
-                            </div>
-                            <ul class="list-unstyled position-absolute">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <button class="add-to-cart btn py-1 px-2">
-                                أضف إلى العربة
-                            </button>
-                        </div>
-                        <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="card-title">هذا النص هو مثال ....</h5>
-                        <h5>70 جنيه</h5>
-                    </div>
-                </div>
-
-                <div class="card mt-4">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets">
-                            <div class="badge product-label badge-success px-3 py-2 rounded-0">
-                                الأكثر
-                            </div>
-                            <ul class="list-unstyled position-absolute">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <button class="add-to-cart btn py-1 px-2">
-                                أضف إلى العربة
-                            </button>
-                        </div>
-                        <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="card-title">هذا النص هو مثال ....</h5>
-                        <h5>70 جنيه</h5>
-                    </div>
-                </div>
-
-                <div class="card mt-4">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets">
-                            <div class="badge product-label badge-diff1 px-3 py-2 rounded-0">
-                                30%
-                            </div>
-                            <ul class="list-unstyled position-absolute">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <button class="add-to-cart btn py-1 px-2">
-                                أضف إلى العربة
-                            </button>
-                        </div>
-                        <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" alt="Card image cap" />
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="card-title">هذا النص هو مثال ....</h5>
-                        <h5>70 جنيه</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
     </div>
 
     </div>
 
     <div class="d-flex justify-content-center mt-5 pt-3">
-        <nav aria-label=" Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link rounded-circle mx-1" href="#">
-                        <i class="fas fa-chevron-right"></i>
-                    </a></li>
-                <li class="page-item active"><a class="page-link rounded-circle mx-1" href="#">1</a></li>
-                <li class="page-item"><a class="page-link rounded-circle mx-1" href="#">2</a></li>
-                <li class="page-item"><a class="page-link rounded-circle mx-1" href="#">3</a></li>
-                <li class="page-item"><a class="page-link rounded-circle mx-1" href="#">
-                        <i class="fas fa-chevron-left"></i>
-                    </a></li>
-            </ul>
-        </nav>
+        {{$vendors_products->links('vendor.pagination.default')}}
     </div>
 
     </div>
 
 
     @endsection
+
+
+
+   
+    @push('scripts')
+
+
+    <script>
+        $(function() {
+            // Price Slider
+            $("#multi").change(function(e) {
+                document.getElementById("price").innerHTML = `${e.target.value}`
+            });
+        })
+    </script>
+
+
+<script>
+    $(document).on('click', '.quick-view', function() {
+        $('.quickview-modal-product-details-' + $(this).attr('data-product-id')).css("display", "block");
+    });
+    $(document).on('click', '.close', function() {
+        $('.quickview-modal-product-details-' + $(this).attr('data-product-id')).css("display", "none");
+    });
+</script>
+
+<script>
+    $(document).ready(function(e) {
+        $('.multi-range').on('change', function() {
+            var multi = $('#multi').val();
+            $.ajax({
+                url: "{{ route('Site.vendor.price.products', $vendor->id) }}",
+                type: 'GET',
+                data: {
+                    multi: multi
+                },
+                success: function(res) {
+                    $('.searchProduct').empty();
+                    $('.searchProduct').html(res);
+                }
+            });
+        });
+        $('#sort_by').on('change', function() {
+            var sort_by = $('#sort_by').val();
+            $.ajax({
+                url: "{{ route('Site.vendor.sort.products', $vendor->id) }}",
+                method: "GET",
+                data: {
+                    sort_by: sort_by
+                },
+                success: function(res) {
+                    $('.searchProduct').empty();
+                    $('.searchProduct').html(res);
+                }
+            });
+        });
+        $('#all_products').on('click', function() {
+            var sort_by = $('#all_products').val();
+            $.ajax({
+                url: "{{ route('Site.vendor.all_products.search', $vendor->id) }}",
+                method: "GET",
+                data: {
+                    sort_by: sort_by
+                },
+                success: function(res) {
+                    $('.searchProduct').empty();
+                    $('.searchProduct').html(res);
+                }
+            });
+        });
+        $('#all_offers').on('click', function() {
+            var sort_by = $('#all_offers').val();
+            $.ajax({
+                url: "{{ route('Site.vendor.all_offers.search', $vendor->id) }}",
+                method: "GET",
+                data: {
+                    sort_by: sort_by
+                },
+                success: function(res) {
+                    $('.searchProduct').empty();
+                    $('.searchProduct').html(res);
+                }
+            });
+        });
+        $('.brandloop').on('click', function() {
+            var brand = [];
+            $('.brandloop').each(function() {
+                if ($(this).is(":checked")) {
+                    brand.push($(this).val());
+                }
+            });
+            allBrand = brand.toString();
+            $.ajax({
+                url: "{{ route('Site.vendor.brands.sort', $vendor->id) }}",
+                method: "GET",
+                data: "brand=" + allBrand,
+                success: function(res) {
+                    $('.searchProduct').empty();
+                    $('.searchProduct').html(res);
+                }
+            });
+        });
+    });
+
+
+    $('.pcColor').on('click' ,function(){
+
+       let color =  $(this).data('color')
+       
+       $.ajax({
+          url:"{{ route('Site.vendor.search.color' , $vendor->id) }}",
+          method:"GET",
+          data:{color:color},
+
+          success: function(res) {
+                    $('.searchProduct').empty();
+                    $('.searchProduct').html(res);
+                }
+
+       })
+
+    })
+
+    $('.size').on('click' , function(){
+
+        let size = $(this).val();
+
+        $.ajax({
+            url:"{{ route('Site.vendor.search.size' , $vendor->id) }}",
+            method:"GET",
+            data:{size:size},
+            
+            success: function(res) {
+                    $('.searchProduct').empty();
+                    $('.searchProduct').html(res);
+                }
+
+        })
+    })
+
+    $('.stars').on('click' , function(){
+        let star_rating = $(this).val();
+
+        $.ajax({
+            url:"{{ route('Site.vendor.search.review' , $vendor->id) }}",
+            method:"GET",
+            data:{rating : star_rating},
+
+            success: function(res) {
+                console.log("oer");
+                    $('.searchProduct').empty();
+                    $('.searchProduct').html(res);
+                }
+        })
+    })
+</script>
+
+        
+    @endpush

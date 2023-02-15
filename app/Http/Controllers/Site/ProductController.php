@@ -71,11 +71,15 @@ class ProductController extends Controller
     {
         $product = Product::where('id', $id)->first();
 
-        $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)->get();
+        $productColors = ProductColor::distinct()->get(['name']);
+
+        $productSizes = Productsize::distinct()->get(['name']);
+
+        $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)->paginate(4);
 
         $vendor = Vendor::where('id', $product->vendor_id)->first();
 
-        return view('site.categories.vendor_products', compact('product', 'vendors_products', 'vendor'));
+        return view('site.categories.vendor_products', compact('product', 'productColors', 'productSizes','vendors_products', 'vendor'));
     } // الكنترولر اللي بيجيب البائع بمنتجاته
 
 
@@ -116,4 +120,150 @@ class ProductController extends Controller
 
         return view('site.categories.vendorDetails', compact('vendor','average','reviewsCount','productsWithReviews'));
     }
+
+    public function search_products_by_price(Request $request, $id){
+
+        $product = Product::where('id', $id)->first();
+
+        $productColors = ProductColor::distinct()->get(['name']);
+
+        $productSizes = Productsize::distinct()->get(['name']);
+
+        $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)
+         ->where('price', '>=', $request->multi)
+        ->paginate(4);
+
+        $vendor = Vendor::where('id', $product->vendor_id)->first();
+        
+        return view('site.categories.vendor_filter_products' , compact('product' , 'productColors' , 'productSizes' , 'vendors_products' , 'vendor' ))->render();
+
+    }
+
+    public function search_products_by_created_at(Request $request, $id){
+              
+        $product = Product::where('id', $id)->first();
+
+        $productColors = ProductColor::distinct()->get(['name']);
+
+        $productSizes = Productsize::distinct()->get(['name']);
+
+        $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)
+         ->orderBy("created_at" , "desc")
+        ->paginate(4);
+
+        $vendor = Vendor::where('id', $product->vendor_id)->first();
+        
+        return view('site.categories.vendor_filter_products' , compact('product' , 'productColors' , 'productSizes' , 'vendors_products' , 'vendor' ))->render();
+
+
+    }
+
+
+    public function get_all_products(Request $request, $id){
+
+        $product = Product::where('id', $id)->first();
+
+        $productColors = ProductColor::distinct()->get(['name']);
+
+        $productSizes = Productsize::distinct()->get(['name']);
+
+        $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)->paginate(4);
+
+        $vendor = Vendor::where('id', $product->vendor_id)->first();
+        
+        return view('site.categories.vendor_filter_products' , compact('product' , 'productColors' , 'productSizes' , 'vendors_products' , 'vendor' ))->render();
+
+    }
+
+    public function get_flash_products(Request $request, $id){
+
+        $product = Product::where('id', $id)->first();
+
+      
+
+        $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)
+        
+         ->where('flash_sale', 1)
+        
+        ->paginate(4);
+
+        $vendor = Vendor::where('id', $product->vendor_id)->first();
+        
+        return view('site.categories.vendor_filter_products' , compact('product'  , 'vendors_products' , 'vendor' ))->render();
+
+    }
+
+
+    public function get_products_ByBrands(Request $request, $id){
+             
+        $product = Product::where('id', $id)->first();
+
+       
+
+        $brand = $request->brand; //brand
+        $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)
+        ->whereIN('brand_id', explode(',', $brand))->paginate(4);
+        $vendor = Vendor::where('id', $product->vendor_id)->first();
+
+        return view('site.categories.vendor_filter_products' , compact('product'  , 'vendors_products' , 'vendor' ))->render();
+    }
+
+
+    public function search_by_color(Request $request , $id){
+           
+        $product = Product::where('id', $id)->first();
+
+        $colors =  ProductColor::where("name" , $request->color)->pluck('product_id')->toArray();
+
+
+        $colorsArr = array_values($colors);
+
+
+        $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)->whereIN("id" , $colorsArr)->paginate(4);
+       
+        $vendor = Vendor::where('id', $product->vendor_id)->first();
+
+        return view('site.categories.vendor_filter_products' , compact('product'  , 'vendors_products' , 'vendor' ))->render();
+
+
+
+
+    }
+
+    public function search_by_size(Request $request , $id){
+           
+        $product = Product::where('id', $id)->first();
+
+        $sizes = Productsize::where('name' , $request->size)->pluck('product_id')->toArray();
+
+        $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)->whereIN("id" , $sizes)->paginate(4); 
+
+        $vendor = Vendor::where('id', $product->vendor_id)->first();
+        return view('site.categories.vendor_filter_products' , compact('product'  , 'vendors_products' , 'vendor' ))->render();
+
+    }
+
+
+    public function search_by_review_products(Request $request , $id){
+
+        $product = Product::where('id', $id)->first();
+        $reviews = Review::where("star_rating" , $request->rating)->pluck('product_id')->toArray();
+
+        $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)->whereIN("id" , $reviews)->paginate(4);
+        
+        $vendor = Vendor::where('id', $product->vendor_id)->first();
+
+        return view('site.categories.vendor_filter_products' , compact('product'  , 'vendors_products' , 'vendor' ))->render();
+
+
+    }
+
+
+
+
+    
+
+
+
+
 }

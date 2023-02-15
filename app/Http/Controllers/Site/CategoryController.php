@@ -125,7 +125,7 @@ class CategoryController extends Controller
         $brand = $request->brand; //brand
 
         if ($category && $brand) {
-            $products = $category->products->whereIN('brand_id', explode(',', $brand))->all();
+            $products = Product::where("mainCategory_id" , $category->id)->whereIN('brand_id', explode(',', $brand))->paginate(4);
         }
         $allCategories = Category::Parent()->paginate(4);
         $ads = Ad::paginate(1);
@@ -168,9 +168,6 @@ class CategoryController extends Controller
 
             $products = Product::where("mainCategory_id" , $category->id)
             ->whereIN("id" , $sizes)->paginate(4); 
-
-            
-            
             
         }
          

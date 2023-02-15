@@ -35,7 +35,7 @@
                     </button>
                 </form>
             </div>
-            <img class="card-img-top" src="{{$product ->images[0]->photo ?? asset('images/default.png')}}" alt="{{$product->name}}" />
+            <img class="card-img-top" src="{{$product ->images[0]->photo ? asset($product ->images[0]->photo) : asset('images/default.png')}}" alt="{{$product->name}}" />
         </div>
 
         <div class="card-body text-center">

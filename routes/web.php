@@ -67,6 +67,19 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
 
     //vendors
     Route::get('product/vendor/{id}', [ProductController::class, 'vendorProducts'])->name('Site.product.vendorProducts');
+
+    Route::get('product/vendor/{id}/price-products', [ProductController::class, 'search_products_by_price'])->name('Site.vendor.price.products');
+    
+    Route::get('product/vendor/{id}/sort-products', [ProductController::class, 'search_products_by_created_at'])->name('Site.vendor.sort.products');
+
+    Route::get('product/vendor/{id}/all-products', [ProductController::class, 'get_all_products'])->name('Site.vendor.all_products.search');
+    Route::get('product/vendor/{id}/flash-products', [ProductController::class, 'get_flash_products'])->name('Site.vendor.all_offers.search');
+    Route::get('product/vendor/{id}/brands-products', [ProductController::class, 'get_products_ByBrands'])->name('Site.vendor.brands.sort');
+    Route::get('product/vendor/{id}/colors-products', [ProductController::class, 'search_by_color'])->name('Site.vendor.search.color');
+    Route::get('product/vendor/{id}/sizes-products', [ProductController::class, 'search_by_size'])->name('Site.vendor.search.size');
+    Route::get('product/vendor/{id}/review-products', [ProductController::class, 'search_by_review_products'])->name('Site.vendor.search.review');
+
+
     Route::get('vendor/{id}', [ProductController::class, 'getVendor'])->name('Site.getVendor');
 
     //profile
