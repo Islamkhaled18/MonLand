@@ -9,6 +9,7 @@ use App\Models\ProductColor;
 use App\Models\Productsize;
 use App\Models\Review;
 use App\Models\Vendor;
+use App\Models\Size;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -273,7 +274,12 @@ class ProductController extends Controller
 
 
 
-    
+    public function sizeTable()
+    {
+        $size = Size::first();
+        return view('site.categories.size',compact('size'));
+
+    }
 
 
 

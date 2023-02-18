@@ -59,13 +59,11 @@
                             @enderror
                         </div>
 
-
-                   
                         <div class="mt-4 d-flex justify-content-between">
                             <div>
-                                <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                <input type="checkbox" name="remember_token" id="remember_token" {{ old('remember_token') ? 'checked' : '' }}>
 
-                                <label for="remember" class="font-weight-bold text-muted">
+                                <label for="remember_token" class="font-weight-bold text-muted">
                                     تذكرنى
                                 </label>
                             </div>
@@ -74,7 +72,7 @@
                                     {{ __('Login') }}
                                 </button>
                             </div> -->
-                            <a href="#" class="forget-pass">
+                            <a href="{{route('password.email.send')}}" class="forget-pass">
                                 هل نسيت كلمة المرور ؟
                             </a>
                         </div>

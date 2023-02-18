@@ -14,9 +14,12 @@ use App\Http\Controllers\Site\ProfileController;
 use App\Http\Controllers\Site\WishlistController;
 use App\Http\Controllers\Site\ExchangeController;
 use App\Http\Controllers\Site\TermsConditionController;
+use App\Mail\PasswordResetEmail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +30,8 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Auth::routes();
+
+Route::get('/sizes', [ProductController::class, 'sizeTable'])->name('sizeTable');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -141,4 +146,61 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
 }); // routes for authenticated users
 
 Route::group(['namespace' => 'Site', 'middleware' => 'guest:web', 'prefix' => 'Site'], function () {
+
+
+    Route::get('reset-passord',function(){
+        return view('auth.passwords.email');
+    })->name('password.email.send');
+
+    Route::post('/forgot-password', function (Request $request) {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
+    
+        $user = App\Models\User::where('email', $request->email)->first();
+    
+        if ($user) {
+            $verificationCode = rand(10000, 99999);
+            $user->verification_code = $verificationCode;
+            $user->save();
+    
+            Mail::to($user->email)->send(new PasswordResetEmail($verificationCode));
+        }
+    
+        return redirect()->route('password.verify', ['email' => $request->email]);
+    })->name('password.email');
+
+
+    Route::get('/reset-password', function (Request $request) {
+        return view('auth.passwords.reset-password', ['email' => $request->email]);
+    })->name('password.verify');
+
+
+    Route::post('/reset-password', function (Request $request) {
+        $request->validate([
+            'email' => 'required|email',
+            'verification_code' => 'required|numeric',
+            'password' => 'required|min:8',
+        ]);
+    
+        $user = App\Models\User::where('email', $request->email)
+                    ->where('verification_code', $request->verification_code)
+                    ->first();
+    
+        if ($user) {
+            $user->password = Hash::make($request->password);
+            $user->verification_code = null;
+            $user->save();
+    
+            return redirect()->route('password.success', ['newPassword' => $request->password]);
+        }
+    
+        return redirect()->back()->withErrors(['verification_code' => 'Invalid verification code.']);
+    })->name('password.update');
+    
+
+    Route::get('/password-reset-success', function (Request $request) {
+        return view('auth.passwords.password-reset-success', ['newPassword' => $request->newPassword]);
+    })->name('password.success');
+    
 }); // routes for un-authenticated users

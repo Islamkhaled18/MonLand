@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Cart;
+use App\Models\Governorate;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
@@ -60,11 +61,28 @@ class CartController extends Controller
                 })
                 ->get();
 
+
+                $vendors_cart_count = Vendor::with(['carts' => function ($query) use ($user) {
+                    $query->where('carts.user_id', $user->id);
+                    $query->with(['products' => function ($products) {
+                        $products->get();
+                    }]);
+                }])
+                ->whereHas('carts.products', function ($query) {
+                    $query->whereNull('products.deleted_at');
+                })
+                ->count();
+
+              
+
         
         $countProdcts = count($products);
         $addresses = Address::with('governorate')->where('user_id', auth()->user()->id)->first();
 
-        return view('site.sale.cart', compact('products', 'countProdcts', 'addresses'));
+        $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
+       
+
+        return view('site.sale.cart', compact('products', 'countProdcts', 'addresses','delivery_fees','vendors_cart_count'));
     } //cart page
 
     public function countCart()

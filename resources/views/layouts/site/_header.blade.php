@@ -11,6 +11,9 @@
                 <li>
                     <a href="{{route('Site.contactUs')}}">تواصل معنا</a>
                 </li>
+                <li>
+                    <a href="{{route('sizeTable')}}">جدول المقاسات </a>
+                </li>
                 <!-- <li>
                     <a href="#">الشروط والأحكام </a>
                 </li> -->

@@ -220,10 +220,10 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="row p-2 text-white card-deck-title">
-                                <a class="text-white" href="{{ route('Site.getVendor', $vendor->id) }}">
+                                {{-- <a class="text-white" href="{{ route('Site.getVendor', $vendor->id) }}"> --}}
 
                                     <p>معلومات اكتر عن التاجر ومنتجاته واراء العملاء</p>
-                                </a>
+                                {{-- </a> --}}
                             </div>
 
                             <div class="card-deck2 d-flex flex-wrap searchProduct">

@@ -3,16 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale= 1">
-    <title>كيـان - استعادة كلمة المرور
-    </title>
+    <title>إستعادة كلمة المرور</title>
+
     <link rel="stylesheet" href="{{ asset('website_assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('website_assets/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('website_assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('website_assets/pages-css/register/passwordRecovery.css') }}" />
-    {{-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> --}}
-
+    <link rel="stylesheet" href="{{ asset('website_assets/pages-css/passwordRecovery.css') }}" />
 </head>
 
 <body>
@@ -36,27 +33,13 @@
                         إستعادة كلمة المرور
                     </h4>
 
-                    <div class="d-flex mt-5 mb-4">
-                        <i class="fa fa-exclamation-circle fa-lg mt-1"></i>
-                        <p class="text-right mr-2 font-weight-bold text-muted">
-                            الرجاء إدخال البريد الإلكترونى الخاص بحسابك على كيان سنرسل لك رابط لإستعادة كلمة المرور
-                        </p>
-
+                    <div class="text-center my-5">
+                        <i class="fa fa-check-circle fa-7x"></i>
                     </div>
+                    <p class="text-right mr-3 font-weight-bold text-muted mb-5">
+                        مت استعادة كلمة المرور بنجاح
+                    </p>
 
-                    {{-- <form class="text-right px-4"> --}}
-                    <form class="text-right px-4" action="{{ route('password.email') }}" method="POST">
-                        @csrf
-
-                        <div class="form-group">
-                            <label for="email" class="font-weight-bold">البريد الإلكترونى</label>
-                            <input type="email" name="email" class="form-control mt-4" id="email">
-
-                        </div>
-                        <button type="submit" class="btn d-block w-100 my-5 text-white font-weight-bold py-2">إستعادة
-                            كلمة
-                            المرور</button>
-                    </form>
                 </div>
 
             </div>

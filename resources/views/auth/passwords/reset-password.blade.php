@@ -3,16 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale= 1">
-    <title>كيـان - استعادة كلمة المرور
-    </title>
+    <title>إستعادة كلمة المرور</title>
+
     <link rel="stylesheet" href="{{ asset('website_assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('website_assets/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('website_assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('website_assets/pages-css/register/passwordRecovery.css') }}" />
-    {{-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> --}}
-
+    <link rel="stylesheet" href="{{ asset('website_assets/pages-css/registernewPass.css') }}" />
 </head>
 
 <body>
@@ -33,29 +30,31 @@
                 </div>
                 <div class="modal-body">
                     <h4 class="text-center">
-                        إستعادة كلمة المرور
+                        إنشاء كلمة مرور جديدة
                     </h4>
 
-                    <div class="d-flex mt-5 mb-4">
-                        <i class="fa fa-exclamation-circle fa-lg mt-1"></i>
-                        <p class="text-right mr-2 font-weight-bold text-muted">
-                            الرجاء إدخال البريد الإلكترونى الخاص بحسابك على كيان سنرسل لك رابط لإستعادة كلمة المرور
-                        </p>
 
-                    </div>
-
-                    {{-- <form class="text-right px-4"> --}}
-                    <form class="text-right px-4" action="{{ route('password.email') }}" method="POST">
+                    <form class="text-right px-4 my-5" action="{{ route('password.update') }}" method="POST">
                         @csrf
-
                         <div class="form-group">
-                            <label for="email" class="font-weight-bold">البريد الإلكترونى</label>
-                            <input type="email" name="email" class="form-control mt-4" id="email">
+                            <label class="font-weight-bold">كود التأكيد</label>
 
+                            <div class="d-flex justify-content-between flex-row-reverse">
+                                <input type="text" name="verification_code" class="form-control mt-4" maxlength="1">
+                                <input type="text" name="verification_code" class="form-control mt-4" maxlength="1">
+                                <input type="text" name="verification_code" class="form-control mt-4" maxlength="1">
+                                <input type="text" name="verification_code" class="form-control mt-4" maxlength="1">
+                                <input type="text" name="verification_code" class="form-control mt-4" maxlength="1">
+                            </div>
                         </div>
-                        <button type="submit" class="btn d-block w-100 my-5 text-white font-weight-bold py-2">إستعادة
+
+                        <div class="form-group mt-4">
+                            <label class="font-weight-bold text-muted">كلمة المرور الجديدة</label>
+                            <input type="password" name="password" class="form-control mt-4">
+                        </div>
+                        <button type="submit" class="btn d-block w-100 my-5 text-white font-weight-bold py-2">إنشاء
                             كلمة
-                            المرور</button>
+                            مرور جديدة</button>
                     </form>
                 </div>
 
@@ -67,6 +66,9 @@
     <script src="{{ asset('website_assets/js/popper.min.js') }}"></script>
     <script src="{{ asset('website_assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('website_assets/js/script.js') }}"></script>
+    <script src="{{ asset('website_assets/pages-js/newPass.js') }}"></script>
+
+
 </body>
 
 </html>

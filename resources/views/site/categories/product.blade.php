@@ -131,7 +131,7 @@
                     <div id="size-section " class="my-4">
                         <div class="normal-text my-2 subheader d-flex justify-content-between">
                             المقاس
-                            <a href="#" class="under-line text-dark"><u>جدول المقاسات</u></a>
+                            <a href="{{route('sizeTable')}}" class="under-line text-dark"><u>جدول المقاسات</u></a>
                         </div>
                         <div class="d-flex available-sizes flex-nowrap">
                             @foreach ($product_sizes as $size)

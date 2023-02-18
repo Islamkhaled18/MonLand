@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DeliveryController;
 use App\Http\Controllers\Admin\DeliveryPolicyController;
 use App\Http\Controllers\Admin\EmailUsController;
+use App\Http\Controllers\Admin\ExchangeController;
 use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\Admin\MainCategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductColorController;
 use App\Http\Controllers\Admin\ProductSizeController;
+use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\TermsController;
 use Illuminate\Support\Facades\Route;
 
@@ -188,6 +190,15 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
         Route::post('update/{id}', [GovernorateController::class, 'update'])->name('governorate.update');
         Route::get('delete/{id}', [GovernorateController::class, 'destroy'])->name('governorate.destroy');
     });
+    ///////////////sizes Controller/////////////////////
+    Route::group(['prefix' => 'Sizes-table'], function () {
+        Route::get('/', [SizeController::class, 'index'])->name('sizes.index');
+        Route::get('create', [SizeController::class, 'create'])->name('sizes.create');
+        Route::post('store', [SizeController::class, 'store'])->name('sizes.store');
+        Route::get('edit/{id}', [SizeController::class, 'edit'])->name('sizes.edit');
+        Route::post('update/{id}', [SizeController::class, 'update'])->name('sizes.update');
+        Route::get('delete/{id}', [SizeController::class, 'destroy'])->name('sizes.destroy');
+    });
 
 
     ///////////////coupon Controller/////////////////////
@@ -207,6 +218,13 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
         Route::get('edit/{id}', [OrderController::class, 'edit'])->name('order.edit');
         Route::post('update/{id}', [OrderController::class, 'update'])->name('order.update');
         Route::get('delete/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
+    });
+    ///////////////Exchnge Controller/////////////////////
+    Route::group(['prefix' => 'Exchnge'], function () {
+        Route::get('/', [ExchangeController::class, 'index'])->name('exchanges.index');
+        Route::get('show/{id}', [ExchangeController::class, 'show'])->name('exchanges.show');
+        // Route::post('update/{id}', [OrderController::class, 'update'])->name('order.update');
+        Route::get('delete/{id}', [ExchangeController::class, 'destroy'])->name('exchanges.destroy');
     });
 }); // routes for authenticated admins
 
