@@ -21,7 +21,7 @@
     </h1>
     @else
     <div>
-        <a class="btn btn-primary btn-sm" href="{{ route('sizes.create') }}" title="انشاء صورة جدول مقاسات جديده">انشاء صورة جدول مقاسات جديده</a>
+        <a class="btn btn-primary btn-sm" href="{{ route('size.create') }}" title="انشاء صورة جدول مقاسات جديده">انشاء صورة جدول مقاسات جديده</a>
     </div>
     @endif
     {{-- @endcan --}}
@@ -48,10 +48,10 @@
 
                                 <td>
                                     {{-- @can('ads.edit') --}}
-                                    <a class="btn btn-sm btn-dark" title="تعديل" href="{{ route('sizes.edit', ['id' => $size->id]) }}">تعديل</a>
+                                    <a class="btn btn-sm btn-dark" title="تعديل" href="{{ route('size.edit', ['id' => $size->id]) }}">تعديل</a>
                                     {{-- @endcan --}}
                                     @can('ads.edit')
-                                    <form action="{{ route('sizes.destroy', $size->id) }}" method="post" style="display: inline-block">
+                                    <form action="{{ route('size.destroy', $size->id) }}" method="post" style="display: inline-block">
                                         @csrf
                                         @method('GET')
                                         <button type="'submit" title="حذف" class="btn btn-danger delete btn-sm"><i class="fa fa-trash"></i>حذف</button>

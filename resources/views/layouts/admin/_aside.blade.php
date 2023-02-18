@@ -56,7 +56,7 @@
                         المنتجات </a></li>
 
 
-                <li><a class="treeview-item" href="{{ route('sizes.index') }}"><i
+                <li><a class="treeview-item" href="{{ route('size.index') }}"><i
                             class="app-menu__icon fa fa-user"></i> <span class="app-menu__label"> جدول المقاسات
                         </span></a></li>
             </ul>

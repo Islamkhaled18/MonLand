@@ -10,8 +10,8 @@
         </div>
         <ul class="app-breadcrumb breadcrumb side">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-            <li class="breadcrumb-item"><a href="{{ route('sizes.index') }}" title="جدول المقاسات">جدول المقاسات</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('sizes.create') }}" title="انشاء صورة جدول مقاسات جديده">إانشاء صورة جدول مقاسات جديده</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('size.index') }}" title="جدول المقاسات">جدول المقاسات</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('size.create') }}" title="انشاء صورة جدول مقاسات جديده">إانشاء صورة جدول مقاسات جديده</a></li>
         </ul>
     </div>
     <div class="row">

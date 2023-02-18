@@ -14,9 +14,9 @@ class OptionController extends Controller
 {
     public function index()
     {
-        if(!Gate::allows('options')){
-            return view('admin.errors.notAllowed');
-        }
+        // if(!Gate::allows('options')){
+        //     return view('admin.errors.notAllowed');
+        // }
         $options = Option::with(['product' => function ($prod) {
             $prod->select('id','name');
         }, 'attribute' => function ($attr) {
@@ -28,9 +28,9 @@ class OptionController extends Controller
 
     public function create()
     {
-        if(!Gate::allows('options.create')){
-            return view('admin.errors.notAllowed');
-        }
+        // if(!Gate::allows('options.create')){
+        //     return view('admin.errors.notAllowed');
+        // }
         $data = [];
         $data['products'] = Product::select('id','name')->get();
         $data['attributes'] = Attribute::select('id','name')->get();
@@ -62,9 +62,9 @@ class OptionController extends Controller
     public function edit($optionId)
     {
 
-        if(!Gate::allows('options.edit')){
-            return view('admin.errors.notAllowed');
-        }
+        // if(!Gate::allows('options.edit')){
+        //     return view('admin.errors.notAllowed');
+        // }
         $data = [];
         $data['option'] = Option::findOrFail($optionId);
         $data['products'] = Product::select('name')->get();
@@ -93,9 +93,9 @@ class OptionController extends Controller
 
     public function destroy($id)
     {
-        if(!Gate::allows('options.destroy')){
-            return view('admin.errors.notAllowed');
-        }
+        // if(!Gate::allows('options.destroy')){
+        //     return view('admin.errors.notAllowed');
+        // }
 
         $option = Option::findOrFail($id);
         $option->delete();

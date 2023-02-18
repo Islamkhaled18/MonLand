@@ -14,9 +14,9 @@ class ProductColorController extends Controller
 
     public function index()
     {
-        if (!Gate::allows('productColors')) {
-            return view('admin.errors.notAllowed');
-        }
+        // if (!Gate::allows('productColors')) {
+        //     return view('admin.errors.notAllowed');
+        // }
         $colors = ProductColor::with('product')->paginate(5);
 
         return view('admin.productColors.index', compact('colors'));

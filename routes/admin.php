@@ -192,12 +192,12 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
     });
     ///////////////sizes Controller/////////////////////
     Route::group(['prefix' => 'Sizes-table'], function () {
-        Route::get('/', [SizeController::class, 'index'])->name('sizes.index');
-        Route::get('create', [SizeController::class, 'create'])->name('sizes.create');
-        Route::post('store', [SizeController::class, 'store'])->name('sizes.store');
-        Route::get('edit/{id}', [SizeController::class, 'edit'])->name('sizes.edit');
-        Route::post('update/{id}', [SizeController::class, 'update'])->name('sizes.update');
-        Route::get('delete/{id}', [SizeController::class, 'destroy'])->name('sizes.destroy');
+        Route::get('/', [SizeController::class, 'index'])->name('size.index');
+        Route::get('create', [SizeController::class, 'create'])->name('size.create');
+        Route::post('store', [SizeController::class, 'store'])->name('size.store');
+        Route::get('edit/{id}', [SizeController::class, 'edit'])->name('size.edit');
+        Route::post('update/{id}', [SizeController::class, 'update'])->name('size.update');
+        Route::get('delete/{id}', [SizeController::class, 'destroy'])->name('size.destroy');
     });
 
 

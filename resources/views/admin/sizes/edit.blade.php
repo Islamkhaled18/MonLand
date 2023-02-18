@@ -10,8 +10,8 @@
         </div>
         <ul class="app-breadcrumb breadcrumb side">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-            <li class="breadcrumb-item"><a href="{{ route('sizes.index') }}" title="صور المقاسات">صور المقاسات</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('sizes.edit', $size->id) }}" title="تعديل على صورة مقاسات">تعديل على صورة مقاسات -
+            <li class="breadcrumb-item"><a href="{{ route('size.index') }}" title="صور المقاسات">صور المقاسات</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('size.edit', $size->id) }}" title="تعديل على صورة مقاسات">تعديل على صورة مقاسات -
                     </a></li>
         </ul>
     </div>
@@ -20,7 +20,7 @@
             <div class="tile">
                 <div class="tile-body">
                     <div class="col-lg-6">
-                        <form action="{{ route('sizes.update', $size->id) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('size.update', $size->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <input name="id" value="{{ $size->id }}" type="hidden">
