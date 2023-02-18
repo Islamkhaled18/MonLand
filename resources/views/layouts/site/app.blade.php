@@ -111,17 +111,17 @@
                     <ul class="list-unstyled d-flex mt-4 second-list">
 
                         <li>
-                            <a class="p-3 whats">
+                            <a href="{{$instagram}}" class="p-3 whats">
                                 <i class="fab fa-instagram fa-lg"></i>
                             </a>
                         </li>
                         <li>
-                            <a class="mx-3 p-3 telegram">
+                            <a href="{{$twitter}}" class="mx-3 p-3 telegram">
                                 <i class="fab fa-twitter fa-lg"></i>
                             </a>
                         </li>
                         <li>
-                            <a class="p-3 facebook main-back-color text-white rounded-circle">
+                            <a href="{{$face_book}}" class="p-3 facebook main-back-color text-white rounded-circle">
                                 <i class=" fab fa-facebook-f fa-lg"></i>
                             </a>
                         </li>
@@ -211,7 +211,7 @@
 
     <footer class="main-back-color text-center">
         <p class="secondary-color px-3 py-3 h6 mb-0">
-            جميع الحقوق محفوظة kayan 2022
+            جميع الحقوق محفوظة kayan 2023
         </p>
 
     </footer>
@@ -237,6 +237,18 @@
         function setProgress(percent) {
             progressCircle.style.strokeDashoffset = circumference - (percent / 100) * circumference;
         }
+    </script>
+    <script>
+        const selectEl = document.querySelector('select[name="category"]');
+        selectEl.addEventListener('change', () => {
+            const formEl = selectEl.closest('form');
+            const hiddenInput = formEl.querySelector('input[name="category"]');
+            if (hiddenInput) {
+                hiddenInput.value = selectEl.value;
+            } else {
+                console.error('Could not find input element with name "category"');
+            }
+        });
     </script>
     <script>
         $.ajaxSetup({
