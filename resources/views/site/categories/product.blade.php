@@ -29,7 +29,7 @@
                             alt="{{ $product->name }}" />
                     </div>
                     <!-- Slider Nav imgs -->
-                    <div id="slide" class="d-flex justify-content-between flex-wrap mt-2">
+                    {{-- <div id="slide" class="d-flex justify-content-between flex-wrap mt-2">
                         <img class="thumbnail active"
                             src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
                             alt="{{ $product->name }}" />
@@ -51,6 +51,17 @@
 
 
 
+                    </div> --}}
+
+                    <div id="slide" class="d-flex justify-content-between flex-wrap mt-2">
+                        @foreach ($product->images as $key => $image)
+                            <img class="thumbnail{{ $loop->first ? ' active' : '' }}"
+                                 src="{{ $image->photo ? asset($image->photo) : asset('images/default.png') }}"
+                                 alt="{{ $product->name }}" />
+                            @if ($key == 5) {{-- Stop after 6 images --}}
+                                @break
+                            @endif
+                        @endforeach
                     </div>
                     {{-- <!-- Link -->
                     <div class="d-flex flex-column text-start text-large text-bold mt-2">
@@ -85,7 +96,7 @@
                             <?php endfor; ?>
                         </div>
                         {{-- <span id="product-review-count" class="mx-4">(اراء العملاء 180)</span> --}}
-                        @if ($product && $product->qty <= 20)
+                        @if (isset($product) && $product->qty !== null && $product->qty <= 20)
                             <!-- Rating End-->
                             <div class="col d-inline-flex justify-content-end">
                                 <div class="px-5 mr-2 text-center text-white bg-main text-bold text-xlarge">

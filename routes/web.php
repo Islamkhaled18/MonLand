@@ -171,32 +171,44 @@ Route::group(['namespace' => 'Site', 'middleware' => 'guest:web', 'prefix' => 'S
     })->name('password.email');
 
 
+    // Route::get('/reset-password', function (Request $request) {
+    //     return view('auth.passwords.reset-password', ['email' => $request->email]);
+    // })->name('password.verify');
+    
     Route::get('/reset-password', function (Request $request) {
-        return view('auth.passwords.reset-password', ['email' => $request->email]);
-    })->name('password.verify');
+    $email = $request->query('email');
+    $user = App\Models\User::where('email', $email)->first();
+    return view('auth.passwords.reset-password', ['user' => $user]);
+})->name('password.verify');
 
 
-    Route::post('/reset-password', function (Request $request) {
-        $request->validate([
-            'email' => 'required|email',
-            'verification_code' => 'required|numeric',
-            'password' => 'required|min:8',
-        ]);
-    
-        $user = App\Models\User::where('email', $request->email)
-                    ->where('verification_code', $request->verification_code)
-                    ->first();
-    
-        if ($user) {
-            $user->password = Hash::make($request->password);
-            $user->verification_code = null;
-            $user->save();
-    
-            return redirect()->route('password.success', ['newPassword' => $request->password]);
-        }
-    
-        return redirect()->back()->withErrors(['verification_code' => 'Invalid verification code.']);
-    })->name('password.update');
+  Route::post('/reset-password', function (Request $request) {
+
+    $request->validate([
+        'verification_code.*' => 'required|numeric',
+        'password' => 'required|min:6',
+        'email' => 'required|email',
+    ]);
+
+    // Combine the verification code digits into a single string
+    $verificationCode = implode('', $request->input('verification_code'));
+
+    $user = App\Models\User::where('email', $request->input('email'))
+                ->where('verification_code', $verificationCode)
+                ->first();
+                
+            
+
+    if ($user) {
+        $user->password = bcrypt($request->password);
+        $user->verification_code = null;
+        $user->save();
+
+        return redirect()->route('password.success', ['newPassword' => $request->password]);
+    }
+
+    return redirect()->back()->withErrors(['verification_code' => 'Invalid verification code.']);
+})->name('password.update');
     
 
     Route::get('/password-reset-success', function (Request $request) {

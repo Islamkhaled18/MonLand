@@ -489,21 +489,21 @@
                                                 <div class="row mt-3 mx-3 cart-item rounded">
                                                     <div class="col-12 col-lg-2 no-gutters d-flex justify-content-start">
                                                         <img class="product-img img-fluid"
-                                                            src="../imgs/fav/fav-card-img.jpg" />
+                                                        src="{{ $cart->products->images[1]->photo ? asset($cart->products->images[1]->photo) : asset('images/default.png') }}" />
                                                     </div>
                                                     <div
                                                         class="col-12 col-lg-7 text-start cart-item-details d-flex flex-column text-large">
                                                         <span class="py-2"> {{ $cart->products->name }}</span>
-                                                        <span class="">اللون : أسود</span>
-                                                        <span class="">المقاس : XL</span>
-                                                        <form action="{{ route('cart.destroy', $cart->products->id) }}"
+                                                        {{-- <span class="">اللون : أسود</span>
+                                                        <span class="">المقاس : XL</span> --}}
+                                                        {{-- <form action="{{ route('cart.destroy', $cart->products->id) }}"
                                                             method="POST" style="color: rgb(31, 27, 27)">
                                                             @csrf
                                                             @method('GET')
                                                             <button type="submit" style="color: rgb(24, 20, 20)"><i
                                                                     class="fa-solid fa-trash-can px-1"></i>حذف</button>
 
-                                                        </form>
+                                                        </form> --}}
                                                         <span class="main-color">
                                                             <i class="fa-solid fa-arrow-rotate-left px-1"></i>
                                                             <span>{{ $cart->products->anotherInformation }}</span>
@@ -881,11 +881,11 @@
                                 </div>
 
 
-                                <form action="{{ route('site.coupon.destroy') }}" method="POST" style="color: green">
+                                {{-- <form action="{{ route('site.coupon.destroy') }}" method="POST" style="color: green">
                                     @csrf
                                     {{ method_field('delete') }}
                                     <button type="submit" style="color: rgb(24, 20, 20)">حذف</button>
-                                </form>
+                                </form> --}}
                             @endif
 
                             <hr class=" ">
@@ -970,21 +970,21 @@
                                                 <div class="row mt-3 mx-3 cart-item rounded">
                                                     <div class="col-12 col-lg-2 no-gutters d-flex justify-content-start">
                                                         <img class="product-img img-fluid"
-                                                            src="../imgs/fav/fav-card-img.jpg" />
+                                                        src="{{ $cart->products->images[1]->photo ? asset($cart->products->images[1]->photo) : asset('images/default.png') }}" />
                                                     </div>
                                                     <div
                                                         class="col-12 col-lg-7 text-start cart-item-details d-flex flex-column text-large">
                                                         <span class="py-2"> {{ $cart->products->name }}</span>
-                                                        <span class="">اللون : أسود</span>
-                                                        <span class="">المقاس : XL</span>
-                                                        <form action="{{ route('cart.destroy', $cart->products->id) }}"
+                                                        {{-- <span class="">اللون : أسود</span>
+                                                        <span class="">المقاس : XL</span> --}}
+                                                        {{-- <form action="{{ route('cart.destroy', $cart->products->id) }}"
                                                             method="POST" style="color: rgb(31, 27, 27)">
                                                             @csrf
                                                             @method('GET')
                                                             <button type="submit" style="color: rgb(24, 20, 20)"><i
                                                                     class="fa-solid fa-trash-can px-1"></i>حذف</button>
 
-                                                        </form>
+                                                        </form> --}}
                                                         <span class="main-color">
                                                             <i class="fa-solid fa-arrow-rotate-left px-1"></i>
                                                             <span>{{ $cart->products->anotherInformation }}</span>
@@ -1360,12 +1360,12 @@
                                 <div class="text-large text-bold py-1">الخصم: ({{ session()->get('value') }})
                                 </div>
 
-
+{{-- 
                                 <form action="{{ route('site.coupon.destroy') }}" method="POST" style="color: green">
                                     @csrf
                                     {{ method_field('delete') }}
                                     <button type="submit" style="color: rgb(24, 20, 20)">حذف</button>
-                                </form>
+                                </form> --}}
                             @endif
 
                             <hr class=" ">

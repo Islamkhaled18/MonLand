@@ -33,7 +33,7 @@ class CouponController extends Controller
     {
         $request->validate([
             'code'=>'required|max:255',
-            'value'=>'required',
+            'value'=>'required|integer',
         ]);
 
         $coupon = new Coupon();

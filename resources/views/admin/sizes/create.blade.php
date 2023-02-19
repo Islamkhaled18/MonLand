@@ -20,7 +20,7 @@
             <div class="tile">
                 <div class="tile-body">
                     <div class="col-lg-6">
-                        <form action="{{route('sizes.store')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('size.store')}}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             

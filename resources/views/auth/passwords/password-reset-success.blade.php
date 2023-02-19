@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="{{ asset('website_assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('website_assets/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('website_assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('website_assets/pages-css/passwordRecovery.css') }}" />
+    <link rel="stylesheet" href="{{ asset('website_assets/pages-css/register/passwordRecovery.css') }}" />
+
 </head>
 
 <body>
@@ -17,11 +18,11 @@
         <div class="modal-dialog px-4">
             <div class="modal-content">
                 <div class="modal-header d-flex align-items-center pl-3 pr-1 border-0">
-                    <button class="btn" onclick="history.back()">
+                    {{-- <button class="btn" onclick="history.back()">
                         <span aria-hidden="true">
                             <i class="fa fa-arrow-right text-dark fa-lg"></i>
                         </span>
-                    </button>
+                    </button> --}}
 
                     {{-- <select class="form-control" id="exampleFormControlSelect1">
                         <option>العربية</option>
@@ -37,10 +38,13 @@
                         <i class="fa fa-check-circle fa-7x"></i>
                     </div>
                     <p class="text-right mr-3 font-weight-bold text-muted mb-5">
-                        مت استعادة كلمة المرور بنجاح
+                        تمت استعادة كلمة المرور بنجاح
                     </p>
 
                 </div>
+                <button>
+                    <a href="{{ route('login') }}">الرجوع لصفحة تسجيل الدخول</a>
+                </button>
 
             </div>
         </div>

@@ -19,7 +19,7 @@ class ProductSizeController extends Controller
         }
         $sizes = Productsize::with('product')->paginate(5);
 
-        return view('admin.productsizes.index', compact('sizes'));
+        return view('admin.productSizes.index', compact('sizes'));
     }
 
     public function create()

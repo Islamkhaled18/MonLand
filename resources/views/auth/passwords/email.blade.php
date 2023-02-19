@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('website_assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('website_assets/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('website_assets/css/style.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('website_assets/pages-css/register/passwordRecovery.css') }}" /> --}}
     <link rel="stylesheet" href="{{ asset('website_assets/pages-css/register/passwordRecovery.css') }}" />
     {{-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> --}}
 

@@ -32,7 +32,7 @@
                             <tr>
 
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $email->user->email }}</td>
+                                <td>{{ $email->email }}</td>
                                 <td>
                                     @can('emailUs.destroy')
                                     <form action="{{ route('emailUs.destroy', $email->id) }}" title="حذف" method="post" style="display: inline-block">

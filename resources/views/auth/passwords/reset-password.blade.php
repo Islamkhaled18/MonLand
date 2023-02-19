@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="{{ asset('website_assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('website_assets/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('website_assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('website_assets/pages-css/registernewPass.css') }}" />
+    <link rel="stylesheet" href="{{ asset('website_assets/pages-css/register/newPass.css') }}" />
+
 </head>
 
 <body>
@@ -36,15 +37,16 @@
 
                     <form class="text-right px-4 my-5" action="{{ route('password.update') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="email" value="{{ $user->email }}">
                         <div class="form-group">
                             <label class="font-weight-bold">كود التأكيد</label>
 
                             <div class="d-flex justify-content-between flex-row-reverse">
-                                <input type="text" name="verification_code" class="form-control mt-4" maxlength="1">
-                                <input type="text" name="verification_code" class="form-control mt-4" maxlength="1">
-                                <input type="text" name="verification_code" class="form-control mt-4" maxlength="1">
-                                <input type="text" name="verification_code" class="form-control mt-4" maxlength="1">
-                                <input type="text" name="verification_code" class="form-control mt-4" maxlength="1">
+                                <input type="text" name="verification_code[]" class="form-control mt-4" maxlength="1">
+                                <input type="text" name="verification_code[]" class="form-control mt-4" maxlength="1">
+                                <input type="text" name="verification_code[]" class="form-control mt-4" maxlength="1">
+                                <input type="text" name="verification_code[]" class="form-control mt-4" maxlength="1">
+                                <input type="text" name="verification_code[]" class="form-control mt-4" maxlength="1">
                             </div>
                         </div>
 

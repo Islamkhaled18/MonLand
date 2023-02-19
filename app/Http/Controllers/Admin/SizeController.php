@@ -33,6 +33,8 @@ class SizeController extends Controller
     public function store(Request $request)
     {
 
+        // dd($request);
+
         $request->validate([
             'image'=>'mimes:png,jpg,bmp,jpeg,webp',
         ]);
@@ -47,7 +49,7 @@ class SizeController extends Controller
 
         Size::create($data);
         Toastr()->success('تم إضافة جدول المقاسات بنجاح');
-        return redirect()->route('sizes.index');
+        return redirect()->route('size.index');
 
     }//end of store
 
@@ -86,7 +88,7 @@ class SizeController extends Controller
         }
 
         Toastr()->success('تم التعديل على صورة جدول المقاسات بنجاح');
-        return redirect()->route('sizes.index');
+        return redirect()->route('size.index');
     }//end of update
 
 
@@ -102,8 +104,8 @@ class SizeController extends Controller
             Storage::disk('images')->delete($size->image);
         }
 
-        Toastr()->success('تم حذف صورة الاعلان بنجاح');
-        return redirect()->route('sizes.index');
+        Toastr()->success('تم حذف صورة جدول المقاسات بنجاح');
+        return redirect()->route('size.index');
 
     }//end of destroy
 }

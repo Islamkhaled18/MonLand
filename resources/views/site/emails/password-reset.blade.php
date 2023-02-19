@@ -2,10 +2,10 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Password Reset</title>
+    <title>Password Reset - Kayan Team</title>
 </head>
 <body>
-    <h1>Password Reset</h1>
+    <h1>Password Reset - Kayan Team</h1>
     <p>Hi there,</p>
     <p>We received a request to reset your password. To complete the password reset process, please enter the following verification code:</p>
     <p><strong>{{ $verificationCode }}</strong></p>
