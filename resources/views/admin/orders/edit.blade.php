@@ -31,6 +31,40 @@
                                 <input class="form-control" id="exampleInputEmail1" name="user_id" value="{{ $order->user->firstName }}" type="text" disabled>
 
                             </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">رقم تليفون العميل </label>
+                                <input class="form-control" id="exampleInputEmail1"  value="{{ $order->user->phone }}" type="text" disabled>
+
+                            </div>
+                            @if($order->user->addresses )
+                            @foreach ($order->user->addresses as $address)
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">رقم تليفون ثاني للعميل </label>
+                                <input class="form-control" id="exampleInputEmail1"  value="{{ $address->Phone_2 }}" type="text" disabled>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"> تفاصيل العنوان </label>
+                                <input class="form-control" id="exampleInputEmail1"  value="{{ $address->address_details }}" type="text" disabled>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"> رقم العماره  </label>
+                                <input class="form-control" id="exampleInputEmail1"  value="{{ $address->building_no }}" type="text" disabled>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"> رقم الشقه  </label>
+                                <input class="form-control" id="exampleInputEmail1"  value="{{ $address->flat_no }}" type="text" disabled>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"> المحافظة   </label>
+                                <input class="form-control" id="exampleInputEmail1"  value="{{ $address->governorate->name }}" type="text" disabled>
+
+                            </div>
+                            @endforeach
+                            @endif
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">مبلغ الطلبيه</label>

@@ -29,7 +29,7 @@ class ProductSizeController extends Controller
         }
         $products = Product::select('id','name')->get();
 
-        return view('admin.productsizes.create', compact('products'));
+        return view('admin.productSizes.create', compact('products'));
     }
 
     public function store(Request $request)
@@ -61,7 +61,7 @@ class ProductSizeController extends Controller
         $size = Productsize::findOrFail($id);
         $products = Product::select('name')->get();
 
-        return view('admin.productsizes.edit', compact('size','products'));
+        return view('admin.productSizes.edit', compact('size','products'));
 
     }
 

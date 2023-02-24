@@ -28,39 +28,42 @@ class CartController extends Controller
         $user = Auth::user();
 
     
-                ///////////////////////////////////////////////////
-                $products = Vendor::with(['carts' => function ($query) use ($user) {
-                    $query->where('carts.user_id', $user->id);
-                    $query->with(['products' => function ($products) {
-                        $products->get();
-                    }]);
-                }])
-                ->whereHas('carts.products', function ($query) {
-                    $query->whereNull('products.deleted_at');
-                })
-                ->get();
+        ///////////////////////////////////////////////////
+        $products = Vendor::with(['carts' => function ($query) use ($user) {
+            $query->where('carts.user_id', $user->id);
+            $query->with(['products' => function ($products) {
+                $products->get();
+            }]);
+        }])
+        ->whereHas('carts.products', function ($query) {
+            $query->whereNull('products.deleted_at');
+        })
+        ->get();
 
 
-                $vendors_cart_count = Vendor::with(['carts' => function ($query) use ($user) {
-                    $query->where('carts.user_id', $user->id);
-                    $query->with(['products' => function ($products) {
-                        $products->get();
-                    }]);
-                }])
-                ->whereHas('carts.products', function ($query) {
-                    $query->whereNull('products.deleted_at');
-                })
-                ->count();
+        $vendors_cart_count = Vendor::with(['carts' => function ($query) use ($user) {
+            $query->where('carts.user_id', $user->id);
+            $query->with(['products' => function ($products) {
+                $products->get();
+            }]);
+        }])
+        ->whereHas('carts.products', function ($query) {
+            $query->whereNull('products.deleted_at');
+        })
+        ->count();
 
-              
-
-        
+                      
         $countProdcts = count($products);
+
         $addresses = Address::with('governorate')->where('user_id', auth()->user()->id)->first();
+        if ($addresses == null || $addresses->governorate_id == null) {
+            session()->flash('error', 'برجاء اكمال بياناتك الشخصيه واضافة عنوان خاص بك');
+                return redirect()->back();
+            }
 
         $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
        
-
+        
         return view('site.sale.cart', compact('products', 'countProdcts', 'addresses','delivery_fees','vendors_cart_count'));
     } //cart page
 
@@ -315,6 +318,10 @@ $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
 
         $addresses = Address::with('governorate')->where('user_id', auth()->user()->id)->first();
 
+        if ($addresses == null || $addresses->governorate_id == null) {
+            session()->flash('error', 'برجاء اكمال بياناتك الشخصيه واضافة عنوان خاص بك');
+                return redirect()->back();
+            }
         
         $vendors_cart_count = Vendor::with(['carts' => function ($query) use ($user) {
             $query->where('carts.user_id', $user->id);
@@ -326,6 +333,7 @@ $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
             $query->whereNull('products.deleted_at');
         })
         ->count();
+
         $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
 
         return view('site.sale.order_status', compact('user', 'products', 'addresses', 'countProdcts', 'order','vendors_cart_count','delivery_fees'));

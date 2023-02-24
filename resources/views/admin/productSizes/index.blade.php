@@ -15,7 +15,7 @@
     </div>
     @can('productSizes.create')
     <div>
-        <a class="btn btn-primary btn-sm" href="{{ route('sizes.create') }}" title="انشاء لون منتج">انشاء لون منتج</a>
+        <a class="btn btn-primary btn-sm" href="{{ route('sizes.create') }}" title="انشاء مقاس منتج">انشاء مقاس منتج</a>
     </div>
     @endcan
 

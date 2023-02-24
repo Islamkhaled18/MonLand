@@ -10,15 +10,18 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::with(['items', 'user'])->get();
+        // $orders = Order::with(['items', 'user'])->get();
+        
+        $orders = Order::with(['items', 'user.addresses.governorate'])->get();
+        return $orders;
         return view('admin.orders.index', compact('orders'));
     }
 
 
     public function edit($id)
     {
-        $orders = Order::with(['items', 'user'])->get();
-        $order = Order::with(['items', 'user'])->findOrFail($id);
+        $orders = Order::with(['items', 'user.addresses.governorate'])->get();
+        $order = Order::with(['items', 'user.addresses.governorate'])->findOrFail($id);
         return view('admin.orders.edit', compact('order', 'orders'));
     }
 
