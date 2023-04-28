@@ -9,13 +9,16 @@
             <h1><i class="fa fa-th-list"></i> الاقسام الرئيسية </h1>
         </div>
         <ul class="app-breadcrumb breadcrumb side">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('mainCategories.index') }}" title="الاقسام الرئيسية">الاقسام الرئيسية</a></li>
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a>
+            </li>
+            <li class="breadcrumb-item active"><a href="{{ route('mainCategories.index') }}"
+                    title="الاقسام الرئيسية">الاقسام الرئيسية</a></li>
         </ul>
     </div>
     {{-- @can('mainCategories.create')
     <div>
-        <a class="btn btn-primary btn-sm" href="{{ route('mainCategories.create') }}" title="انشاء قسم رئيسي">انشاء قسم رئيسي</a>
+        <a class="btn btn-primary btn-sm" href="{{ route('mainCategories.create') }}" title="انشاء قسم رئيسي">انشاء قسم
+            رئيسي</a>
     </div>
     @endcan --}}
 
@@ -40,13 +43,17 @@
                                 <td>{{ $mainCategory->name }}</td>
                                 {{-- <td>
                                     @can('mainCategories.edit')
-                                    <a class="btn btn-sm btn-dark" href="{{ route('mainCategories.edit', ['id' => $mainCategory->id]) }}" title="تعديل">تعديل</a>
+                                    <a class="btn btn-sm btn-dark"
+                                        href="{{ route('mainCategories.edit', ['id' => $mainCategory->id]) }}"
+                                        title="تعديل">تعديل</a>
                                     @endcan
                                     @can('mainCategories.destroy')
-                                    <form action="{{ route('mainCategories.destroy', $mainCategory->id) }}" title="حذف" method="post" style="display: inline-block">
+                                    <form action="{{ route('mainCategories.destroy', $mainCategory->id) }}" title="حذف"
+                                        method="post" style="display: inline-block">
                                         @csrf
                                         @method('GET')
-                                        <button type="'submit" class="btn btn-danger delete btn-sm"><i class="fa fa-trash"></i>حذف</button>
+                                        <button type="'submit" class="btn btn-danger delete btn-sm"><i
+                                                class="fa fa-trash"></i>حذف</button>
 
                                     </form>
                                     @endcan

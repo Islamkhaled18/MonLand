@@ -48,11 +48,10 @@
                     <div class="utility">
                         <div class="animated-checkbox">
                             <label>
-                                <input type="checkbox" name="remember_me" id="remember-me"><span
+                                <input type="checkbox" name="remember" id="remember-me"><span
                                     class="label-text">تذكرني</span>
                             </label>
                         </div>
-                        {{-- <p class="semibold-text mb-2"><a href="#" data-toggle="flip">هل نسيت كلمة المرور</a></p> --}}
                     </div>
                 </div>
                 <div class="form-group btn-container">
@@ -73,7 +72,7 @@
                     @endif
                 </div>
                 <div class="form-group btn-container">
-                    <button type="submit"  title=" إعادة ضبط كلمة المرور" class="btn btn-primary btn-block" > 
+                    <button type="submit"  title=" إعادة ضبط كلمة المرور" class="btn btn-primary btn-block" >
                         <i class="fa fa-unlock fa-lg fa-fw"></i>
                         إعادة ضبط كلمة المرور
                     </button>

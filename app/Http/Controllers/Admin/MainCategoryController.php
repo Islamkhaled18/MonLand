@@ -7,7 +7,6 @@ use App\Models\MainCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-
 class MainCategoryController extends Controller
 {
     public function index()

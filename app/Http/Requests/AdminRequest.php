@@ -24,23 +24,25 @@ class AdminRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>['required','max:255'],
-            'email'=>['required','email','unique:admins,email'],
-            'password'=>['required'],
-            'phone'=>['required'],
+            'name' => ['required', 'max:255'],
+            'email' => ['required', 'email', 'unique:admins,email'],
+            'password' => ['required'],
+            'phone' => ['required'],
+            'role_id' => ['required|exists:roles,id'],
 
         ];
     }
     public function messages()
     {
         return [
-            'name.required'=> 'يجب ادخال الاسم ',
-            'name.max'=> 'اقصى دد حروف هو 255 حرف',
-            'email.required'=> 'البريد الإلكتروني مطلوب',
-            'email.email'=> 'يجب ان يكون ايميل صحيح',
-            'email.unique'=> 'عذرا يوجد ايميل مسجل مسبقا بهذا الاسم',
+            'name.required' => 'يجب ادخال الاسم ',
+            'name.max' => 'اقصى دد حروف هو 255 حرف',
+            'email.required' => 'البريد الإلكتروني مطلوب',
+            'email.email' => 'يجب ان يكون ايميل صحيح',
+            'email.unique' => 'عذرا يوجد ايميل مسجل مسبقا بهذا الاسم',
             'password.required' => 'برجاء ادخال الرقم السري',
-            'phone.required' => 'برجاء ادخال رقم الهاتف'
+            'phone.required' => 'برجاء ادخال رقم الهاتف',
+            'role_id.required'=>'هذا الحفل مطلوب ',
         ];
     }
 }
