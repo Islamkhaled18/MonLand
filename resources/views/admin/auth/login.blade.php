@@ -19,7 +19,7 @@
     </section>
     <section class="login-content">
         <div class="logo">
-            <h1>MonLand</h1>
+            <h1>Kayan</h1>
         </div>
         @include('admin.partials.success')
         @include('admin.partials.error')

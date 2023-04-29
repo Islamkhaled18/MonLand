@@ -29,8 +29,8 @@
 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">محتوى سياسة الشحن</label>
-                                    <textarea class="form-control" id="exampleInputEmail1" value="{{ $term->name }}" name="name"></textarea>
-                                    
+                                    <textarea class="form-control" id="editor_three" value="{{ $term->name }}" name="name"></textarea>
+
                                     @error('name')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -47,3 +47,12 @@
 
     </main>
 @endsection
+@push('scripts')
+<script>
+    ClassicEditor
+		.create( document.querySelector( '#editor_three' ) )
+		.catch( error => {
+			console.error( error );
+		} );
+</script>
+@endpush

@@ -16,7 +16,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-               
+
                 <div class="tile">
                     <div class="tile-body">
                         <div class="col-lg-6">
@@ -25,12 +25,12 @@
 
                               <div class="form-group">
                                 <label for="exampleInputEmail1">محتوى الشروط  </label>
-                                <textarea class="form-control" id="exampleInputEmail1" name="name"></textarea>
+                                <textarea class="form-control" id="editor_two" name="name"></textarea>
                                 @error('name')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                              
+
                               <div class="tile-footer">
                                 <button class="btn btn-primary" type="submit">حفظ</button>
                               </div>
@@ -43,3 +43,12 @@
 
     </main>
 @endsection
+@push('scripts')
+<script>
+    ClassicEditor
+		.create( document.querySelector( '#editor_two' ) )
+		.catch( error => {
+			console.error( error );
+		} );
+</script>
+@endpush

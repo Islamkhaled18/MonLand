@@ -9,9 +9,11 @@
             <h1><i class="fa fa-th-list"></i> المنتجات </h1>
         </div>
         <ul class="app-breadcrumb breadcrumb side">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a>
+            </li>
             <li class="breadcrumb-item"><a href="{{ route('products.index') }}" title="المنتجات">المنتجات</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('products.general.create') }}" title="انشاء منتج جديد">إانشاء منتج جديد</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('products.general.create') }}"
+                    title="انشاء منتج جديد">إانشاء منتج جديد</a></li>
         </ul>
     </div>
     <div class="row">
@@ -20,14 +22,16 @@
             <div class="tile">
                 <div class="tile-body">
                     <div class="col-lg-12">
-                        <form action="{{ route('products.general.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('products.general.store') }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-body">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="exampleInputEmail1">اسم المنتج</label>
-                                        <input class="form-control" id="exampleInputEmail1" name="name" value="{{ old('name') }}" type="text" placeholder="اسم المنتج">
+                                        <input class="form-control" id="exampleInputEmail1" name="name"
+                                            value="{{ old('name') }}" type="text" placeholder="اسم المنتج">
                                         @error('name')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -36,7 +40,8 @@
                                     <div class="col-md-6">
                                         <label for="projectinput1"> اسم بالرابط
                                         </label>
-                                        <input type="text" class="form-control" placeholder=" اسم بالرابط " value="{{ old('slug') }}" name="slug">
+                                        <input type="text" class="form-control" placeholder=" اسم بالرابط "
+                                            value="{{ old('slug') }}" name="slug">
                                         @error('slug')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -49,7 +54,8 @@
                                     <div class="col-md-6">
                                         <label for="projectinput1"> وصف المنتج
                                         </label>
-                                        <textarea name="description" id="description" class="form-control" placeholder="  ">{{ old('description') }}</textarea>
+                                        <textarea name="description" id="editor_four" class="form-control"
+                                            placeholder="  ">{{ old('description') }}</textarea>
 
                                         @error('description')
                                         <span class="text-danger">{{ $message }}</span>
@@ -60,7 +66,8 @@
                                     <div class="col-md-6">
                                         <label for="projectinput1"> الوصف المختصر
                                         </label>
-                                        <textarea name="short_description" id="short-description" class="form-control" placeholder="">{{ old('short_description') }}</textarea>
+                                        <textarea name="short_description" id="editor_short" class="form-control"
+                                            placeholder="">{{ old('short_description') }}</textarea>
 
                                         @error('short_description')
                                         <span class="text-danger">{{ $message }}</span>
@@ -128,7 +135,9 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="exampleInputEmail1"> معلومات اخرى عن المنتج</label>
-                                        <input class="form-control" id="exampleInputEmail1" name="anotherInformation" value="{{ old('anotherInformation') }}" type="text" placeholder='معلومات اخرى'>
+                                        <input class="form-control" id="exampleInputEmail1" name="anotherInformation"
+                                            value="{{ old('anotherInformation') }}" type="text"
+                                            placeholder='معلومات اخرى'>
                                         @error('anotherInformation')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -138,7 +147,9 @@
                                     <div class="col-md-6">
                                         <label for="photo" class="form-label">صور المنتج</label>
 
-                                        <input type="file" class="form-control @error('photo') is-invalid @enderror" value="{{ old('photo') }}" id="photo" name="photo[]" multiple accept="image/*">
+                                        <input type="file" class="form-control @error('photo') is-invalid @enderror"
+                                            value="{{ old('photo') }}" id="photo" name="photo[]" multiple
+                                            accept="image/*">
                                         @error('file')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                         @enderror
@@ -147,21 +158,24 @@
 
                                     <div class="col-md-6">
                                         <label for="exampleInputEmail1"> المقاس </label>
-                                        <input class="form-control" id="exampleInputEmail1" name="weight" value="{{ old('weight') }}" type="text" placeholder='المقاس '>
+                                        <input class="form-control" id="exampleInputEmail1" name="weight"
+                                            value="{{ old('weight') }}" type="text" placeholder='المقاس '>
                                         @error('weight')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="col-md-6">
                                         <label for="exampleInputEmail1"> الابعاد </label>
-                                        <input class="form-control" id="exampleInputEmail1" name="dimension" value="{{ old('dimension') }}" type="text" placeholder='الابعاد '>
+                                        <input class="form-control" id="exampleInputEmail1" name="dimension"
+                                            value="{{ old('dimension') }}" type="text" placeholder='الابعاد '>
                                         @error('dimension')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="col-md-6">
                                         <label for="exampleInputEmail1"> المواد المصنوعه </label>
-                                        <input class="form-control" id="exampleInputEmail1" name="material" value="{{ old('material') }}" type="text" placeholder=' المواد المصنوعه'>
+                                        <input class="form-control" id="exampleInputEmail1" name="material"
+                                            value="{{ old('material') }}" type="text" placeholder=' المواد المصنوعه'>
                                         @error('material')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -173,7 +187,8 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <br>
-                                        <input type="checkbox" value="1" name="is_active" id="switcheryColor4" class="switchery" data-color="success" checked />
+                                        <input type="checkbox" value="1" name="is_active" id="switcheryColor4"
+                                            class="switchery" data-color="success" checked />
                                         <label for="switcheryColor4" class="card-title ml-1">الحالة </label>
 
                                         @error('is_active')
@@ -183,7 +198,8 @@
 
                                     <div class="col-md-3">
                                         <br>
-                                        <input type="checkbox" value="1" name="featured" id="switcheryColor4" class="switchery" data-color="success" checked />
+                                        <input type="checkbox" value="1" name="featured" id="switcheryColor4"
+                                            class="switchery" data-color="success" checked />
                                         <label for="switcheryColor4" class="card-title ml-1">مميز </label>
 
                                         @error('featured')
@@ -193,7 +209,8 @@
 
                                     <div class="col-md-3">
                                         <br>
-                                        <input type="checkbox" value="1" name="deal_of_the_day" id="switcheryColor4" class="switchery" data-color="success" checked />
+                                        <input type="checkbox" value="1" name="deal_of_the_day" id="switcheryColor4"
+                                            class="switchery" data-color="success" checked />
                                         <label for="switcheryColor4" class="card-title ml-1">عروض اليوم </label>
 
                                         @error('deal_of_the_day')
@@ -208,7 +225,8 @@
                             <div class="form-body">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input type="checkbox" value="1" name="flash_sale" id="switcheryColor4" class="switchery" data-color="success" checked />
+                                        <input type="checkbox" value="1" name="flash_sale" id="switcheryColor4"
+                                            class="switchery" data-color="success" checked />
                                         <label for="switcheryColor4" class="card-title ml-1">عروض فلاش </label>
 
                                         @error('flash_sale')
@@ -217,7 +235,8 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <input type="checkbox" value="1" name="quick_request" id="switcheryColor4" class="switchery" data-color="success" checked />
+                                        <input type="checkbox" value="1" name="quick_request" id="switcheryColor4"
+                                            class="switchery" data-color="success" checked />
                                         <label for="switcheryColor4" class="card-title ml-1">طلب سريع </label>
 
                                         @error('quick_request')
@@ -234,7 +253,8 @@
                                         <div class="form-group">
                                             <label for="projectinput1"> سعر المنتج
                                             </label>
-                                            <input type="text" id="price" class="form-control" placeholder=" سعر المنتج " value="{{ old('price') }}" name="price">
+                                            <input type="text" id="price" class="form-control"
+                                                placeholder=" سعر المنتج " value="{{ old('price') }}" name="price">
                                             @error('price')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -249,7 +269,7 @@
 
                                 <h4 class="form-section"><i class="ft-home"></i> اداره المستودع </h4>
                                 <div class="row">
-                                   
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="projectinput1">تتبع المستودع
@@ -291,7 +311,8 @@
                                         <div class="form-group">
                                             <label for="projectinput1">الكمية
                                             </label>
-                                            <input type="text" id="sku" class="form-control" placeholder="  " value="{{ old('qty') }}" name="qty">
+                                            <input type="text" id="sku" class="form-control" placeholder="  "
+                                                value="{{ old('qty') }}" name="qty">
                                             @error('qty')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -346,5 +367,19 @@
         }
     });
 
+
+    ClassicEditor
+		.create( document.querySelector( '#editor_four' ) )
+		.catch( error => {
+			console.error( error );
+		} );
+    ClassicEditor
+		.create( document.querySelector( '#editor_short' ) )
+		.catch( error => {
+			console.error( error );
+		} );
 </script>
+
+
+
 @endpush
