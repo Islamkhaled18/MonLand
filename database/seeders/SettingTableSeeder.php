@@ -34,6 +34,6 @@ class SettingTableSeeder extends Seeder
         ];
 
         DB::table('settings')->insert($data);
-    
+
     }
 }

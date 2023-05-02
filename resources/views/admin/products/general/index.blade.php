@@ -13,6 +13,12 @@
                 <li class="breadcrumb-item active"><a href="{{ route('products.index') }} " title="المنتجات">المنتجات</a></li>
             </ul>
         </div>
+
+        <div>
+            <a class="btn btn-info btn-sm" title="التحكم في حالة الطلب على السريع للمنتجات" href="{{ route('productSetting.index') }}">التحكم في حالة الطلب على السريع للمنتجات</a>
+        </div>
+
+
         @can('products.create')
             <div>
                 <a class="btn btn-primary btn-sm" title="انشاء منتج جديد" href="{{ route('products.general.create') }}">انشاء منتج جديد</a>

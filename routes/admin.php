@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\GovernorateController;
 use App\Http\Controllers\Admin\MainCategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductColorController;
+use App\Http\Controllers\Admin\ProductSettingController;
 use App\Http\Controllers\Admin\ProductSizeController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\TermsController;
@@ -85,6 +86,14 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
         Route::get('edit/{id}', [ProductController::class, 'edit'])->name('products.edit');
         Route::post('update/{id}', [ProductController::class, 'update'])->name('products.update');
         Route::post('delete/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+    });
+    ################################## product-Setting Controller ######################################
+    Route::group(['prefix' => 'product-setting'], function () {
+        Route::get('/',  [ProductSettingController::class, 'index'])->name('productSetting.index');
+        Route::get('/create',  [ProductSettingController::class, 'create'])->name('productSetting.create');
+        Route::post('/store',  [ProductSettingController::class, 'store'])->name('productSetting.store');
+        Route::get('/edit/{id}', [ProductSettingController::class, 'edit'])->name('productSetting.edit');
+        Route::post('/update/{id}', [ProductSettingController::class, 'update'])->name('productSetting.update');
     });
     ///////////////colors Controller/////////////////////
     Route::group(['prefix' => 'colors'], function () {
