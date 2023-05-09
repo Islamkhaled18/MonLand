@@ -319,6 +319,17 @@
                             @enderror
                         </div>
 
+
+
+                        <div class="form-group">
+                            <label for="cover_image" class="form-label">صورة غلاف المنتج </label>
+                            <input type="file" class="form-control @error('cover_image') is-invalid @enderror" value="{{ old('cover_image') }}" id="image" name="image">
+                            <td><img src="{{ $product->image_url }}" class="d-block" width="60" height="60" alt=""></td>
+                            @error('file')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+
                         <div class="tile-footer">
                             <button class="btn btn-primary" type="submit">تعديل</button>
                         </div>

@@ -340,6 +340,15 @@
                             </div>
 
 
+                            <div class="form-group">
+                                <label for="cover_image">صورة غلاف المنتج </label>
+                                <input class="form-control @error('cover_image') is-invalid @enderror" id="cover_image" name="cover_image" type="file">
+                                @error('file')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+
 
                             <div class="tile-footer">
                                 <button class="btn btn-primary" type="submit">حفظ</button>

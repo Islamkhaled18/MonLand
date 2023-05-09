@@ -5,35 +5,33 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\LoginController;
-use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\CouponController;
-use App\Http\Controllers\Admin\DeliveryController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DeliveryPolicyController;
 use App\Http\Controllers\Admin\EmailUsController;
 use App\Http\Controllers\Admin\ExchangeController;
-use App\Http\Controllers\Admin\OptionController;
-use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\SettingController;
-use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Admin\GovernorateController;
+use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\MainCategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductColorController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductSettingController;
 use App\Http\Controllers\Admin\ProductSizeController;
+use App\Http\Controllers\Admin\ProductSpecificationController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\TermsController;
+use App\Http\Controllers\Admin\VendorController;
 use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
 |--------------------------------------------------------------------------
-*/
-
+ */
 
 Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 'admin'], function () {
 
@@ -68,7 +66,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
         Route::get('delete/{id}', [MainCategoryController::class, 'destroy'])->name('mainCategories.destroy');
     });
 
-
     ///////////////categories Controller/////////////////////
     Route::group(['prefix' => 'categories'], function () {
         Route::get('/', [CategoryController::class, 'index'])->name('categories.index');
@@ -80,21 +77,27 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
     });
     ################################## products Controller ######################################
     Route::group(['prefix' => 'products'], function () {
-        Route::get('/',  [ProductController::class, 'index'])->name('products.index');
-        Route::get('general-information',  [ProductController::class, 'create'])->name('products.general.create');
-        Route::post('store-general-information',  [ProductController::class, 'store'])->name('products.general.store');
+        Route::get('/', [ProductController::class, 'index'])->name('products.index');
+        Route::get('general-information', [ProductController::class, 'create'])->name('products.general.create');
+        Route::post('store-general-information', [ProductController::class, 'store'])->name('products.general.store');
         Route::get('edit/{id}', [ProductController::class, 'edit'])->name('products.edit');
         Route::post('update/{id}', [ProductController::class, 'update'])->name('products.update');
         Route::post('delete/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
     });
     ################################## product-Setting Controller ######################################
     Route::group(['prefix' => 'product-setting'], function () {
-        Route::get('/',  [ProductSettingController::class, 'index'])->name('productSetting.index');
-        Route::get('/create',  [ProductSettingController::class, 'create'])->name('productSetting.create');
-        Route::post('/store',  [ProductSettingController::class, 'store'])->name('productSetting.store');
+        Route::get('/', [ProductSettingController::class, 'index'])->name('productSetting.index');
+        Route::get('/create', [ProductSettingController::class, 'create'])->name('productSetting.create');
+        Route::post('/store', [ProductSettingController::class, 'store'])->name('productSetting.store');
         Route::get('/edit/{id}', [ProductSettingController::class, 'edit'])->name('productSetting.edit');
         Route::post('/update/{id}', [ProductSettingController::class, 'update'])->name('productSetting.update');
     });
+    ################################## product-Specification Controller ######################################
+    Route::group(['prefix' => 'product-Specification'], function () {
+        Route::get('/create/{id}', [ProductSpecificationController::class, 'create'])->name('productSpecification.create');
+        Route::post('/store/{id}', [ProductSpecificationController::class, 'store'])->name('productSpecification.store');
+    });
+
     ///////////////colors Controller/////////////////////
     Route::group(['prefix' => 'colors'], function () {
         Route::get('/', [ProductColorController::class, 'index'])->name('colors.index');
@@ -117,8 +120,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
 
     ################################## settings ######################################
     Route::group(['prefix' => 'settings'], function () {
-        Route::get('/',  [SettingController::class, 'index'])->name('settings.index');
-        Route::post('update/{id}',  [SettingController::class, 'update'])->name('settings.update');
+        Route::get('/', [SettingController::class, 'index'])->name('settings.index');
+        Route::post('update/{id}', [SettingController::class, 'update'])->name('settings.update');
     });
 
     ///////////////roles Controller/////////////////////
@@ -133,36 +136,35 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
 
     ################################## profile ######################################
     Route::group(['prefix' => 'profiles'], function () {
-        Route::get('edit/{id}',  [AdminProfileController::class, 'edit'])->name('adminsProfile.edit');
-        Route::post('update/{id}',  [AdminProfileController::class, 'update'])->name('adminsProfile.update');
+        Route::get('edit/{id}', [AdminProfileController::class, 'edit'])->name('adminsProfile.edit');
+        Route::post('update/{id}', [AdminProfileController::class, 'update'])->name('adminsProfile.update');
     });
 
     ################################## delivery options ######################################
     Route::group(['prefix' => 'vendors'], function () {
-        Route::get('/',  [VendorController::class, 'index'])->name('vendors.index');
-        Route::get('create',  [VendorController::class, 'create'])->name('vendors.create');
-        Route::post('store',  [VendorController::class, 'store'])->name('vendors.store');
-        Route::get('edit/{id}',  [VendorController::class, 'edit'])->name('vendors.edit');
-        Route::post('update/{id}',  [VendorController::class, 'update'])->name('vendors.update');
+        Route::get('/', [VendorController::class, 'index'])->name('vendors.index');
+        Route::get('create', [VendorController::class, 'create'])->name('vendors.create');
+        Route::post('store', [VendorController::class, 'store'])->name('vendors.store');
+        Route::get('edit/{id}', [VendorController::class, 'edit'])->name('vendors.edit');
+        Route::post('update/{id}', [VendorController::class, 'update'])->name('vendors.update');
         Route::get('delete/{id}', [VendorController::class, 'destroy'])->name('vendors.destroy');
     });
     ################################## Contact Us ######################################
     Route::group(['prefix' => 'ContactUs'], function () {
-        Route::get('/',  [ContactUsController::class, 'index'])->name('ContactUs.index');
-        Route::post('store',  [ContactUsController::class, 'store'])->name('ContactUs.store');
+        Route::get('/', [ContactUsController::class, 'index'])->name('ContactUs.index');
+        Route::post('store', [ContactUsController::class, 'store'])->name('ContactUs.store');
         Route::get('delete/{id}', [ContactUsController::class, 'destroy'])->name('ContactUs.destroy');
     });
 
     ################################## delivery Policy ######################################
     Route::group(['prefix' => 'deliveryPolicy'], function () {
-        Route::get('/',  [DeliveryPolicyController::class, 'index'])->name('DeliveryPolicy.index');
-        Route::get('create',  [DeliveryPolicyController::class, 'create'])->name('DeliveryPolicy.create');
-        Route::post('store',  [DeliveryPolicyController::class, 'store'])->name('DeliveryPolicy.store');
-        Route::get('edit/{id}',  [DeliveryPolicyController::class, 'edit'])->name('DeliveryPolicy.edit');
-        Route::post('update/{id}',  [DeliveryPolicyController::class, 'update'])->name('DeliveryPolicy.update');
+        Route::get('/', [DeliveryPolicyController::class, 'index'])->name('DeliveryPolicy.index');
+        Route::get('create', [DeliveryPolicyController::class, 'create'])->name('DeliveryPolicy.create');
+        Route::post('store', [DeliveryPolicyController::class, 'store'])->name('DeliveryPolicy.store');
+        Route::get('edit/{id}', [DeliveryPolicyController::class, 'edit'])->name('DeliveryPolicy.edit');
+        Route::post('update/{id}', [DeliveryPolicyController::class, 'update'])->name('DeliveryPolicy.update');
         Route::get('delete/{id}', [DeliveryPolicyController::class, 'destroy'])->name('DeliveryPolicy.destroy');
     });
-
 
     ///////////////ads Controller/////////////////////
     Route::group(['prefix' => 'ads'], function () {
@@ -176,17 +178,17 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
 
     ################################## Contact Us ######################################
     Route::group(['prefix' => 'emailUs'], function () {
-        Route::get('/',  [EmailUsController::class, 'index'])->name('emailUs.index');
+        Route::get('/', [EmailUsController::class, 'index'])->name('emailUs.index');
         Route::get('delete/{id}', [EmailUsController::class, 'destroy'])->name('emailUs.destroy');
     });
 
     ///////////////terms Controller/////////////////////
     Route::group(['prefix' => 'Terms-Conditions'], function () {
-        Route::get('/',  [TermsController::class, 'index'])->name('terms.index');
-        Route::get('create',  [TermsController::class, 'create'])->name('terms.create');
-        Route::post('store',  [TermsController::class, 'store'])->name('terms.store');
-        Route::get('edit/{id}',  [TermsController::class, 'edit'])->name('terms.edit');
-        Route::post('update/{id}',  [TermsController::class, 'update'])->name('terms.update');
+        Route::get('/', [TermsController::class, 'index'])->name('terms.index');
+        Route::get('create', [TermsController::class, 'create'])->name('terms.create');
+        Route::post('store', [TermsController::class, 'store'])->name('terms.store');
+        Route::get('edit/{id}', [TermsController::class, 'edit'])->name('terms.edit');
+        Route::post('update/{id}', [TermsController::class, 'update'])->name('terms.update');
         Route::get('delete/{id}', [TermsController::class, 'destroy'])->name('terms.destroy');
     });
 
@@ -209,7 +211,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
         Route::get('delete/{id}', [SizeController::class, 'destroy'])->name('size.destroy');
     });
 
-
     ///////////////coupon Controller/////////////////////
     Route::group(['prefix' => 'Coupon'], function () {
         Route::get('/', [CouponController::class, 'index'])->name('coupon.index');
@@ -219,7 +220,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
         Route::post('update/{id}', [CouponController::class, 'update'])->name('coupon.update');
         Route::get('delete/{id}', [CouponController::class, 'destroy'])->name('coupon.destroy');
     });
-
 
     ///////////////Orders Controller/////////////////////
     Route::group(['prefix' => 'Order'], function () {
@@ -247,4 +247,4 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'guest:admin', 'prefix' =>
     Route::post('forget-password', [LoginController::class, 'submitForgetPasswordForm'])->name('admin.forget.password.post');
     Route::get('reset-password/{token}', [LoginController::class, 'showResetPasswordForm'])->name('admin.reset.password.get');
     Route::post('reset-password', [LoginController::class, 'submitResetPasswordForm'])->name('admin.reset.password.post');
-});// routes for un-authenticated admins
+}); // routes for un-authenticated admins

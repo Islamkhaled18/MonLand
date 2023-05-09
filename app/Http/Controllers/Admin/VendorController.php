@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -18,7 +19,7 @@ class VendorController extends Controller
         return view('admin.vendors.index',compact('vendors'));
     }//end of index
 
-   
+
     public function create()
     {
         if(!Gate::allows('vendors.create')){
@@ -27,7 +28,7 @@ class VendorController extends Controller
         return view('admin.vendors.create');
     }//end of create
 
-    
+
     public function store(Request $request)
     {
         $request->validate([
@@ -44,24 +45,24 @@ class VendorController extends Controller
 
         Toastr()->success('تم إضافة بائع سعر توصيل خاص به بنجاح');
         return redirect()->route('vendors.index');
-       
+
 
     }//end of store
 
-   
+
     public function edit($id)
     {
         if(!Gate::allows('vendors.edit')){
             return view('admin.errors.notAllowed');
         }
         $vendor = Vendor::findOrFail($id);
-        
+
         return view('admin.vendors.edit',[
             'vendor'=> $vendor,
         ]);
     }//end of edit
 
-  
+
     public function update(Request $request,$id)
     {
         $vendor = Vendor::findOrFail($id);
@@ -69,7 +70,7 @@ class VendorController extends Controller
 
             'vendor_name'=>'required|max:255',
             'vendor_price'=>'required|max:255',
-          
+
         ]);
 
         $vendor->update([
@@ -83,18 +84,24 @@ class VendorController extends Controller
         return redirect()->route('vendors.index');
     }//end of update
 
-   
+
     public function destroy($id)
     {
         if(!Gate::allows('vendors.destroy')){
             return view('admin.errors.notAllowed');
         }
         $vendor = Vendor::findOrFail($id);
+        $products = Product::where('vendor_id', $vendor->id)->get();
+
+        foreach ($products as $product) {
+            $product->delete();
+        }
+
         $vendor->delete();
 
         Toastr()->success('تم حذف بائع سعر التوصيل بنجاح');
         return redirect()->route('vendors.index');
-    
+
     }//end of destroy
 
 }

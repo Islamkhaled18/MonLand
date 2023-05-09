@@ -24,9 +24,16 @@
                             @csrf
 
                             <div class="form-group">
-                                <label for="exampleInputEmail1">الاسم </label>
+                                <label for="exampleInputEmail1">المقاس </label>
                                 <input class="form-control" id="exampleInputEmail1" name="name" value="{{old('name')}}" type="text" placeholder="اكتب الاسم ">
                                 @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">السعر </label>
+                                <input class="form-control" id="exampleInputEmail1" name="price" value="{{old('price')}}" type="text" placeholder="اكتب الاسم ">
+                                @error('price')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>

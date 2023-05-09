@@ -10,7 +10,6 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
-
     protected $table = "products";
     protected $guarded = [];
 
@@ -64,7 +63,7 @@ class Product extends Model
 
     public function getFlashSale()
     {
-        return $this->flash_sale == 0 ?  'عروض فلاش' : 'ليس في عروض فلاش';
+        return $this->flash_sale == 0 ? 'عروض فلاش' : 'ليس في عروض فلاش';
     }
 
     public function scopeFlashSale($query)
@@ -113,7 +112,7 @@ class Product extends Model
     }
     public function getTotal($converted = true)
     {
-        return $total =  $this->special_price ?? $this->price;
+        return $total = $this->special_price ?? $this->price;
     }
 
     public function options()
@@ -140,7 +139,6 @@ class Product extends Model
         return $this->belongsTo(MainCategory::class, 'mainCategory_id')->withDefault();
     }
 
-
     public function wishlist()
     {
         return $this->hasMany(Wishlist::class, 'product_id');
@@ -156,5 +154,18 @@ class Product extends Model
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function getImageUrlAttribute()
+    {
+        if ($this->cover_image) {
+            return asset('images/' . $this->image);
+        }
+        return asset('images/default.png');
+    }
+
+    public function specifications()
+    {
+        return $this->hasMany(ProductSpecification::class, 'product_id');
     }
 }

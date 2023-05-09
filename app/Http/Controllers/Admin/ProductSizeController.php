@@ -39,10 +39,12 @@ class ProductSizeController extends Controller
 
         $request->validate([
             'name'=>'required|max:255',
+            'price'=>'required',
         ]);
         Productsize::create([
             'product_id' => $request->product_id,
             'name' => $request->name,
+            'price' => $request->price,
         ]);
 
         DB::commit();
@@ -74,7 +76,7 @@ class ProductSizeController extends Controller
         ]);
 
         $color = Productsize::findOrFail($id);
-        $color->update($request->only(['product_id','name']));
+        $color->update($request->only(['product_id','name','price']));
         $color->save();
 
         Toastr()->success('تم التحديث بنجاح');
@@ -90,7 +92,7 @@ class ProductSizeController extends Controller
 
         $size = Productsize::findOrFail($id);
         $size->delete();
-        Toastr()->success('تم حذف لون منتج بنجاح');
+        Toastr()->success('تم حذف مقاس منتج بنجاح');
         return redirect()->route('sizes.index');
 
     }//end of destroy

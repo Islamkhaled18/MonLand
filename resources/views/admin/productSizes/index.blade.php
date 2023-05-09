@@ -27,8 +27,9 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>الاسم</th>
-                                <th>المنتج</th>
+                                <th>اسم المنتج</th>
+                                <th>المقاس</th>
+                                <th>السعر</th>
                                 <th>العمليات</th>
 
                             </tr>
@@ -38,8 +39,9 @@
                             <tr>
 
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $size->name }}</td>
                                 <td>{{ $size->product->name }}</td>
+                                <td>{{ $size->name }}</td>
+                                <td>{{ $size->price }}</td>
 
                                 <td>
                                     @can('productSizes.edit')

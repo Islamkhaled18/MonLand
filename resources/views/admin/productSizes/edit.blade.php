@@ -28,9 +28,17 @@
                                 <input name="id" value="{{ $size->id }}" type="hidden">
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">الاسم</label>
+                                    <label for="exampleInputEmail1">المقاس</label>
                                     <input class="form-control" id="exampleInputEmail1" name="name"
-                                        value="{{ $size->name }}" type="text" placeholder="اكتب الاسم">
+                                        value="{{ $size->name }}" type="text" placeholder="اكتب المقاس">
+                                    @error('name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">السعر</label>
+                                    <input class="form-control" id="exampleInputEmail1" name="price"
+                                        value="{{ $size->price }}" type="text" placeholder="اكتب السعر">
                                     @error('name')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

@@ -23,9 +23,9 @@ class ProductController extends Controller
             return view('admin.errors.notAllowed');
         }
 
-        $products = Product::select('id', 'name', 'price', 'created_at')->paginate(5);
+        $products = Product::with('specifications')->paginate(5);
         return view('admin.products.general.index')->with([
-            'products' => $products
+            'products' => $products,
         ]);
     } //end of index
 
@@ -39,9 +39,8 @@ class ProductController extends Controller
         $categories = Category::select('id', 'name')->get();
         $mainCategories = MainCategory::select('id', 'name')->get();
         $vendors = Vendor::all();
-        return view('admin.products.general.create', compact('brands', 'categories', 'vendors','mainCategories'));
+        return view('admin.products.general.create', compact('brands', 'categories', 'vendors', 'mainCategories'));
     } //end of create
-
 
     public function store(Request $request)
     {
@@ -59,36 +58,41 @@ class ProductController extends Controller
             'sku' => 'nullable|min:3|max:10',
             'manage_stock' => 'required|in:0,1',
             'in_stock' => 'required|in:0,1',
+            'cover_image' => 'mimes:png,jpg,bmp,jpeg,webp',
 
         ]);
 
         DB::beginTransaction();
         //validation
-        if (!$request->has('is_active'))
+        if (!$request->has('is_active')) {
             $request->request->add(['is_active' => 0]);
-        else
+        } else {
             $request->request->add(['is_active' => 1]);
+        }
 
-        if (!$request->has('featured'))
+        if (!$request->has('featured')) {
             $request->request->add(['featured' => 0]);
-        else
+        } else {
             $request->request->add(['featured' => 1]);
+        }
 
-        if (!$request->has('deal_of_the_day'))
+        if (!$request->has('deal_of_the_day')) {
             $request->request->add(['deal_of_the_day' => 0]);
-        else
+        } else {
             $request->request->add(['deal_of_the_day' => 1]);
+        }
 
-        if (!$request->has('flash_sale'))
+        if (!$request->has('flash_sale')) {
             $request->request->add(['flash_sale' => 0]);
-        else
+        } else {
             $request->request->add(['flash_sale' => 1]);
+        }
 
-        if (!$request->has('quick_request'))
+        if (!$request->has('quick_request')) {
             $request->request->add(['quick_request' => 0]);
-        else
+        } else {
             $request->request->add(['quick_request' => 1]);
-
+        }
 
         $product = new Product();
         $product->slug = $request->slug;
@@ -111,25 +115,27 @@ class ProductController extends Controller
         $product->weight = $request->weight;
         $product->dimension = $request->dimension;
         $product->material = $request->material;
-        $product->save();
+        // Save cover image if uploaded
+        if ($request->hasFile('cover_image')) {
+            $path = $request->file('cover_image')->store('public/images');
+            $product->cover_image = $path;
+        }
 
+        $product->save();
 
         foreach ($request->file('photo') as $imagefile) {
             $image = new Image;
-            $path = $imagefile->store('/images/products', ['disk' =>   'my_files']);
+            $path = $imagefile->store('/images/products', ['disk' => 'my_files']);
             $image->photo = $path;
             $image->product_id = $product->id;
             $image->save();
         }
-
 
         $product->categories()->attach($request->categories);
         DB::commit();
         toastr()->success('تمت اضافة المنتج بنجاح');
         return redirect()->route('products.index');
     } //end of basic information
-
-
 
     public function edit($id)
     {
@@ -143,8 +149,7 @@ class ProductController extends Controller
         $brands = Brand::all();
         $mainCategories = MainCategory::select('id', 'name')->get();
 
-
-        return view('admin.products.edit', compact('product', 'categories', 'vendors', 'brands','mainCategories'));
+        return view('admin.products.edit', compact('product', 'categories', 'vendors', 'brands', 'mainCategories'));
     }
 
     public function update($id, Request $request)
@@ -170,10 +175,17 @@ class ProductController extends Controller
         $product->update($request->except('_token', 'categories', 'photo'));
         $product->categories()->sync($request->categories);
 
+
+        // Update cover image if uploaded
+        if ($request->hasFile('cover_image')) {
+            $path = $request->file('cover_image')->store('public/images');
+            $product->cover_image = $path;
+            $product->save();
+        }
+
         Toastr()->success('تم التحديث بنجاح');
         return redirect()->route('products.index');
     }
-
 
     public function destroy($id)
     {
