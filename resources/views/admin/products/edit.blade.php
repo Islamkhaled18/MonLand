@@ -222,12 +222,26 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="projectinput1"> سعر المنتج
+                                                <label for="projectinput1">السعر القديم للمنتج
                                                 </label>
-                                                <input type="number" id="price" class="form-control"
-                                                    placeholder="  سعر المنتج " value="{{ $product->price }}"
-                                                    name="price">
-                                                @error('price')
+                                                <input type="number" id="old_price" class="form-control"
+                                                    placeholder=" السعر القديم للمنتج " value="{{ $product->old_price }}"
+                                                    name="old_price">
+                                                @error('old_price')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="projectinput1">السعر الجديد للمنتج
+                                                </label>
+                                                <input type="number" id="new_price" class="form-control"
+                                                    placeholder=" السعر الجديد للمنتج " value="{{ $product->new_price }}"
+                                                    name="new_price">
+                                                @error('new_price')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>

@@ -39,16 +39,22 @@ a{
     color: #FFF;
     background-color: #262626;
     padding: 15px 50px;
-    border-radius: 50px;
+    border-radius: 10px;
     text-decoration: none;
     font-weight: 600;
-    font-size: 1.2em;
+    font-size: 1.5em;
 }
 
 @media(max-width: 768px){
-
+    body{
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
     h1{
         font-size: 6em;
+        margin-top: 0;
     }
 
     p{

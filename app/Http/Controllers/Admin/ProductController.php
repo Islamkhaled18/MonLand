@@ -54,7 +54,8 @@ class ProductController extends Controller
             'categories' => 'array|min:1',
             'categories.*' => 'numeric|exists:categories,id',
             'brand_id' => 'required|exists:brands,id',
-            'price' => 'required',
+            'old_price' => 'nullable',
+            'new_price' => 'required',
             'sku' => 'nullable|min:3|max:10',
             'manage_stock' => 'required|in:0,1',
             'in_stock' => 'required|in:0,1',
@@ -106,7 +107,8 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->short_description = $request->short_description;
         $product->anotherInformation = $request->anotherInformation;
-        $product->price = $request->price;
+        $product->old_price = $request->old_price;
+        $product->new_price = $request->new_price;
         $product->manage_stock = $request->manage_stock;
         $product->in_stock = $request->in_stock;
         $product->qty = $request->qty;

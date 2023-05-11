@@ -17,7 +17,8 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->double('price', 18, 4)->unsigned()->nullable();
+            $table->double('old_price', 18, 4)->unsigned()->nullable();
+            $table->double('new_price', 18, 4)->unsigned()->nullable();
             $table->boolean('manage_stock')->nullable();
             $table->integer('qty')->nullable();
             $table->boolean('in_stock')->nullable();

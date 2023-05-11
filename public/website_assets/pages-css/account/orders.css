@@ -12,6 +12,10 @@ body {
     font-weight: bolder;
 }
 
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    border-color: red;
+    background-color: red;
+}
 #account {
     display: flex;
     justify-content: flex-start;
@@ -211,6 +215,55 @@ form button {
     border: 0;
 }
 
+ .checkbox_border_bottom{
+    border-bottom: 1.6px solid #7f0924;
+}
+
+input[type=checkbox] {
+    visibility: hidden;
+}
+
+.geekmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 23px;
+    width: 23px;
+    background-color: #FFF;
+    border: 2px solid #7f0924;
+}
+
+input:checked ~ .geekmark {
+    background-color: #7f0924;
+}
+
+
+.geekmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+input:checked ~ .geekmark:after {
+    display: block;
+}
+
+.main{
+    position: relative;
+}
+
+.main .geekmark:after {
+
+    left: 8px;
+    bottom: 5px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 4px 4px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
 
 @media(max-width: 992px) {
 
@@ -221,8 +274,10 @@ form button {
 
 @media(max-width: 768px) {
     .tab {
-        width: 80%;
+        width: 100%;
         margin: auto;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
     }
 
     .card-body {
@@ -231,4 +286,10 @@ form button {
 
 }
 
-@media(max-width: 576px) {}
+
+
+@media(max-width: 576px) {
+    .tab li button{
+            font-size: .71em !important ;
+    }
+}

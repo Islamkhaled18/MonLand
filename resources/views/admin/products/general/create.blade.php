@@ -251,11 +251,24 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="projectinput1"> سعر المنتج
+                                            <label for="projectinput1">  السعر القديم للمنتج
                                             </label>
-                                            <input type="text" id="price" class="form-control"
-                                                placeholder=" سعر المنتج " value="{{ old('price') }}" name="price">
-                                            @error('price')
+                                            <input type="text" id="old_price" class="form-control"
+                                                placeholder="السعر القديم للمنتج" value="{{ old('old_price') }}" name="old_price">
+                                            @error('old_price')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="projectinput1">سعر المنتج الجديد
+                                            </label>
+                                            <input type="text" id="new_price" class="form-control"
+                                                placeholder="سعر المنتج الجديد " value="{{ old('new_price') }}" name="new_price">
+                                            @error('new_price')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>

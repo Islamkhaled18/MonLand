@@ -1,54 +1,83 @@
- <!-- Start Upper Header -->
- <header>
-        <div class="container d-flex justify-content-between align-items-center">
-            <ul class="list-unstyled m-0 d-none d-md-flex">
-                <li>
-                    <a href="{{route('site.terms.index')}}">الشروط والاحكام </a>
-                </li>
-                <li>
-                    <a href="{{route('site.DeliveryPolicy.index')}}">سياسة الشحن </a>
-                </li>
-                <li>
-                    <a href="{{route('Site.contactUs')}}">تواصل معنا</a>
-                </li>
-                <li>
-                    <a href="{{route('sizeTable')}}">جدول المقاسات </a>
-                </li>
-                <!-- <li>
-                    <a href="#">الشروط والأحكام </a>
-                </li> -->
-            </ul>
+<!-- Start Upper Header -->
+<div class="overlay"></div>
 
-            @guest
-            <ul class="list-unstyled m-0 d-none d-md-flex">
-                <li>
-                    <a title="تسجيل الدخول" href="{{route('login')}}">تسجيل الدخول</a>
-                </li>
-                <li>
-                    <a title="تسجيل حساب جديد" href="{{route('register')}}">تسجيل حساب جديد</a>
-                </li>
+<header>
+    <div class="container d-flex justify-content-between align-items-center">
+        <!-- start sidebar -->
+        @include('layouts.site._sidebar')
+        <!-- end sidebar -->
 
-            </ul>
-            @else
-            <ul class="list-unstyled m-0 d-none d-md-flex">
+        <ul class="list-unstyled m-0 d-md-flex">
+            <div class="d-flex align-items-center">
                 <li>
-                    <a title="تسجيل الخروج" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
+                    <a class="open-sidebar">
+                        <img src="{{ asset('website_assets/imgs/icons/category.png') }}" />
                     </a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
                 </li>
-            </ul>
-            @endguest
 
-            <!-- <select class="form-control mr-auto">
-                <option>العربية</option>
-                <option>English</option>
-            </select> -->
+                <li>
+                    <a href="../all-products/all-products.html" class="pr-0"> كل
+                        الفئات </a>
+                </li>
+            </div>
 
+            <div class="d-none d-md-flex">
+
+                <li>
+                    <a href="#"> أطفال </a>
+                </li>
+                <li>
+                    <a href="#">الجمال </a>
+                </li>
+                <li>
+                    <a href="#"> المنزل </a>
+                </li>
+                <li>
+                    <a href="#"> نسائية </a>
+                </li>
+                <li>
+                    <a href="#"> رجالية </a>
+                </li>
+                <li>
+                    <a href="#"> الالكترونيات </a>
+                </li>
+                <li>
+                    <a href="#"> عروض </a>
+                </li>
+            </div>
+        </ul>
+        <div class="input-group w-50 p-0 d-md-none">
+
+            <input type="text" class="form-control " placeholder="عن ماذا تبحث ؟
+      ">
+            <div class="input-group-prepend">
+                <div class="input-group-text p-0">
+                    <button class="btn px-3 border-0">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-    </header>
-    <!-- End Upper Header -->
+        <ul class="list-unstyled d-none d-md-flex special-list m-0
+    align-items-center">
+
+            <li>
+                <a href="../fav/fav.html" class="d-block text-decoration-none">
+                    المفضلة
+
+                    <img src="{{ asset('website_assets/imgs/icons/wishlist.png') }}" />
+
+                </a>
+            </li>
+            <b>|</b>
+            <li>
+                <a href="../compare/compare.html" class="d-block
+        text-decoration-none">
+                    قارن
+                    <i class="fa-solid fa-code-compare fa-lg"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</header>
+<!-- End Upper Header -->

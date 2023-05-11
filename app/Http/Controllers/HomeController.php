@@ -31,11 +31,7 @@ class HomeController extends Controller
         $brand_slides = Brand::select('image')->get();
         $category_slides = Category::parent()->select('name', 'image')->limit(7)->get();
         $ad_images = Ad::select('name', 'image')->limit(3)->get();
-
-
-
         $new_products = Product::paginate(6);
-
         $featured_products = Product::where('featured', true)->paginate(6);
         $dealOfDay_products = Product::where('deal_of_the_day', true)->paginate(6);
         $flash_products = Product::where('flash_sale', true)->paginate(6);

@@ -13,4 +13,19 @@ button[type="submit"]{
 input[type='text']{
     width: 18%;
     text-align: center;
+    height: 60px;
+}
+
+select{
+    border: 0 !important;
+}
+
+.selectpicker::after {
+    display: none;
+}
+
+@media (max-width: 576px) {
+    .modal-body{
+        width: 100% !important;
+    }
 }

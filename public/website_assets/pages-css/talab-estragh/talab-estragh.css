@@ -13,3 +13,21 @@ select:focus {
     outline: 0 !important;
     box-shadow: none !important;
 }
+
+@media(max-width: 576px){
+    .top-panel .info{
+        width: 100% !important
+    }
+
+    .top-panel .info h2{
+        font-size: 1.5rem;
+    }
+
+    .top-panel .info h4{
+        font-size: 1.2rem;
+    }
+
+    .top-panel .info li{
+        font-size: .9rem !important;
+    }
+}

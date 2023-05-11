@@ -5,7 +5,12 @@
   border: none;
   background-color: #f9f7fc;
 }
-
+.saving-bage {
+  color: white;
+  background-color: #3b8b4f;
+  border-radius: 10px;
+  padding: 2px 10px;
+}
 .fav-card-body {
   text-align: start;
   font-weight: 500;
