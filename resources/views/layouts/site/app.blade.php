@@ -17,6 +17,33 @@
 </head>
 
 <body>
+    <style type="text/css">
+        #goog-gt-tt,
+        .goog-te-balloon-frame {
+            display: none !important;
+        }
+
+        .goog-text-highlight {
+            background: none !important;
+            box-shadow: none !important;
+        }
+
+        .goog-te-banner-frame {
+            display: none !important;
+        }
+
+        .goog-logo-link,
+        .goog-te-gadget span {
+
+            display: none !important;
+
+        }
+
+        .goog-te-gadget {
+
+            color: transparent !important;
+            font-size: 0;
+    </style>
     <section>
         <!-- Start Navbar -->
         @include('layouts.site._navbar')
@@ -37,21 +64,16 @@
         <!-- Footer banner -->
         <div class="bg-light py-5 ">
 
-            <div class="row d-flex p-3 py-5 justify-content-sm-center
-          align-items-center">
+            <div class="row d-flex p-3 py-5 justify-content-sm-center align-items-center">
 
 
                 <div class="col-12 col-md-3 text-right ">
-                    <img src="{{ asset('website_assets/imgs/logo/logo.png') }}" sizes="w-100 h-" class="d-block
-              m-auto img-fluid " />
-
-
-
+                    <img src="{{ asset('website_assets/imgs/logo/logo.png') }}" sizes="w-100 h-"
+                        class="d-block m-auto img-fluid " />
                 </div>
 
 
-                <div class="col-12 col-md-7 d-flex flex-column text-right
-            justify-content-center">
+                <div class="col-12 col-md-7 d-flex flex-column text-right justify-content-center">
                     <h4 class="text-secondary text-center ">
                         تسوق اينما كنت
                     </h4>
@@ -75,8 +97,7 @@
                     <h4 class="text-secondary text-center ">
                         تابعونا على
                     </h4>
-                    <ul class=" list-unstyled d-flex justify-content-center mt-4
-              second-list">
+                    <ul class=" list-unstyled d-flex justify-content-center mt-4 second-list">
 
                         <li>
                             <a class="p-3 whats">
@@ -89,8 +110,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="p-3 facebook main-back-color text-white
-                  rounded-circle">
+                            <a class="p-3 facebook main-back-color text-white rounded-circle">
                                 <i class=" fab fa-facebook-f fa-lg"></i>
                             </a>
                         </li>
@@ -103,8 +123,7 @@
         </div>
         <!-- banner end -->
 
-        <div class="my-5 text-start d-flex flex-wrap flex-column-reverse
-        flex-lg-row">
+        <div class="my-5 text-start d-flex flex-wrap flex-column-reverse flex-lg-row">
             <div class="col-12 col-lg-4 px-3 py-2 mb-3">
 
                 <ul class="list-unstyled">
@@ -218,6 +237,180 @@
     <script src="{{ asset('website_assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('website_assets/pages-js/orders.js') }}"></script>
     <script src="{{ asset('website_assets/js/script.js') }}"></script>
+
+
+    @stack('scripts')
+    <script>
+        let progressCircle = document.querySelector(".progress");
+        let radius = progressCircle.r.baseVal.value;
+        //circumference of a circle = 2πr;
+        let circumference = radius * 2 * Math.PI;
+        progressCircle.style.strokeDasharray = circumference;
+
+        //0 to 100
+        setProgress(40);
+
+        function setProgress(percent) {
+            progressCircle.style.strokeDashoffset = circumference - (percent / 100) * circumference;
+        }
+    </script>
+    <script>
+        const selectEl = document.querySelector('select[name="category"]');
+        selectEl.addEventListener('change', () => {
+            const formEl = selectEl.closest('form');
+            const hiddenInput = formEl.querySelector('input[name="category"]');
+            if (hiddenInput) {
+                hiddenInput.value = selectEl.value;
+            } else {
+                console.error('Could not find input element with name "category"');
+            }
+        });
+    </script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(document).on('click', '.addToWishlist', function(e) {
+
+            e.preventDefault();
+            @guest()
+                $('.not-loggedin-modal').css('display', 'block');
+            @endguest
+            $.ajax({
+                type: 'post',
+                url: "{{ Route('wishlist.store') }}",
+                data: {
+                    'productId': $(this).attr('data-product-id'),
+                },
+                success: function(data) {
+                    location.reload();
+                    if (data.wished)
+
+                        $('.alert-modal').css('display', 'block');
+
+                    else
+                        $('.alert-modal2').css('display', 'block');
+
+
+                }
+            });
+        });
+        $(document).ready(function() {
+            countFav();
+
+            function countFav() {
+                $.ajax({
+                    method: 'GET',
+                    url: "{{ Route('wishlist.countFav') }}",
+                    success: function(response) {
+                        $('.countFavProd').html('');
+                        $('.countFavProd').html(response.count);
+                    }
+                });
+            }
+        });
+
+        $(document).ready(function() {
+            countCart();
+
+            function countCart() {
+                $.ajax({
+                    method: 'GET',
+                    url: "{{ Route('cart.countCart') }}",
+                    success: function(response) {
+                        $('.productsCount').html('');
+                        $('.productsCount').html(response.count);
+                    }
+                });
+            }
+        });
+
+
+        $(document).on('click', '.removeFromWishlist', function(e) {
+            e.preventDefault();
+            @guest()
+                $('.not-loggedin-modal').css('display', 'block');
+            @endguest
+            $.ajax({
+                type: 'delete',
+                url: "{{ Route('wishlist.destroy') }}",
+                data: {
+                    'productId': $(this).attr('data-product-id'),
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
+        });
+
+
+        $(document).on('click', '.addTocomparelist', function(e) {
+
+            e.preventDefault();
+            @guest()
+                $('.not-loggedin-modal').css('display', 'block');
+            @endguest
+            $.ajax({
+                type: 'post',
+                url: "{{ Route('compare.store') }}",
+                data: {
+                    'productId': $(this).attr('data-product-id'),
+                },
+                success: function(data) {
+                    console.log('ssssss');
+                    location.reload();
+                    if (data.compared)
+
+                        $('.alert-modal').css('display', 'block');
+
+                    else
+                        $('.alert-modal2').css('display', 'block');
+                }
+            });
+        });
+
+        $(document).on('click', '.removeFromcomparelist', function(e) {
+            e.preventDefault();
+            @guest()
+                $('.not-loggedin-modal').css('display', 'block');
+            @endguest
+            $.ajax({
+                type: 'delete',
+                url: "{{ Route('compare.destroy') }}",
+                data: {
+                    'productId': $(this).attr('data-product-id'),
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
+        });
+
+
+
+
+    </script>
+
+    <script>
+        function googleTranslateElementInit() {
+
+            new google.translate.TranslateElement({
+
+                autoDisplay: 'true',
+
+                includedLanguages: 'ar,en'
+                , layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+
+            }, 'google_translate_element');
+
+        }
+
+    </script>
+
+    <script src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'></script>
+
 </body>
 
 </html>
