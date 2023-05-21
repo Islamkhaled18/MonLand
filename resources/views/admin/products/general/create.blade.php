@@ -55,7 +55,7 @@
                                         <label for="projectinput1"> وصف المنتج
                                         </label>
                                         <textarea name="description" id="editor_four" class="form-control"
-                                            placeholder="  ">{{ old('description') }}</textarea>
+                                            placeholder="  "></textarea>
 
                                         @error('description')
                                         <span class="text-danger">{{ $message }}</span>
@@ -67,7 +67,7 @@
                                         <label for="projectinput1"> الوصف المختصر
                                         </label>
                                         <textarea name="short_description" id="editor_short" class="form-control"
-                                            placeholder="">{{ old('short_description') }}</textarea>
+                                            placeholder=""></textarea>
 
                                         @error('short_description')
                                         <span class="text-danger">{{ $message }}</span>

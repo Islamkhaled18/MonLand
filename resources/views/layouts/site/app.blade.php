@@ -10,14 +10,59 @@
     </title>
     <link rel="stylesheet" href="{{ asset('website_assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('website_assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('website_assets/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('website_assets/css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('website_assets/pages-css/product/product-details.css') }}" />
     <!-- <link rel="stylesheet" href="{{ asset('website_assets/pages-css/account/orders.css') }}"> -->
+
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
+    <style>
+        .rate {
+            float: left;
+            height: 46px;
+            padding: 0 10px;
+        }
 
-<body>
-    <style type="text/css">
+        .rate:not(:checked)>input {
+            position: absolute;
+            top: -9999px;
+        }
+
+        .rate:not(:checked)>label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
+
+        .rate:not(:checked)>label:before {
+            content: '★ ';
+        }
+
+        .rate>input:checked~label {
+            color: #ffc700;
+        }
+
+        .rate:not(:checked)>label:hover,
+        .rate:not(:checked)>label:hover~label {
+            color: #deb217;
+        }
+
+        .rate>input:checked+label:hover,
+        .rate>input:checked+label:hover~label,
+        .rate>input:checked~label:hover,
+        .rate>input:checked~label:hover~label,
+        .rate>label:hover~input:checked~label {
+            color: #c59b08;
+        }
+
         #goog-gt-tt,
         .goog-te-balloon-frame {
             display: none !important;
@@ -43,7 +88,12 @@
 
             color: transparent !important;
             font-size: 0;
+        }
     </style>
+</head>
+
+<body>
+
     <section>
         <!-- Start Navbar -->
         @include('layouts.site._navbar')
@@ -100,17 +150,17 @@
                     <ul class=" list-unstyled d-flex justify-content-center mt-4 second-list">
 
                         <li>
-                            <a class="p-3 whats">
+                            <a href="{{$instagram}}" class="p-3 whats">
                                 <i class="fab fa-instagram fa-lg"></i>
                             </a>
                         </li>
                         <li>
-                            <a class="mx-3 p-3 telegram">
+                            <a href="{{$twitter}}" class="mx-3 p-3 telegram">
                                 <i class="fab fa-twitter fa-lg"></i>
                             </a>
                         </li>
                         <li>
-                            <a class="p-3 facebook main-back-color text-white rounded-circle">
+                            <a href="{{$face_book}}" class="p-3 facebook main-back-color text-white rounded-circle">
                                 <i class=" fab fa-facebook-f fa-lg"></i>
                             </a>
                         </li>
@@ -132,7 +182,7 @@
                     </h4>
                     <li class="font-weight-bold">
                         <i class="fas fa-caret-left ml-2 main-color"></i>
-                        <a href="../register/registerNewAccount.html">تسجيل الدخول</a>
+                        <a href="{{route('login')}}">تسجيل الدخول</a>
                     </li>
                     <li class="my-2 font-weight-bold">
                         <i class="fas fa-caret-left ml-2 main-color"></i>
@@ -146,17 +196,21 @@
                     </li>
                     <li class="my-2 font-weight-bold">
                         <i class="fas fa-caret-left ml-2 main-color"></i>
-                        <a href="../account/orders.html">الملف الشخصى</a>
+                        @guest
+                        <a href="{{route('login')}}"> الملف الشخصى</a>
+                        @else
+                        <a href="{{ route('site.profile', auth()->user()->id) }}">الملف الشخصى</a>
+                        @endguest
 
                     </li>
                     <li class="my-2 font-weight-bold">
                         <i class="fas fa-caret-left ml-2 main-color"></i>
-                        <a href="../fav/fav.html">المفضلة</a>
+                        <a href="{{ route('wishlist.products.index') }}">المفضلة</a>
 
                     </li>
                     <li class="font-weight-bold">
                         <i class="fas fa-caret-left ml-2 main-color"></i>
-                        <a href="../compare/compare.html">قارن</a>
+                        <a href="{{ route('compare.products.index') }}">قارن</a>
 
                     </li>
                 </ul>
@@ -181,13 +235,18 @@
                     </li class="font-weight-bold">
                     <li class="my-2 font-weight-bold">
                         <i class="fas fa-caret-left ml-2 main-color"></i>
+                        @guest
 
-                        <a href="#">سياسة الاستبدال والاسترجاع</a>
+                        <a href="{{ route('exchange.create') }}">سياسة الاستبدال والاسترجاع</a>
+                        @else
+                        <a href="{{ route('login') }}">سياسة الاستبدال والاسترجاع</a>
+
+                        @endguest
                     </li>
                     <li class="font-weight-bold">
                         <i class="fas fa-caret-left ml-2 main-color"></i>
 
-                        <a href="../contact-us/contact-us.html">جدول المقاسات </a>
+                        <a href="{{route('sizeTable')}}">جدول المقاسات </a>
                     </li>
 
                 </ul>
@@ -200,24 +259,32 @@
                 <h6 class="">
                     اشترك فى نشرتنا الاخبارية للحصول على احدث المنتجات
                 </h6>
+
                 <div class="form-group d-flex mt-4">
-                    <input type="email" class="form-control rounded-0 py-4" placeholder="ادخل بريدك الالكترونى هنا" />
-                    <button class="text-white py-2 px-4 rounded-0">اشترك</button>
+                    <form action="{{ route('emailUs.store') }}" method="POST">
+                        @csrf
+
+                        <input type="email" name="email" value="{{ old('email') }}" class="form-control rounded-0 py-4"
+                            placeholder="ادخل بريدك الالكترونى هنا" />
+                        <button type="submit" class="text-white py-2 px-4 rounded-0">اشترك</button>
+                    </form>
                 </div>
+
             </div>
+
             <div class="d-flex justify-content-center main-color text-bold col-12">
                 <ul class="list-unstyled d-flex flex-wrap">
                     <li class="m-2">
                         <a href="#" class="footer-link">عن المنظمه</a>
                     </li>
                     <li class="m-2">
-                        <a href="#" class="footer-link">سياسة الشحن</a>
+                        <a href="{{route('site.DeliveryPolicy.index')}}" class="footer-link">سياسة الشحن</a>
                     </li>
                     <li class="m-2">
                         <a href="#" class="footer-link">سياسة الخصوصية</a>
                     </li>
                     <li class="m-2">
-                        <a href="#" class="footer-link">الشروط والأحكام</a>
+                        <a href="{{route('site.terms.index')}}" class="footer-link">الشروط والأحكام</a>
                     </li>
 
                 </ul>
@@ -237,6 +304,9 @@
     <script src="{{ asset('website_assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('website_assets/pages-js/orders.js') }}"></script>
     <script src="{{ asset('website_assets/js/script.js') }}"></script>
+
+    <script src="{{ asset('website_assets/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('website_assets/js/bootstrap.bundle.min.js') }}"></script>
 
 
     @stack('scripts')
@@ -387,9 +457,6 @@
                 }
             });
         });
-
-
-
 
     </script>
 

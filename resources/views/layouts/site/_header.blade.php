@@ -62,7 +62,7 @@
     align-items-center">
 
             <li>
-                <a href="../fav/fav.html" class="d-block text-decoration-none">
+                <a href="{{ route('wishlist.products.index') }}" class="d-block text-decoration-none">
                     المفضلة
 
                     <img src="{{ asset('website_assets/imgs/icons/wishlist.png') }}" />
@@ -71,8 +71,7 @@
             </li>
             <b>|</b>
             <li>
-                <a href="../compare/compare.html" class="d-block
-        text-decoration-none">
+                <a href="{{ route('compare.products.index') }}" class="d-block text-decoration-none">
                     قارن
                     <i class="fa-solid fa-code-compare fa-lg"></i>
                 </a>

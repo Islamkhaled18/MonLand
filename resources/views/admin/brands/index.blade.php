@@ -13,16 +13,16 @@
             <li class="breadcrumb-item active"><a href="{{ route('brands.index') }}" title="الماركات">الماركات</a></li>
         </ul>
     </div>
-    @if ($brands && count($brands)>=5)
+    {{--  @if ($brands && count($brands)>=5)
     <p>لا يمكنك اضافة اكثر من خمسة ماركات برجاء حذف ايا من الموجود لتتمكن من تسجيل ماركه جديده</p>
-    @else
+    @else  --}}
 
     @can('brands.create')
     <div>
         <a class="btn btn-primary btn-sm" href="{{ route('brands.create') }}" title="انشاء ماركه جديده">انشاء ماركه جديده</a>
     </div>
     @endcan
-    @endif
+    {{--  @endif  --}}
 
     <div class="row">
         <div class="col-md-12">

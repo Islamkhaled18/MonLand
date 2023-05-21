@@ -1,996 +1,4007 @@
 @extends('layouts.site.app')
 
 @section('content')
-    <!-- Start Slider And Aside -->
-    <div class="slider-aside py-4">
-        <div class="container">
-            <div class="row">
+<!-- Start Slider And Aside -->
+<div class="slider-aside py-3">
 
-                <div class="col-3 ">
-                    <div class="aside-header d-flex justify-content-between align-items-center py-3 px-2">
-                        <h4>الاقسام</h4>
-                        <a href="{{ route('Site.allCategory') }}" class="text-white text-decoration-none">
-                            إظهار الكل
-                            <i class="fa fa-chevron-left" aria-hidden="true"></i>
-                        </a>
-                    </div>
+    <div id="carouselExampleControls" style="height: auto !important" class="carousel slide carousel-vertical">
+        <ol class="carousel-indicators main-slider">
+            <li data-bs-target="#carouselExampleControls" data-bs-slide-to="0" class="active"></li>
+            <li data-bs-target="#carouselExampleControls" data-bs-slide-to="1"></li>
+            <li data-bs-target="#carouselExampleControls" data-bs-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner h-100">
+            @if ($brand_slides)
+            @php
+            $active = true;
+            @endphp
 
-                    <div class="bg-light py-3 px-2 text-right">
-                        <ul class="list-unstyled">
-                            @foreach ($category_slides as $category_slide)
-                                <li class="my-2">
-                                    <a href="{{ route('Site.category', $category_slide->name) }}" class="text-dark">
-                                        {{ $category_slide->name }}
-                                    </a>
-                                </li>
-                            @endforeach
+            @foreach ($brand_slides as $brand_slide)
+            <div class="carousel-item {{ $active ? ' active' : '' }}">
+                <img class="d-block w-100" src="{{ $brand_slide->image_url }}" title="{{ $brand_slide->name }}"
+                    alt="{{ $brand_slide->name }}" height="600" alt="First slide">
+            </div>
+            @php
+            $active = false;
+            @endphp
+            @endforeach
 
-                        </ul>
-                    </div>
-                </div>
+            @else
+
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="{{ asset('website_assets/Design/Finished/404-ar.png') }}"
+                    alt="First slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="{{ asset('website_assets/Design/Finished/404-ar.png') }}"
+                    alt="Second slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="{{ asset('website_assets/Design/Finished/404-ar.png') }}"
+                    alt="Third slide">
+            </div>
+            @endif
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+            data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" style="transform: scale(2.5);" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+            data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" style="transform: scale(2.5);" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    <div id="owl-demo" class="owl-carousel owl-theme position-relative upper">
+
+        @if ($category_slides)
+        @foreach ($category_slides as $category_slide )
+
+        <div class="item">
+            <img src="{{ $category_slide->image_url }}" title="{{ $category_slide->name }}"
+                alt="{{ $category_slide->name }}" height="160" width="100" />
+            <h5 class="mt-2">ملابس</h5>
+        </div>
+        @endforeach
+        @else
+
+        <div class="item">
+            <img src="{{ asset('website_assets/Design/Finished/404-ar.png') }}" class="w-100 h-100" />
+            <h5 class="mt-2">ملابس</h5>
+        </div>
+        @endif
 
 
-                <div class="col-9">
-                    <div id="carouselExampleControls" style="height: auto !important" class="carousel slide">
-                        <div class="carousel-inner h-100">
 
-                            @foreach ($brand_slides as $brand_slide)
-                                <div class="carousel-item @if ($loop->first) active @endif">
-                                    <img class="d-block" width="800" height="500" src="{{ $brand_slide->image_url }}"
-                                        title="{{ $brand_slide->name }}" alt="{{ $brand_slide->name }}">
-                                </div>
-                            @endforeach
+    </div>
 
+</div>
+<!-- End Slider And Aside -->
+
+<!-- Start Ads -->
+<div class="ads py-5">
+    <div class="container-fluid px-5 ">
+        <div class="row">
+
+            <div class="d-flex col-md-4 col-12 px-2 py-3">
+                <div class="bg-light p-3 pb-5">
+                    <h3 class="text-right">كل الخصومات</h3>
+                    <div class="row justify-content-between w-100">
+                        @if($all_offers)
+
+                        @foreach ($all_offers as $all_offer )
+
+                        <div class="col-6">
+                            <img src="{{$all_offer->image_url }}" title="{{$all_offer->name }}"
+                                alt="{{$all_offer->name }}" height="155" class="w-100 m-3" />
                         </div>
-                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-
-                    <div id="owl-demo" class="owl-carousel owl-theme position-relative">
-                        @foreach ($brand_slides as $brand_slide)
-                            <div class="item">
-                                <img src="{{ $brand_slide->image_url }}" title="{{ $brand_slide->name }}"
-                                    alt="{{ $brand_slide->name }}" class="w-100 h-100" />
-                                <h5 class="mt-2">{{ $brand_slide->name }}</h5>
-                            </div>
                         @endforeach
 
-                    </div>
-                </div>
+                        @else
 
-
-            </div>
-        </div>
-    </div>
-    <!-- End Slider And Aside -->
-
-    <!-- Start Ads -->
-    <div class="ads py-5">
-        <div class="container">
-            <div class="grid">
-                @foreach ($ad_images as $ad_img)
-                    <div>
-                        <img src="{{ $ad_img->image_url }}" title="{{ $ad_img->name }}" alt="{{ $ad_img->name }}"
-                            class="w-100" width="500" height="200" />
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-    <!-- End Ads -->
-
-    <!-- Start Collections -->
-    <div class="collections py-5">
-        <div class="container">
-            <ul class="nav nav-tabs justify-content-center border-0" id="myTab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active border-0" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                        aria-controls="home" aria-selected="true">وصلنا حديثا</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link border-0" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                        aria-controls="profile" aria-selected="false">الأكثر مبيعا</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link border-0" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
-                        aria-controls="contact" aria-selected="false">متميز</a>
-                </li>
-            </ul>
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card-deck d-flex flex-wrap">
-                                @foreach ($new_products as $product)
-                                    <div class="card mt-5 position-relative">
-                                        <div
-                                            class="position-absolute item-assets d-flex justify-content-between w-100 align-items-start p-3">
-                                            <ul class="list-unstyled">
-                                                <li>
-                                                    <button>
-                                                        <a class="addToWishlist  add-to-fav" href="#"
-                                                            data-product-id="{{ $product->id }}">
-                                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                                        </a>
-                                                    </button>
-                                                </li>
-
-                                                <li>
-                                                    <button data-toggle="modal" data-target="#show{{ $product->id }}"><i
-                                                            class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                                </li>
-
-                                                <li>
-                                                    <button>
-                                                        <a class="addTocomparelist  add-to-fav" href="#"
-                                                            data-product-id="{{ $product->id }}">
-                                                            <i class="fa fa-exchange" aria-hidden="true"></i>
-                                                        </a>
-                                                    </button>
-                                                </li>
-                                            </ul>
-
-                                            <div class="w-100 align-self-end text-center">
-                                                <form action="{{ route('cart.store') }}" method="POST">
-                                                    @csrf
-
-                                                    <button type="submit" name="product_id" value="{{ $product->id }}"
-                                                        class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                                </form>
-                                            </div>
-
-                                        </div>
-                                        <img class="card-img-top" width="40" height="40"
-                                            src="{{ $product->images[0]->photo }}" alt="{{ $product->name }}">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title"><a
-                                                    href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a>
-                                            </h5>
-                                            <h5>{{ $product->price }} جنيه</h5>
-
-                                        </div>
-                                    </div>
-                                    @include('site.includes.product_detail')
-                                @endforeach
-                            </div>
+                        <div class="col-6">
+                            <img src=" {{ asset('website_assets/Design/Finished/404-ar.png') }}"
+                                class="w-100 h-100 m-3" />
                         </div>
-                    </div>
-                </div>
-
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <div class="row">
-
-                        <div class="col-12">
-                            <div class="card-deck d-flex flex-wrap">
-
-                                @foreach ($best_sellings as $product)
-                                    <div class="card mt-5 position-relative">
-                                        <div
-                                            class="position-absolute item-assets d-flex justify-content-between w-100 align-items-start p-3">
-                                            <ul class="list-unstyled">
-                                                <li>
-                                                    <button>
-                                                        <a class="addToWishlist  add-to-fav" href="#"
-                                                            data-product-id="{{ $product->id }}">
-                                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                                        </a>
-                                                    </button>
-                                                </li>
-
-                                                <li>
-                                                    <button data-toggle="modal"
-                                                        data-target="#show1{{ $product->id }}"><i
-                                                            class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                                </li>
-
-                                                <li>
-                                                    <button>
-                                                        <a class="addTocomparelist  add-to-fav" href="#"
-                                                            data-product-id="{{ $product->id }}">
-                                                            <i class="fa fa-exchange" aria-hidden="true"></i>
-                                                        </a>
-                                                    </button>
-                                                </li>
-                                            </ul>
-
-                                            <div class="w-100 align-self-end text-center">
-                                                <form action="{{ route('cart.store') }}" method="POST">
-                                                    @csrf
-
-                                                    <button type="submit" name="product_id" value="{{ $product->id }}"
-                                                        class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                                </form>
-                                            </div>
-                                            <div class="badge badge-success px-3 py-2 rounded-0">
-                                                جديد
-                                            </div>
-
-
-                                        </div>
-                                        <img class="card-img-top" width="40" height="40"
-                                            src="{{ $product->images[0]->photo }}" alt="{{ $product->name }}">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title"><a
-                                                    href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a>
-                                            </h5>
-                                            <h5>{{ $product->price }} جنيه</h5>
-
-                                        </div>
-                                    </div>
-                                    @include('site.includes.best_sellings')
-                                @endforeach
-
-                            </div>
+                        <div class="col-6">
+                            <img src=" {{ asset('website_assets/Design/Finished/404-ar.png') }}"
+                                class="w-100 h-100 m-3" />
                         </div>
+                        <div class="col-6 mt-4">
+                            <img src=" {{ asset('website_assets/Design/Finished/404-ar.png') }}"
+                                class="w-100 h-100 m-3" />
+                        </div>
+                        <div class="col-6 mt-4">
+                            <img src=" {{ asset('website_assets/Design/Finished/404-ar.png') }}"
+                                class="w-100 h-100 m-3" />
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex col-md-4 col-12 px-2 py-3">
+                <div class="bg-light p-3 pb-5">
+                    <h3 class="text-right"> عروض اخر الاسبوع</h3>
+                    <div class="row justify-content-between w-100">
+
+                        @if($weekend_offers)
+
+                        @foreach ($weekend_offers as $weekend_offer )
+
+                        <div class="col-6">
+                            <img src="{{$weekend_offer->image_url }}" title="{{$weekend_offer->name }}"
+                                alt="{{$weekend_offer->name }}" height="155" class="w-100 m-3" />
+                        </div>
+                        @endforeach
+
+                        @else
+
+                        <div class="col-6">
+                            <img src=" {{ asset('website_assets/Design/Finished/404-ar.png') }}"
+                                class="w-100 h-100 m-3" />
+                        </div>
+                        <div class="col-6">
+                            <img src=" {{ asset('website_assets/Design/Finished/404-ar.png') }}"
+                                class="w-100 h-100 m-3" />
+                        </div>
+                        <div class="col-6 mt-4">
+                            <img src=" {{ asset('website_assets/Design/Finished/404-ar.png') }}"
+                                class="w-100 h-100 m-3" />
+                        </div>
+                        <div class="col-6 mt-4">
+                            <img src=" {{ asset('website_assets/Design/Finished/404-ar.png') }}"
+                                class="w-100 h-100 m-3" />
+                        </div>
+                        @endif
 
                     </div>
                 </div>
-                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                    <div class="row">
+            </div>
 
-                        <div class="col-12">
-                            <div class="card-deck d-flex flex-wrap">
-                                @foreach ($featured_products as $product)
-                                    <div class="card mt-5 position-relative">
-                                        <div
-                                            class="position-absolute item-assets d-flex justify-content-between w-100 align-items-start p-3">
-                                            <ul class="list-unstyled">
-                                                <li>
-                                                    <button>
-                                                        <a class="addToWishlist  add-to-fav" href="#"
-                                                            data-product-id="{{ $product->id }}">
-                                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                                        </a>
-                                                    </button>
-                                                </li>
+            <div class="d-flex col-md-4 col-12 px-2 py-3">
+                <div class="bg-light p-3 pb-5">
+                    <h3 class="text-right"> اشترى وبالك مرتاح</h3>
+                    <div class="row justify-content-between w-100">
+                        @if($buy_your_mind_is_frees)
 
-                                                <li>
-                                                    <button data-toggle="modal"
-                                                        data-target="#show2{{ $product->id }}"><i
-                                                            class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                                </li>
+                        @foreach ($buy_your_mind_is_frees as $buy_your_mind_is_free )
 
-                                                <li>
-                                                    <button>
-                                                        <a class="addTocomparelist  add-to-fav" href="#"
-                                                            data-product-id="{{ $product->id }}">
-                                                            <i class="fa fa-exchange" aria-hidden="true"></i>
-                                                        </a>
-                                                    </button>
-                                                </li>
-                                            </ul>
+                        <div class="col-6">
+                            <img src="{{$buy_your_mind_is_free->image_url }}" title="{{$buy_your_mind_is_free->name }}"
+                                alt="{{$buy_your_mind_is_free->name }}" height="155" class="w-100 m-3" />
+                        </div>
+                        @endforeach
 
-                                            <div class="w-100 align-self-end text-center">
-                                                <form action="{{ route('cart.store') }}" method="POST">
-                                                    @csrf
+                        @else
 
-                                                    <button type="submit" name="product_id" value="{{ $product->id }}"
-                                                        class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                                </form>
-                                            </div>
+                        <div class="col-6">
+                            <img src=" {{ asset('website_assets/Design/Finished/404-ar.png') }}"
+                                class="w-100 h-100 m-3" />
+                        </div>
+                        <div class="col-6">
+                            <img src=" {{ asset('website_assets/Design/Finished/404-ar.png') }}"
+                                class="w-100 h-100 m-3" />
+                        </div>
+                        <div class="col-6 mt-4">
+                            <img src=" {{ asset('website_assets/Design/Finished/404-ar.png') }}"
+                                class="w-100 h-100 m-3" />
+                        </div>
+                        <div class="col-6 mt-4">
+                            <img src=" {{ asset('website_assets/Design/Finished/404-ar.png') }}"
+                                class="w-100 h-100 m-3" />
+                        </div>
+                        @endif
 
+                    </div>
+                </div>
+            </div>
 
-                                        </div>
-                                        <img class="card-img-top" width="40" height="40"
-                                            src="{{ $product->images[0]->photo }}" alt="{{ $product->name }}">
-                                        <div class="card-body text-center">
-                                            <h5 class="card-title"><a
-                                                    href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a>
-                                            </h5>
-                                            <h5>{{ $product->price }} جنيه</h5>
+        </div>
 
-                                        </div>
-                                    </div>
-                                    @include('site.includes.featured_products')
-                                @endforeach
+    </div>
+</div>
+<!-- End Ads -->
 
+<!-- Today Deal -->
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> عروضنا المفضلة</h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                تسوق الأن
+            </button>
+        </div>
+
+        <div class="owl-carousel owl-theme todayDeal mt-4">
+            @if ($flash_products)
+            @foreach ($flash_products as $product )
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+
+                            <div class="carousel-item active">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
+                            </div>
+
+                            <div class="carousel-item">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Collections -->
-    <!-- Today Deal -->
-    <div class="today-deal py-4 bg-light pb-5">
-        <h2 class="text-center">صفقة اليوم</h2>
-        <div class="container">
-            <div class="owl-carousel owl-theme todayDeal mt-4">
-                @foreach ($dealOfDay_products as $product)
-                    <div class="card mt-5 position-relative today-deal-item">
-                        <div
-                            class="position-absolute item-assets d-flex justify-content-between w-100 align-items-start p-3">
-                            <ul class="list-unstyled">
-                                <li>
-                                    <button>
-                                        <a class="addToWishlist  add-to-fav" href="#"
-                                            data-product-id="{{ $product->id }}">
-                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                        </a>
-                                    </button>
-                                </li>
 
-                                {{-- <li>
-                                    <button data-toggle="modal" data-target="#show4{{ $product->id }}"><i
-                                            class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                </li> --}}
+                <div class="card-body mt-4">
 
-                                <li>
-                                    <button>
-                                        <a class="addTocomparelist  add-to-fav" href="#"
-                                            data-product-id="{{ $product->id }}">
-                                            <i class="fa fa-exchange" aria-hidden="true"></i>
-                                        </a>
-                                    </button>
-                                </li>
-                            </ul>
+                    <p class="card-title">{{  $product->name }}
 
-                            <div class="w-100 align-self-end text-center">
-                                <form action="{{ route('cart.store') }}" method="POST">
-                                    @csrf
-
-                                    <button type="submit" name="product_id" value="{{ $product->id }}"
-                                        class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                </form>
-                            </div>
-
-
-
-                        </div>
-                        <img class="card-img-top" width="40" height="40" src="{{ $product->images[0]->photo }}"
-                            alt="{{ $product->name }}">
-                        <div class="card-body text-center">
-                            <h5 class="card-title"><a
-                                    href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a></h5>
-                            <h5>{{ $product->price }} جنيه</h5>
-
-                        </div>
-                    </div>
-                    {{-- @include('site.includes.dealOfDay_products') --}}
-                @endforeach
-            </div>
-        </div>
-    </div>
-    <!-- Today Deal -->
-    <div class="men-more-sections p-5">
-
-        <div class="p-2 px-3 main-back-color d-flex align-items-center justify-content-between">
-            <div class=" card-deck-title">
-                <p class=" text-white text-right px-3 py-2 h5 mb-0">
-                    أزياء الرجال
-                </p>
-            </div>
-        </div>
-
-        <div class="px-3">
-
-            <div class="card-deck d-flex flex-wrap bg-light px-3 py-4">
-
-                @foreach ($men_products as $product)
-                    <div class="card position-relative">
-                        <div
-                            class="position-absolute item-assets d-flex justify-content-between w-100 align-items-start p-3">
-                            <ul class="list-unstyled">
-                                <li>
-                                    <button>
-                                        <a class="addToWishlist  add-to-fav" href="#"
-                                            data-product-id="{{ $product->id }}">
-                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                        </a>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button data-toggle="modal" data-target="#show5{{ $product->id }}"><i
-                                            class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <a class="addTocomparelist  add-to-fav" href="#"
-                                            data-product-id="{{ $product->id }}">
-                                            <i class="fa fa-exchange" aria-hidden="true"></i>
-                                        </a>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <div class="w-100 align-self-end text-center">
-                                <form action="{{ route('cart.store') }}" method="POST">
-                                    @csrf
-
-                                    <button type="submit" name="product_id" value="{{ $product->id }}"
-                                        class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                </form>
-                            </div>
-                        </div>
-                        <img class="card-img-top" width="40" height="40" src="{{ $product->images[0]->photo }}"
-                            alt="{{ $product->name }}">
-                        <div class="card-body text-center">
-                            <h5 class="card-title"><a
-                                    href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a></h5>
-                            <h5>{{ $product->price }} جنيه</h5>
-
-                        </div>
-                    </div>
-                    @include('site.includes.men_products')
-                @endforeach
-
-            </div>
-        </div>
-
-    </div>
-
-    <div class="women-more-sections p-5">
-
-        <div class="p-2 px-3 main-back-color d-flex align-items-center justify-content-between">
-            <div class=" card-deck-title">
-                <p class=" text-white text-right px-3 py-2 h5 mb-0">
-                    أزياء النساء
-                </p>
-            </div>
-
-        </div>
-
-        <div class="px-3">
-
-            <div class="card-deck d-flex flex-wrap bg-light px-3 py-4">
-
-                @foreach ($women_products as $product)
-                    <div class="card position-relative">
-                        <div
-                            class="position-absolute item-assets d-flex justify-content-between w-100 align-items-start p-3">
-                            <ul class="list-unstyled">
-                                <li>
-                                    <button>
-                                        <a class="addToWishlist  add-to-fav" href="#"
-                                            data-product-id="{{ $product->id }}">
-                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                        </a>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button data-toggle="modal" data-target="#show6{{ $product->id }}"><i
-                                            class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <a class="addTocomparelist  add-to-fav" href="#"
-                                            data-product-id="{{ $product->id }}">
-                                            <i class="fa fa-exchange" aria-hidden="true"></i>
-                                        </a>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <div class="w-100 align-self-end text-center">
-                                <form action="{{ route('cart.store') }}" method="POST">
-                                    @csrf
-
-                                    <button type="submit" name="product_id" value="{{ $product->id }}"
-                                        class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                </form>
-                            </div>
-
-
-                        </div>
-                        <img class="card-img-top" width="40" height="40" src="{{ $product->images[0]->photo }}"
-                            alt="{{ $product->name }}">
-                        <div class="card-body text-center">
-                            <h5 class="card-title"><a
-                                    href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a></h5>
-                            <h5>{{ $product->price }} جنيه</h5>
-
-                        </div>
-                    </div>
-                    @include('site.includes.women_products')
-                @endforeach
-
-
-            </div>
-        </div>
-
-    </div>
-
-    <div class="women-more-sections p-5">
-
-        <div class="p-2 px-3 main-back-color">
-            <div class=" card-deck-title">
-                <p class="text-center text-white text-right px-3 py-2 h3 mb-0">
-                    عروض على كل حاجة
-                </p>
-            </div>
-        </div>
-
-        <div class="bg-light py-4 px-4">
-
-            <div class="card-deck d-flex flex-wrap">
-                @foreach ($flash_products as $product)
-                    <div class="card position-relative my-2">
-                        <div
-                            class="position-absolute item-assets d-flex justify-content-between w-100 align-items-start p-3">
-                            <ul class="list-unstyled">
-                                <li>
-                                    <button>
-                                        <a class="addToWishlist  add-to-fav" href="#"
-                                            data-product-id="{{ $product->id }}">
-                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                        </a>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button data-toggle="modal" data-target="#show7{{ $product->id }}"><i
-                                            class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <a class="addTocomparelist  add-to-fav" href="#"
-                                            data-product-id="{{ $product->id }}">
-                                            <i class="fa fa-exchange" aria-hidden="true"></i>
-                                        </a>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <div class="w-100 align-self-end text-center">
-                                <form action="{{ route('cart.store') }}" method="POST">
-                                    @csrf
-
-                                    <button type="submit" name="product_id" value="{{ $product->id }}"
-                                        class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                </form>
-                            </div>
-
-
-                        </div>
-                        <img class="card-img-top" width="40" height="40" src="{{ $product->images[0]->photo }}"
-                            alt="{{ $product->name }}">
-                        <div class="card-body text-center">
-                            <h5 class="card-title"><a
-                                    href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a></h5>
-                            <h5>{{ $product->price }} جنيه</h5>
-
-                        </div>
-                    </div>
-                    @include('site.includes.flash_products')
-                @endforeach
-
-
-
-            </div>
-        </div>
-
-    </div>
-
-    <div class="wafr-more-sections p-5">
-
-        <div class="p-2 px-3 main-back-color d-flex align-items-center justify-content-between">
-            <div class=" card-deck-title">
-                <p class=" text-white text-right px-3 py-2 h5 mb-0">
-                    وفر أكثر مع كيان
-                </p>
-            </div>
-
-
-        </div>
-
-        <div class="bg-light">
-            <div class="owl-carousel owl-theme todayDeal p-3">
-                @foreach ($ad_images as $ad_img)
-                    <div class="card mt-2 position-relative today-deal-item border-0">
-
-                        <img src="{{ $ad_img->image_url }}" title="{{ $ad_img->name }}" alt="{{ $ad_img->name }}"
-                            class="w-100" width="500" height="200" />
-                        {{-- <div class="card-body text-center">
-                        <h5 class="card-title"> ملابس</h5>
-                    </div> --}}
-                    </div>
-                @endforeach
-            </div>
-        </div>
-
-    </div>
-
-    <div class="child-more-sections p-5">
-
-        <div class="p-2 px-3 main-back-color d-flex align-items-center justify-content-between">
-            <div class=" card-deck-title">
-                <p class=" text-white text-right px-3 py-2 h5 mb-0">
-                    الأطفال
-                </p>
-            </div>
-
-        </div>
-
-        <div class="py-4 px-4 bg-light">
-
-            <div class="card-deck d-flex flex-wrap">
-
-                @foreach ($childrens_products as $product)
-                    <div class="card">
-                        <div class="position-relative">
-                            <div class="position-absolute w-100 p-3 item-assets">
-
-                                <ul class="list-unstyled position-absolute">
-                                    <li>
-                                        <button>
-                                            <a class="addToWishlist  add-to-fav" href="#"
-                                                data-product-id="{{ $product->id }}">
-                                                <i class="fa fa-heart" aria-hidden="true"></i>
-                                            </a>
-                                        </button>
-                                    </li>
-
-                                    <li>
-                                        <button data-toggle="modal" data-target="#show8{{ $product->id }}"><i
-                                                class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                    </li>
-
-                                    <li>
-                                        <button>
-                                            <a class="addTocomparelist  add-to-fav" href="#"
-                                                data-product-id="{{ $product->id }}">
-                                                <i class="fa fa-exchange" aria-hidden="true"></i>
-                                            </a>
-                                        </button>
-                                    </li>
-                                </ul>
-
-                                <form action="{{ route('cart.store') }}" method="POST">
-                                    @csrf
-
-                                    <button type="submit" name="product_id" value="{{ $product->id }}"
-                                        class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                </form>
-                            </div>
-                            <img class="card-img-top" width="40" height="40"
-                                src="{{ $product->images[0]->photo }}" alt="{{ $product->name }}">
-                            <div class="card-body text-center">
-                                <h5 class="card-title"><a
-                                        href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a></h5>
-                                <h5>{{ $product->price }} جنيه</h5>
-
-                            </div>
-                        </div>
-                    </div>
-                    @include('site.includes.childrens_products')
-                @endforeach
-
-
-            </div>
-        </div>
-
-    </div>
-
-    <div class="flash-more-sections p-3">
-
-        <div class="main-back-color pt-2 pb-5">
-            <div class="p-2 px-3 d-flex align-items-center justify-content-between">
-                <div class="card-deck-title d-flex">
-                    <p class="text-white text-right px-3 py-2 h5 mb-0">
-                        عروض فلاش
                     </p>
-                    <p>
-                        {{-- <div id="countdown" class="d-flex flex-row-reverse">
-                        <div id="days" class="timer mx-1 px-3 py-2 text-white rounded font-weight-bold"> </div>
-                        <div id="hours" class="timer mx-1 px-3 py-2 text-white rounded font-weight-bold"> </div>
-                        <div id="minutes" class="timer mx-1 px-3 py-2 text-white rounded font-weight-bold"> </div>
-                        <div id="seconds" class="timer mx-1 px-3 py-2 text-white rounded font-weight-bold"> </div>
-                    </div> --}}
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">{{ number_format((($product->old_price - $product->new_price) / $product->old_price) * 100, 2, '.', '') }}</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+                        {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }}
+
+
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+            @endforeach
+
+
+            @else
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
                     </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+            @endif
+
+
+        </div>
+    </div>
+</div>
+<!-- Today Deal -->
+
+<!-- Start Electronics -->
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> الكترونيات</h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                عرض الكل
+            </button>
+        </div>
+        <div class="overflow-auto">
+            <div class="row flex-nowrap">
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<!-- End Electronics -->
 
-            <div class="row  px-5">
-                <div class="owl-carousel owl-theme todayDeal mt-4">
+<!-- Start Electronics Offer -->
 
-                    @foreach ($childrens_products as $product)
-                        <div class="card position-relative today-deal-item border-0">
-                            <div class="position-relative">
-                                <div class="position-absolute w-100 p-3 item-assets">
+<div class="today-deal py-4 pb-5">
 
-                                    <ul class="list-unstyled position-absolute">
-                                        <li>
-                                            <button>
-                                                <a class="addToWishlist  add-to-fav" href="#"
-                                                    data-product-id="{{ $product->id }}">
-                                                    <i class="fa fa-heart" aria-hidden="true"></i>
-                                                </a>
-                                            </button>
-                                        </li>
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> عروضنا الألكترونيات</h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                تسوق الأن
+            </button>
+        </div>
+        <div class="owl-carousel owl-theme todayDeal mt-4">
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
 
-                                        {{-- <li>
-                                            <button data-toggle="modal" data-target="#show{{ $product->id }}"><i
-                                                    class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                        </li> --}}
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
 
-                                        <li>
-                                            <button>
-                                                <a class="addTocomparelist  add-to-fav" href="#"
-                                                    data-product-id="{{ $product->id }}">
-                                                    <i class="fa fa-exchange" aria-hidden="true"></i>
-                                                </a>
-                                            </button>
-                                        </li>
-                                    </ul>
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
 
-                                    <form action="{{ route('cart.store') }}" method="POST">
-                                        @csrf
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
 
-                                        <button type="submit" name="product_id" value="{{ $product->id }}"
-                                            class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                    </form>
-                                </div>
-                                <img class="card-img-top" width="40" height="40"
-                                    src="{{ $product->images[0]->photo }}" alt="{{ $product->name }}">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title"><a
-                                            href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a>
-                                    </h5>
-                                    <h5>{{ $product->price }} جنيه</h5>
+                    </div>
+                    <div id="product-card-indicators-7" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-7" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-7" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-7" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
 
-                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
                             </div>
                         </div>
-                    @endforeach
+                    </div>
+                </div>
+
+
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-8" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-8" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-8" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-8" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-9" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-9" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-9" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-9" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-10" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-10" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-10" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-10" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-11" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-11" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-11" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-11" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-12" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-12" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-12" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-12" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Electronics Offer -->
+
+<div class="banners py-5">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100 h-100" />
+            </div>
+            <div class="col-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100 h-100" />
+            </div>
+            <div class="col-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100 h-100" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Start Men Fashion -->
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> أزياء الرجال</h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                عرض الكل
+            </button>
+        </div>
+
+        <div class="overflow-auto">
+            <div class="row flex-nowrap">
+                <div class="col-4 col-md-2">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-4 col-md-2">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-4 col-md-2">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-4 col-md-2">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-4 col-md-2">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-4 col-md-2">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
                 </div>
             </div>
-
         </div>
     </div>
+</div>
+<!-- End Men Fashion  -->
 
+<!-- Start Men Fashion Offer -->
 
-    <div class="banners py-5">
-        <div class="container">
-            <div class="row">
-                @foreach ($ad_images as $ad_img)
-                    <div class="col-4">
-                        <img src="{{ $ad_img->image_url }}" title="{{ $ad_img->name }}" alt="{{ $ad_img->name }}"
-                            class="w-100" width="500" height="200" />
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> عروض أزياء الرجال </h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                تسوق الأن
+            </button>
+        </div>
+        <div class="owl-carousel owl-theme todayDeal mt-4">
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
                     </div>
-                @endforeach
+                    <div id="product-card-indicators-13" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-13" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-13" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-13" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
 
-            </div>
-        </div>
-    </div>
-
-    <div class="electronics-more-sections p-5">
-
-        <div class="p-2 px-3 main-back-color d-flex align-items-center justify-content-between">
-            <div class=" card-deck-title">
-                <p class=" text-white text-right px-3 py-2 h5 mb-0">
-                    إلكترونيات
-                </p>
-            </div>
-
-        </div>
-
-        <div class="py-4 px-4 bg-light">
-
-            <div class="card-deck d-flex flex-wrap">
-                @foreach ($electronics_products as $product)
-                    <div class="card">
-                        <div class="position-relative">
-                            <div class="position-absolute w-100 p-3 item-assets">
-
-                                <ul class="list-unstyled position-absolute">
-                                    <li>
-                                        <button>
-                                            <a class="addToWishlist  add-to-fav" href="#"
-                                                data-product-id="{{ $product->id }}">
-                                                <i class="fa fa-heart" aria-hidden="true"></i>
-                                            </a>
-                                        </button>
-                                    </li>
-
-                                    <li>
-                                        <button data-toggle="modal" data-target="#show9{{ $product->id }}"><i
-                                                class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                    </li>
-
-                                    <li>
-                                        <button>
-                                            <a class="addTocomparelist  add-to-fav" href="#"
-                                                data-product-id="{{ $product->id }}">
-                                                <i class="fa fa-exchange" aria-hidden="true"></i>
-                                            </a>
-                                        </button>
-                                    </li>
-                                </ul>
-
-                                <form action="{{ route('cart.store') }}" method="POST">
-                                    @csrf
-
-                                    <button type="submit" name="product_id" value="{{ $product->id }}"
-                                        class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                </form>
                             </div>
-                            <img class="card-img-top" width="40" height="40"
-                                src="{{ $product->images[0]->photo }}" alt="{{ $product->name }}">
-                            <div class="card-body text-center">
-                                <h5 class="card-title"><a
-                                        href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a>
-                                </h5>
-                                <h5>{{ $product->price }} جنيه</h5>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
 
                             </div>
                         </div>
                     </div>
-                    @include('site.includes.electronics_products')
-                @endforeach
-            </div>
-        </div>
+                </div>
 
-    </div>
 
-    <div class="electronics-more-sections p-5">
+                <div class="card-body mt-4">
 
-        <div class="p-2 px-3 main-back-color d-flex align-items-center justify-content-between">
-            <div class=" card-deck-title">
-                <p class=" text-white text-right px-3 py-2 h5 mb-0">
-                    الجمال
-                </p>
-            </div>
-        </div>
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
 
-        <div class="py-4 px-4 bg-light">
-
-            <div class="card-deck d-flex flex-wrap">
-                @foreach ($beauty_products as $product)
-                    <div class="card">
-                        <div class="position-relative">
-                            <div class="position-absolute w-100 p-3 item-assets">
-
-                                <ul class="list-unstyled position-absolute">
-                                    <li>
-                                        <button>
-                                            <a class="addToWishlist  add-to-fav" href="#"
-                                                data-product-id="{{ $product->id }}">
-                                                <i class="fa fa-heart" aria-hidden="true"></i>
-                                            </a>
-                                        </button>
-                                    </li>
-
-                                    <li>
-                                        <button data-toggle="modal" data-target="#show10{{ $product->id }}"><i
-                                                class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                    </li>
-
-                                    <li>
-                                        <button>
-                                            <a class="addTocomparelist  add-to-fav" href="#"
-                                                data-product-id="{{ $product->id }}">
-                                                <i class="fa fa-exchange" aria-hidden="true"></i>
-                                            </a>
-                                        </button>
-                                    </li>
-                                </ul>
-
-                                <form action="{{ route('cart.store') }}" method="POST">
-                                    @csrf
-
-                                    <button type="submit" name="product_id" value="{{ $product->id }}"
-                                        class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                </form>
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
                             </div>
-                            <img class="card-img-top" width="40" height="40"
-                                src="{{ $product->images[0]->photo }}" alt="{{ $product->name }}">
-                            <div class="card-body text-center">
-                                <h5 class="card-title"><a
-                                        href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a>
-                                </h5>
-                                <h5>{{ $product->price }} جنيه</h5>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-14" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-14" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-14" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-14" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
 
                             </div>
                         </div>
                     </div>
-                    @include('site.includes.beauty_products')
-                @endforeach
-            </div>
-        </div>
-
-    </div>
-
-    <div class="electronics-more-sections p-5">
-
-        <div class="p-2 px-3 main-back-color d-flex align-items-center justify-content-between">
-            <div class=" card-deck-title">
-                <p class=" text-white text-right px-3 py-2 h5 mb-0">
-                    البيت والمطبخ
-                </p>
-            </div>
+                </div>
 
 
-        </div>
 
-        <div class="py-4 px-4 bg-light">
+                <div class="card-body mt-4">
 
-            <div class="card-deck d-flex flex-wrap">
-                @foreach ($home_products as $product)
-                    <div class="card">
-                        <div class="position-relative">
-                            <div class="position-absolute w-100 p-3 item-assets">
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
 
-                                <ul class="list-unstyled position-absolute">
-                                    <li>
-                                        <button>
-                                            <a class="addToWishlist  add-to-fav" href="#"
-                                                data-product-id="{{ $product->id }}">
-                                                <i class="fa fa-heart" aria-hidden="true"></i>
-                                            </a>
-                                        </button>
-                                    </li>
-
-                                    <li>
-                                        <button data-toggle="modal" data-target="#show11{{ $product->id }}"><i
-                                                class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                                    </li>
-
-                                    <li>
-                                        <button>
-                                            <a class="addTocomparelist  add-to-fav" href="#"
-                                                data-product-id="{{ $product->id }}">
-                                                <i class="fa fa-exchange" aria-hidden="true"></i>
-                                            </a>
-                                        </button>
-                                    </li>
-                                </ul>
-
-                                <form action="{{ route('cart.store') }}" method="POST">
-                                    @csrf
-
-                                    <button type="submit" name="product_id" value="{{ $product->id }}"
-                                        class="add-to-cart btn bg-light py-1 px-2 ">أضف إلى العربة</button>
-                                </form>
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
                             </div>
-                            <img class="card-img-top" width="40" height="40"
-                                src="{{ $product->images[0]->photo }}" alt="{{ $product->name }}">
-                            <div class="card-body text-center">
-                                <h5 class="card-title"><a
-                                        href="{{ route('Site.product', $product->name) }}">{{ $product->name }}</a>
-                                </h5>
-                                <h5>{{ $product->price }} جنيه</h5>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-9" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-15" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-15" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-15" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
 
                             </div>
                         </div>
                     </div>
-                    @include('site.includes.home_products')
-                @endforeach
+                </div>
+
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-16" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-16" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-16" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-16" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-17" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-17" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-17" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-17" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-18" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-18" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-18" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-18" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Men Fashion Offer -->
+
+<!-- Start women Fashion -->
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> أزياء نسائية</h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                عرض الكل
+            </button>
+        </div>
+
+
+        <div class="overflow-auto">
+            <div class="row flex-nowrap">
+                <div class="col-4 col-md-2">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Women Fashion  -->
+
+<!-- Start Women Fashion Offer -->
+
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> عروضنا الأزياء النسائية</h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                تسوق الأن
+            </button>
+        </div>
+        <div class="owl-carousel owl-theme todayDeal mt-4">
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-19" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-19" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-19" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-19" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-19" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-19" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-19" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-19" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-20" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-20" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-20" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-20" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-21" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-21" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-21" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-21" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-22" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-22" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-22" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-22" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-23" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-23" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-23" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-23" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Women Fashion Offer -->
+
+<!-- Start Beauty -->
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> الجمال </h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                عرض الكل
+            </button>
+        </div>
+        <div class="overflow-auto">
+            <div class="row flex-nowrap">
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- End Beauty  -->
+
+<!-- Start Accessories -->
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> اكسسوارات </h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                عرض الكل
+            </button>
+        </div>
+        <div class="overflow-auto">
+            <div class="row flex-nowrap">
+                <div class="col-md-2 col-4">
+                    <img src=" {{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src=" {{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src=" {{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src=" {{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src=" {{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src=" {{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
             </div>
         </div>
 
 
 
-        {{-- <a href="./chat/chat.html"
-            class="position-fixed chat rounded-circle d-flex justify-content-center align-items-center">
-            <i class="fas fa-comments fa-lg"></i>
-        </a> --}}
     </div>
+</div>
+<!-- End Accessories  -->
 
+<!-- Start Accessories Offer -->
 
-    @include('site.includes.not-logged')
-    @include('site.includes.alert')
-    <!-- we can use only one with dynamic text -->
-    @include('site.includes.alert2')
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> عروض اكسسوارات </h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                تسوق الأن
+            </button>
+        </div>
+        <div class="owl-carousel owl-theme todayDeal mt-4">
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-24" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-24" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-24" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-24" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-25" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-25" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-25" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-25" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-26" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-26" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-26" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-26" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-27" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-27" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-27" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-27" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-28" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-28" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-28" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-28" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-29" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-29" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-29" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-29" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Accessories  Offer -->
+
+<!-- Start Top Sells -->
+
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> الأكثر مبيعا </h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                تسوق الأن
+            </button>
+        </div>
+        <div class="owl-carousel owl-theme todayDeal mt-4">
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-30" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-30" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-30" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-30" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-31" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-31" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-31" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-31" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-32" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-32" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-32" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-32" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-33" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-33" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-33" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-33" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-34" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-34" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-34" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-34" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-35" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-35" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-35" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-35" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Top Sells   -->
+
+<!-- Start Home And Kitchen -->
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> البيت والمطبخ </h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                عرض الكل
+            </button>
+        </div>
+        <div class="overflow-auto">
+            <div class="row flex-nowrap">
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Home And Kitchen  -->
+
+<!-- Start Home And Kitchen Offers -->
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> عروض البيت والمطبخ</h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                تسوق الأن
+            </button>
+        </div>
+        <div class="owl-carousel owl-theme todayDeal mt-4">
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-36" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-36" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-36" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-36" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-37" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-37" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-37" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-37" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-38" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-38" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-38" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-38" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-39" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-39" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-39" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-39" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-40" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-40" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-40" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-40" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators-41" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators-41" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators-41" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators-41" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top" src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
+                                    alt="Card image cap" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+                        المساحة
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">70 جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">100 جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">47</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+
+                        جديد
+                    </div>
+                </div>
+                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                    أضف إلى العربة
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Home And Kitchen Offers -->
+
+<!-- Start More Cats -->
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> فئات أكثر </h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                عرض الكل
+            </button>
+        </div>
+        <div class="overflow-auto">
+            <div class="row flex-nowrap">
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                <div class="col-md-2 col-4">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End More Cats  -->
+
+<div class="bg-light py-5">
+    <div class="container-fluid">
+        <h1 class="text-center">تسوق حسب الماركة</h1>
+        <div class="row mt-5">
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100" />
+            </div>
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100" />
+            </div>
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100" />
+            </div>
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100" />
+            </div>
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100" />
+            </div>
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100" />
+            </div>
+
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100" />
+            </div>
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100" />
+            </div>
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100" />
+            </div>
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100" />
+            </div>
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100" />
+            </div>
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100" />
+            </div>
+
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100" />
+            </div>
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100" />
+            </div>
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100" />
+            </div>
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100" />
+            </div>
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100" />
+            </div>
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100" />
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 
 
 @push('scripts')
-    <script>
-        $.ajaxSetup({
+<script>
+    $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
@@ -1040,5 +4051,5 @@
                 }
             });
         });
-    </script>
+</script>
 @endpush

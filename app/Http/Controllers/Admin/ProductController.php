@@ -23,7 +23,7 @@ class ProductController extends Controller
             return view('admin.errors.notAllowed');
         }
 
-        $products = Product::with('specifications')->paginate(5);
+        $products = Product::with('specifications')->get();
         return view('admin.products.general.index')->with([
             'products' => $products,
         ]);
@@ -60,6 +60,11 @@ class ProductController extends Controller
             'manage_stock' => 'required|in:0,1',
             'in_stock' => 'required|in:0,1',
             'cover_image' => 'mimes:png,jpg,bmp,jpeg,webp',
+            'weight' => 'nullable',
+            'dimension' => 'nullable',
+            'material' => 'nullable',
+            'photo' => 'required|array|min:1',
+            'photo.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
 
         ]);
 
@@ -176,7 +181,6 @@ class ProductController extends Controller
 
         $product->update($request->except('_token', 'categories', 'photo'));
         $product->categories()->sync($request->categories);
-
 
         // Update cover image if uploaded
         if ($request->hasFile('cover_image')) {

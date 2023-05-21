@@ -39,7 +39,8 @@
                                 <th>#</th>
                                 <th>الاسم </th>
                                 <th>الحالة</th>
-                                <th>السعر</th>
+                                <th>السعر القديم</th>
+                                <th>السعر الجديد</th>
 
                                 <th> الاجراءات </th>
                                 <th>الخصائص</th>
@@ -52,7 +53,8 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->getActive() }}</td>
-                                <td>{{ $product->price }}</td>
+                                <td>{{ $product->old_price }}</td>
+                                <td>{{ $product->new_price }}</td>
                                 <td>
                                     @can('products.edit')
 

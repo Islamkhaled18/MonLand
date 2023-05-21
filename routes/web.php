@@ -77,7 +77,7 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
     Route::get('product/vendor/{id}', [ProductController::class, 'vendorProducts'])->name('Site.product.vendorProducts');
 
     Route::get('product/vendor/{id}/price-products', [ProductController::class, 'search_products_by_price'])->name('Site.vendor.price.products');
-    
+
     Route::get('product/vendor/{id}/sort-products', [ProductController::class, 'search_products_by_created_at'])->name('Site.vendor.sort.products');
 
     Route::get('product/vendor/{id}/all-products', [ProductController::class, 'get_all_products'])->name('Site.vendor.all_products.search');
@@ -145,6 +145,10 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
     });
 }); // routes for authenticated users
 
+
+
+
+
 Route::group(['namespace' => 'Site', 'middleware' => 'guest:web', 'prefix' => 'Site'], function () {
 
 
@@ -156,17 +160,17 @@ Route::group(['namespace' => 'Site', 'middleware' => 'guest:web', 'prefix' => 'S
         $request->validate([
             'email' => 'required|email|exists:users,email',
         ]);
-    
+
         $user = App\Models\User::where('email', $request->email)->first();
-    
+
         if ($user) {
             $verificationCode = rand(10000, 99999);
             $user->verification_code = $verificationCode;
             $user->save();
-    
+
             Mail::to($user->email)->send(new PasswordResetEmail($verificationCode));
         }
-    
+
         return redirect()->route('password.verify', ['email' => $request->email]);
     })->name('password.email');
 
@@ -174,7 +178,7 @@ Route::group(['namespace' => 'Site', 'middleware' => 'guest:web', 'prefix' => 'S
     // Route::get('/reset-password', function (Request $request) {
     //     return view('auth.passwords.reset-password', ['email' => $request->email]);
     // })->name('password.verify');
-    
+
     Route::get('/reset-password', function (Request $request) {
     $email = $request->query('email');
     $user = App\Models\User::where('email', $email)->first();
@@ -196,8 +200,8 @@ Route::group(['namespace' => 'Site', 'middleware' => 'guest:web', 'prefix' => 'S
     $user = App\Models\User::where('email', $request->input('email'))
                 ->where('verification_code', $verificationCode)
                 ->first();
-                
-            
+
+
 
     if ($user) {
         $user->password = bcrypt($request->password);
@@ -209,10 +213,10 @@ Route::group(['namespace' => 'Site', 'middleware' => 'guest:web', 'prefix' => 'S
 
     return redirect()->back()->withErrors(['verification_code' => 'Invalid verification code.']);
 })->name('password.update');
-    
+
 
     Route::get('/password-reset-success', function (Request $request) {
         return view('auth.passwords.password-reset-success', ['newPassword' => $request->newPassword]);
     })->name('password.success');
-    
+
 }); // routes for un-authenticated users
