@@ -46,6 +46,11 @@ class MainCategoryTableSeeder extends Seeder
             'id' => 6,
             'name' => 'البيت والمطبخ',
             ]
+            ,
+            [
+            'id' => 7,
+            'name' => 'اكسسوارات',
+            ]
         ];
 
         foreach($mainCategories as $mainCategory){

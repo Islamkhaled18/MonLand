@@ -27,7 +27,6 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>القسم الرئيسي</th>
                                 <th>القسم</th>
                                 <th>القسم التابع</th>
                                 <th>صورة القسم</th>
@@ -40,7 +39,6 @@
                             <tr>
 
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{$category->MainCategory->name ?? '--'}}</td>
                                 <td>{{ $category->name }}</td>
                                 <td>{{ $category->_parent->name ?? '--' }}</td>
                                 <td><img src="{{ $category->image_url }}" title="{{ $category->name }}" alt="{{ $category->name }}" width="60" height="60" alt="">

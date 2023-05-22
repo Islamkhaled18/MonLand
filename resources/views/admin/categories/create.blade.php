@@ -22,31 +22,7 @@
                         <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
-                            <div class="form-body">
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <br>
-                                        <label for="projectinput1">
-                                            القسم الرئيسي
-                                        </label>
-                                        <select name="mainCategory_id" class="select2 form-group">
-                                            <optgroup label="القسم الرئيسي">
-                                                @if ($mainCategories && $mainCategories->count() > 0)
-                                                @foreach ($mainCategories as $mainCategory)
-                                                <option value="{{ $mainCategory->id }}">
-                                                    {{ $mainCategory->name }}</option>
-                                                @endforeach
-                                                @endif
-
-                                            </optgroup>
-                                        </select>
-                                        @error('mainCategory_id')
-                                        <span class="text-danger"> {{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-
+                            
                             <div class="form-group">
                                 <label for="exampleInputEmail1"> القسم</label>
                                 <input class="form-control" id="exampleInputEmail1" name="name" value="{{ old('name') }}" type="text" placeholder="ااسم القسم">
