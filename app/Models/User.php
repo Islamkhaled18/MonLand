@@ -67,14 +67,14 @@ class User extends Authenticatable
         return $this->hasMany(Address::class);
     }
 
-    public function wishlist()
+    public function favorites()
     {
-        return $this->belongsToMany(Product::class, 'wishlists')->withTimestamps();
+        return $this->belongsToMany(Product::class, 'favorites')->withTimestamps();
     }
 
-    public function wishlistHas($productId)
+    public function favoritesHas($productId)
     {
-        return self::wishlist()->where('product_id', $productId)->exists();
+        return self::favorites()->where('product_id', $productId)->exists();
     }
 
     public function comparelist()
@@ -98,7 +98,7 @@ class User extends Authenticatable
     }
 
     public function getProviderTokenAttribute($value){
-       
+
         return Crypt::decrypt($value);
 
     }

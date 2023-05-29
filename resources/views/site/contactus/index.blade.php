@@ -17,7 +17,7 @@
         <a href="/" class="text-dark pl-2">
             <i class="fa-solid fa-house-chimney"></i>
         </a>
-        <a href="#" class="text-dark">
+        <a href="{{ route('Site.contactUs') }}" class="text-dark">
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
             اتصل بنا
         </a>
@@ -57,28 +57,28 @@
     <div class="env-border mb-5">
 
 
-        <form action="{{route('ContactUs.store')}}" method="post" class="p-5">
+        <form action="{{route('Site.ContactUs.store')}}" method="POST" class="p-5">
             @csrf
 
             <div class="row">
                 <div class="col-5">
                     <div class="form-group ">
                         <label for="inputName">الاسم الاول</label>
-                        <input type="text" disabled value="{{auth()->user()->firstName}}" class="form-control ml-5 bg-light" id="inputName">
+                        <input type="text" disabled value="{{auth()->user()->firstName}}" name="user_id" class="form-control ml-5 bg-light" id="inputName">
                     </div>
                     <div class="form-group ">
                         <label for="inputName">الاسم الثانى</label>
-                        <input type="text" disabled value="{{auth()->user()->lastName}}" class="form-control ml-5 bg-light" id="inputName">
+                        <input type="text" disabled value="{{auth()->user()->lastName}}" name="user_id" class="form-control ml-5 bg-light" id="inputName">
                     </div>
                     <div class="form-group ">
                         <label for="inputName">
                             عنوان البريد الالكترونى
                         </label>
-                        <input type="email" disabled value="{{auth()->user()->email}}" class="form-control ml-5 bg-light" id="inputName">
+                        <input type="email" disabled value="{{auth()->user()->email}}" name="user_id" class="form-control ml-5 bg-light" id="inputName">
                     </div>
                     <div class="form-group ">
                         <label for="inputName">رقم الهاتف </label>
-                        <input type="text" disabled value="{{auth()->user()->phone}}" class="form-control ml-5 bg-light" id="inputName">
+                        <input type="text" disabled value="{{auth()->user()->phone}}" name="user_id" class="form-control ml-5 bg-light" id="inputName">
                     </div>
                 </div>
                 <div class="col-7">

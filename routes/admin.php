@@ -152,7 +152,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
     ################################## Contact Us ######################################
     Route::group(['prefix' => 'ContactUs'], function () {
         Route::get('/', [ContactUsController::class, 'index'])->name('ContactUs.index');
-        Route::post('store', [ContactUsController::class, 'store'])->name('ContactUs.store');
+        // Route::post('store', [ContactUsController::class, 'store'])->name('ContactUs.store');
         Route::get('delete/{id}', [ContactUsController::class, 'destroy'])->name('ContactUs.destroy');
     });
 

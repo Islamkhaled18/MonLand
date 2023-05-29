@@ -19,15 +19,7 @@ class ContactUsController extends Controller
         return view('admin.contactus.index',compact('contactUs'));
     }//end of index
 
-    public function store(Request $request){
-
-        $contactUs = new ContactUs();
-        $contactUs->user_id = Auth::user()->id;
-        $contactUs->subject = $request->subject;
-        $contactUs->save();
-
-        return redirect()->back();
-    }
+    
 
 
     public function destroy(Request $request, $id)

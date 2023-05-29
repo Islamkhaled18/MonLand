@@ -27,6 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+
 /////////////////////////////////////////////////////////////////////////////////////////////
         // $cacheKey = 'random_brand_slides';
 

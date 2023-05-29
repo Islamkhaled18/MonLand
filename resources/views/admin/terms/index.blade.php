@@ -26,7 +26,7 @@
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>/</th>
                                 <th>محتوى الشروط والاحكام</th>
                                 <th>العمليات</th>
 

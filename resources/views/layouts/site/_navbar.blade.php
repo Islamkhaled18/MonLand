@@ -42,10 +42,21 @@
                     <i class="fa fa-user" aria-hidden="true"></i>
                 </a>
                 @else
-                <a href="{{route('logout')}}" class="d-block text-decoration-none">
+                {{--  <a href="{{route('logout')}}" class="d-block text-decoration-none">
                     تسجيل الخروج
                     <i class="fa fa-user" aria-hidden="true"></i>
-                </a>
+                </a>  --}}
+
+                <a class="dropdown-item" href="page-login.html" class="d-block text-decoration-none" href="{{ route('logout') }}"
+                onclick="event.preventDefault();document.getElementById('logout-form_site').submit();">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                تسجيل الخروج
+                <form id="logout-form_site" action="{{ route('logout') }}" method="post"
+                    style="display: none;">
+                    @csrf
+                </form>
+            </a>
+
 
                 @endguest
             </li>

@@ -9,23 +9,22 @@ use App\Http\Controllers\Site\CompareController;
 use App\Http\Controllers\Site\ContactUsController;
 use App\Http\Controllers\Site\CouponController;
 use App\Http\Controllers\Site\DeliveryPolicyController;
+use App\Http\Controllers\Site\ExchangeController;
 use App\Http\Controllers\Site\ProductController;
 use App\Http\Controllers\Site\ProfileController;
-use App\Http\Controllers\Site\WishlistController;
-use App\Http\Controllers\Site\ExchangeController;
 use App\Http\Controllers\Site\TermsConditionController;
+use App\Http\Controllers\Site\WishlistController;
 use App\Mail\PasswordResetEmail;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-*/
+ */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -35,28 +34,28 @@ Route::get('/sizes', [ProductController::class, 'sizeTable'])->name('sizeTable')
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('social/{provider}' , [SocialAuthController::class , "redirect"])->name('auth.provider.redirect');
+Route::get('social/{provider}', [SocialAuthController::class, "redirect"])->name('auth.provider.redirect');
 
-Route::get('social/{provider}/callback' , [SocialAuthController::class , "callBack"]);
+Route::get('social/{provider}/callback', [SocialAuthController::class, "callBack"]);
 
 Route::group(['prefix' => 'emailUs'], function () {
-    Route::post('store',  [EmailUsController::class, 'store'])->name('emailUs.store');
+    Route::post('store', [EmailUsController::class, 'store'])->name('emailUs.store');
 });
 
 Route::group(['prefix' => 'Site/DeliveryPolicy'], function () {
-    Route::get('/',  [DeliveryPolicyController::class, 'index'])->name('site.DeliveryPolicy.index');
+    Route::get('/', [DeliveryPolicyController::class, 'index'])->name('site.DeliveryPolicy.index');
 });
 Route::group(['prefix' => 'Site/Terms-Conditions'], function () {
-    Route::get('/',  [TermsConditionController::class, 'index'])->name('site.terms.index');
+    Route::get('/', [TermsConditionController::class, 'index'])->name('site.terms.index');
 });
 
 Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Site'], function () {
 
-
-    Route::get('search',[ProductController::class,'search'])->name('site.search');
+    Route::get('search', [ProductController::class, 'search'])->name('site.search');
 
     //contact us
     Route::get('contactUs', [ContactUsController::class, 'index'])->name('Site.contactUs');
+    Route::post('store', [ContactUsController::class, 'store'])->name('Site.ContactUs.store');
 
     //categories & products
     Route::get('AllCategories', [CategoryController::class, 'allCategory'])->name('Site.allCategory');
@@ -69,9 +68,9 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
     Route::get('category/{name}/all-products', [CategoryController::class, 'get_all_products'])->name('all_products.search');
     Route::get('category/{name}/flash-products', [CategoryController::class, 'get_flash_products'])->name('all_offers.search');
     Route::get('category/{name}/brands-products', [CategoryController::class, 'get_products_ByBrands'])->name('brands.sort');
-    Route::get('category/{name}/colors-products' , [CategoryController::class , 'search_by_color'])->name('search.color');
-    Route::get('category/{name}/sizes-products' , [CategoryController::class , 'search_by_size'])->name('search.size');
-    Route::get('category/{name}/review-products' , [CategoryController::class , 'search_by_review_products'])->name('search.review.product');
+    Route::get('category/{name}/colors-products', [CategoryController::class, 'search_by_color'])->name('search.color');
+    Route::get('category/{name}/sizes-products', [CategoryController::class, 'search_by_size'])->name('search.size');
+    Route::get('category/{name}/review-products', [CategoryController::class, 'search_by_review_products'])->name('search.review.product');
 
     //vendors
     Route::get('product/vendor/{id}', [ProductController::class, 'vendorProducts'])->name('Site.product.vendorProducts');
@@ -87,7 +86,6 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
     Route::get('product/vendor/{id}/sizes-products', [ProductController::class, 'search_by_size'])->name('Site.vendor.search.size');
     Route::get('product/vendor/{id}/review-products', [ProductController::class, 'search_by_review_products'])->name('Site.vendor.search.review');
 
-
     Route::get('vendor/{id}', [ProductController::class, 'getVendor'])->name('Site.getVendor');
 
     //profile
@@ -98,20 +96,8 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
 
     Route::get('/cities/{id}', [ProfileController::class, 'getcity'])->name('city');
 
-
     Route::post('profile/Store-Address/{id}', [ProfileController::class, 'storeAddress'])->name('site.profile.storeAddress');
     Route::get('profile/delete/{id}', [ProfileController::class, 'destroyAddress'])->name('site.profile.destroyAddress');
-
-    //wishlist
-    Route::get('wishlist/products', [WishlistController::class, 'index'])->name('wishlist.products.index');
-    Route::post('wishlist',  [WishlistController::class, 'store'])->name('wishlist.store');
-    Route::delete('wishlist',  [WishlistController::class, 'destroy'])->name('wishlist.destroy');
-    Route::get('count-fav-prod',  [WishlistController::class, 'countFav'])->name('wishlist.countFav');
-
-    //compare
-    Route::get('compare/products', [CompareController::class, 'index'])->name('compare.products.index');
-    Route::post('compare',  [CompareController::class, 'store'])->name('compare.store');
-    Route::delete('compare',  [CompareController::class, 'destroy'])->name('compare.destroy');
 
     ///////////////cart Controller/////////////////////
     Route::group(['prefix' => 'cart'], function () {
@@ -119,7 +105,7 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
         Route::post('store', [CartController::class, 'store'])->name('cart.store');
         Route::get('delete/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
         Route::post('update_cart', [CartController::class, 'update_cart'])->name('cart.update'); //upate product in cart list
-        Route::get('count-cart-prod',  [CartController::class, 'countCart'])->name('cart.countCart');
+        Route::get('count-cart-prod', [CartController::class, 'countCart'])->name('cart.countCart');
 
         /////////////////////////////////////// coupon //////////////////////////////////////////
         Route::post('/coupon', [CouponController::class, 'store'])->name('site.coupon.store');
@@ -133,7 +119,6 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
         Route::get('order/{id}', [CartController::class, 'showOrder'])->name('order.show');
     });
 
-
     ///////////////Exchange Controller/////////////////////
     Route::group(['prefix' => 'Exchange'], function () {
         Route::get('/', [ExchangeController::class, 'create'])->name('exchange.create');
@@ -145,14 +130,23 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
     });
 }); // routes for authenticated users
 
+Route::group(['namespace' => 'Site', 'prefix' => 'Site'], function () {
+
+    //wishlist
+    Route::get('wishlist/products', [WishlistController::class, 'index'])->name('wishlist.products.index');
+    Route::post('wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
+    Route::delete('/wishlist', [WishlistController::class, 'destroy'])
+    ->name('wishlist.destroy');
+
+
+    //compare
+    Route::get('compare/products', [CompareController::class, 'index'])->name('compare.products.index');
+    Route::post('compare', [CompareController::class, 'store'])->name('compare.store');
+    Route::delete('compare', [CompareController::class, 'destroy'])->name('compare.destroy');
 
 
 
-
-Route::group(['namespace' => 'Site', 'middleware' => 'guest:web', 'prefix' => 'Site'], function () {
-
-
-    Route::get('reset-passord',function(){
+    Route::get('reset-passord', function () {
         return view('auth.passwords.email');
     })->name('password.email.send');
 
@@ -174,46 +168,41 @@ Route::group(['namespace' => 'Site', 'middleware' => 'guest:web', 'prefix' => 'S
         return redirect()->route('password.verify', ['email' => $request->email]);
     })->name('password.email');
 
-
     // Route::get('/reset-password', function (Request $request) {
     //     return view('auth.passwords.reset-password', ['email' => $request->email]);
     // })->name('password.verify');
 
     Route::get('/reset-password', function (Request $request) {
-    $email = $request->query('email');
-    $user = App\Models\User::where('email', $email)->first();
-    return view('auth.passwords.reset-password', ['user' => $user]);
-})->name('password.verify');
+        $email = $request->query('email');
+        $user = App\Models\User::where('email', $email)->first();
+        return view('auth.passwords.reset-password', ['user' => $user]);
+    })->name('password.verify');
 
+    Route::post('/reset-password', function (Request $request) {
 
-  Route::post('/reset-password', function (Request $request) {
+        $request->validate([
+            'verification_code.*' => 'required|numeric',
+            'password' => 'required|min:6',
+            'email' => 'required|email',
+        ]);
 
-    $request->validate([
-        'verification_code.*' => 'required|numeric',
-        'password' => 'required|min:6',
-        'email' => 'required|email',
-    ]);
+        // Combine the verification code digits into a single string
+        $verificationCode = implode('', $request->input('verification_code'));
 
-    // Combine the verification code digits into a single string
-    $verificationCode = implode('', $request->input('verification_code'));
+        $user = App\Models\User::where('email', $request->input('email'))
+            ->where('verification_code', $verificationCode)
+            ->first();
 
-    $user = App\Models\User::where('email', $request->input('email'))
-                ->where('verification_code', $verificationCode)
-                ->first();
+        if ($user) {
+            $user->password = bcrypt($request->password);
+            $user->verification_code = null;
+            $user->save();
 
+            return redirect()->route('password.success', ['newPassword' => $request->password]);
+        }
 
-
-    if ($user) {
-        $user->password = bcrypt($request->password);
-        $user->verification_code = null;
-        $user->save();
-
-        return redirect()->route('password.success', ['newPassword' => $request->password]);
-    }
-
-    return redirect()->back()->withErrors(['verification_code' => 'Invalid verification code.']);
-})->name('password.update');
-
+        return redirect()->back()->withErrors(['verification_code' => 'Invalid verification code.']);
+    })->name('password.update');
 
     Route::get('/password-reset-success', function (Request $request) {
         return view('auth.passwords.password-reset-success', ['newPassword' => $request->newPassword]);

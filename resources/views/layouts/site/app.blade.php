@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="{{ asset('website_assets/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('website_assets/css/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('website_assets/pages-css/product/product-details.css') }}" />
+    <link rel="stylesheet" href="{{ asset('website_assets/pages-css/fav.css') }}" />
+
+
     <!-- <link rel="stylesheet" href="{{ asset('website_assets/pages-css/account/orders.css') }}"> -->
 
 
@@ -304,9 +307,9 @@
     <script src="{{ asset('website_assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('website_assets/pages-js/orders.js') }}"></script>
     <script src="{{ asset('website_assets/js/script.js') }}"></script>
-
     <script src="{{ asset('website_assets/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('website_assets/js/bootstrap.bundle.min.js') }}"></script>
+    {{-- <script src="{{ asset('website_assets/js/pages.js') }}"></script> --}}
 
 
     @stack('scripts')
@@ -343,119 +346,120 @@
             }
         });
         $(document).on('click', '.addToWishlist', function(e) {
-
+            var product_id = $(this).data('product-id');
+            //console.log(product_id)
             e.preventDefault();
-            @guest()
-                $('.not-loggedin-modal').css('display', 'block');
-            @endguest
             $.ajax({
                 type: 'post',
-                url: "{{ Route('wishlist.store') }}",
+                url: "{{ route('wishlist.store') }}",
                 data: {
-                    'productId': $(this).attr('data-product-id'),
+                    product_id: product_id,
+                    _token: '{{ csrf_token() }}'
                 },
-                success: function(data) {
-                    location.reload();
-                    if (data.wished)
+                success: function(response) {
 
-                        $('.alert-modal').css('display', 'block');
-
-                    else
-                        $('.alert-modal2').css('display', 'block');
-
-
+                    if (response === 'added') {
+                        $('.favorite-alert-modal-first').css('display', 'block');
+                        setTimeout(function() {
+                            $('.favorite-alert-modal-first').css('display', 'none');
+                        }, 2500);
+                    } else if (response === 'exists') {
+                        $('.favorite-alert-modal-exist').css('display', 'block');
+                        setTimeout(function() {
+                            $('.favorite-alert-modal-exist').css('display', 'none');
+                        }, 2500);
+                    }
+                },
+                error: function(response) {
+                    alert('Error adding product to favorites!');
                 }
             });
-        });
-        $(document).ready(function() {
-            countFav();
-
-            function countFav() {
-                $.ajax({
-                    method: 'GET',
-                    url: "{{ Route('wishlist.countFav') }}",
-                    success: function(response) {
-                        $('.countFavProd').html('');
-                        $('.countFavProd').html(response.count);
-                    }
-                });
-            }
-        });
-
-        $(document).ready(function() {
-            countCart();
-
-            function countCart() {
-                $.ajax({
-                    method: 'GET',
-                    url: "{{ Route('cart.countCart') }}",
-                    success: function(response) {
-                        $('.productsCount').html('');
-                        $('.productsCount').html(response.count);
-                    }
-                });
-            }
         });
 
 
         $(document).on('click', '.removeFromWishlist', function(e) {
             e.preventDefault();
-            @guest()
-                $('.not-loggedin-modal').css('display', 'block');
-            @endguest
-            $.ajax({
-                type: 'delete',
-                url: "{{ Route('wishlist.destroy') }}",
+            var favorite_uuid = 'favorite_uuid';
+            var product_id = $(this).data('product-id');
+
+             $.ajax({
+                 type: 'DELETE',
+                 url: '{{ route('wishlist.destroy')}}',
                 data: {
-                    'productId': $(this).attr('data-product-id'),
-                },
-                success: function(data) {
+                    _token: '{{ csrf_token() }}'
+                 },
+                 success: function(response) {
+
                     location.reload();
-                }
-            });
+                 },
+                 error: function(response) {
+                    alert('Error removing product from favorites!');
+                 }
+             });
+
+
         });
 
 
-        $(document).on('click', '.addTocomparelist', function(e) {
 
+
+        $(document).on('click', '.addTocomparelist', function(e) {
             e.preventDefault();
-            @guest()
-                $('.not-loggedin-modal').css('display', 'block');
-            @endguest
+
+            var product_id = $(this).data('product-id');
+            //console.log(product_id)
+            e.preventDefault();
             $.ajax({
                 type: 'post',
-                url: "{{ Route('compare.store') }}",
+                url: "{{ route('compare.store') }}",
                 data: {
-                    'productId': $(this).attr('data-product-id'),
+                    product_id: product_id,
+                    _token: '{{ csrf_token() }}'
                 },
-                success: function(data) {
-                    console.log('ssssss');
-                    location.reload();
-                    if (data.compared)
-
-                        $('.alert-modal').css('display', 'block');
-
-                    else
-                        $('.alert-modal2').css('display', 'block');
+                success: function(response) {
+                    if (response === 'added') {
+                        $('.compare-alert-modal-first').css('display', 'block');
+                        setTimeout(function() {
+                            $('.compare-alert-modal-first').css('display', 'none');
+                        }, 2500);
+                    } else if (response === 'exists') {
+                        $('.compare-alert-modal-exist').css('display', 'block');
+                        setTimeout(function() {
+                            $('.compare-alert-modal-exist').css('display', 'none');
+                        }, 2500);
+                    } else if (response === 'limit_reached') {
+                        $('.compare-alert-modal-max').css('display', 'block');
+                        setTimeout(function() {
+                            $('.compare-alert-modal-max').css('display', 'none');
+                        }, 2500);
+                    }
+                },
+                error: function(response) {
+                    alert('Error adding product to compares!');
                 }
             });
         });
 
         $(document).on('click', '.removeFromcomparelist', function(e) {
             e.preventDefault();
-            @guest()
-                $('.not-loggedin-modal').css('display', 'block');
-            @endguest
-            $.ajax({
-                type: 'delete',
-                url: "{{ Route('compare.destroy') }}",
+
+            var compare_uuid = 'compare_uuid';
+            var product_id = $(this).data('product-id');
+
+             $.ajax({
+                 type: 'DELETE',
+                 url: '{{ route('compare.destroy')}}',
                 data: {
-                    'productId': $(this).attr('data-product-id'),
-                },
-                success: function(data) {
+                    _token: '{{ csrf_token() }}'
+                 },
+                 success: function(response) {
+
                     location.reload();
-                }
-            });
+                 },
+                 error: function(response) {
+                    alert('Error removing product from favorites!');
+                 }
+             });
         });
 
     </script>

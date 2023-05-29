@@ -198,7 +198,157 @@
                         <ul class="list-unstyled">
                             <li>
                                 <button class="add-to-fav">
-                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                    <i class="fa fa-heart addToWishlist" data-product-id="{{ $product->id }}"
+                                        aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt " aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange addTocomparelist" data-product-id="{{ $product->id }}"
+                                        aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+
+                            <div class="carousel-item active">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
+                            </div>
+
+                            <div class="carousel-item">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title">{{ $product->name }}
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">{{ number_format((($product->old_price - $product->new_price) /
+                                $product->old_price) * 100, 2, '.', '') }}</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+                        {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }} </div>
+                    </div>
+                    <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                        أضف إلى العربة
+                    </button>
+                </div>
+                {{-- modal --}}
+
+                {{-- @include('site.includes.product-details',$product) --}}
+                @endforeach
+
+                @endif
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Today Deal -->
+
+
+<!-- Start Electronics -->
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> الكترونيات</h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                عرض الكل
+            </button>
+        </div>
+        <div class="overflow-auto">
+            <div class="row flex-nowrap">
+                @if ($electronics_products_photos)
+                @foreach ($electronics_products_photos as $electronics_products_photo)
+
+                <div class="col-md-2 col-4">
+                    <img src="{{ $electronics_products_photo->images[0]->photo ? asset($electronics_products_photo->images[0]->photo) : asset('images/default.png') }}"
+                        alt="{{ $electronics_products_photo->name }}" title="{{ $electronics_products_photo->name }}"
+                        class="w-100">
+                </div>
+
+                @endforeach
+                @endif
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Electronics -->
+
+<!-- Start Electronics Offer -->
+
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> عروضنا الألكترونيات</h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                تسوق الأن
+            </button>
+        </div>
+        <div class="owl-carousel owl-theme todayDeal mt-4">
+
+            @if ($electronics_products)
+            @foreach ($electronics_products as $product )
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart addToWishlist" data-product-id="{{ $product->id }}"
+                                        aria-hidden="true"></i>
                                 </button>
                             </li>
 
@@ -210,7 +360,8 @@
 
                             <li>
                                 <button>
-                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                    <i class="fa fa-exchange addTocomparelist" data-product-id="{{ $product->id }}"
+                                        aria-hidden="true"></i>
                                 </button>
                             </li>
                         </ul>
@@ -279,1744 +430,873 @@
                 </div>
                 @endforeach
 
+                @endif
 
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+<!-- End Electronics Offer -->
+
+
+<div class="banners py-5">
+    <div class="container-fluid">
+        <div class="row">
+            @foreach ($banners as $banner)
+
+            <div class="col-4">
+                <img src="{{$banner->image_url }}" title="{{$banner->name }}" alt="{{$banner->name }}"
+                    class="w-100 h-100" />
+            </div>
+            @endforeach
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Start Men Fashion -->
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> أزياء الرجال</h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                عرض الكل
+            </button>
+        </div>
+
+        <div class="overflow-auto">
+            <div class="row flex-nowrap">
+                @if($men_products_photos)
+                @foreach ($men_products_photos as $men_products_photo)
+
+                <div class="col-4 col-md-2">
+                    <img src="{{ $men_products_photo->images[0]->photo ? asset($men_products_photo->images[0]->photo) : asset('images/default.png') }}"
+                        alt="{{ $men_products_photo->name }}" title="{{ $men_products_photo->name }}" height="200"
+                        class="w-100">
+                </div>
+                @endforeach
                 @else
-                <div class="card mt-4 text-start">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets ">
+                <div class="col-4 col-md-2">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                @endif
 
-                            <ul class="list-unstyled">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Men Fashion  -->
 
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
+<!-- Start Men Fashion Offer -->
 
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
+<div class="today-deal py-4 pb-5">
 
-                        </div>
-                        <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
-                            <ol class="carousel-indicators ">
-                                <li data-target="#product-card-indicators" data-slide-to="0" class="active"></li>
-                                <li data-target="#product-card-indicators" data-slide-to="1" class="border"></li>
-                                <li data-target="#product-card-indicators" data-slide-to="2" class="border"></li>
-                            </ol>
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img class="card-img-top"
-                                        src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                        alt="Card image cap" />
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> عروض أزياء الرجال </h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                تسوق الأن
+            </button>
+        </div>
+        <div class="owl-carousel owl-theme todayDeal mt-4">
+            @if ($men_products)
+            @foreach ($men_products as $product )
 
-                                </div>
-                                <div class="carousel-item">
-                                    <img class="card-img-top"
-                                        src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                        alt="Card image cap" />
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
 
-                                </div>
-                                <div class="carousel-item">
-                                    <img class="card-img-top"
-                                        src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                        alt="Card image cap" />
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart addToWishlist" data-product-id="{{ $product->id }}"
+                                        aria-hidden="true"></i>
+                                </button>
+                            </li>
 
-                                </div>
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange addTocomparelist" data-product-id="{{ $product->id }}"
+                                        aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+
+                            <div class="carousel-item active">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
+                            </div>
+
+                            <div class="carousel-item">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="card-body mt-4">
+                <div class="card-body mt-4">
 
-                        <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
-                            المساحة
+                    <p class="card-title">{{ $product->name }}
 
-                        </p>
-                        <div class="d-flex row no-gutters justify-content-between">
-                            <span class="px-1 text-bold">70 جنيه</span>
-                            <div class="d-flex justify-content-end ">
-                                <div class="star-rating d-flex align-items-center  text-small">
-                                    <span id="rating-score">03</span>
-                                    <i class="fa-solid text-smaller fa-star"></i>
-                                </div>
-                                <span id="product-review-count" class="mx-1">(180)</span>
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
                             </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
                         </div>
+                    </div>
 
-                        <div id="before-price" class=" my-3 row">
-                            <span class="text-crossed  px-1">100 جنيه</span>
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
 
-                            <div class="text-success text-bold d-flex"><span>خصم</span>
-                                <span id="save-quantity">47</span>
-                                <span>%</span>
-                            </div>
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">{{ number_format((($product->old_price - $product->new_price) /
+                                $product->old_price) * 100, 2, '.', '') }}</span>
+                            <span>%</span>
                         </div>
+                    </div>
 
-                        <div class="  border-dotted p-2 text-bold">
-
-                            جديد
-                        </div>
+                    <div class="  border-dotted p-2 text-bold">
+                        {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }} </div>
                     </div>
                     <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
                         أضف إلى العربة
                     </button>
                 </div>
+                @endforeach
+
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Men Fashion Offer -->
+
+<!-- Start women Fashion -->
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> أزياء نسائية</h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                عرض الكل
+            </button>
+        </div>
+
+
+        <div class="overflow-auto">
+            <div class="row flex-nowrap">
+                @if($women_products_photos)
+                @foreach ($women_products_photos as $women_products_photo)
+
+                <div class="col-4 col-md-2">
+                    <img src="{{ $women_products_photo->images[0]->photo ? asset($women_products_photo->images[0]->photo) : asset('images/default.png') }}"
+                        alt="{{ $women_products_photo->name }}" title="{{ $women_products_photo->name }}" height="200"
+                        class="w-100">
+                </div>
+                @endforeach
+                @else
+                <div class="col-4 col-md-2">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Women Fashion  -->
+
+<!-- Start Women Fashion Offer -->
+
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> عروضنا الأزياء النسائية</h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                تسوق الأن
+            </button>
+        </div>
+        <div class="owl-carousel owl-theme todayDeal mt-4">
+            @if ($women_products)
+            @foreach ($women_products as $product )
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart addToWishlist" data-product-id="{{ $product->id }}"
+                                        aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange addTocomparelist" data-product-id="{{ $product->id }}"
+                                        aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
+
+                            <div class="carousel-item active">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
+                            </div>
+
+                            <div class="carousel-item">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title">{{ $product->name }}
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">{{ number_format((($product->old_price -
+                                $product->new_price) /
+                                $product->old_price) * 100, 2, '.', '') }}</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+                        {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }} </div>
+                    </div>
+                    <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                        أضف إلى العربة
+                    </button>
+                </div>
+                @endforeach
+
+
+
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- End Women Fashion Offer -->
+
+<!-- Start Beauty -->
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> الجمال </h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                عرض الكل
+            </button>
+        </div>
+        <div class="overflow-auto">
+            <div class="row flex-nowrap">
+                @if($beauty_products_photos)
+                @foreach ($beauty_products_photos as $beauty_products_photo)
+
+                <div class="col-4 col-md-2">
+                    <img src="{{ $beauty_products_photo->images[0]->photo ? asset($beauty_products_photo->images[0]->photo) : asset('images/default.png') }}"
+                        alt="{{ $beauty_products_photo->name }}" title="{{ $beauty_products_photo->name }}" height="200"
+                        class="w-100">
+                </div>
+                @endforeach
+                @else
+                <div class="col-4 col-md-2">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- End Beauty  -->
+
+
+<!-- Start Accessories -->
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> اكسسوارات </h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                عرض الكل
+            </button>
+        </div>
+        <div class="overflow-auto">
+            <div class="row flex-nowrap">
+                @if($accessories_products_photos)
+                @foreach ($accessories_products_photos as $accessories_products_photo)
+
+                <div class="col-4 col-md-2">
+                    <img src="{{ $accessories_products_photo->images[0]->photo ? asset($accessories_products_photo->images[0]->photo) : asset('images/default.png') }}"
+                        alt="{{ $accessories_products_photo->name }}" title="{{ $accessories_products_photo->name }}"
+                        height="200" class="w-100">
+                </div>
+                @endforeach
+                @else
+                <div class="col-4 col-md-2">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                @endif
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<!-- End Accessories  -->
+
+<!-- Start Accessories Offer -->
+
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> عروض اكسسوارات </h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                تسوق الأن
+            </button>
+        </div>
+        <div class="owl-carousel owl-theme todayDeal mt-4">
+
+            @if ($accessories_products)
+            @foreach ($accessories_products as $product )
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart addToWishlist" data-product-id="{{ $product->id }}"
+                                        aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange addTocomparelist" data-product-id="{{ $product->id }}"
+                                        aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators" data-slide-to="0" class="active">
+                            </li>
+                            <li data-target="#product-card-indicators" data-slide-to="1" class="border">
+                            </li>
+                            <li data-target="#product-card-indicators" data-slide-to="2" class="border">
+                            </li>
+                        </ol>
+                        <div class="carousel-inner">
+
+                            <div class="carousel-item active">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
+                            </div>
+
+                            <div class="carousel-item">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title">{{ $product->name }}
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">{{ number_format((($product->old_price -
+                                $product->new_price) /
+                                $product->old_price) * 100, 2, '.', '') }}</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+                        {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }} </div>
+                    </div>
+                    <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                        أضف إلى العربة
+                    </button>
+                </div>
+                @endforeach
+                @endif
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Accessories  Offer -->
+
+<!-- Start Top Sells -->
+
+<div class="today-deal py-4 pb-5">
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> الأكثر مبيعا </h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                تسوق الأن
+            </button>
+        </div>
+        <div class="owl-carousel owl-theme todayDeal mt-4">
+
+            @if ($best_sellings)
+            @foreach ($best_sellings as $product )
+
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart addToWishlist" data-product-id="{{ $product->id }}"
+                                        aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange addTocomparelist" data-product-id="{{ $product->id }}"
+                                        aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators" data-slide-to="0" class="active">
+                            </li>
+                            <li data-target="#product-card-indicators" data-slide-to="1" class="border">
+                            </li>
+                            <li data-target="#product-card-indicators" data-slide-to="2" class="border">
+                            </li>
+                        </ol>
+                        <div class="carousel-inner">
+
+                            <div class="carousel-item active">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
+                            </div>
+
+                            <div class="carousel-item">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-4">
+
+                    <p class="card-title">{{ $product->name }}
+
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
+
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
+
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">{{ number_format((($product->old_price -
+                                $product->new_price) /
+                                $product->old_price) * 100, 2, '.', '') }}</span>
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="  border-dotted p-2 text-bold">
+                        {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }} </div>
+                    </div>
+                    <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                        أضف إلى العربة
+                    </button>
+                </div>
+                @endforeach
+
+
+
                 @endif
 
 
             </div>
         </div>
     </div>
-    <!-- Today Deal -->
+</div>
+<!-- End Top Sells   -->
 
+<!-- Start Home And Kitchen -->
+<div class="today-deal py-4 pb-5">
 
-    <!-- Start Electronics -->
-    <div class="today-deal py-4 pb-5">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> البيت والمطبخ </h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                عرض الكل
+            </button>
+        </div>
+        <div class="overflow-auto">
+            <div class="row flex-nowrap">
+                @if($home_products_photos)
+                @foreach ($home_products_photos as $home_products_photo)
 
-        <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center">
-                <h2 class="text-right"> الكترونيات</h2>
-                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                    عرض الكل
-                </button>
-            </div>
-            <div class="overflow-auto">
-                <div class="row flex-nowrap">
-                    @if ($electronics_products_photos)
-                    @foreach ($electronics_products_photos as $electronics_products_photo)
-
-                    <div class="col-md-2 col-4">
-                        <img src="{{ $electronics_products_photo->images[0]->photo ? asset($electronics_products_photo->images[0]->photo) : asset('images/default.png') }}"
-                            alt="{{ $electronics_products_photo->name }}"
-                            title="{{ $electronics_products_photo->name }}" class="w-100">
-                    </div>
-
-                    @endforeach
-                    @endif
-
+                <div class="col-4 col-md-2">
+                    <img src="{{ $home_products_photo->images[0]->photo ? asset($home_products_photo->images[0]->photo) : asset('images/default.png') }}"
+                        alt="{{ $home_products_photo->name }}" title="{{ $home_products_photo->name }}" height="200"
+                        class="w-100">
                 </div>
+                @endforeach
+                @else
+                <div class="col-4 col-md-2">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                @endif
             </div>
         </div>
     </div>
-    <!-- End Electronics -->
+</div>
+<!-- End Home and Kitchen  -->
 
-    <!-- Start Electronics Offer -->
+<!-- Start Home And Kitchen Offers -->
+<div class="today-deal py-4 pb-5">
 
-    <div class="today-deal py-4 pb-5">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> عروض البيت والمطبخ</h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                تسوق الأن
+            </button>
+        </div>
+        <div class="owl-carousel owl-theme todayDeal mt-4">
+            @if ($home_products)
+            @foreach ($home_products as $product )
 
-        <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center">
-                <h2 class="text-right"> عروضنا الألكترونيات</h2>
-                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                    تسوق الأن
-                </button>
-            </div>
-            <div class="owl-carousel owl-theme todayDeal mt-4">
+            <div class="card mt-4 text-start">
+                <div class="position-relative">
+                    <div class="position-absolute w-100 p-3 item-assets ">
 
-                @if ($electronics_products)
-                @foreach ($electronics_products as $product )
+                        <ul class="list-unstyled">
+                            <li>
+                                <button class="add-to-fav">
+                                    <i class="fa fa-heart addToWishlist" data-product-id="{{ $product->id }}"
+                                        aria-hidden="true"></i>
+                                </button>
+                            </li>
 
-                <div class="card mt-4 text-start">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets ">
+                            <li>
+                                <button>
+                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                </button>
+                            </li>
 
-                            <ul class="list-unstyled">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
+                            <li>
+                                <button>
+                                    <i class="fa fa-exchange addTocomparelist" data-product-id="{{ $product->id }}"
+                                        aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
 
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
+                    </div>
+                    <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators ">
+                            <li data-target="#product-card-indicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#product-card-indicators" data-slide-to="1" class="border"></li>
+                            <li data-target="#product-card-indicators" data-slide-to="2" class="border"></li>
+                        </ol>
+                        <div class="carousel-inner">
 
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
+                            <div class="carousel-item active">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
+                            </div>
 
-                        </div>
-                        <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
-                            <ol class="carousel-indicators ">
-                                <li data-target="#product-card-indicators" data-slide-to="0" class="active"></li>
-                                <li data-target="#product-card-indicators" data-slide-to="1" class="border"></li>
-                                <li data-target="#product-card-indicators" data-slide-to="2" class="border"></li>
-                            </ol>
-                            <div class="carousel-inner">
-
-                                <div class="carousel-item active">
-                                    <img class="card-img-top"
-                                        src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
-                                        alt="{{ $product->name }}" title="{{ $product->name }}" />
-                                </div>
-
-                                <div class="carousel-item">
-                                    <img class="card-img-top"
-                                        src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
-                                        alt="{{ $product->name }}" title="{{ $product->name }}" />
-                                </div>
-                                <div class="carousel-item">
-                                    <img class="card-img-top"
-                                        src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
-                                        alt="{{ $product->name }}" title="{{ $product->name }}" />
-                                </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
+                            </div>
+                            <div class="carousel-item">
+                                <img class="card-img-top"
+                                    src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
+                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
                             </div>
                         </div>
                     </div>
-
-                    <div class="card-body mt-4">
-
-                        <p class="card-title">{{ $product->name }}
-
-                        </p>
-                        <div class="d-flex row no-gutters justify-content-between">
-                            <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
-                            <div class="d-flex justify-content-end ">
-                                <div class="star-rating d-flex align-items-center  text-small">
-                                    <span id="rating-score">03</span>
-                                    <i class="fa-solid text-smaller fa-star"></i>
-                                </div>
-                                <span id="product-review-count" class="mx-1">(180)</span>
-                            </div>
-                        </div>
-
-                        <div id="before-price" class=" my-3 row">
-                            <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
-
-                            <div class="text-success text-bold d-flex"><span>خصم</span>
-                                <span id="save-quantity">{{ number_format((($product->old_price - $product->new_price) /
-                                    $product->old_price) * 100, 2, '.', '') }}</span>
-                                <span>%</span>
-                            </div>
-                        </div>
-
-                        <div class="  border-dotted p-2 text-bold">
-                            {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }} </div>
-                        </div>
-                        <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
-                            أضف إلى العربة
-                        </button>
-                    </div>
-                    @endforeach
-
-
-                    @else
-                    <div class="card mt-4 text-start">
-                        <div class="position-relative">
-                            <div class="position-absolute w-100 p-3 item-assets ">
-
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <button class="add-to-fav">
-                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                        </button>
-                                    </li>
-
-                                    <li>
-                                        <button>
-                                            <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                        </button>
-                                    </li>
-
-                                    <li>
-                                        <button>
-                                            <i class="fa fa-exchange" aria-hidden="true"></i>
-                                        </button>
-                                    </li>
-                                </ul>
-
-                            </div>
-                            <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
-                                <ol class="carousel-indicators ">
-                                    <li data-target="#product-card-indicators" data-slide-to="0" class="active"></li>
-                                    <li data-target="#product-card-indicators" data-slide-to="1" class="border"></li>
-                                    <li data-target="#product-card-indicators" data-slide-to="2" class="border"></li>
-                                </ol>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img class="card-img-top"
-                                            src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            alt="Card image cap" />
-
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="card-img-top"
-                                            src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            alt="Card image cap" />
-
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="card-img-top"
-                                            src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            alt="Card image cap" />
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-body mt-4">
-
-                            <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
-                                المساحة
-
-                            </p>
-                            <div class="d-flex row no-gutters justify-content-between">
-                                <span class="px-1 text-bold">70 جنيه</span>
-                                <div class="d-flex justify-content-end ">
-                                    <div class="star-rating d-flex align-items-center  text-small">
-                                        <span id="rating-score">03</span>
-                                        <i class="fa-solid text-smaller fa-star"></i>
-                                    </div>
-                                    <span id="product-review-count" class="mx-1">(180)</span>
-                                </div>
-                            </div>
-
-                            <div id="before-price" class=" my-3 row">
-                                <span class="text-crossed  px-1">100 جنيه</span>
-
-                                <div class="text-success text-bold d-flex"><span>خصم</span>
-                                    <span id="save-quantity">47</span>
-                                    <span>%</span>
-                                </div>
-                            </div>
-
-                            <div class="  border-dotted p-2 text-bold">
-
-                                جديد
-                            </div>
-                        </div>
-                        <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
-                            أضف إلى العربة
-                        </button>
-                    </div>
-                    @endif
-
-
                 </div>
 
+                <div class="card-body mt-4">
 
+                    <p class="card-title">{{ $product->name }}
 
-            </div>
-        </div>
-    </div>
-    <!-- End Electronics Offer -->
+                    </p>
+                    <div class="d-flex row no-gutters justify-content-between">
+                        <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
+                        <div class="d-flex justify-content-end ">
+                            <div class="star-rating d-flex align-items-center  text-small">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid text-smaller fa-star"></i>
+                            </div>
+                            <span id="product-review-count" class="mx-1">(180)</span>
+                        </div>
+                    </div>
 
+                    <div id="before-price" class=" my-3 row">
+                        <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
 
-    <div class="banners py-5">
-        <div class="container-fluid">
-            <div class="row">
-                @foreach ($banners as $banner)
+                        <div class="text-success text-bold d-flex"><span>خصم</span>
+                            <span id="save-quantity">{{ number_format((($product->old_price -
+                                $product->new_price) /
+                                $product->old_price) * 100, 2, '.', '') }}</span>
+                            <span>%</span>
+                        </div>
+                    </div>
 
-                <div class="col-4">
-                    <img src="{{$banner->image_url }}" title="{{$banner->name }}" alt="{{$banner->name }}"
-                        class="w-100 h-100" />
+                    <div class="  border-dotted p-2 text-bold">
+                        {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }} </div>
+                    </div>
+                    <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                        أضف إلى العربة
+                    </button>
                 </div>
                 @endforeach
 
+
+
+                @endif
             </div>
         </div>
     </div>
+</div>
+<!-- End Home And Kitchen Offers -->
 
+<!-- Start More Cats -->
+<div class="today-deal py-4 pb-5">
 
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-right"> فئات أكثر </h2>
+            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
+                عرض الكل
+            </button>
+        </div>
+        <div class="overflow-auto">
+            <div class="row flex-nowrap">
+                @if($new_products)
+                @foreach ($new_products as $new_product)
 
-    <!-- Start Men Fashion -->
-    <div class="today-deal py-4 pb-5">
-
-        <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center">
-                <h2 class="text-right"> أزياء الرجال</h2>
-                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                    عرض الكل
-                </button>
-            </div>
-
-            <div class="overflow-auto">
-                <div class="row flex-nowrap">
-                    @if($men_products_photos)
-                    @foreach ($men_products_photos as $men_products_photo)
-
-                    <div class="col-4 col-md-2">
-                        <img src="{{ $men_products_photo->images[0]->photo ? asset($men_products_photo->images[0]->photo) : asset('images/default.png') }}"
-                            alt="{{ $men_products_photo->name }}" title="{{ $men_products_photo->name }}" height="200"
-                            class="w-100">
-                    </div>
-                    @endforeach
-                    @else
-                    <div class="col-4 col-md-2">
-                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
-                    </div>
-                    @endif
-
+                <div class="col-4 col-md-2">
+                    <img src="{{ $new_product->images[0]->photo ? asset($new_product->images[0]->photo) : asset('images/default.png') }}"
+                        alt="{{ $new_product->name }}" title="{{ $new_product->name }}" height="200" class="w-100">
                 </div>
+                @endforeach
+                @else
+                <div class="col-4 col-md-2">
+                    <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
+                </div>
+                @endif
             </div>
         </div>
     </div>
-    <!-- End Men Fashion  -->
+</div>
+<!-- End More Cats  -->
 
-    <!-- Start Men Fashion Offer -->
+<div class="bg-light py-5">
+    <div class="container-fluid">
+        <h1 class="text-center">تسوق حسب الماركة</h1>
+        <div class="row mt-5">
+            @if($ads)
 
-    <div class="today-deal py-4 pb-5">
+            @foreach ($ads as $ad )
 
-        <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center">
-                <h2 class="text-right"> عروض أزياء الرجال </h2>
-                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                    تسوق الأن
-                </button>
+            <div class="col-md-3 col-4 mt-4">
+                <img src="{{$ad->image_url }}" title="{{$ad->name }}" alt="{{$ad->name }}" height="250" class="w-100" />
             </div>
-            <div class="owl-carousel owl-theme todayDeal mt-4">
-                @if ($men_products)
-                @foreach ($men_products as $product )
-
-                <div class="card mt-4 text-start">
-                    <div class="position-relative">
-                        <div class="position-absolute w-100 p-3 item-assets ">
-
-                            <ul class="list-unstyled">
-                                <li>
-                                    <button class="add-to-fav">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <button>
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                    </button>
-                                </li>
-                            </ul>
-
-                        </div>
-                        <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
-                            <ol class="carousel-indicators ">
-                                <li data-target="#product-card-indicators" data-slide-to="0" class="active"></li>
-                                <li data-target="#product-card-indicators" data-slide-to="1" class="border"></li>
-                                <li data-target="#product-card-indicators" data-slide-to="2" class="border"></li>
-                            </ol>
-                            <div class="carousel-inner">
-
-                                <div class="carousel-item active">
-                                    <img class="card-img-top"
-                                        src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
-                                        alt="{{ $product->name }}" title="{{ $product->name }}" />
-                                </div>
-
-                                <div class="carousel-item">
-                                    <img class="card-img-top"
-                                        src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
-                                        alt="{{ $product->name }}" title="{{ $product->name }}" />
-                                </div>
-                                <div class="carousel-item">
-                                    <img class="card-img-top"
-                                        src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
-                                        alt="{{ $product->name }}" title="{{ $product->name }}" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-body mt-4">
-
-                        <p class="card-title">{{ $product->name }}
-
-                        </p>
-                        <div class="d-flex row no-gutters justify-content-between">
-                            <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
-                            <div class="d-flex justify-content-end ">
-                                <div class="star-rating d-flex align-items-center  text-small">
-                                    <span id="rating-score">03</span>
-                                    <i class="fa-solid text-smaller fa-star"></i>
-                                </div>
-                                <span id="product-review-count" class="mx-1">(180)</span>
-                            </div>
-                        </div>
-
-                        <div id="before-price" class=" my-3 row">
-                            <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
-
-                            <div class="text-success text-bold d-flex"><span>خصم</span>
-                                <span id="save-quantity">{{ number_format((($product->old_price - $product->new_price) /
-                                    $product->old_price) * 100, 2, '.', '') }}</span>
-                                <span>%</span>
-                            </div>
-                        </div>
-
-                        <div class="  border-dotted p-2 text-bold">
-                            {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }} </div>
-                        </div>
-                        <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
-                            أضف إلى العربة
-                        </button>
-                    </div>
-                    @endforeach
+            @endforeach
+            @endif
 
 
-                    @else
-                    <div class="card mt-4 text-start">
-                        <div class="position-relative">
-                            <div class="position-absolute w-100 p-3 item-assets ">
-
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <button class="add-to-fav">
-                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                        </button>
-                                    </li>
-
-                                    <li>
-                                        <button>
-                                            <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                        </button>
-                                    </li>
-
-                                    <li>
-                                        <button>
-                                            <i class="fa fa-exchange" aria-hidden="true"></i>
-                                        </button>
-                                    </li>
-                                </ul>
-
-                            </div>
-                            <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
-                                <ol class="carousel-indicators ">
-                                    <li data-target="#product-card-indicators" data-slide-to="0" class="active"></li>
-                                    <li data-target="#product-card-indicators" data-slide-to="1" class="border"></li>
-                                    <li data-target="#product-card-indicators" data-slide-to="2" class="border"></li>
-                                </ol>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img class="card-img-top"
-                                            src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            alt="Card image cap" />
-
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="card-img-top"
-                                            src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            alt="Card image cap" />
-
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="card-img-top"
-                                            src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            alt="Card image cap" />
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-body mt-4">
-
-                            <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
-                                المساحة
-
-                            </p>
-                            <div class="d-flex row no-gutters justify-content-between">
-                                <span class="px-1 text-bold">70 جنيه</span>
-                                <div class="d-flex justify-content-end ">
-                                    <div class="star-rating d-flex align-items-center  text-small">
-                                        <span id="rating-score">03</span>
-                                        <i class="fa-solid text-smaller fa-star"></i>
-                                    </div>
-                                    <span id="product-review-count" class="mx-1">(180)</span>
-                                </div>
-                            </div>
-
-                            <div id="before-price" class=" my-3 row">
-                                <span class="text-crossed  px-1">100 جنيه</span>
-
-                                <div class="text-success text-bold d-flex"><span>خصم</span>
-                                    <span id="save-quantity">47</span>
-                                    <span>%</span>
-                                </div>
-                            </div>
-
-                            <div class="  border-dotted p-2 text-bold">
-
-                                جديد
-                            </div>
-                        </div>
-                        <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
-                            أضف إلى العربة
-                        </button>
-                    </div>
-                    @endif
-                </div>
-            </div>
         </div>
-        <!-- End Men Fashion Offer -->
+    </div>
+</div>
 
-        <!-- Start women Fashion -->
-        <div class="today-deal py-4 pb-5">
 
-            <div class="container-fluid">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h2 class="text-right"> أزياء نسائية</h2>
-                    <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                        عرض الكل
-                    </button>
-                </div>
+//favorites
+@include('site.includes.first_add_to_favorite_modal')
+@include('site.includes.exist_same_product_in_favorites_modal')
+//compares
+@include('site.includes.first_add_to_compare_modal')
+@include('site.includes.exist_same_product_in_compares_modal')
+@include('site.includes.max_products_in_compares')
 
 
-                <div class="overflow-auto">
-                    <div class="row flex-nowrap">
-                        @if($women_products_photos)
-                        @foreach ($women_products_photos as $women_products_photo)
 
-                        <div class="col-4 col-md-2">
-                            <img src="{{ $women_products_photo->images[0]->photo ? asset($women_products_photo->images[0]->photo) : asset('images/default.png') }}"
-                                alt="{{ $women_products_photo->name }}" title="{{ $women_products_photo->name }}"
-                                height="200" class="w-100">
-                        </div>
-                        @endforeach
-                        @else
-                        <div class="col-4 col-md-2">
-                            <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
-                        </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Women Fashion  -->
 
-        <!-- Start Women Fashion Offer -->
+@endsection
 
-        <div class="today-deal py-4 pb-5">
 
-            <div class="container-fluid">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h2 class="text-right"> عروضنا الأزياء النسائية</h2>
-                    <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                        تسوق الأن
-                    </button>
-                </div>
-                <div class="owl-carousel owl-theme todayDeal mt-4">
-                    @if ($women_products)
-                    @foreach ($women_products as $product )
 
-                    <div class="card mt-4 text-start">
-                        <div class="position-relative">
-                            <div class="position-absolute w-100 p-3 item-assets ">
+@push('scripts')
 
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <button class="add-to-fav">
-                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                        </button>
-                                    </li>
+<script>
+    $(document).on('click', '.quick-view', function () {
+        $('.quickview-modal-product-details-' + $(this).attr('data-product-id')).css("display", "block");
+    });
+    $(document).on('click', '.close', function () {
+        $('.quickview-modal-product-details-' + $(this).attr('data-product-id')).css("display", "none");
 
-                                    <li>
-                                        <button>
-                                            <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                        </button>
-                                    </li>
+    });
 
-                                    <li>
-                                        <button>
-                                            <i class="fa fa-exchange" aria-hidden="true"></i>
-                                        </button>
-                                    </li>
-                                </ul>
 
-                            </div>
-                            <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
-                                <ol class="carousel-indicators ">
-                                    <li data-target="#product-card-indicators" data-slide-to="0" class="active"></li>
-                                    <li data-target="#product-card-indicators" data-slide-to="1" class="border"></li>
-                                    <li data-target="#product-card-indicators" data-slide-to="2" class="border"></li>
-                                </ol>
-                                <div class="carousel-inner">
+    function generateUUID() {
+        return uuid.v4();
+      }
 
-                                    <div class="carousel-item active">
-                                        <img class="card-img-top"
-                                            src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
-                                            alt="{{ $product->name }}" title="{{ $product->name }}" />
-                                    </div>
-
-                                    <div class="carousel-item">
-                                        <img class="card-img-top"
-                                            src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
-                                            alt="{{ $product->name }}" title="{{ $product->name }}" />
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="card-img-top"
-                                            src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
-                                            alt="{{ $product->name }}" title="{{ $product->name }}" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-body mt-4">
-
-                            <p class="card-title">{{ $product->name }}
-
-                            </p>
-                            <div class="d-flex row no-gutters justify-content-between">
-                                <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
-                                <div class="d-flex justify-content-end ">
-                                    <div class="star-rating d-flex align-items-center  text-small">
-                                        <span id="rating-score">03</span>
-                                        <i class="fa-solid text-smaller fa-star"></i>
-                                    </div>
-                                    <span id="product-review-count" class="mx-1">(180)</span>
-                                </div>
-                            </div>
-
-                            <div id="before-price" class=" my-3 row">
-                                <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
-
-                                <div class="text-success text-bold d-flex"><span>خصم</span>
-                                    <span id="save-quantity">{{ number_format((($product->old_price -
-                                        $product->new_price) /
-                                        $product->old_price) * 100, 2, '.', '') }}</span>
-                                    <span>%</span>
-                                </div>
-                            </div>
-
-                            <div class="  border-dotted p-2 text-bold">
-                                {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }} </div>
-                            </div>
-                            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
-                                أضف إلى العربة
-                            </button>
-                        </div>
-                        @endforeach
-
-
-                        @else
-                        <div class="card mt-4 text-start">
-                            <div class="position-relative">
-                                <div class="position-absolute w-100 p-3 item-assets ">
-
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <button class="add-to-fav">
-                                                <i class="fa fa-heart" aria-hidden="true"></i>
-                                            </button>
-                                        </li>
-
-                                        <li>
-                                            <button>
-                                                <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                            </button>
-                                        </li>
-
-                                        <li>
-                                            <button>
-                                                <i class="fa fa-exchange" aria-hidden="true"></i>
-                                            </button>
-                                        </li>
-                                    </ul>
-
-                                </div>
-                                <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
-                                    <ol class="carousel-indicators ">
-                                        <li data-target="#product-card-indicators" data-slide-to="0" class="active">
-                                        </li>
-                                        <li data-target="#product-card-indicators" data-slide-to="1" class="border">
-                                        </li>
-                                        <li data-target="#product-card-indicators" data-slide-to="2" class="border">
-                                        </li>
-                                    </ol>
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <img class="card-img-top"
-                                                src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                                alt="Card image cap" />
-
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img class="card-img-top"
-                                                src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                                alt="Card image cap" />
-
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img class="card-img-top"
-                                                src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                                alt="Card image cap" />
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card-body mt-4">
-
-                                <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
-                                    المساحة
-
-                                </p>
-                                <div class="d-flex row no-gutters justify-content-between">
-                                    <span class="px-1 text-bold">70 جنيه</span>
-                                    <div class="d-flex justify-content-end ">
-                                        <div class="star-rating d-flex align-items-center  text-small">
-                                            <span id="rating-score">03</span>
-                                            <i class="fa-solid text-smaller fa-star"></i>
-                                        </div>
-                                        <span id="product-review-count" class="mx-1">(180)</span>
-                                    </div>
-                                </div>
-
-                                <div id="before-price" class=" my-3 row">
-                                    <span class="text-crossed  px-1">100 جنيه</span>
-
-                                    <div class="text-success text-bold d-flex"><span>خصم</span>
-                                        <span id="save-quantity">47</span>
-                                        <span>%</span>
-                                    </div>
-                                </div>
-
-                                <div class="  border-dotted p-2 text-bold">
-
-                                    جديد
-                                </div>
-                            </div>
-                            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
-                                أضف إلى العربة
-                            </button>
-                        </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-            <!-- End Women Fashion Offer -->
-
-            <!-- Start Beauty -->
-            <div class="today-deal py-4 pb-5">
-
-                <div class="container-fluid">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h2 class="text-right"> الجمال </h2>
-                        <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                            عرض الكل
-                        </button>
-                    </div>
-                    <div class="overflow-auto">
-                        <div class="row flex-nowrap">
-                            @if($beauty_products_photos)
-                            @foreach ($beauty_products_photos as $beauty_products_photo)
-
-                            <div class="col-4 col-md-2">
-                                <img src="{{ $beauty_products_photo->images[0]->photo ? asset($beauty_products_photo->images[0]->photo) : asset('images/default.png') }}"
-                                    alt="{{ $beauty_products_photo->name }}" title="{{ $beauty_products_photo->name }}"
-                                    height="200" class="w-100">
-                            </div>
-                            @endforeach
-                            @else
-                            <div class="col-4 col-md-2">
-                                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
-                            </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- End Beauty  -->
-
-
-            <!-- Start Accessories -->
-            <div class="today-deal py-4 pb-5">
-
-                <div class="container-fluid">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h2 class="text-right"> اكسسوارات </h2>
-                        <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                            عرض الكل
-                        </button>
-                    </div>
-                    <div class="overflow-auto">
-                        <div class="row flex-nowrap">
-                            @if($accessories_products_photos)
-                            @foreach ($accessories_products_photos as $accessories_products_photo)
-
-                            <div class="col-4 col-md-2">
-                                <img src="{{ $accessories_products_photo->images[0]->photo ? asset($accessories_products_photo->images[0]->photo) : asset('images/default.png') }}"
-                                    alt="{{ $accessories_products_photo->name }}"
-                                    title="{{ $accessories_products_photo->name }}" height="200" class="w-100">
-                            </div>
-                            @endforeach
-                            @else
-                            <div class="col-4 col-md-2">
-                                <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}" class="w-100">
-                            </div>
-                            @endif
-                        </div>
-                    </div>
-
-
-
-                </div>
-            </div>
-            <!-- End Accessories  -->
-
-            <!-- Start Accessories Offer -->
-
-            <div class="today-deal py-4 pb-5">
-
-                <div class="container-fluid">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h2 class="text-right"> عروض اكسسوارات </h2>
-                        <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                            تسوق الأن
-                        </button>
-                    </div>
-                    <div class="owl-carousel owl-theme todayDeal mt-4">
-
-                        @if ($accessories_products)
-                        @foreach ($accessories_products as $product )
-
-                        <div class="card mt-4 text-start">
-                            <div class="position-relative">
-                                <div class="position-absolute w-100 p-3 item-assets ">
-
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <button class="add-to-fav">
-                                                <i class="fa fa-heart" aria-hidden="true"></i>
-                                            </button>
-                                        </li>
-
-                                        <li>
-                                            <button>
-                                                <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                            </button>
-                                        </li>
-
-                                        <li>
-                                            <button>
-                                                <i class="fa fa-exchange" aria-hidden="true"></i>
-                                            </button>
-                                        </li>
-                                    </ul>
-
-                                </div>
-                                <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
-                                    <ol class="carousel-indicators ">
-                                        <li data-target="#product-card-indicators" data-slide-to="0" class="active">
-                                        </li>
-                                        <li data-target="#product-card-indicators" data-slide-to="1" class="border">
-                                        </li>
-                                        <li data-target="#product-card-indicators" data-slide-to="2" class="border">
-                                        </li>
-                                    </ol>
-                                    <div class="carousel-inner">
-
-                                        <div class="carousel-item active">
-                                            <img class="card-img-top"
-                                                src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
-                                                alt="{{ $product->name }}" title="{{ $product->name }}" />
-                                        </div>
-
-                                        <div class="carousel-item">
-                                            <img class="card-img-top"
-                                                src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
-                                                alt="{{ $product->name }}" title="{{ $product->name }}" />
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img class="card-img-top"
-                                                src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
-                                                alt="{{ $product->name }}" title="{{ $product->name }}" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card-body mt-4">
-
-                                <p class="card-title">{{ $product->name }}
-
-                                </p>
-                                <div class="d-flex row no-gutters justify-content-between">
-                                    <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
-                                    <div class="d-flex justify-content-end ">
-                                        <div class="star-rating d-flex align-items-center  text-small">
-                                            <span id="rating-score">03</span>
-                                            <i class="fa-solid text-smaller fa-star"></i>
-                                        </div>
-                                        <span id="product-review-count" class="mx-1">(180)</span>
-                                    </div>
-                                </div>
-
-                                <div id="before-price" class=" my-3 row">
-                                    <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
-
-                                    <div class="text-success text-bold d-flex"><span>خصم</span>
-                                        <span id="save-quantity">{{ number_format((($product->old_price -
-                                            $product->new_price) /
-                                            $product->old_price) * 100, 2, '.', '') }}</span>
-                                        <span>%</span>
-                                    </div>
-                                </div>
-
-                                <div class="  border-dotted p-2 text-bold">
-                                    {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }}
-                                        </div>
-                                </div>
-                                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
-                                    أضف إلى العربة
-                                </button>
-                            </div>
-                            @endforeach
-
-
-                            @else
-                            <div class="card mt-4 text-start">
-                                <div class="position-relative">
-                                    <div class="position-absolute w-100 p-3 item-assets ">
-
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <button class="add-to-fav">
-                                                    <i class="fa fa-heart" aria-hidden="true"></i>
-                                                </button>
-                                            </li>
-
-                                            <li>
-                                                <button>
-                                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                                </button>
-                                            </li>
-
-                                            <li>
-                                                <button>
-                                                    <i class="fa fa-exchange" aria-hidden="true"></i>
-                                                </button>
-                                            </li>
-                                        </ul>
-
-                                    </div>
-                                    <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
-                                        <ol class="carousel-indicators ">
-                                            <li data-target="#product-card-indicators" data-slide-to="0" class="active">
-                                            </li>
-                                            <li data-target="#product-card-indicators" data-slide-to="1" class="border">
-                                            </li>
-                                            <li data-target="#product-card-indicators" data-slide-to="2" class="border">
-                                            </li>
-                                        </ol>
-                                        <div class="carousel-inner">
-                                            <div class="carousel-item active">
-                                                <img class="card-img-top"
-                                                    src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                                    alt="Card image cap" />
-
-                                            </div>
-                                            <div class="carousel-item">
-                                                <img class="card-img-top"
-                                                    src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                                    alt="Card image cap" />
-
-                                            </div>
-                                            <div class="carousel-item">
-                                                <img class="card-img-top"
-                                                    src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                                    alt="Card image cap" />
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card-body mt-4">
-
-                                    <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
-                                        المساحة
-
-                                    </p>
-                                    <div class="d-flex row no-gutters justify-content-between">
-                                        <span class="px-1 text-bold">70 جنيه</span>
-                                        <div class="d-flex justify-content-end ">
-                                            <div class="star-rating d-flex align-items-center  text-small">
-                                                <span id="rating-score">03</span>
-                                                <i class="fa-solid text-smaller fa-star"></i>
-                                            </div>
-                                            <span id="product-review-count" class="mx-1">(180)</span>
-                                        </div>
-                                    </div>
-
-                                    <div id="before-price" class=" my-3 row">
-                                        <span class="text-crossed  px-1">100 جنيه</span>
-
-                                        <div class="text-success text-bold d-flex"><span>خصم</span>
-                                            <span id="save-quantity">47</span>
-                                            <span>%</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="  border-dotted p-2 text-bold">
-
-                                        جديد
-                                    </div>
-                                </div>
-                                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
-                                    أضف إلى العربة
-                                </button>
-                            </div>
-                            @endif
-
-                        </div>
-                    </div>
-                </div>
-                <!-- End Accessories  Offer -->
-
-                <!-- Start Top Sells -->
-
-                <div class="today-deal py-4 pb-5">
-
-                    <div class="container-fluid">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h2 class="text-right"> الأكثر مبيعا </h2>
-                            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                                تسوق الأن
-                            </button>
-                        </div>
-                        <div class="owl-carousel owl-theme todayDeal mt-4">
-
-                            @if ($best_sellings)
-                            @foreach ($best_sellings as $product )
-
-                            <div class="card mt-4 text-start">
-                                <div class="position-relative">
-                                    <div class="position-absolute w-100 p-3 item-assets ">
-
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <button class="add-to-fav">
-                                                    <i class="fa fa-heart" aria-hidden="true"></i>
-                                                </button>
-                                            </li>
-
-                                            <li>
-                                                <button>
-                                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                                </button>
-                                            </li>
-
-                                            <li>
-                                                <button>
-                                                    <i class="fa fa-exchange" aria-hidden="true"></i>
-                                                </button>
-                                            </li>
-                                        </ul>
-
-                                    </div>
-                                    <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
-                                        <ol class="carousel-indicators ">
-                                            <li data-target="#product-card-indicators" data-slide-to="0" class="active">
-                                            </li>
-                                            <li data-target="#product-card-indicators" data-slide-to="1" class="border">
-                                            </li>
-                                            <li data-target="#product-card-indicators" data-slide-to="2" class="border">
-                                            </li>
-                                        </ol>
-                                        <div class="carousel-inner">
-
-                                            <div class="carousel-item active">
-                                                <img class="card-img-top"
-                                                    src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
-                                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
-                                            </div>
-
-                                            <div class="carousel-item">
-                                                <img class="card-img-top"
-                                                    src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
-                                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
-                                            </div>
-                                            <div class="carousel-item">
-                                                <img class="card-img-top"
-                                                    src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
-                                                    alt="{{ $product->name }}" title="{{ $product->name }}" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card-body mt-4">
-
-                                    <p class="card-title">{{ $product->name }}
-
-                                    </p>
-                                    <div class="d-flex row no-gutters justify-content-between">
-                                        <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
-                                        <div class="d-flex justify-content-end ">
-                                            <div class="star-rating d-flex align-items-center  text-small">
-                                                <span id="rating-score">03</span>
-                                                <i class="fa-solid text-smaller fa-star"></i>
-                                            </div>
-                                            <span id="product-review-count" class="mx-1">(180)</span>
-                                        </div>
-                                    </div>
-
-                                    <div id="before-price" class=" my-3 row">
-                                        <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
-
-                                        <div class="text-success text-bold d-flex"><span>خصم</span>
-                                            <span id="save-quantity">{{ number_format((($product->old_price -
-                                                $product->new_price) /
-                                                $product->old_price) * 100, 2, '.', '') }}</span>
-                                            <span>%</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="  border-dotted p-2 text-bold">
-                                        {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }}
-                                            </div>
-                                    </div>
-                                    <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
-                                        أضف إلى العربة
-                                    </button>
-                                </div>
-                                @endforeach
-
-
-                                @else
-                                <div class="card mt-4 text-start">
-                                    <div class="position-relative">
-                                        <div class="position-absolute w-100 p-3 item-assets ">
-
-                                            <ul class="list-unstyled">
-                                                <li>
-                                                    <button class="add-to-fav">
-                                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                                    </button>
-                                                </li>
-
-                                                <li>
-                                                    <button>
-                                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                                    </button>
-                                                </li>
-
-                                                <li>
-                                                    <button>
-                                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                                    </button>
-                                                </li>
-                                            </ul>
-
-                                        </div>
-                                        <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
-                                            <ol class="carousel-indicators ">
-                                                <li data-target="#product-card-indicators" data-slide-to="0"
-                                                    class="active">
-                                                </li>
-                                                <li data-target="#product-card-indicators" data-slide-to="1"
-                                                    class="border">
-                                                </li>
-                                                <li data-target="#product-card-indicators" data-slide-to="2"
-                                                    class="border">
-                                                </li>
-                                            </ol>
-                                            <div class="carousel-inner">
-                                                <div class="carousel-item active">
-                                                    <img class="card-img-top"
-                                                        src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                                        alt="Card image cap" />
-
-                                                </div>
-                                                <div class="carousel-item">
-                                                    <img class="card-img-top"
-                                                        src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                                        alt="Card image cap" />
-
-                                                </div>
-                                                <div class="carousel-item">
-                                                    <img class="card-img-top"
-                                                        src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                                        alt="Card image cap" />
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="card-body mt-4">
-
-                                        <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
-                                            المساحة
-
-                                        </p>
-                                        <div class="d-flex row no-gutters justify-content-between">
-                                            <span class="px-1 text-bold">70 جنيه</span>
-                                            <div class="d-flex justify-content-end ">
-                                                <div class="star-rating d-flex align-items-center  text-small">
-                                                    <span id="rating-score">03</span>
-                                                    <i class="fa-solid text-smaller fa-star"></i>
-                                                </div>
-                                                <span id="product-review-count" class="mx-1">(180)</span>
-                                            </div>
-                                        </div>
-
-                                        <div id="before-price" class=" my-3 row">
-                                            <span class="text-crossed  px-1">100 جنيه</span>
-
-                                            <div class="text-success text-bold d-flex"><span>خصم</span>
-                                                <span id="save-quantity">47</span>
-                                                <span>%</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="  border-dotted p-2 text-bold">
-
-                                            جديد
-                                        </div>
-                                    </div>
-                                    <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
-                                        أضف إلى العربة
-                                    </button>
-                                </div>
-                                @endif
-
-
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Top Sells   -->
-
-                    <!-- Start Home And Kitchen -->
-                    <div class="today-deal py-4 pb-5">
-
-                        <div class="container-fluid">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h2 class="text-right"> البيت والمطبخ </h2>
-                                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                                    عرض الكل
-                                </button>
-                            </div>
-                            <div class="overflow-auto">
-                                <div class="row flex-nowrap">
-                                    @if($home_products_photos)
-                                    @foreach ($home_products_photos as $home_products_photo)
-
-                                    <div class="col-4 col-md-2">
-                                        <img src="{{ $home_products_photo->images[0]->photo ? asset($home_products_photo->images[0]->photo) : asset('images/default.png') }}"
-                                            alt="{{ $home_products_photo->name }}"
-                                            title="{{ $home_products_photo->name }}" height="200" class="w-100">
-                                    </div>
-                                    @endforeach
-                                    @else
-                                    <div class="col-4 col-md-2">
-                                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            class="w-100">
-                                    </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Home And Kitchen  -->
-
-                    <!-- Start Home And Kitchen Offers -->
-                    <div class="today-deal py-4 pb-5">
-
-                        <div class="container-fluid">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h2 class="text-right"> عروض البيت والمطبخ</h2>
-                                <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                                    تسوق الأن
-                                </button>
-                            </div>
-                            <div class="owl-carousel owl-theme todayDeal mt-4">
-                                @if ($home_products)
-                                @foreach ($home_products as $product )
-
-                                <div class="card mt-4 text-start">
-                                    <div class="position-relative">
-                                        <div class="position-absolute w-100 p-3 item-assets ">
-
-                                            <ul class="list-unstyled">
-                                                <li>
-                                                    <button class="add-to-fav">
-                                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                                    </button>
-                                                </li>
-
-                                                <li>
-                                                    <button>
-                                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                                    </button>
-                                                </li>
-
-                                                <li>
-                                                    <button>
-                                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                                    </button>
-                                                </li>
-                                            </ul>
-
-                                        </div>
-                                        <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
-                                            <ol class="carousel-indicators ">
-                                                <li data-target="#product-card-indicators" data-slide-to="0"
-                                                    class="active"></li>
-                                                <li data-target="#product-card-indicators" data-slide-to="1"
-                                                    class="border"></li>
-                                                <li data-target="#product-card-indicators" data-slide-to="2"
-                                                    class="border"></li>
-                                            </ol>
-                                            <div class="carousel-inner">
-
-                                                <div class="carousel-item active">
-                                                    <img class="card-img-top"
-                                                        src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
-                                                        alt="{{ $product->name }}" title="{{ $product->name }}" />
-                                                </div>
-
-                                                <div class="carousel-item">
-                                                    <img class="card-img-top"
-                                                        src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
-                                                        alt="{{ $product->name }}" title="{{ $product->name }}" />
-                                                </div>
-                                                <div class="carousel-item">
-                                                    <img class="card-img-top"
-                                                        src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
-                                                        alt="{{ $product->name }}" title="{{ $product->name }}" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="card-body mt-4">
-
-                                        <p class="card-title">{{ $product->name }}
-
-                                        </p>
-                                        <div class="d-flex row no-gutters justify-content-between">
-                                            <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
-                                            <div class="d-flex justify-content-end ">
-                                                <div class="star-rating d-flex align-items-center  text-small">
-                                                    <span id="rating-score">03</span>
-                                                    <i class="fa-solid text-smaller fa-star"></i>
-                                                </div>
-                                                <span id="product-review-count" class="mx-1">(180)</span>
-                                            </div>
-                                        </div>
-
-                                        <div id="before-price" class=" my-3 row">
-                                            <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
-
-                                            <div class="text-success text-bold d-flex"><span>خصم</span>
-                                                <span id="save-quantity">{{ number_format((($product->old_price -
-                                                    $product->new_price) /
-                                                    $product->old_price) * 100, 2, '.', '') }}</span>
-                                                <span>%</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="  border-dotted p-2 text-bold">
-                                            {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره'
-                                                }} </div>
-                                        </div>
-                                        <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
-                                            أضف إلى العربة
-                                        </button>
-                                    </div>
-                                    @endforeach
-
-
-                                    @else
-                                    <div class="card mt-4 text-start">
-                                        <div class="position-relative">
-                                            <div class="position-absolute w-100 p-3 item-assets ">
-
-                                                <ul class="list-unstyled">
-                                                    <li>
-                                                        <button class="add-to-fav">
-                                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                                        </button>
-                                                    </li>
-
-                                                    <li>
-                                                        <button>
-                                                            <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                                        </button>
-                                                    </li>
-
-                                                    <li>
-                                                        <button>
-                                                            <i class="fa fa-exchange" aria-hidden="true"></i>
-                                                        </button>
-                                                    </li>
-                                                </ul>
-
-                                            </div>
-                                            <div id="product-card-indicators" class="carousel slide"
-                                                data-ride="carousel">
-                                                <ol class="carousel-indicators ">
-                                                    <li data-target="#product-card-indicators" data-slide-to="0"
-                                                        class="active"></li>
-                                                    <li data-target="#product-card-indicators" data-slide-to="1"
-                                                        class="border"></li>
-                                                    <li data-target="#product-card-indicators" data-slide-to="2"
-                                                        class="border"></li>
-                                                </ol>
-                                                <div class="carousel-inner">
-                                                    <div class="carousel-item active">
-                                                        <img class="card-img-top"
-                                                            src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                                            alt="Card image cap" />
-
-                                                    </div>
-                                                    <div class="carousel-item">
-                                                        <img class="card-img-top"
-                                                            src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                                            alt="Card image cap" />
-
-                                                    </div>
-                                                    <div class="carousel-item">
-                                                        <img class="card-img-top"
-                                                            src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                                            alt="Card image cap" />
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="card-body mt-4">
-
-                                            <p class="card-title"> هذا النص هو مثال لنص يمكن أن يستبدل في نفس
-                                                المساحة
-
-                                            </p>
-                                            <div class="d-flex row no-gutters justify-content-between">
-                                                <span class="px-1 text-bold">70 جنيه</span>
-                                                <div class="d-flex justify-content-end ">
-                                                    <div class="star-rating d-flex align-items-center  text-small">
-                                                        <span id="rating-score">03</span>
-                                                        <i class="fa-solid text-smaller fa-star"></i>
-                                                    </div>
-                                                    <span id="product-review-count" class="mx-1">(180)</span>
-                                                </div>
-                                            </div>
-
-                                            <div id="before-price" class=" my-3 row">
-                                                <span class="text-crossed  px-1">100 جنيه</span>
-
-                                                <div class="text-success text-bold d-flex"><span>خصم</span>
-                                                    <span id="save-quantity">47</span>
-                                                    <span>%</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="  border-dotted p-2 text-bold">
-
-                                                جديد
-                                            </div>
-                                        </div>
-                                        <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
-                                            أضف إلى العربة
-                                        </button>
-                                    </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Home And Kitchen Offers -->
-
-                        <!-- Start More Cats -->
-                        <div class="today-deal py-4 pb-5">
-
-                            <div class="container-fluid">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h2 class="text-right"> فئات أكثر </h2>
-                                    <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                                        عرض الكل
-                                    </button>
-                                </div>
-                                <div class="overflow-auto">
-                                    <div class="row flex-nowrap">
-                                        @if($new_products)
-                                        @foreach ($new_products as $new_product)
-
-                                        <div class="col-4 col-md-2">
-                                            <img src="{{ $new_product->images[0]->photo ? asset($new_product->images[0]->photo) : asset('images/default.png') }}"
-                                                alt="{{ $new_product->name }}" title="{{ $new_product->name }}"
-                                                height="200" class="w-100">
-                                        </div>
-                                        @endforeach
-                                        @else
-                                        <div class="col-4 col-md-2">
-                                            <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                                class="w-100">
-                                        </div>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End More Cats  -->
-
-                        <div class="bg-light py-5">
-                            <div class="container-fluid">
-                                <h1 class="text-center">تسوق حسب الماركة</h1>
-                                <div class="row mt-5">
-                                    @if($ads)
-
-                                    @foreach ($ads as $ad )
-
-                                    <div class="col-md-3 col-4 mt-4">
-                                        <img src="{{$ad->image_url }}" title="{{$ad->name }}" alt="{{$ad->name }}"
-                                            height="250" class="w-100" />
-                                    </div>
-                                    @endforeach
-                                    @endif
-
-                                    {{-- <div class="col-md-3 col-4 mt-4">
-                                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            class="w-100" />
-                                    </div>
-                                    <div class="col-md-3 col-4 mt-4">
-                                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            class="w-100" />
-                                    </div>
-                                    <div class="col-md-3 col-4 mt-4">
-                                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            class="w-100" />
-                                    </div>
-                                    <div class="col-md-3 col-4 mt-4">
-                                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            class="w-100" />
-                                    </div>
-                                    <div class="col-md-3 col-4 mt-4">
-                                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            class="w-100" />
-                                    </div>
-
-                                    <div class="col-md-3 col-4 mt-4">
-                                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            class="w-100" />
-                                    </div>
-                                    <div class="col-md-3 col-4 mt-4">
-                                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            class="w-100" />
-                                    </div>
-                                    <div class="col-md-3 col-4 mt-4">
-                                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            class="w-100" />
-                                    </div>
-                                    <div class="col-md-3 col-4 mt-4">
-                                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            class="w-100" />
-                                    </div>
-                                    <div class="col-md-3 col-4 mt-4">
-                                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            class="w-100" />
-                                    </div>
-                                    <div class="col-md-3 col-4 mt-4">
-                                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            class="w-100" />
-                                    </div>
-
-                                    <div class="col-md-3 col-4 mt-4">
-                                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            class="w-100" />
-                                    </div>
-                                    <div class="col-md-3 col-4 mt-4">
-                                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            class="w-100" />
-                                    </div>
-                                    <div class="col-md-3 col-4 mt-4">
-                                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            class="w-100" />
-                                    </div>
-                                    <div class="col-md-3 col-4 mt-4">
-                                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            class="w-100" />
-                                    </div>
-                                    <div class="col-md-3 col-4 mt-4">
-                                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            class="w-100" />
-                                    </div>
-                                    <div class="col-md-3 col-4 mt-4">
-                                        <img src="{{ asset('website_assets/imgs/fav/fav-card-img.jpg') }}"
-                                            class="w-100" />
-                                    </div> --}}
-                                </div>
-                            </div>
-                        </div>
-                        @endsection
-
-
-
-                        @push('scripts')
-                        <script>
-                            $.ajaxSetup({
+    $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        $(document).on('click', '.addTocomparelist', function(e) {
 
-            e.preventDefault();
-            @guest()
-                $('.not-loggedin-modal').css('display', 'block');
-            @endguest
-            $.ajax({
-                type: 'post',
-                url: "{{ Route('compare.store') }}",
-                data: {
-                    'productId': $(this).attr('data-product-id'),
-                },
-                success: function(data) {
-
-                    console.log('ssssss');
-                    location.reload();
-                    if (data.compared)
-
-                        $('.alert-modal').css('display', 'block');
-
-                    else
-                        $('.alert-modal2').css('display', 'block');
-                }
-            });
-        });
-        $(document).on('click', '.addToWishlist', function(e) {
-            e.preventDefault();
-            @guest()
-                $('.not-loggedin-modal').css('display', 'block');
-            @endguest
-            $.ajax({
-                type: 'post',
-                url: "{{ Route('wishlist.store') }}",
-                data: {
-                    'productId': $(this).attr('data-product-id'),
-                },
-                success: function(data) {
-                    location.reload();
-                    if (data.wished)
-                        $('.alert-modal').css('display', 'block');
-                    else
-                        $('.alert-modal2').css('display', 'block');
-                }
-            });
-        });
-                        </script>
-                        @endpush
+</script>
+@endpush

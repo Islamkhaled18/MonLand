@@ -18,4 +18,18 @@ class ContactUsController extends Controller
         });
         return view('site.contactus.index',$setting);
     }
+
+
+    public function store(Request $request){
+
+        // return $request;
+
+        $contactUs = new ContactUs();
+        $contactUs->user_id = Auth::user()->id;
+        $contactUs->subject = $request->subject;
+        $contactUs->save();
+
+        Toastr()->success('تم ارسال الرساله بنجاح');
+        return redirect()->back();
+    }
 }
