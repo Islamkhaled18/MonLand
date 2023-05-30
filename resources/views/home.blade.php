@@ -1261,10 +1261,10 @@
 </div>
 
 
-//favorites
+{{--  //favorites  --}}
 @include('site.includes.first_add_to_favorite_modal')
 @include('site.includes.exist_same_product_in_favorites_modal')
-//compares
+{{--  //compares  --}}
 @include('site.includes.first_add_to_compare_modal')
 @include('site.includes.exist_same_product_in_compares_modal')
 @include('site.includes.max_products_in_compares')

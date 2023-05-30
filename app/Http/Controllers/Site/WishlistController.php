@@ -15,15 +15,18 @@ class WishlistController extends Controller
     public function index()
     {
 
-        $products = Wishlist::with('products')->where('uuid', $this->getCartId())
-            ->orWhere('user_id', Auth::id())->get();
+        $favorite_products = Wishlist::with('products')
+            ->where('uuid', $this->getCartId())
+            ->orWhere('user_id', Auth::id())
+            ->get();
 
-        return view('site.categories.wishlist', compact('products'));
+
+        return view('site.categories.wishlist', compact('favorite_products'));
     }
 
     public function store(Request $request)
     {
-        $uuid = $request->cookie('favorite_uuid');
+        $uuid = $this->getCartId();
         $user_id = auth()->check() ? auth()->user()->id : null;
 
         if (!$uuid) {

@@ -7,7 +7,7 @@
 @section('content')
 
 <!-- my Cart -->
-@if ($products && $products->count() > 0 && $products->count() <= 1) <div class="container mt-4 mb-5">
+@if ($compare_products && $compare_products->count() > 0 && $compare_products->count() <= 1) <div class="container mt-4 mb-5">
     <div class="page-nav row">
         <a href="/" class="text-dark pl-2">
             <i class="fa-solid fa-house-chimney"></i>
@@ -23,7 +23,7 @@
 
 
         <div class="container">
-            @foreach ($products as $compare )
+            @foreach ($compare_products as $compare )
             @php
             $product = $compare->products;
             @endphp
@@ -90,32 +90,32 @@
         </div>
 
     </div>
-    @elseif ($products && $products->count() > 1 && $products->count() <= 2) <div class="container">
+    @elseif ($compare_products && $compare_products->count() > 1 && $compare_products->count() <= 2) <div class="container">
         <table class="table table-bordered font-weight-bold">
             <thead>
                 <tr>
                     <td>المنتج</td>
                     <td class="p-4"><img
-                            src="{{ $products[0]->products->images[0]->photo ? asset($products[0]->products->images[0]->photo) : asset('images/default.png') }}"
-                            alt="{{ $products[0]->products->name }}" title="{{ $products[0]->products->name }}"
+                            src="{{ $compare_products[0]->products->images[0]->photo ? asset($compare_products[0]->products->images[0]->photo) : asset('images/default.png') }}"
+                            alt="{{ $compare_products[0]->products->name }}" title="{{ $compare_products[0]->products->name }}"
                             class="w-50" /> </td>
 
                     <td class="p-4"><img
-                            src="{{ $products[1]->products->images[0]->photo ? asset($products[1]->products->images[0]->photo) : asset('images/default.png') }}"
-                            alt="{{ $products[1]->products->name }}" title="{{ $products[1]->products->name }}"
+                            src="{{ $compare_products[1]->products->images[0]->photo ? asset($compare_products[1]->products->images[0]->photo) : asset('images/default.png') }}"
+                            alt="{{ $compare_products[1]->products->name }}" title="{{ $compare_products[1]->products->name }}"
                             class="w-50" /> </td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>الوصف</td>
-                    <td>{{ $products[0]->products->description }}</td>
-                    <td>{{ $products[1]->products->description }}</td>
+                    <td>{{ $compare_products[0]->products->description }}</td>
+                    <td>{{ $compare_products[1]->products->description }}</td>
                 </tr>
                 <tr>
                     <td>السعر</td>
-                    <td>{{ $products[0]->products->new_price ?? $products[0]->products->old_price }} جنيه</td>
-                    <td>{{ $products[1]->products->new_price ?? $products[1]->products->old_price }} جنيه</td>
+                    <td>{{ $compare_products[0]->products->new_price ?? $compare_products[0]->products->old_price }} جنيه</td>
+                    <td>{{ $compare_products[1]->products->new_price ?? $compare_products[1]->products->old_price }} جنيه</td>
 
                 </tr>
                 <tr>
@@ -124,7 +124,7 @@
                         <form action="{{ route('cart.store') }}" method="POST">
                             @csrf
 
-                            <button type="submit" name="product_id" value="{{ $products[0]->products->id }}"
+                            <button type="submit" name="product_id" value="{{ $compare_products[0]->products->id }}"
                                 class="btn btn-dark w-75 py-2">أضف إلى العربة</button>
                         </form>
                     </td>
@@ -132,7 +132,7 @@
                         <form action="{{ route('cart.store') }}" method="POST">
                             @csrf
 
-                            <button type="submit" name="product_id" value="{{ $products[1]->products->id }}"
+                            <button type="submit" name="product_id" value="{{ $compare_products[1]->products->id }}"
                                 class="btn btn-dark w-75 py-2">أضف إلى العربة</button>
                         </form>
                     </td>
@@ -163,9 +163,9 @@
                 </tr>
                 <tr>
                     <td>حذف</td>
-                    <td><a class="removeFromcomparelist" href="#" data-product-id="{{ $products[0]->products->id }}"><i
+                    <td><a class="removeFromcomparelist" href="#" data-product-id="{{ $compare_products[0]->products->id }}"><i
                                 class="fas fa-trash-alt"></a></i></td>
-                    <td><a class="removeFromcomparelist" href="#" data-product-id="{{ $products[1]->products->id }}"><i
+                    <td><a class="removeFromcomparelist" href="#" data-product-id="{{ $compare_products[1]->products->id }}"><i
                                 class="fas fa-trash-alt"></a></i></td>
                 </tr>
             </tbody>
@@ -201,5 +201,7 @@
         </section>
         @endif
 
-
+        {{-- //favorites --}}
+        @include('site.includes.first_add_to_favorite_modal')
+        @include('site.includes.exist_same_product_in_favorites_modal')
         @endsection

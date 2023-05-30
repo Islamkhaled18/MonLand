@@ -16,34 +16,19 @@
                 </li>
 
                 <li>
-                    <a href="../all-products/all-products.html" class="pr-0"> كل
+                    <a href="{{ route('Site.allCategory') }}" class="pr-0"> كل
                         الفئات </a>
                 </li>
             </div>
 
             <div class="d-none d-md-flex">
 
+                @foreach ($mainCategories as $mainCategory)
                 <li>
-                    <a href="#"> أطفال </a>
+                    <a href="{{ route('mainCategory.products', $mainCategory->name) }}">{{ $mainCategory->name }}</a>
                 </li>
-                <li>
-                    <a href="#">الجمال </a>
-                </li>
-                <li>
-                    <a href="#"> المنزل </a>
-                </li>
-                <li>
-                    <a href="#"> نسائية </a>
-                </li>
-                <li>
-                    <a href="#"> رجالية </a>
-                </li>
-                <li>
-                    <a href="#"> الالكترونيات </a>
-                </li>
-                <li>
-                    <a href="#"> عروض </a>
-                </li>
+                @endforeach
+
             </div>
         </ul>
         <div class="input-group w-50 p-0 d-md-none">

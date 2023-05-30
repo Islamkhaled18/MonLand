@@ -8,6 +8,8 @@ use App\Models\Wishlist;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
@@ -43,8 +45,8 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        $wishlistUuid = $request->cookie('favorite_uuid');
-        $compareUuid = $request->cookie('compare_uuid');
+        $wishlistUuid = $this->getCartIdFav();
+        $compareUuid = $this->getCartIdCompare();
 
         if ($wishlistUuid) {
             Wishlist::where('uuid', $wishlistUuid)
@@ -59,6 +61,29 @@ class LoginController extends Controller
         }
 
         return redirect()->intended($this->redirectPath());
+    }
+
+
+    protected function getCartIdFav()
+    {
+        $id = request()->cookie('favorite_uuid');
+        if (!$id) {
+            $id = Str::uuid();
+            Cookie::queue('cart_id', $id, 60 * 24 * 7);
+        }
+
+        return $id;
+    }
+
+    protected function getCartIdCompare()
+    {
+        $id = request()->cookie('favorite_uuid');
+        if (!$id) {
+            $id = Str::uuid();
+            Cookie::queue('cart_id', $id, 60 * 24 * 7);
+        }
+
+        return $id;
     }
 
 }

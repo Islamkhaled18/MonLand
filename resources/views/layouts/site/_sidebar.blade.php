@@ -25,7 +25,11 @@
         </li>
         <li class="font-weight-bold">
             <i class="fa-solid fa-location-dot ml-2"></i>
-            <a href="../account/orders.html"> سجل العناوين</a>
+            @guest
+            <a href="{{route('login')}}"> سجل العناوين</a>
+            @else
+            <a href="{{ route('site.profile', auth()->user()->id) }}"> سجل العناوين</a>
+            @endguest
         </li>
 
         <li>
@@ -77,18 +81,16 @@
 
     <h5> الأقسام</h5>
     <ul class="list-unstyled">
+        @foreach ($mainCategoriesSideBar as $mainCategory)
         <li>
-            <a href="#" class="py-2 " style="font-weight: 400">قسم 1</a>
+            <a href="{{ route('mainCategory.products', $mainCategory->name) }}" class="py-2 " style="font-weight: 400">
+                {{
+                $mainCategory->name }}</a>
         </li>
-        <li>
-            <a href="#" class="py-2 " style="font-weight: 400">قسم 2 </a>
-        </li>
-        <li>
-            <a href="#" class="py-2 " style="font-weight: 400">قسم 3 </a>
-        </li>
+        @endforeach
     </ul>
 
-    <a class="main-color h6" href="./all-products/all-products.html">
+    <a class="main-color h6" href="{{ route('Site.allCategory') }}">
         المزيد من الأقسام
         <i class="fa-solid fa-caret-down"></i>
     </a>

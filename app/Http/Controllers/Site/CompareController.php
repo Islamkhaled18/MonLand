@@ -67,7 +67,7 @@ class CompareController extends Controller
     public function index()
     {
 
-        $products = Compare::with('products')
+        $compare_products = Compare::with('products')
             ->where(function ($query) {
                 $query->where('uuid', $this->getCartId())
                     ->orWhere('user_id', Auth::id());
@@ -106,12 +106,12 @@ class CompareController extends Controller
         // return view('site.categories.compare', compact('products', 'reviews', 'average', 'vendor', 'productsWithRatingOne',
         //     'productsWithRatingTwo', 'productsWithRatingThree', 'productsWithRatingFour', 'productsWithRatingFive'
         // ));
-        return view('site.categories.compare', compact('products'));
+        return view('site.categories.compare', compact('compare_products'));
     }
 
     public function store(Request $request)
     {
-        $uuid = $request->cookie('compare_uuid');
+        $uuid = $this->getCartId();
         $user_id = auth()->check() ? auth()->user()->id : null;
 
         // Check if the user has already added two products

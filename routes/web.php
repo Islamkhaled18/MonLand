@@ -10,6 +10,7 @@ use App\Http\Controllers\Site\ContactUsController;
 use App\Http\Controllers\Site\CouponController;
 use App\Http\Controllers\Site\DeliveryPolicyController;
 use App\Http\Controllers\Site\ExchangeController;
+use App\Http\Controllers\Site\MainCategoryController;
 use App\Http\Controllers\Site\ProductController;
 use App\Http\Controllers\Site\ProfileController;
 use App\Http\Controllers\Site\TermsConditionController;
@@ -57,21 +58,6 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
     Route::get('contactUs', [ContactUsController::class, 'index'])->name('Site.contactUs');
     Route::post('store', [ContactUsController::class, 'store'])->name('Site.ContactUs.store');
 
-    //categories & products
-    Route::get('AllCategories', [CategoryController::class, 'allCategory'])->name('Site.allCategory');
-    Route::get('category/{name}', [CategoryController::class, 'categoryProducts'])->name('Site.category');
-    Route::get('product/{name}', [ProductController::class, 'productByName'])->name('Site.product');
-
-    Route::get('category/{name}/search-products', [CategoryController::class, 'search_products_by_price'])->name('search.products');
-    Route::get('category/{name}/sort-products', [CategoryController::class, 'search_products_by_created_at'])->name('sort.products');
-
-    Route::get('category/{name}/all-products', [CategoryController::class, 'get_all_products'])->name('all_products.search');
-    Route::get('category/{name}/flash-products', [CategoryController::class, 'get_flash_products'])->name('all_offers.search');
-    Route::get('category/{name}/brands-products', [CategoryController::class, 'get_products_ByBrands'])->name('brands.sort');
-    Route::get('category/{name}/colors-products', [CategoryController::class, 'search_by_color'])->name('search.color');
-    Route::get('category/{name}/sizes-products', [CategoryController::class, 'search_by_size'])->name('search.size');
-    Route::get('category/{name}/review-products', [CategoryController::class, 'search_by_review_products'])->name('search.review.product');
-
     //vendors
     Route::get('product/vendor/{id}', [ProductController::class, 'vendorProducts'])->name('Site.product.vendorProducts');
 
@@ -89,14 +75,14 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
     Route::get('vendor/{id}', [ProductController::class, 'getVendor'])->name('Site.getVendor');
 
     //profile
-    Route::get('profile/{id}', [ProfileController::class, 'getProfile'])->name('site.profile');
-    Route::post('updateprofile/{id}', [ProfileController::class, 'updateprofile'])->name('site.profile.update');
+    Route::get('profile/{firstName}', [ProfileController::class, 'getProfile'])->name('site.profile');
+    Route::post('updateprofile/{id}', [ProfileController::class, 'updateProfile'])->name('site.profile.update');
     Route::post('updateprofilePassword/{id}', [ProfileController::class, 'updateprofilePassword'])->name('site.profile.password.update');
-    Route::get('profile/Add-Address/{id}', [ProfileController::class, 'addAddress'])->name('site.profile.address');
-
     Route::get('/cities/{id}', [ProfileController::class, 'getcity'])->name('city');
-
+    Route::get('profile/Add-Address/{id}', [ProfileController::class, 'addAddress'])->name('site.profile.address');
     Route::post('profile/Store-Address/{id}', [ProfileController::class, 'storeAddress'])->name('site.profile.storeAddress');
+    Route::post('/profile/set-default-address', [ProfileController::class, 'setDefaultAddress'])->name('site.profile.setDefaultAddress');
+
     Route::get('profile/delete/{id}', [ProfileController::class, 'destroyAddress'])->name('site.profile.destroyAddress');
 
     ///////////////cart Controller/////////////////////
@@ -132,19 +118,35 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
 
 Route::group(['namespace' => 'Site', 'prefix' => 'Site'], function () {
 
+
+    //all categories
+    Route::get('AllCategories', [CategoryController::class, 'allCategory'])->name('Site.allCategory');
+    // products belongs to main categories
+    Route::get('/mainCategory/{name}/products', [MainCategoryController::class, 'categoryProducts'])->name('mainCategory.products');
+
+    //categories & products
+    Route::get('category/{name}', [CategoryController::class, 'categoryProducts'])->name('Site.category');
+    Route::get('product/{name}', [ProductController::class, 'productByName'])->name('Site.product');
+
+    Route::get('category/{name}/search-products', [CategoryController::class, 'search_products_by_price'])->name('search.products');
+    Route::get('category/{name}/sort-products', [CategoryController::class, 'search_products_by_created_at'])->name('sort.products');
+    Route::get('category/{name}/all-products', [CategoryController::class, 'get_all_products'])->name('all_products.search');
+    Route::get('category/{name}/flash-products', [CategoryController::class, 'get_flash_products'])->name('all_offers.search');
+    Route::get('category/{name}/brands-products', [CategoryController::class, 'get_products_ByBrands'])->name('brands.sort');
+    Route::get('category/{name}/colors-products', [CategoryController::class, 'search_by_color'])->name('search.color');
+    Route::get('category/{name}/sizes-products', [CategoryController::class, 'search_by_size'])->name('search.size');
+    Route::get('category/{name}/review-products', [CategoryController::class, 'search_by_review_products'])->name('search.review.product');
+
     //wishlist
     Route::get('wishlist/products', [WishlistController::class, 'index'])->name('wishlist.products.index');
     Route::post('wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
     Route::delete('/wishlist', [WishlistController::class, 'destroy'])
-    ->name('wishlist.destroy');
-
+        ->name('wishlist.destroy');
 
     //compare
     Route::get('compare/products', [CompareController::class, 'index'])->name('compare.products.index');
     Route::post('compare', [CompareController::class, 'store'])->name('compare.store');
     Route::delete('compare', [CompareController::class, 'destroy'])->name('compare.destroy');
-
-
 
     Route::get('reset-passord', function () {
         return view('auth.passwords.email');

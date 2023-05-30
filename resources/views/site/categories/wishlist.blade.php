@@ -7,8 +7,6 @@
 @section('content')
 
 <!-- my Cart -->
-@if ($products && $products->count() > 0)
-<!-- my Cart -->
 <section id="cart" class="py-5 container my-5">
     <div class="page-nav row">
         <a href="/" class="text-dark pl-2">
@@ -20,13 +18,16 @@
         </a>
     </div>
 
+    @if($favorite_products && count($favorite_products) > 0)
+
     <div class="row my-5 py-5" id="fav-list">
         <!-- card list  -->
 
-        @foreach ($products as $wishlist )
+        @foreach ( $favorite_products as $wishlist )
         @php
         $product = $wishlist->products;
         @endphp
+
 
         <div class="card my-2 w-100 mb-3">
             <div class="row no-gutters">
@@ -35,7 +36,7 @@
                         class="position-absolute item-assets d-flex justify-content-between w-100 align-items-start p-3">
                         <ul class="list-unstyled">
                             <li>
-                                <button class="btn bg-light removeFromWishlist" data-product-id="{{ $product->id }}">
+                                <button class="btn bg-light removeFromWishlist">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </button>
                             </li>
@@ -47,15 +48,14 @@
                             </li>
 
                             <li>
-                                <button class="btn bg-light">
-                                    <i class="fa-solid fa-arrow-right-arrow-left addTocomparelist" data-product-id="{{ $product->id }}"></i>
+                                <button class="btn bg-light addTocomparelist">
+                                    <i class="fa-solid fa-arrow-right-arrow-left"></i>
                                 </button>
                             </li>
                         </ul>
                     </div>
                     <img src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
                         alt="{{ $product->name }}" title="{{ $product->name }}" class="card-img img-fluid" />
-
                 </div>
                 <div class="col-lg-10">
                     <div class="fav-card-body px-2 pt-2">
@@ -80,7 +80,8 @@
                             </p>
                             <div class="col-12 col-lg-5 button-col d-flex flex-column justify-content-end">
                                 <div class="row">
-                                    <button type="button" class="btn bg-main-color btn-dark my-1 col-5 col-lg-7">
+                                    <button type="button"
+                                        class="btn bg-main-color btn-dark my-1 col-5 col-lg-7 addTocomparelist">
                                         نظرة سريعة
                                     </button>
                                 </div>
@@ -98,39 +99,31 @@
         @endforeach
 
 
-
     </div>
-</section>
-@else
-<!-- my Cart -->
-<section id="cart" class="py-5 container my-5">
-    <div class="page-nav row">
-        <a href="{{ route('home') }}" class="text-dark pl-2">
-            <i class="fa-solid fa-house-chimney"></i>
-        </a>
-        <a href="{{ route('wishlist.products.index') }}" class="text-dark">
-            <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            المفضلة
-        </a>
-    </div>
+    @else
+    <!-- my Cart -->
+    <section id="cart" class="py-5 container my-5">
 
-    <div class="d-flex flex-column justify-content-center text-center align-items-center my-5 py-5">
-        <div>
-            <img src="{{ asset('website_assets/imgs/cart/Empty cart cartoon.svg') }}" class=" img-fluid"
-                alt="Empty Cart" />
 
+        <div class="d-flex flex-column justify-content-center text-center align-items-center my-5 py-5">
+            <div>
+                <img src="{{ asset('website_assets/imgs/cart/Empty cart cartoon.svg') }}" class="img-fluid"
+                    alt="Empty Cart" />
+            </div>
+            <h4>الصنف غير موجود</h4>
+            <p class="col-md-6 justify-self-center">
+                أسف... لم يتم العثور على عنصر داخل قائمة المفضلة بك!
+            </p>
+            <button type="button" class="btn btn-dark my-4">
+                <a href="{{ route('home') }}">استمرار التسوق</a>
+            </button>
         </div>
-        <h4>المنتج غير موجود</h4>
-        <p class="col-md-6 justify-self-center">
-            أسف... لم يتم العثور على اي منتج داخل قائمة المفضلة بك!
-        </p>
-        <button type="button" class="btn btn-dark my-4"><a href="{{ route('Site.allCategory') }}">استمرار
-                التسوق</a></button>
-    </div>
-</section>
-@endif
+    </section>
 
-//compares
+    @endif
+</section>
+
+{{-- compares --}}
 @include('site.includes.first_add_to_compare_modal')
 @include('site.includes.exist_same_product_in_compares_modal')
 @include('site.includes.max_products_in_compares')

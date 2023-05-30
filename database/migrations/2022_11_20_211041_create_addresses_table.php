@@ -28,6 +28,7 @@ class CreateAddressesTable extends Migration
             $table->integer('flat_no')->nullable();
             $table->integer('apartment_no')->nullable();
             $table->string('special_mark')->nullable();
+            $table->boolean('is_default')->default(0);
             $table->timestamps();
         });
     }

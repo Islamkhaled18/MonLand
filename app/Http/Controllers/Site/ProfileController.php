@@ -4,31 +4,33 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
-use App\Models\City;
 use App\Models\Governorate;
 use App\Models\Order;
 use App\Models\User;
-use App\Models\Vendor;
+use App\Models\Wishlist;
 use App\Rules\MatchOldPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
-    public function getProfile($id)
+    public function getProfile($firstName)
     {
-        $profile = User::where('id', auth()->user()->id)->get();
+        $profile = User::where('firstName', auth()->user()->firstName)->get();
         $addresses = Address::where('user_id', auth()->user()->id)->get();
-        $favProducts =  auth()->user()->wishlist()->latest()->get();
+        $favProducts = Wishlist::with('products')->where('uuid', $this->getCartId())
+            ->orWhere('user_id', Auth::id())->get();
 
-        $orders = Order::where('user_id',Auth::id())->get();
+        $orders = Order::where('user_id', Auth::id())->get();
 
-
-        return view('site.profile.profile', compact('profile', 'addresses', 'favProducts','orders'));
+        return view('site.profile.profile', compact('profile', 'addresses', 'favProducts', 'orders'));
     } //end of profile
 
-    public function updateprofile(Request $request, $id)
+    public function updateProfile(Request $request, $id)
     {
+
 
         $this->validate($request, [
 
@@ -45,7 +47,6 @@ class ProfileController extends Controller
         return redirect()->route('site.profile', auth()->user()->id);
     } //end of update
 
-
     public function updateprofilePassword(Request $request, $id)
     {
         $this->validate($request, [
@@ -60,8 +61,6 @@ class ProfileController extends Controller
         return redirect()->route('site.profile', auth()->user()->id);
     } //end of update user password
 
-
-
     public function addAddress($id)
     {
 
@@ -70,7 +69,6 @@ class ProfileController extends Controller
         // $cities = City::all();
         return view('site.profile.add_address', compact('user', 'governorates'));
     } //end of addAddress page
-
 
     public function getcity($id)
     {
@@ -82,19 +80,18 @@ class ProfileController extends Controller
     public function storeAddress(Request $request, $id)
     {
 
-        $this->validate($request, [
+        // $this->validate($request, [
 
-            'Phone_2' => 'nullable|max:255',
-            'postal_code' => 'nullable|integer|max:255',
-            'address_details' => 'nullable',
-            'governorate_id' => 'nullable|integer',
-            'city_id' => 'nullable|integer',
-            'building_no' => 'nullable|integer',
-            'flat_no' => 'nullable|integer',
-            'apartment_no' => 'nullable|integer',
-            'special_mark' => 'nullable|max:255',
-        ]);
-
+        //     'Phone_2' => 'nullable|max:255',
+        //     'postal_code' => 'nullable|integer|max:255',
+        //     'address_details' => 'nullable',
+        //     'governorate_id' => 'nullable|integer',
+        //     'city_id' => 'nullable|integer',
+        //     'building_no' => 'nullable|integer',
+        //     'flat_no' => 'nullable|integer',
+        //     'apartment_no' => 'nullable|integer',
+        //     'special_mark' => 'nullable|max:255',
+        // ]);
 
         $address = new Address();
         $address->user_id = auth()->user()->id;
@@ -112,6 +109,31 @@ class ProfileController extends Controller
         return redirect()->route('site.profile', auth()->user()->id);
     }
 
+    public function setDefaultAddress(Request $request)
+    {
+        $addressId = $request->input('addressId');
+
+        // Retrieve the address by ID
+        $address = Address::find($addressId);
+
+        if (!$address) {
+            return response()->json(['error' => 'Address not found'], 404);
+        }
+
+        $userId = $address->user_id;
+
+        // Set all addresses belonging to the user as non-default
+        Address::where('user_id', $userId)->update(['is_default' => 0]);
+
+        // Set the selected address as default
+        $address->is_default = 1;
+        $address->save();
+
+        return response()->json(['success' => 'Default address set successfully']);
+    }
+
+
+
     public function destroyAddress($id)
     {
 
@@ -120,8 +142,15 @@ class ProfileController extends Controller
         return redirect()->route('site.profile', auth()->user()->id);
     } //end of destroy
 
+    protected function getCartId()
+    {
+        $id = request()->cookie('favorite_uuid');
+        if (!$id) {
+            $id = Str::uuid();
+            Cookie::queue('cart_id', $id, 60 * 24 * 7);
+        }
 
-
-   
+        return $id;
+    }
 
 }

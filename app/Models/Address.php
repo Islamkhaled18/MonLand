@@ -20,6 +20,12 @@ class Address extends Model
         'flat_no',
         'apartment_no',
         'special_mark',
+        'is_default'
+    ];
+
+
+    protected $casts = [
+        'is_default' => 'boolean',
     ];
 
     public function user()

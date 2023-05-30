@@ -14,15 +14,14 @@
     <link rel="stylesheet" href="{{ asset('website_assets/css/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('website_assets/pages-css/product/product-details.css') }}" />
     <link rel="stylesheet" href="{{ asset('website_assets/pages-css/fav.css') }}" />
-
+    <link rel="stylesheet" href="{{ asset('website_assets/pages-css/account/orders.css') }}" />
 
     <!-- <link rel="stylesheet" href="{{ asset('website_assets/pages-css/account/orders.css') }}"> -->
-
-
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
         .rate {
             float: left;
@@ -309,6 +308,7 @@
     <script src="{{ asset('website_assets/js/script.js') }}"></script>
     <script src="{{ asset('website_assets/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('website_assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('website_assets/pages-js/orders.js') }}"></script>
     {{-- <script src="{{ asset('website_assets/js/pages.js') }}"></script> --}}
 
 
@@ -396,12 +396,7 @@
                     alert('Error removing product from favorites!');
                  }
              });
-
-
         });
-
-
-
 
         $(document).on('click', '.addTocomparelist', function(e) {
             e.preventDefault();
@@ -460,6 +455,49 @@
                     alert('Error removing product from favorites!');
                  }
              });
+        });
+
+        $(document).ready(function() {
+
+            $('.default-address-checkbox').on('change', function() {
+                var addressId = $(this).data('address-id');
+
+                $.ajax({
+                    url: '{{ route("site.profile.setDefaultAddress") }}',
+                    type: 'POST',
+                    data: {
+                        addressId: addressId,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        location.reload();
+                    },
+                    error: function(xhr) {
+                        alert('Error in is default !');
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function() {
+            $('select[name="governorate_id"]').on('change', function() {
+                var governorate_id = $(this).val();
+                if (governorate_id) {
+                    $.ajax({
+                        url: "{{ URL::to('Site/cities') }}/" + governorate_id
+                        , type: "GET"
+                        , dataType: "json"
+                        , success: function(data) {
+                            $('select[name="city_id"]').empty();
+                            $.each(data, function(key, value) {
+                                $('select[name="city_id"]').append('<option value="' + key + '">' + value + '</option>');
+                            });
+                        }
+                    , });
+                } else {
+                    console.log('AJAX load did not work');
+                }
+            });
         });
 
     </script>
