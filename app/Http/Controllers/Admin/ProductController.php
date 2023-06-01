@@ -23,9 +23,9 @@ class ProductController extends Controller
             return view('admin.errors.notAllowed');
         }
 
-        $products = Product::with('specifications')->get();
+        $all_products = Product::with('specifications')->get();
         return view('admin.products.general.index')->with([
-            'products' => $products,
+            'all_products' => $all_products,
         ]);
     } //end of index
 
@@ -123,9 +123,14 @@ class ProductController extends Controller
         $product->dimension = $request->dimension;
         $product->material = $request->material;
         // Save cover image if uploaded
-        if ($request->hasFile('cover_image')) {
-            $path = $request->file('cover_image')->store('public/images');
-            $product->cover_image = $path;
+        // if ($request->hasFile('cover_image')) {
+        //     $path = $request->file('cover_image')->store('public/images');
+        //     $product->cover_image = $path;
+        // }
+
+        if( $request->hasFile('image') && $request->file('image')->isValid()){
+            $image = $request->file('image');
+            $product['image'] = $image->store('my_files','images');
         }
 
         $product->save();

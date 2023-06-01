@@ -7,7 +7,6 @@ use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Governorate;
 use App\Models\Order;
-use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\Vendor;
@@ -27,7 +26,7 @@ class CartController extends Controller
 
         $user = Auth::user();
 
-    
+
         ///////////////////////////////////////////////////
         $products = Vendor::with(['carts' => function ($query) use ($user) {
             $query->where('carts.user_id', $user->id);
@@ -52,7 +51,7 @@ class CartController extends Controller
         })
         ->count();
 
-                      
+
         $countProdcts = count($products);
 
         $addresses = Address::with('governorate')->where('user_id', auth()->user()->id)->first();
@@ -62,8 +61,8 @@ class CartController extends Controller
             }
 
         $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
-       
-        
+
+
         return view('site.sale.cart', compact('products', 'countProdcts', 'addresses','delivery_fees','vendors_cart_count'));
     } //cart page
 
@@ -137,17 +136,17 @@ class CartController extends Controller
 
     public function checkout(Request $request)
     {
-        
+
         $products = Cart::with('products')->where('user_id', Auth::user()->id)->get();
         if (!$products) {
             return redirect()->route('cart.index');
         }
-         
+
         if( strlen($request->pickedSize[0]) < count($products) || strlen($request->pickedColor[0]) < count($products)  ){
 
             return back()->with("message" , "يجب اختيار اللون و المقاس لكل المنتجات في السلة لاتمام الطلب");
         }
-        
+
         $Pickedcolors = explode(',' , $request->pickedColor[0]);
         $pickedSizes = explode(',' , $request->pickedSize[0]);
 
@@ -159,7 +158,7 @@ class CartController extends Controller
                 'status' => 'تم استلام الطلبيه والعمل عليها',
                 'total' =>  $request->total,
             ]);
-            
+
             for($i = 0 ; $i < count($products) ; $i++){
                $order_products = $order->items()->create([
                     'order_id'   => $order->id,
@@ -168,9 +167,9 @@ class CartController extends Controller
                     'price'      => $products[$i]->products->price,
                     "product_color" => $Pickedcolors[$i],
                     "product_size" => $pickedSizes[$i],
-                    
+
                 ]);
-                
+
             }
             // foreach ($products as $item) {
 
@@ -272,7 +271,7 @@ $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
         })
         ->get();
         $countProdcts = count($products);
-        
+
 
         $addresses = Address::with('governorate')->where('user_id', auth()->user()->id)->first();
 
@@ -313,7 +312,7 @@ $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
         })
         ->get();
 
-       
+
         $countProdcts = count($products);
 
         $addresses = Address::with('governorate')->where('user_id', auth()->user()->id)->first();
@@ -322,7 +321,7 @@ $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
             session()->flash('error', 'برجاء اكمال بياناتك الشخصيه واضافة عنوان خاص بك');
                 return redirect()->back();
             }
-        
+
         $vendors_cart_count = Vendor::with(['carts' => function ($query) use ($user) {
             $query->where('carts.user_id', $user->id);
             $query->with(['products' => function ($products) {
@@ -341,19 +340,19 @@ $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
 
     public function reviewstore(Request $request )
     {
-    
+
         $review = new Review();
         $review->user_id = auth()->user()->id;
         $review->product_id = $request->product_id;
         $review->vendor_id = $request->vendor_id;
         $review->comments = $request->input("comments");
         $review->star_rating = $request->star_rating;
-         
+
         $review->save();
 
         return redirect()->back();
 
     }
 
-    
+
 }

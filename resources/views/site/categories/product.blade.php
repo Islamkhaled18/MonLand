@@ -1,630 +1,837 @@
 @extends('layouts.site.app')
 
 @section('title')
-    - المنتج {{ $product->name }}
+- المنتج {{ $productDetails->name }}
 @endsection
 
 @section('content')
 
-    <body>
+<section id="product-details" class="container-fluid">
+    <!-- Page Navigation -->
+    <div class="page-nav row px-4">
+        <a href="/" class="text-dark pl-2">
+            <img src="../imgs/icons/home-icon-silhouette.png" alt>
+            <!-- <i class="fa-solid fa-house-chimney"></i> -->
+        </a>
+        <a href="#" class="text-dark">
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            {{ $productDetails->name }}
+        </a>
+    </div>
 
-        <!-- my Cart -->
-        <section id="product-details" class="py-5 container">
-            <!-- Page Navigation -->
-            <div class="page-nav row">
-                <a href="/" class="text-dark pl-2">
-                    <i class="fa-solid fa-house-chimney"></i>
-                </a>
-                <a href="#" class="text-dark">
-                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                    {{ $product->name }}
-                </a>
+    <div id="content-wrapper" class="row d-flex py-5 px-4">
+        <!-- image cursoul -->
+        <div id=" imgs-section" class="col-md-4 no-gutters pl-4">
+            <div class="row">
+                <img id="featured" class="w-100" src="{{ asset('storage/'.$productDetails->cover_image) }}" />
+            </div>
+            <!-- Slider Nav imgs -->
+            <div id="slide" class="d-flex justify-content-between flex-wrap mt-2 py-2">
+                @foreach ($productDetails->images as $key => $image)
+                <img class="thumbnail{{ $loop->first ? ' active' : '' }}"
+                    src="{{ $image->photo ? asset($image->photo) : asset('images/default.png') }}"
+                    alt="{{ $productDetails->name }}" />
+                @if ($key == 5) {{-- Stop after 6 images --}}
+                @break
+                @endif
+                @endforeach
+
+
             </div>
 
-            <div id="content-wrapper" class="row d-flex py-5">
-                <div id="imgs-section" class="col-md-4 no-gutters">
-                    <div class="=row">
-                        <img id="featured" class="w-100"
-                            src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
-                            alt="{{ $product->name }}" />
+        </div>
+        <!-- product detials -->
+        <div class=" col-12 col-md-8 no-gutters">
+            <div class="d-flex row">
+
+                <div id="text-section" class="col-12 col-md-8 pl-3">
+                    <!-- <div class></div> -->
+                    <p id="brarnd" class="main-color text-larger text-bold"> {{ $brand_name->name }} : الماركة</p>
+                    <div id="product-title" class="text-larger py-2 text-bold">
+                        {{ $productDetails->name }}
                     </div>
-                    <!-- Slider Nav imgs -->
-                    {{-- <div id="slide" class="d-flex justify-content-between flex-wrap mt-2">
-                        <img class="thumbnail active"
-                            src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
-                            alt="{{ $product->name }}" />
-                        <img class="thumbnail"
-                            src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
-                            alt="{{ $product->name }}" />
-                        <img class="thumbnail"
-                            src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
-                            alt="{{ $product->name }}" />
-                        <img class="thumbnail"
-                            src="{{ $product->images[3]->photo ? asset($product->images[3]->photo) : asset('images/default.png') }}"
-                            alt="{{ $product->name }}" />
-                        <img class="thumbnail"
-                            src="{{ $product->images[4]->photo ? asset($product->images[4]->photo) : asset('images/default.png') }}"
-                            alt="{{ $product->name }}" />
-                        <img class="thumbnail"
-                            src="{{ $product->images[5]->photo ? asset($product->images[5]->photo) : asset('images/default.png') }}"
-                            alt="{{ $product->name }}" />
-
-
-
-                    </div> --}}
-
-                    <div id="slide" class="d-flex justify-content-between flex-wrap mt-2">
-                        @foreach ($product->images as $key => $image)
-                            <img class="thumbnail{{ $loop->first ? ' active' : '' }}"
-                                 src="{{ $image->photo ? asset($image->photo) : asset('images/default.png') }}"
-                                 alt="{{ $product->name }}" />
-                            @if ($key == 5) {{-- Stop after 6 images --}}
-                                @break
-                            @endif
-                        @endforeach
-                    </div>
-                    {{-- <!-- Link -->
-                    <div class="d-flex flex-column text-start text-large text-bold mt-2">
-                        <p>مشاركة هذا المنتج</p>
-                        <p>
-                            انسخ الرابط
-                            <a href="#"> <i class="fa-solid fa-link"></i> </a>
-                        </p>
-                    </div> --}}
-                </div>
-
-                <div id="text-section" class="col-md-8 px-md-5">
-                    <h3 id="product-title">
-                        {{ $product->description }}
-                    </h3>
-                    <!-- Rating Start-->
-                    <?php
-                    $fullStars = floor($average);
-                    $halfStar = $average - $fullStars >= 0.5;
-                    ?>
-                    <div class="d-flex my-3">
-                        <div class="star-rating">
-                            <?php for ($i = 0; $i < 5; $i++): ?>
-                            <?php if ($i < $fullStars): ?>
-                            <i class="fa-solid fa-star"></i>
-                            <?php elseif ($halfStar): ?>
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                            <?php $halfStar = false; ?>
-                            <?php else: ?>
-                            <i class="fa-light fa-star"></i>
-                            <?php endif; ?>
-                            <?php endfor; ?>
+                    <!-- model and rating -->
+                    <div class="d-flex ">
+                        <div class="model-num">
+                            <span>رقم الموديل</span>
+                            <span id="model-number" class="px-1">{{ $productDetails->model ?? $productDetails->name
+                                }}</span>
                         </div>
-                        {{-- <span id="product-review-count" class="mx-4">(اراء العملاء 180)</span> --}}
-                        @if (isset($product) && $product->qty !== null && $product->qty <= 20)
-                            <!-- Rating End-->
-                            <div class="col d-inline-flex justify-content-end">
-                                <div class="px-5 mr-2 text-center text-white bg-main text-bold text-xlarge">
-                                    العدد المتبقى - {{ $product->qty }}
-                                </div>
+                        <!-- Rating Start-->
+                        <div class="d-flex mx-2">
 
+                            <div class="star-rating  ">
+                                <span id="rating-score">03</span>
+                                <i class="fa-solid fa-star"></i>
                             </div>
-                        @endif
+                            <span id="product-review-count" class="mx-4 text-success">(اراء
+                                العملاء 180)</span>
 
+                        </div>
                     </div>
-                    {{-- <div class="d-flex  flex-wrap">
-                    <h4 id="product-price">{{$product->price }} جنية</h4>
-                    <div class="col d-inline-flex justify-content-end">
-                        <div class="px-3 mr-2 text-center text-white bg-main text-bold text-xlarge">
-                            <i class="fa-regular fa-clock"></i>
-                            العرض علي وشك النفاذ
+
+                    <div id="before-price" class=" my-3">
+                        <span>قبل</span>
+                        <span class="text-crossed px-1">{{ $productDetails->old_price }} جنيه</span>
+                    </div>
+                    <div id="after-price" class=" my-3">
+                        <span>الأن</span>
+                        <span class="px-1 text-bold">{{ $productDetails->new_price }} جنيه</span>
+                    </div>
+                    <div id="save-section" class=" my-3 d-flex ">
+                        <span>وفرت</span>
+                        <span class="px-1 ">{{ $productDetails->old_price - $productDetails->new_price }} جنيه</span>
+                        <div class=" px-2 saving-bage ">
+                            <span>خصم</span>
+                            <span id="save-quantity">{{ number_format((($productDetails->old_price -
+                                $productDetails->new_price) /
+                                $productDetails->old_price) * 100, 2, '.', '') }}</span>
+                            <span>%</span>
                         </div>
 
                     </div>
-                </div> --}}
 
-                    <!-- Quantity -->
-                    {{-- <div class="d-flex my-3 flex-wrap">
-                    <span class="normal-text">الكمية</span>
-                    <div id="quantity-counter" class="row flex-nowrap mx-5 align-items-center">
-                        <i class="fa-solid fa-circle-minus"></i>
-                        <div id="quantity-count" class="">1</div>
-                        <i class="fa-solid fa-circle-plus"></i>
-                    </div>
-
-                    <div class="col d-inline-flex justify-content-end">
-                        <div class="p-2 mr-2 text-warning bg-main text-bold text-larger">00</div>
-                        <div class="p-2 mr-2 text-warning bg-main text-bold text-larger">14</div>
-                        <div class="p-2 mr-2 text-warning bg-main text-bold text-larger">42</div>
-                        <div class="p-2 mr-2 text-warning bg-main text-bold text-larger">35</div>
-                    </div>
-                </div> --}}
                     <!-- Colors -->
                     <div id="color-section " class="my-4">
-                        <div class="normal-text my-2 subheader">الوان</div>
+                        <div class="normal-text my-2 ">الوان</div>
                         <div class="d-flex available-colors flex-nowrap">
                             @foreach ($product_colors as $color)
-                                <div style="background:{{ $color->name }}"></div>
+                            <div style="background:{{ $color->name }}"></div>
                             @endforeach
-
                         </div>
                     </div>
                     <!-- Sizes -->
                     <div id="size-section " class="my-4">
-                        <div class="normal-text my-2 subheader d-flex justify-content-between">
+                        <div class="normal-text my-2  d-flex justify-content-between">
                             المقاس
                             <a href="{{ route('sizeTable') }}" class="under-line text-dark"><u>جدول المقاسات</u></a>
                         </div>
                         <div class="d-flex available-sizes flex-nowrap">
                             @foreach ($product_sizes as $size)
-                                <div class="available-size active">{{ $size->name }}</div>
+                            <div class="available-size active">{{ $size->name }}</div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div id="remaining-section" class="main-color text-bold">
+                        <span>باقي</span>
+                        <span id="remaining-quantity">{{ $productDetails->qty }}</span>
+                        <span>قطع فقط</span>
+
+                    </div>
+
+                    <!-- order quantity and add to card -->
+                    <div class="row my-3">
+                        <div id="order-quantity-dropdown" class="dropdown  ml-1">
+                            <button class="btn py-3 border-dark dropdown-toggle" type="button" data-toggle="dropdown"
+                                aria-expanded="false">
+                                <span id="order-quantity" class="border-left px-2">1</span>
+                            </button>
+                            <div id="order-quantity-list" class="dropdown-menu ">
+                                <a class="dropdown-item" href="#">1</a>
+                                <a class="dropdown-item" href="#">2</a>
+                                <a class="dropdown-item" href="#">3</a>
+                            </div>
+                            <!-- Add to card button -->
+
+                        </div> <button class="col-8 col-lg-9 bg-main text-white text-larger badge">
+                            أضف الي العربة
+                        </button>
+                    </div>
+                </div>
+
+                <!-- info -->
+                <div class="col-12 col-md-4 no-gutters">
+
+                    <div class="info-section border-right px-3 text-start  d-flex flex-column  flex-wrap">
+
+                        <div class=" pt-3 pb-4">
+
+                            <img src="{{ asset('website_assets/imgs/icons/product-return.png') }}">
+                            <!-- <i class="fa-solid fa-arrow-rotate-left px-1 main-color"></i> -->
+                            <span>لا يمكن استبدال او ارجاع هذا المنتج</span>
+                        </div>
+
+                        <div id="seller-info" class="  d-flex justify-content-between text-start pt-3 pb-4">
+                            <div class>
+                                <span>
+
+                                    <img src="{{ asset('website_assets/imgs/icons/shop.png') }}">
+                                    <!-- <i class="fa-solid fa-arrow-rotate-left px-1 main-color"></i> -->
+                                    <span class="seller-name"> <a href="{{ route('Site.product.vendorProducts', $productDetails->vendor_id) }}"> اسم البائع : {{ $vendor->vendor_name }}</a> </span>
+                                </span>
+                                <p class="seller-rate"><span class="number">70%</span> تقييم
+                                    البائع</p>
+                            </div>
+                            <div class="d-flex flex-column justify-content-end  align-items-end">
+                                <button class="subscribe-btn px-3">تابع</button>
+                                <p class="seller-subscribers"><span class="number">117525</span>
+                                    المتابعين</p>
+
+                            </div>
+                        </div>
+
+                        <div class=" pt-3 pb-4">
+                            <div>
+
+                                <img src="{{ asset('website_assets/imgs/icons/delivery-truck.png') }}">
+                                <!-- <i class="fa-solid fa-arrow-rotate-left px-1 main-color"></i> -->
+                                <span class="text-large text-simi-bold pr-2">شحن موثوق به</span>
+                            </div>
+
+                            <p class="pr-5">كل شحنه لها مصاريف شحن خاصة بها علي حسب عروض
+                                البائع</p>
+
+                        </div>
+
+                        <div class=" pt-3 pb-4">
+                            <div>
+
+                                <img src="{{ asset('website_assets/imgs/icons/encrypted.png') }}">
+                                <span class="text-large text-simi-bold pr-2">تسوق امن</span>
+                            </div>
+
+                            <p class="pr-5">بياناتك محمية دائما</p>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Tabs -->
+    <div class="collections pt-5 text-start">
+        <div class="container-fluid">
+            <!-- navigation -->
+
+            <ul class="nav nav-tabs justify-content-start border-bottom border-dark py-2 text-large" id="myTab"
+                role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link  border-0" id="description-tab" data-toggle="tab" href="#description" role="tab"
+                        aria-controls="description" aria-selected="true">نظره عامة</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  border-0" id="more-info-tab" data-toggle="tab" href="#more-info" role="tab"
+                        aria-controls="more-info" aria-selected="false">المواصفات</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active border-0" id="reviwes-tab" data-toggle="tab" href="#reviwes" role="tab"
+                        aria-controls="contact" aria-selected="false">التقيمات</a>
+                </li>
+
+            </ul>
+
+            <!--Content Tabs -->
+            <div class="tab-content" id="myTabContent">
+                <!-- generail view Tab -->
+                <div class="tab-pane fade" id="description" role="tabpanel" aria-labelledby="description-tab">
+                    <div id="description-text" class=" d-flex flex-wrap py-4 text-bold text-start">
+                        {{ $productDetails->description }}
+                    </div>
+                </div>
+                <!--  Description Tab -->
+
+                @php
+
+                @endphp
+                <div class="tab-pane fade show " id="more-info" role="tabpanel" aria-labelledby="more-info-tab">
+                    <div class=" d-flex flex-row flex-wrap py-4 text-bold text-large">
+                        <div class="col-12 my-2 col-md-6 ">
+
+                            @foreach ($productSpecifications as $specification)
+                            <div class="px-2">{{ $specification->spec_key }} : {{ $specification->spec_value }}</div>
                             @endforeach
 
-
                         </div>
-                    </div>
-                    <!-- Add To Fav ans Compare -->
-                    <div class="d-flex">
-                        <a href="#" class="addToWishlist">
-                            <i class="fa fa-heart" aria-hidden="true"></i><span class="px-2">أضف للمفضلة</span>
-                        </a>
 
-                        <a href="#" class="mx-4 addTocomparelist">
-                            <i class="fa fa-exchange" aria-hidden="true"></i>
-                            <span class="px-2">أضف للمقارنة</span></a>
+
                     </div>
                 </div>
-                <!-- Add to card button -->
-                <div class="d-flex col-lg-10 my-3 mx-2 mx-lg-5 px-md-5 justify-content-end">
-                    <form action="{{ route('cart.store') }}" method="POST">
-                        @csrf
-                        <button type="submit" name="product_id" value="{{ $product->id }}"
-                            class="d-flex bg-add-to-cart text-larger align-items-center">
-                            <div class="icon p-2">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </div>
-                            <span class="col-10">أضف الي العربة</span>
-                        </button>
-                    </form>
-                </div>
-                <!-- info -->
-                <div class="col-12 pl-md-5">
-                    <div class="info-section border border-secondary border-top-0 d-flex flex-row  flex-wrap ">
+                <!-- rerviews Tab -->
+                <div class="tab-pane fade show active py-5" id="reviwes" role="tabpanel" aria-labelledby="reviwes-tab">
+                    <div class=" d-flex flex-row flex-wrap pt-3 pb-5 text-bold text-large bg-light">
+                        <!-- ratings -->
+                        <div class="col-12 d-flex flex-row flex-wrap px-4 pt-3 col-md-6 ">
+                            <div class="col-12 col-lg-3 no-gutters d-flex flex-column align-items-center ">
+                                <span class="text-xlarge">التقيم العام</span>
 
-                        <div class="col-6 col-md-3 no-gutters border-secondary border-top  py-1">
-                            <div class="table-header text-larger text-center py-1">
-                                <i class="fa-solid fa-shop main-color"> </i>
-                            </div>
-                            <div id="seller-info" class="border-top border-secondary d-flex text-start px-2">
-                                <div class="col-7 no-gutters">
-                                    <p class="text-large seller-name">{{ $vendor->vendor_name }}</p>
-                                    {{-- <p class="seller-rate"><span class="number">70%</span> تقييم البائع</p>
-                                    <p class="seller-subscribers"><span class="number">117525</span> المتابعين</p> --}}
+                                <div class="circle-wrap">
+                                    <div class="circle">
+                                        <div class="mask full">
+                                            <div class="fill"></div>
+                                        </div>
+                                        <div class="mask half">
+                                            <div class="fill"></div>
+                                        </div>
+                                        <div class="inside-circle ">
+                                            <div id="generail-review-rating"
+                                                class="  position-absolute total-rate text-success">4.2</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                {{-- <div class="col-5 justify-content-center d-flex  align-items-center">
-                                    <button class="subscribe-btn">تابع</button>
-                                </div> --}}
+
                             </div>
+
+                            <div class="col-12 col-lg-9 no-gutters d-flex flex-row my-3">
+
+                                <div class="col no-gutters">
+                                    <div class="d-flex">5
+                                        <div class="bar-container m-1 ">
+                                            <div class="bar bar-5"></div>
+                                        </div>
+                                        (127)
+                                    </div>
+                                    <div class="d-flex">4
+                                        <div class="bar-container m-1 ">
+                                            <div class="bar bar-4"></div>
+                                        </div>
+                                        (73)
+                                    </div>
+                                    <div class="d-flex">3
+                                        <div class="bar-container m-1 ">
+                                            <div class="bar bar-3"></div>
+                                        </div>
+                                        (13)
+                                    </div>
+                                    <div class="d-flex">2
+                                        <div class="bar-container m-1 ">
+                                            <div class="bar bar-2"></div>
+                                        </div>
+                                        (50)
+                                    </div>
+                                    <div class="d-flex">1
+                                        <div class="bar-container m-1 ">
+                                            <div class="bar bar-1"></div>
+                                        </div>
+                                        (43)
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- questions -->
+                        <div class="col-12 my-2  pt-3  col-md-6 border-right ">
+                            <div class="question text-smaller main-color">أزاي اقيم المنتج
+                                ده؟</div>
+                            <div class="answer text-small">لو اشتريت منتج من كيان و ممكن
+                                تدخل علي "الطلبات" وبعدين تدوس علي
+                                "تقديم تقييم"</div>
+
+                            <div class="question text-smaller main-color">أزاي بتتحسب
+                                التقيمات؟</div>
+                            <div class="answer text-small">التقيمات من عملاء كيان الذين
+                                اشترو المنتج وكتبو تقييم</div>
+
+                        </div>
+                        <!-- <button class=" text-warning py-1 px-2 mx-4 align-items-center">
+
+              <span>لايوجد تعليق من العملاء و 300 تقييم.</span>
+            </button> -->
+                        <!-- reviews postes -->
+                        <div class="w-100 text-normal">
+
+                            <!-- review comment start -->
+                            <div class=" d-flex flex-wrap d-flex review my-4 justify-content-center text-start  ">
+
+                                <div class="col-3 col-md-1 d-flex justify-content-center align-items-center mr-3">
+                                    <img src="../imgs/productdetails/gir.jpg" alt class="rounded-circle review-image">
+                                </div>
+                                <div class="col-12 col-md-7 px-3 align-content-center align-content-md-start">
+                                    <div class="review-customer-name py-2 ">اسم العميل</div>
+                                    <div class="text-success">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke flip"></i>
+                                    </div>
+                                    <div class="review-customer-review py-1">خامة جميله
+                                        بالنسبه لسعره قصة مناسبه ومقاس مظبوط</div>
+                                    <div class="review-date text-muted text-xsmall">2021-5-22</div>
+                                </div>
+                                <div class="col-12 col-md d-flex justify-content-end align-items-end">
+                                    <div class="review-customer-name text-success ">
+                                        <i class="fa-solid fa-circle-check "></i>
+                                        طلبية مؤكدة
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- review comment ens -->
+                            <!-- review comment start -->
+                            <div class=" d-flex flex-wrap d-flex review my-4 justify-content-center text-start  ">
+
+                                <div class="col-3 col-md-1 d-flex justify-content-center align-items-center mr-3">
+                                    <img src="../imgs/productdetails/gir.jpg" alt class="rounded-circle review-image">
+                                </div>
+                                <div class="col-12 col-md-7 px-3 align-content-center align-content-md-start">
+                                    <div class="review-customer-name py-2 ">اسم العميل</div>
+                                    <div class="text-success">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke flip"></i>
+                                    </div>
+                                    <div class="review-customer-review py-1">خامة جميله
+                                        بالنسبه لسعره قصة مناسبه ومقاس مظبوط</div>
+                                    <div class="review-date text-muted text-xsmall">2021-5-22</div>
+                                </div>
+                                <div class="col-12 col-md d-flex justify-content-end align-items-end">
+                                    <div class="review-customer-name text-success ">
+                                        <i class="fa-solid fa-circle-check "></i>
+                                        طلبية مؤكدة
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- review comment ens -->
+                            <!-- review comment start -->
+                            <div class=" d-flex flex-wrap d-flex review my-4 justify-content-center text-start  ">
+
+                                <div class="col-3 col-md-1 d-flex justify-content-center align-items-center mr-3">
+                                    <img src="../imgs/productdetails/gir.jpg" alt class="rounded-circle review-image">
+                                </div>
+                                <div class="col-12 col-md-7 px-3 align-content-center align-content-md-start">
+                                    <div class="review-customer-name py-2 ">اسم العميل</div>
+                                    <div class="text-success">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke flip"></i>
+                                    </div>
+                                    <div class="review-customer-review py-1">خامة جميله
+                                        بالنسبه لسعره قصة مناسبه ومقاس مظبوط</div>
+                                    <div class="review-date text-muted text-xsmall">2021-5-22</div>
+                                </div>
+                                <div class="col-12 col-md d-flex justify-content-end align-items-end">
+                                    <div class="review-customer-name text-success ">
+                                        <i class="fa-solid fa-circle-check "></i>
+                                        طلبية مؤكدة
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- review comment ens -->
+                            <!-- review comment start -->
+                            <div class=" d-flex flex-wrap d-flex review my-4 justify-content-center text-start  ">
+
+                                <div class="col-3 col-md-1 d-flex justify-content-center align-items-center mr-3">
+
+                                    <img src="../imgs/productdetails/gir.jpg" alt class="rounded-circle review-image">
+                                </div>
+                                <div class="col-12 col-md-7 px-3 align-content-center align-content-md-start">
+                                    <div class="review-customer-name py-2 ">اسم العميل</div>
+                                    <div class="text-success">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke flip"></i>
+                                    </div>
+                                    <div class="review-customer-review py-1">خامة جميله
+                                        بالنسبه لسعره قصة مناسبه ومقاس مظبوط</div>
+                                    <div class="review-date text-muted text-xsmall">2021-5-22</div>
+                                </div>
+                                <div class="col-12 col-md d-flex justify-content-end align-items-end">
+                                    <div class="review-customer-name text-success ">
+                                        <i class="fa-solid fa-circle-check "></i>
+                                        طلبية مؤكدة
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- review comment ens -->
+                            <!-- review comment start -->
+                            <div class=" d-flex flex-wrap d-flex review my-4 justify-content-center text-start  ">
+
+                                <div class="col-3 col-md-1 d-flex justify-content-center align-items-center mr-3">
+                                    <img src="../imgs/productdetails/gir.jpg" alt class="rounded-circle review-image">
+                                </div>
+                                <div class="col-12 col-md-7 px-3 align-content-center align-content-md-start">
+                                    <div class="review-customer-name py-2 ">اسم العميل</div>
+                                    <div class="text-success">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke flip"></i>
+                                    </div>
+                                    <div class="review-customer-review py-1">خامة جميله
+                                        بالنسبه لسعره قصة مناسبه ومقاس مظبوط</div>
+                                    <div class="review-date text-muted text-xsmall">2021-5-22</div>
+                                </div>
+                                <div class="col-12 col-md d-flex justify-content-end align-items-end">
+                                    <div class="review-customer-name text-success ">
+                                        <i class="fa-solid fa-circle-check "></i>
+                                        طلبية مؤكدة
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- review comment ens -->
+
+                        </div>
+                        <!-- review pagination controllers -->
+                        <div class="text-small d-flex justify-content-center align-content-center w-100 mt-5 px-3">
+                            <div class="d-flex  justify-content-center mt-5 pt-3">
+                                <button class="px-5 py-2  bg-transparent border">
+                                    <i class="fas fa-chevron-right ml-2"></i>
+                                    الصفحة السابقة
+
+                                </button>
+                                <button class="mx-3 px-5 py-2  bg-transparent border">
+                                    الصفحة الجاية
+                                    <i class="fas fa-chevron-left mr-2"></i>
+                                </button>
+                            </div>
+
+                            <!--
+              <a href="#" class="main-color ">
+                عرض الكل
+                <i class="fa-solid fa-angle-down"></i></a> -->
                         </div>
 
-                        <div class="col-6 col-md-3 no-gutters border-secondary border-top py-1">
-                            <div class="table-header text-larger text-center py-1">
-                                <i class="fa-solid fa-rotate-left main-color"></i>
-                            </div>
-                            <div class="border-top border-secondary d-block text-start px-2">
-                                <p>{{ $vendor->exhange_status }}</p>
-                            </div>
-                        </div>
-
-                        <div class="col-6 col-md-3 no-gutters border-secondary border-top py-1">
-                            <div class="table-header text-larger text-center py-1">
-                                <i class="fa-solid fa-truck-fast main-color"></i>
-                            </div>
-                            <div class="border-top border-secondary d-block text-start px-2">
-                                <p class="text-large">شحن موثوق به</p>
-                                <p>{{ $vendor->delivery_status }}</p>
-                                {{-- <p>كل شحنه لها مصاريف شحن خاصة بها علي حسب عروض البائع</p> --}}
-                                {{-- <a href="#">معرفه المزيد</a> --}}
-                            </div>
-                        </div>
-
-                        <div class="col-6 col-md-3 no-gutters border-secondary border-top py-1">
-                            <div class="table-header text-larger text-center py-1">
-                                <i class="fa-solid fa-shield main-color"></i>
-                            </div>
-                            <div class="border-top border-secondary d-block text-start px-2">
-                                <p class="text-large">تسوق امن</p>
-                                <p class="">بياناتك محمية دائما</p>
-                            </div>
-                        </div>
                     </div>
-
                 </div>
+
             </div>
+        </div>
 
+    </div>
+    <!-- End Tabs -->
 
-            <!-- Tabs -->
-            <div class="collections pt-5 text-start">
-                <div class="container">
-                    <ul class="nav nav-tabs justify-content-start border-bottom border-dark py-2 text-large"
-                        id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link  border-0" id="description-tab" data-toggle="tab" href="#description"
-                                role="tab" aria-controls="description" aria-selected="true">وصف</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link  border-0" id="more-info-tab" data-toggle="tab" href="#more-info"
-                                role="tab" aria-controls="more-info" aria-selected="false">معلومات اضافية</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active border-0" id="reviwes-tab" data-toggle="tab" href="#reviwes"
-                                role="tab" aria-controls="contact" aria-selected="false">المراجعات</a>
-                        </li>
+    <!-- fast order -->
+    @if($productSetting->quick_request == true)
 
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade" id="description" role="tabpanel" aria-labelledby="description-tab">
-                            <div id="description-text" class=" d-flex flex-wrap py-4 text-bold text-start">
-                                {{ $product->description }}
-                            </div>
-                        </div>
+    @if ($productDetails->quick_request == true)
+    <div id="fast-order" class="d-flex flex-column flex-lg-row align-items-center text-start pb-5">
 
-                        <div class="tab-pane fade show " id="more-info" role="tabpanel" aria-labelledby="more-info-tab">
-                            <div class=" d-flex flex-row flex-wrap py-4 text-bold text-large">
-                                <div class="col-12 my-2 col-md-6 ">
-                                    <div class="px-2">وزن:</div>
-                                    <div class="weight px-2">{{ $product->weight }} </div>
-                                    <div class="dimensions px-2">أبعاد:</div>
-                                    <div class="px-2">{{ $product->dimension }}</div>
-                                    <div class="materials px-2">مواد: </div>
-                                    <div class="px-2">{{ $product->material }}</div>
-                                    <div class="other-info px-2">معلومات اخري:</div>
-                                    <div class="px-2">{{ $product->short_description }}</div>
-                                </div>
+        <div class="col-12  col-lg-4 d-flex flex-nowrap flex-column mt-5 mb-1">
 
-                                {{-- <div class="col-12 my-2  col-md-6 ">
-                                    <div class="px-2">وزن:</div>
-                                    <div class="weight px-2">400 جرام</div>
-                                    <div class="dimensions px-2">أبعاد:</div>
-                                    <div class="px-2">10 x 10x 15 سم</div>
-                                    <div class="materials px-2">مواد: </div>
-                                    <div class="px-2">قطن بنسبة 60% /بولستر بنسب40%</div>
-                                    <div class="other-info px-2">معلومات اخري:</div>
-                                    <div class="px-2">هذا النص هو مثال لنص يمكن أن يستبدل</div>
-                                </div> --}}
+            <p class="main-color text-bold text-xlarge pl-5">اطلب علي السريع</p>
+            <h6>الأن يمكنك طلب المنتج عبر السوشيل ميديا</h6>
+            <div class=" py-1 d-flex align-items-centers">
+                <i class="fa-solid fa-circle-info main-color  px-2"></i>
+                <h6>هذا الاختيار لطلب منتج واحد فقط</h6>
+            </div>
+        </div>
 
+        <div class="col-8 d-flex justify-content-center justify-content-lg-start flex-wrap my-4">
 
+            <button class="bg-add-to-cart px-5 m-2 py-2"><a href="{{$face_book}}">اطلب عبر الفيسبوك</a> <img
+                    src="{{ asset('website_assets/imgs/social media/facebook.svg') }}" alt class="social-icon">
+            </button>
+            <button class="bg-add-to-cart px-5 m-2 py-2"><a href="{{$whatsapp}}">اطلب عبر الواتساب</a> <img
+                    src="{{ asset('website_assets/imgs/social media/whatsapp.svg') }}" alt class="social-icon">
+            </button>
 
+        </div>
 
-                            </div>
-                        </div>
+    </div>
+    @endif
+    @endif
 
-                        <div class="tab-pane fade show active py-5" id="reviwes" role="tabpanel"
-                            aria-labelledby="reviwes-tab">
-                            <div class=" d-flex flex-row flex-wrap pt-3 pb-5 text-bold text-large bg-light">
-                                <!-- ratings -->
-                                <div class="col-12 d-flex flex-row flex-wrap px-4 pt-3 col-md-6 ">
-                                    <div class="col-12 col-lg-3 no-gutters d-flex flex-column align-items-center ">
-                                        <span class="text-larger">التقيم العام</span>
+    <div id="share-product" class="d-flex flex-column align-items-center pt-5">
+        <h5>مشاركة هذا المنتج</h5>
+        <div> <a href class="text-decoration-none">
+                <img src="{{ asset('website_assets/imgs/icons/whatsapp.png') }}">
+            </a>
+            <a href="#" onclick="shareProductOnFacebook(event)" class="text-decoration-none">
+                <img src="{{ asset('website_assets/imgs/icons/facebook.png') }}">
+            </a>
+            <a href class="text-decoration-none">
+                <img src="{{ asset('website_assets/imgs/icons/instagram.png') }}">
+            </a>
+            <a href class="text-decoration-none">
+                <img src="{{ asset('website_assets/imgs/icons/twitter.png') }}">
+            </a>
+        </div>
+    </div>
 
+</section>
 
-                                        <div class="circle-wrap">
-                                            <div class="circle">
-                                                <div class="mask full">
-                                                    <div class="fill"></div>
-                                                </div>
-                                                <div class="mask half">
-                                                    <div class="fill"></div>
-                                                </div>
-                                                <div class="inside-circle ">
-                                                    <i class="fa-solid fa-star position-absolute "></i>
-                                                    <div class="position-absolute total-rate">{{ $average }}</div>
-                                                </div>
-                                            </div>
-                                        </div>
+<!-- samiler products -->
+<section id="semilar-products" class="container-fluid product-card">
+    <div class="row pt-5 px-4 text-start">
+        <div class="col-12">
 
-                                    </div>
+            <h4>مزيد من المنتجات من هذا البائع</h4>
 
-                                    <div class="col-12 col-lg-9 no-gutters d-flex flex-row my-3">
+            <div class="card-deck d-flex flex-wrap px-2">
 
-                                        <div class="col no-gutters">
-                                            <div class="d-flex">5
-                                                <div class="bar-container m-1 ">
-                                                    <div class="bar-5"></div>
-                                                </div>
-                                                ({{ $productsWithRatingFive }})
-                                            </div>
-                                            <div class="d-flex">4
-                                                <div class="bar-container m-1 ">
-                                                    <div class="bar-4"></div>
-                                                </div>
-                                                ({{ $productsWithRatingFour }})
-                                            </div>
-                                            <div class="d-flex">3
-                                                <div class="bar-container m-1 ">
-                                                    <div class="bar-3"></div>
-                                                </div>
-                                                ({{ $productsWithRatingThree }})
-                                            </div>
-                                            <div class="d-flex">2
-                                                <div class="bar-container m-1 ">
-                                                    <div class="bar-2"></div>
-                                                </div>
-                                                ({{ $productsWithRatingTwo }})
-                                            </div>
-                                            <div class="d-flex">1
-                                                <div class="bar-container m-1 ">
-                                                    <div class="bar-1"></div>
-                                                </div>
-                                                ({{ $productsWithRatingOne }})
-                                            </div>
+                <!-- product card start  -->
+                @if($vendors_products)
 
-                                        </div>
-                                    </div>
+                @foreach ($vendors_products as $product)
+                <div class="card mt-4 text-start">
+                    <div class="position-relative">
+                        <div class="position-absolute w-100 p-3 item-assets ">
 
-
-                                </div>
-                                <!-- questions -->
-                                <div class="col-12 my-2  pt-3  col-md-6 border-right ">
-                                    <div class="question text-smaller main-color">أزاي اقيم المنتج ده؟</div>
-                                    <div class="answer text-small">لو اشتريت منتج من كيان و ممكن تدخل علي "الطلبات" وبعدين
-                                        تدوس علي
-                                        "تقديم تقييم"</div>
-
-
-                                    <div class="question text-smaller main-color">أزاي بتتحسب التقيمات؟</div>
-                                    <div class="answer text-small">التقيمات من عملاء كيان الذين اشترو المنتج وكتبو تقييم
-                                    </div>
-
-
-                                </div>
-                                @if (!$reviews)
-                                    <button class=" text-warning py-1 px-2 mx-4 align-items-center">
-
-                                        <span>لايوجد تعليق من العملاء.</span>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <button class="add-to-fav">
+                                        <i class="fa fa-heart" addToWishlist" data-product-id="{{ $product->id }}"
+                                            aria-hidden="true"></i>
                                     </button>
-                                @endif
-                                <!-- reviews postes -->
-                                @foreach ($review_details as $review_detail)
-                                    <div class="w-100 text-normal">
+                                </li>
 
-                                        <div
-                                            class=" d-flex flex-wrap d-flex review my-4 justify-content-center text-start  ">
+                                <li>
+                                    <button>
+                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                    </button>
+                                </li>
 
-                                            <div
-                                                class="col-3 col-md-1 d-flex justify-content-center align-items-center mr-3">
-                                                <img src="../imgs/productdetails/gir.jpg" alt=""
-                                                    class="rounded-circle review-image">
-                                            </div>
-                                            <div class="col-12 col-md-7 px-3 align-content-center align-content-md-start">
-                                                <div class="review-customer-name py-2 ">
-                                                    {{ $review_detail->user->firstName }}</div>
-                                                <div class="star-rating">
-                                                    <?php
-                                                    $star_rating = $review_detail->star_rating;
-                                                    $star_html = '<i class="fa-solid fa-star"></i>';
-                                                    $half_star_html = '<i class="fa-solid fa-star-half-stroke flip"></i>';
-                                                    
-                                                    $full_stars = intval($star_rating);
-                                                    $half_star = $star_rating - $full_stars >= 0.5;
-                                                    for ($i = 0; $i < $full_stars; $i++) {
-                                                        echo $star_html;
-                                                    }
-                                                    
-                                                    if ($half_star) {
-                                                        echo $half_star_html;
-                                                    }
-                                                    
-                                                    for ($i = 0; $i < 5 - $full_stars - intval($half_star); $i++) {
-                                                        echo '<i class="fa-regular fa-star"></i>';
-                                                    }
-                                                    ?>
-                                                </div>
-                                                <div class="review-customer-review py-1">{{ $review_detail->comments }}
-                                                </div>
-                                                <div class="review-date text-muted text-xsmall">
-                                                    {{ $review_detail->create_at }}</div>
-                                            </div>
-                                            {{-- <div class="col-12 col-md d-flex justify-content-end align-items-end">
-                                                <div class="review-customer-name text-success ">
-                                                    <i class="fa-solid fa-circle-check "></i>
-                                                    طلبية مؤكدة
-                                                </div>
-                                            </div> --}}
-                                        </div>
-
-                                    </div>
-                                @endforeach
-
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- End Tabs -->
-                <!-- fast order -->
-
-                @if ($product->quick_request == true)
-                    <div id="fast-order" class="container text-start">
-                        <div class="d-flex flex-nowrap flex-row align-items-baseline mt-5 mb-1">
-
-                            <p class="main-color text-bold text-larger pl-5">اطلب علي السريع</p>
-                            <div class="col line "></div>
-                        </div>
-                        <h5>الأن يمكنك طلب المنتج عبر السوشيل ميديا</h5>
-                        <div class="text-large py-1 d-flex align-items-centers">
-                            <i class="fa-solid fa-circle-info main-color text-xlarge px-2"></i>
-                            <h6>هذا الاختيار لطلب منتج واحد فقط</h6>
-                        </div>
-                        <div class="d-flex justify-content-center justify-content-md-start flex-wrap my-1">
-
-                            <button
-                                class="d-flex col-10 col-md-3 my-2 py-2 mx-md-5 bg-add-to-cart text-larger align-items-center">
-                                <a href="{{ $face_book }}"><span class="col-9">اطلب عبر الفيسبوك</span></a>
-
-                                <img src="../imgs/social media/facebook.svg" alt="" class="social-icon">
-                            </button>
-                            <button class="d-flex col-10 col-md-3 my-2 py-2 bg-add-to-cart text-larger align-items-center">
-
-                                <a href="{{ $whatsapp }}"><span class="col-9">اطلب عبر الوتساب</span></a>
-
-
-                                <img src="../imgs/social media/whatsapp.svg" alt="" class="social-icon">
-
-                            </button>
-
+                                <li>
+                                    <button>
+                                        <i class="fa fa-exchange addTocomparelist" data-product-id="{{ $product->id }}"
+                                            aria-hidden="true"></i>
+                                    </button>
+                                </li>
+                            </ul>
 
                         </div>
-
-                    </div>
-                @endif
-
-
-
-            </div>
-
-        </section>
-
-
-        <!-- samiler products -->
-        <section id="semilar-products" class="container">
-            <div class="row my-5 pt-5">
-                <div class="col-12">
-                    <div class="row p-2 text-white card-deck-title">
-                        <a class="text-white" href="{{ route('Site.product.vendorProducts', $product->vendor_id) }}">
-                            <p>مزيد من المنتجات من هذا البائع</p>
-                        </a>
-                    </div>
-
-                    <div class="card-deck d-flex flex-wrap">
-                        @foreach ($vendors_products as $vendor_product)
-                            <div class="card mt-4">
-                                <input type="hidden" name="product_id" value="{{ $vendor_product->id }}"
-                                    id="product_page_product_id">
-                                <div class="position-relative">
-                                    <div class="position-absolute w-100 p-3 item-assets">
-                                        <div class="badge product-label badge-success px-3 py-2 rounded-0">
-                                            الأكثر
-                                        </div>
-                                        <ul class="list-unstyled position-absolute">
-                                            <li>
-                                                <button class="add-to-fav">
-                                                    <i class="fa fa-heart" aria-hidden="true"></i>
-                                                </button>
-                                            </li>
-
-                                            <li>
-                                                <button data-toggle="modal" data-target="#modal_view_4">
-                                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                                </button>
-                                            </li>
-
-                                            <li>
-                                                <button>
-                                                    <i class="fa fa-exchange" aria-hidden="true"></i>
-                                                </button>
-                                            </li>
-                                        </ul>
-
-                                        <form action="{{ route('cart.store') }}" method="POST">
-                                            @csrf
-
-                                            <button type="submit" name="product_id" value="{{ $vendor_product->id }}"
-                                                class="add-to-cart btn py-1 px-2">
-                                                أضف إلى العربة
-                                            </button>
-                                        </form>
-                                    </div>
-
+                        <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators ">
+                                <li data-target="#product-card-indicators" data-slide-to="0" class="active"></li>
+                                <li data-target="#product-card-indicators" data-slide-to="1" class="border"></li>
+                                <li data-target="#product-card-indicators" data-slide-to="2" class="border"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
                                     <img class="card-img-top"
-                                        src="{{ $vendor_product->images[0]->photo ? asset($vendor_product->images[0]->photo) : asset('images/default.png') }}"
-                                        alt="{{ $vendor_product->name }}" />
-
+                                        src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
+                                        alt="{{ $product->name }}" title="{{ $product->name }}" />
 
                                 </div>
-
-                                <div class="card-body text-center">
-                                    <h5 class="card-title"><a
-                                            href="{{ route('Site.product', $vendor_product->name) }}">{{ $vendor_product->name }}</a>
-                                    </h5>
-                                    <h5>{{ $vendor_product->price }} جنيه</h5>
-                                </div>
-                                {{-- Modal --}}
-
-                                {{-- @include('site.includes.modal_view_4',$vendor_product) --}}
-                            </div>
-                        @endforeach
-
-
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="row my-5 pt-5">
-                <div class="col-12">
-                    <div class="row p-2 text-white card-deck-title">
-                        <p>منتجات ذات صلة</p>
-                    </div>
-
-                    <div class="card-deck d-flex flex-wrap">
-                        @foreach ($related_products as $related_product)
-                            <div class="card mt-4">
-                                <div class="position-relative">
-                                    <div class="position-absolute w-100 p-3 item-assets">
-                                        <div class="badge product-label badge-success px-3 py-2 rounded-0">
-                                            الأكثر
-                                        </div>
-                                        <ul class="list-unstyled position-absolute">
-                                            <li>
-                                                <button class="add-to-fav">
-                                                    <i class="fa fa-heart" aria-hidden="true"></i>
-                                                </button>
-                                            </li>
-
-                                            <li>
-                                                <button data-toggle="modal" data-target="#modal_view_3">
-                                                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                                </button>
-                                            </li>
-
-                                            <li>
-                                                <button>
-                                                    <i class="fa fa-exchange" aria-hidden="true"></i>
-                                                </button>
-                                            </li>
-                                        </ul>
-
-                                        <form action="{{ route('cart.store') }}" method="POST">
-                                            @csrf
-
-                                            <button type="submit" name="product_id" value="{{ $related_product->id }}"
-                                                class="add-to-cart btn py-1 px-2">
-                                                أضف إلى العربة
-                                            </button>
-                                        </form>
-                                    </div>
-
-
+                                <div class="carousel-item">
                                     <img class="card-img-top"
-                                        src="{{ $related_product->images[0]->photo ? asset($related_product->images[0]->photo) : asset('images/default.png') }}"
-                                        alt="{{ $related_product->name }}" />
-                                </div>
+                                        src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
+                                        alt="{{ $product->name }}" title="{{ $product->name }}" />
 
-                                <div class="card-body text-center">
-                                    <h5 class="card-title"><a
-                                            href="{{ route('Site.product', $related_product->name) }}">{{ $related_product->name }}</a>
-                                    </h5>
-                                    <h5>{{ $related_product->price }} جنيه</h5>
                                 </div>
-                                {{-- Modal --}}
+                                <div class="carousel-item">
+                                    <img class="card-img-top"
+                                        src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
+                                        alt="{{ $product->name }}" title="{{ $product->name }}" />
 
-                                {{-- @include('site.includes.modal_view_3',$related_product) --}}
+                                </div>
                             </div>
-                        @endforeach
-
+                        </div>
                     </div>
+
+                    <div class="card-body mt-4">
+
+                        <p class="card-title"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                $product->name}}</a>
+                        </p>
+                        <div class="d-flex row no-gutters justify-content-between">
+                            <span class="px-1 text-bold"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                    $product->new_price }}</a> جنيه</span>
+                            <div class="d-flex justify-content-end ">
+                                <div class="star-rating d-flex align-items-center  text-small">
+                                    <span id="rating-score">03</span>
+                                    <i class="fa-solid text-smaller fa-star"></i>
+                                </div>
+                                <span id="product-review-count" class="mx-1">(180)</span>
+                            </div>
+                        </div>
+
+                        <div id="before-price" class=" my-3 row">
+                            <span class="text-crossed  px-1"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                    $product->old_price }}</a> جنيه</span>
+
+                            <div class="text-success text-bold d-flex"><span>خصم</span>
+                                <span id="save-quantity">{{ number_format((($product->old_price - $product->new_price) /
+                                    $product->old_price) * 100, 2, '.', '') }}</span>
+                                <span>%</span>
+                            </div>
+                        </div>
+
+                        <div class="  border-dotted p-2 text-bold">
+
+                            {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }} </div>
+                        </div>
+                        <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                            أضف إلى العربة
+                        </button>
+                    </div>
+                    @endforeach
+                    @endif
+
+
+
                 </div>
             </div>
-        </section>
+        </div>
 
-    </body>
+</section>
+<!-- related products -->
+<section id="semilar-products" class="container-fluid product-card">
+    <div class="row my-5 pt-5 px-4 text-start">
+        <div class="col-12">
 
-    </html>
+            <h4>منتجات ذات صلة</h4>
+
+            <div class="card-deck d-flex flex-wrap px-2">
+
+                <!-- product card start  -->
+
+                @if($related_products)
+
+                @foreach ($related_products as $product)
+                <div class="card mt-4 text-start">
+                    <div class="position-relative">
+                        <div class="position-absolute w-100 p-3 item-assets ">
+
+                            <ul class="list-unstyled">
+                                <li>
+                                    <button class="add-to-fav">
+                                        <i class="fa fa-heart" addToWishlist" data-product-id="{{ $product->id }}"
+                                            aria-hidden="true"></i>
+                                    </button>
+                                </li>
+
+                                <li>
+                                    <button>
+                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                    </button>
+                                </li>
+
+                                <li>
+                                    <button>
+                                        <i class="fa fa-exchange addTocomparelist" data-product-id="{{ $product->id }}"
+                                            aria-hidden="true"></i>
+                                    </button>
+                                </li>
+                            </ul>
+
+                        </div>
+                        <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators ">
+                                <li data-target="#product-card-indicators" data-slide-to="0" class="active"></li>
+                                <li data-target="#product-card-indicators" data-slide-to="1" class="border"></li>
+                                <li data-target="#product-card-indicators" data-slide-to="2" class="border"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img class="card-img-top"
+                                        src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
+                                        alt="{{ $product->name }}" title="{{ $product->name }}" />
+
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="card-img-top"
+                                        src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
+                                        alt="{{ $product->name }}" title="{{ $product->name }}" />
+
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="card-img-top"
+                                        src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
+                                        alt="{{ $product->name }}" title="{{ $product->name }}" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body mt-4">
+
+                        <p class="card-title"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                $product->name}}</a>
+                        </p>
+                        <div class="d-flex row no-gutters justify-content-between">
+                            <span class="px-1 text-bold"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                    $product->new_price }}</a> جنيه</span>
+                            <div class="d-flex justify-content-end ">
+                                <div class="star-rating d-flex align-items-center  text-small">
+                                    <span id="rating-score">03</span>
+                                    <i class="fa-solid text-smaller fa-star"></i>
+                                </div>
+                                <span id="product-review-count" class="mx-1">(180)</span>
+                            </div>
+                        </div>
+
+                        <div id="before-price" class=" my-3 row">
+                            <span class="text-crossed  px-1"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                    $product->old_price }}</a> جنيه</span>
+
+                            <div class="text-success text-bold d-flex"><span>خصم</span>
+                                <span id="save-quantity">{{ number_format((($product->old_price - $product->new_price) /
+                                    $product->old_price) * 100, 2, '.', '') }}</span>
+                                <span>%</span>
+                            </div>
+                        </div>
+
+                        <div class="  border-dotted p-2 text-bold">
+
+                            {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }} </div>
+                        </div>
+                        <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+                            أضف إلى العربة
+                        </button>
+                    </div>
+                    @endforeach
+                    @endif
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+    {{-- //favorites --}}
+    @include('site.includes.first_add_to_favorite_modal')
+    @include('site.includes.exist_same_product_in_favorites_modal')
+    {{-- //compares --}}
+    @include('site.includes.first_add_to_compare_modal')
+    @include('site.includes.exist_same_product_in_compares_modal')
+    @include('site.includes.max_products_in_compares')
+
+
+
+
+</section>
+
+
 @endsection
+@push('scripts')
+<script>
+    function shareProductOnFacebook(event) {
+        event.preventDefault();
+
+        var urlToShare = "{{ route('Site.product',$productDetails->name) }}"; // Replace with your actual product URL
+        FB.ui({
+            method: 'share',
+            href: urlToShare,
+        }, function(response) {
+            // Handle the response or perform any necessary actions after sharing
+            console.log(response);
+        });
+    }
+</script>
+
+
+<script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: 'YOUR_APP_ID',
+        autoLogAppEvents: true,
+        xfbml: true,
+        version: 'v13.0'
+      });
+    };
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v13.0&appId=YOUR_APP_ID&autoLogAppEvents=1";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+@endpush

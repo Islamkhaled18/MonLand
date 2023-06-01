@@ -42,8 +42,8 @@
                                 </label>
                                 <select name="product_id" class="select2 form-control">
                                     <optgroup label="من فضلك أختر المنتج ">
-                                        @if ($products && $products->count() > 0)
-                                        @foreach ($products as $product)
+                                        @if ($allProducts && $allProducts->count() > 0)
+                                        @foreach ($allProducts as $product)
                                         <option value="{{ $product->id }}">{{ $product->name }}</option>
                                         @endforeach
                                         @endif

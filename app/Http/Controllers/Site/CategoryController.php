@@ -11,13 +11,11 @@ use App\Models\Productsize;
 use App\Models\Review;
 use Illuminate\Http\Request;
 
-
-// الفانكشنشز اللى تخص فلاتر منتجات الاقسام
 class CategoryController extends Controller
 {
     public function allCategory()
     {
-        $allCategories =  Category::parent()->select('id', 'name')->with(['childrens' => function ($q) {
+        $allCategories = Category::parent()->select('id', 'name')->with(['childrens' => function ($q) {
             $q->select('id', 'parent_id', 'name');
             $q->with(['childrens' => function ($qq) {
                 $qq->select('id', 'parent_id', 'name');
@@ -31,61 +29,38 @@ class CategoryController extends Controller
     {
         $category = Category::where('name', $name)->first();
 
-         $productColors = ProductColor::distinct()->get(['name']);
+        $productColors = ProductColor::distinct()->get(['name']);
 
-         $productSizes = Productsize::distinct()->get(['name']);
-
-
+        $productSizes = Productsize::distinct()->get(['name']);
 
         if ($category) {
 
-            //$products = $category->products->paginate(4);
-
-           $products = Product::where("mainCategory_id" , $category->id)->paginate(4);
-
-
+            $categoryProducts = $category->products()->paginate(12);
+            $categoryProductsCount = $category->products->count();
         }
-        $allCategories = Category::Parent()->paginate(4);
 
-        $ads = Ad::paginate(1);
-
-        return view('site.categories.products', compact('category', 'productColors' ,'productSizes' ,'products', 'allCategories', 'ads'));
+        return view('site.categories.products', compact('category', 'categoryProductsCount', 'productColors', 'productSizes', 'categoryProducts'));
     }
 
-
-    public function search_products_by_price(Request $request, $name)
+    public function search_products_by_created_at(Request $request, $name)
     {
+        $productColors = ProductColor::distinct()->get(['name']);
+        $productSizes = Productsize::distinct()->get(['name']);
+
+
         $category = Category::where('name', $name)->first();
 
         if ($category) {
-            $products = Product::where("mainCategory_id" , $category->id)
-            ->where('price', '>=', $request->multi)
-            ->paginate(4);
-            //$products = $category->products->where('price', '>=', $request->multi);
+
+            $categoryProducts = $category->products()
+                ->orderBy("created_at", "desc")
+                ->paginate(12);
+            $categoryProductsCount = $category->products->count();
+
         }
-        $allCategories = Category::Parent()->paginate(4);
-        $ads = Ad::paginate(1);
 
-        return view('site.categories.filterProducts', compact('products', 'category', 'allCategories', 'ads'))->render();
+        return view('site.categories.products', compact('categoryProducts', 'categoryProductsCount', 'category','productColors','productSizes'))->render();
     }
-     public function search_products_by_created_at(Request $request, $name)
-     {
-         $category = Category::where('name', $name)->first();
-
-        if ($category) {
-             //$products = $category->products->sortBy('created_at')->paginate(4);
-
-             $products = Product::where("mainCategory_id" , $category->id)
-             ->orderBy("created_at" , "desc")
-             ->paginate(4);
-
-
-         }
-         $allCategories = Category::Parent()->paginate(4);
-         $ads = Ad::paginate(1);
-
-         return view('site.categories.filterProducts', compact('products', 'category', 'allCategories', 'ads'))->render();
-     }
 
     public function get_all_products(Request $request, $name)
     {
@@ -93,30 +68,94 @@ class CategoryController extends Controller
 
         if ($category) {
 
-           $products = Product::where("mainCategory_id" , $category->id)->paginate(4);
+            $categoryProducts = $category->products()->paginate(4);
+            $categoryProductsCount = $category->products->count();
+
         }
-        $allCategories = Category::Parent()->paginate(4);
-        $ads = Ad::paginate(1);
 
-        return view('site.categories.filterProducts', compact('products', 'category', 'allCategories', 'ads'))->render();
+        return view('site.categories.products', compact('category', 'categoryProducts', 'categoryProductsCount'))->render();
     }
-
 
     public function get_flash_products(Request $request, $name)
     {
-        $category = Category::where('name', $name)->first();
 
+        $category = Category::where('name', $name)->first();
 
         if ($category) {
 
-           $products = Product::where("mainCategory_id" , $category->id)
-            ->where('flash_sale', 1)
-            ->paginate(4);
-        }
-        $allCategories = Category::Parent()->paginate(4);
-        $ads = Ad::paginate(1);
+            $categoryProducts = $category->products()
+                ->where('flash_sale', 1)
+                ->paginate(12);
+            $categoryProductsCount = $category->products->count();
 
-        return view('site.categories.filterProducts', compact('products', 'category', 'allCategories', 'ads'))->render();
+        }
+
+        return view('site.categories.products', compact('categoryProducts', 'category', 'categoryProductsCount'))->render();
+    }
+
+    public function search_products_by_price(Request $request, $name)
+    {
+        $category = Category::where('name', $name)->first();
+
+        if ($category) {
+            $query = $category->products();
+
+            if ($request->has('minPrice')) {
+                $minPrice = $request->input('minPrice');
+                $query->where('new_price', '>=', $minPrice);
+            }
+
+            if ($request->has('maxPrice')) {
+                $maxPrice = $request->input('maxPrice');
+                $query->where('new_price', '<=', $maxPrice);
+            }
+
+            $categoryProducts = $query->paginate(12);
+            $categoryProductsCount = $categoryProducts->count();
+        }
+
+        return view('site.categories.products', compact('categoryProducts', 'category', 'categoryProductsCount'))->render();
+    }
+
+    public function search_by_color(Request $request, $name)
+    {
+        $productColors = ProductColor::distinct()->get(['name']);
+
+        $category = Category::where('name', $name)->first();
+
+        if ($category) {
+            $colors = ProductColor::where("name", $request->color)->pluck('product_id')->toArray();
+
+            $colorsArr = array_values($colors);
+
+            $categoryProducts = $category->products()->whereIN("id", $colorsArr)->paginate(12);
+            $categoryProductsCount = $category->products->count();
+
+        }
+
+        return view('site.categories.products', compact('categoryProductsCount', 'colorsArr', 'category', 'categoryProducts', 'productColors', 'colors'))->render();
+
+    }
+
+
+    public function search_by_size(Request $request, $name)
+    {
+        $productColors = ProductColor::distinct()->get(['name']);
+
+        $productSizes = Productsize::distinct()->get(['name']);
+
+        $category = Category::where('name', $name)->first();
+
+        if ($category) {
+            $sizes = Productsize::where('name', $request->size)->pluck('product_id')->toArray();
+
+            $categoryProducts = $category->products()->whereIN("id", $sizes)->paginate(12);
+            $categoryProductsCount = $category->products->count();
+
+        }
+
+        return view('site.categories.products', compact('productSizes', 'productColors', 'category', 'sizes', 'categoryProducts', 'categoryProductsCount'))->render();
+
     }
 
     public function get_products_ByBrands(Request $request, $name)
@@ -126,86 +165,32 @@ class CategoryController extends Controller
         $brand = $request->brand; //brand
 
         if ($category && $brand) {
-            $products = Product::where("mainCategory_id" , $category->id)->whereIN('brand_id', explode(',', $brand))->paginate(4);
+            $categoryProducts = $category->products()->whereIN('brand_id', explode(',', $brand))->paginate(12);
+            $categoryProductsCount = $category->products->count();
         }
-        $allCategories = Category::Parent()->paginate(4);
-        $ads = Ad::paginate(1);
 
-        return view('site.categories.filterProducts', compact('products', 'category', 'allCategories', 'ads'))->render();
+        return view('site.categories.products', compact('categoryProducts', 'category', 'categoryProductsCount'))->render();
     }
 
-    public function search_by_color(Request $request, $name){
-        $category = Category::where('name', $name)->first();
-
-        $colors =  ProductColor::where("name" , $request->color)->pluck('product_id')->toArray();
-
-        $colorsArr = array_values($colors);
-
-
-
-        if($category) {
-
-            $products = Product::where("mainCategory_id" , $category->id)
-            ->whereIN("id" , $colorsArr)->paginate(4);
-        }
-        $allCategories = Category::Parent()->paginate(4);
-        $ads = Ad::paginate(1);
-
-
-
-        return view('site.categories.filterProducts', compact('products', 'category', 'allCategories', 'ads'))->render();
-
-    }
-
-    public function search_by_size(Request $request , $name){
+    public function search_by_review_products(Request $request, $name)
+    {
 
         $category = Category::where('name', $name)->first();
 
-        $sizes = Productsize::where('name' , $request->size)->pluck('product_id')->toArray();
+        $reviews = Review::where("star_rating", $request->rating)->pluck('product_id')->toArray();
 
+        if ($category) {
 
-
-        if($category) {
-
-            $products = Product::where("mainCategory_id" , $category->id)
-            ->whereIN("id" , $sizes)->paginate(4);
+            $products = Product::where("mainCategory_id", $category->id)
+                ->whereIN("id", $reviews)->paginate(4);
 
         }
 
         $allCategories = Category::Parent()->paginate(4);
         $ads = Ad::paginate(1);
 
-
-
-        return view('site.categories.filterProducts', compact('products', 'category', 'allCategories', 'ads'))->render();
+        return view('site.categories.products', compact('products', 'category', 'allCategories', 'ads'))->render();
 
     }
-
-    public function search_by_review_products(Request $request , $name){
-
-        $category = Category::where('name', $name)->first();
-
-         $reviews = Review::where("star_rating" , $request->rating)->pluck('product_id')->toArray();
-
-
-         if($category) {
-
-            $products = Product::where("mainCategory_id" , $category->id)
-            ->whereIN("id" , $reviews)->paginate(4);
-
-        }
-
-
-        $allCategories = Category::Parent()->paginate(4);
-        $ads = Ad::paginate(1);
-
-
-
-        return view('site.categories.filterProducts', compact('products', 'category', 'allCategories', 'ads'))->render();
-
-
-    }
-
-
 
 }

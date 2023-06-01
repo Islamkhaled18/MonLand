@@ -112,19 +112,21 @@
                 <hr />
                 <form>
                     <div class="d-flex align-items-center">
-                        <input type="radio" name="offers" id="all-products" class="position-relative" />
-                        <label for="all-products" class="mr-2">كل المنتجات</label>
+                        <input type="radio" name="offers" id="all_products" class="position-relative" />
+                        <label for="all_products" class="mr-2">كل المنتجات</label>
                     </div>
                     <div class="d-flex align-items-center">
-                        <input type="radio" name="offers" id="all-offers" />
-                        <label for="all-offers" class="mr-2">العروض فقط</label>
+                        <input type="radio" name="offers" id="all_offers" />
+                        <label for="all_offers" class="mr-2">
+                            العروض فقط
+                        </label>
 
                     </div>
                 </form>
             </div>
 
             <div class="my-4">
-                <h6 class="font-weight-bold">السعر</h6>
+                <h6 class="font-weight-bold">الاقسام الرئيسية</h6>
                 <hr />
                 <div>
                     <ul class="list-unstyled">
@@ -135,15 +137,13 @@
                             <ul class="pr-4 list-unstyled">
                                 <li>
                                     <i class="fa-solid fa-chevron-left"></i>
-                                    رجال
+                                    جميع الاقسام
 
                                     <ul class="list-unstyled pr-4">
-                                        <li><a href="#" class="text-muted">أحذية</a></li>
-                                        <li><a href="#" class="text-muted">حقائب يد وحقائب كتف</a></li>
-                                        <li><a href="#" class="text-muted">ساعات</a></li>
-                                        <li><a href="#" class="text-muted">مجوهرات</a></li>
-                                        <li><a href="#" class="text-muted">ملابس</a></li>
-                                        <li><a href="#" class="text-muted">ملحقات</a></li>
+                                        @foreach ($mainCategories as $mainCategory)
+                                        <li><a href="{{ route('mainCategory.products', $mainCategory->name) }}"
+                                                class="text-muted">{{ $mainCategory->name }}</a></li>
+                                        @endforeach
                                     </ul>
                                 </li>
                             </ul>
@@ -159,17 +159,19 @@
                 <div class="d-flex">
                     <div class="d-flex align-items-center">
                         <span>من </span>
-                        <input type="number" min="0" class="form-control mr-2" />
+                        <input type="number" min="0" class="form-control mr-2" id="minPriceInput" />
+
                     </div>
 
                     <div class="d-flex pr-3 align-items-center">
                         <span>إلى </span>
-                        <input type="number" min="0" class="form-control mr-2" />
+                        <input type="number" min="0" class="form-control mr-2" id="maxPriceInput" />
+
                     </div>
 
                 </div>
                 <div class="d-flex justify-content-end">
-                    <button class=" btn bg-main text-white text-bold mx-2 mt-4 rounded-0 py-2 px-4">
+                    <button class=" btn bg-main text-white text-bold mx-2 mt-4 rounded-0 py-2 px-4 priceRange">
                         تطبيق
                     </button>
                 </div>
@@ -179,62 +181,54 @@
                 <h6 class="font-weight-bold">اللون</h6>
                 <hr />
                 <div class="d-flex available-colors flex-nowrap">
-                    <div class="bg-danger"></div>
-                    <div class="bg-warning"></div>
-                    <div class="bg-success"></div>
+                    @if($productColors)
+
+                    @foreach($productColors as $pc)
+                    <div data-color="{{$pc->name}}" class="pcColor" style="background-color: {{$pc->name}}">
+                    </div>
+                    @endforeach
+                    @endif
                 </div>
             </div>
+
 
             <div class="my-4">
                 <h6 class="font-weight-bold">المقاس</h6>
                 <hr />
                 <form>
                     <div class="row align-items-center">
+                        @foreach ($productSizes as $pz)
                         <div class="col-6 d-flex align-items-center">
-                            <input type="radio" name="size" id="all-sizes" class="position-relative" />
-                            <label for="all-sizes" class="mr-2 mb-0">الكل</label>
+
+                            <input type="radio" value="{{$pz->name}}" name="size" id="size-{{$pz->name}}"
+                                class="position-relative" />
+
+                            <label for="size-{{$pz->name}}" class="mr-2 mb-0">{{$pz->name}}</label>
+
                         </div>
-                        <div class="col-6 d-flex align-items-center rad-btn">
-                            <input type="radio" name="size" id="small" class="position-relative" />
-                            <label for="small" class="mr-2 mb-0">s</label>
-                        </div>
-                        <div class="col-6 d-flex align-items-center mt-3">
-                            <input type="radio" name="size" id="xl" class="position-relative" />
-                            <label for="xl" class="mr-2 mb-0">xl</label>
-                        </div>
-                        <div class="col-6 d-flex align-items-center mt-3">
-                            <input type="radio" name="size" id="xxl" class="position-relative" />
-                            <label for="xxl" class="mr-2 mb-0">xxl</label>
-                        </div>
-                        <div class="col-6 d-flex align-items-center mt-3">
-                            <input type="radio" name="size" id="41" class="position-relative" />
-                            <label for="41" class="mr-2 mb-0">41</label>
-                        </div>
-                        <div class="col-6 d-flex align-items-center mt-3">
-                            <input type="radio" name="size" id="43" class="position-relative" />
-                            <label for="43" class="mr-2 mb-0">43</label>
-                        </div>
+                        @endforeach
                     </div>
 
                 </form>
             </div>
+
             <div>
                 <h6 class="font-weight-bold">الماركة</h6>
                 <hr />
                 <form>
-                    <div class="d-flex align-items-center">
-                        <input type="radio" name="brand" id="all-brands" class="position-relative" />
-                        <label for="all-brands" class="mr-2">الكل </label>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <input type="radio" name="brand" id="brand-1" />
-                        <label for="brand-1" class="mr-2">ماركة 1</label>
-                    </div>
 
+                    <?php $brands = DB::table('brands')
+                            ->orderby('name', 'ASC')
+                            ->get(); ?>
+
+                    @foreach ($brands as $brand)
                     <div class="d-flex align-items-center">
-                        <input type="radio" name="brand" id="brand-2" />
-                        <label for="brand-2" class="mr-2">ماركة 2</label>
+                        <input type="radio" name="brand" id="brandId" value="{{ $brand->id }}" class="brandloop" />
+                        <label for="brand-1" class="mr-2">{{ $brand->name }}</label>
                     </div>
+                    @endforeach
+
+
                 </form>
             </div>
 
@@ -372,15 +366,15 @@
                     <div>
 
                         <p class="mt-2">
-                            إجمالى المنتجات {{ $products_count }}
+                            إجمالى المنتجات {{ $mainCategoryProductsCount }}
                         </p>
                     </div>
 
                     <div class="d-flex align-items-center">
                         ترتيب حسب :
-                        <select class="form-control w-auto mr-3">
-                            <option>العربية</option>
-                            <option>English</option>
+                        <select name="sort_by" id="sort_by" class="form-control w-auto mr-3">
+                            <option value="">ترتيب حسب</option>
+                            <option value="sort_by">وصلنا حديثا</option>
                         </select>
                     </div>
 
@@ -452,10 +446,10 @@
                             <div class="card-body mt-4">
 
                                 <p class="card-title">
-                                    {{ $product->name }}
+                                    <a href="{{ route('Site.product',$product->name ) }}">{{ $product->name }}</a>
                                 </p>
                                 <div class="d-flex row no-gutters justify-content-between">
-                                    <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
+                                    <span class="px-1 text-bold"><a href="{{ route('Site.product',$product->name ) }}">{{ $product->new_price }}</a> جنيه</span>
                                     <div class="d-flex justify-content-end ">
                                         <div class="star-rating d-flex align-items-center  text-small">
                                             <span id="rating-score">03</span>
@@ -466,7 +460,8 @@
                                 </div>
 
                                 <div id="before-price" class=" my-3 row">
-                                    <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
+                                    <span class="text-crossed  px-1"><a href="{{ route('Site.product',$product->name ) }}">
+                                        {{ $product->old_price }}</a> جنيه</span>
 
                                     <div class="text-success text-bold d-flex"><span>خصم</span>
                                         <span id="save-quantity">{{ number_format((($product->old_price -
@@ -517,10 +512,10 @@
 </section>
 
 
-//favorites
+{{-- favorites --}}
 @include('site.includes.first_add_to_favorite_modal')
 @include('site.includes.exist_same_product_in_favorites_modal')
-//compares
+{{-- compares --}}
 @include('site.includes.first_add_to_compare_modal')
 @include('site.includes.exist_same_product_in_compares_modal')
 @include('site.includes.max_products_in_compares')
@@ -528,3 +523,144 @@
 
 
 @endsection
+
+
+
+@push('scripts')
+
+<script>
+    $(document).ready(function(e) {
+        $('#sort_by').on('change', function() {
+            var sort_by = $('#sort_by').val();
+            $.ajax({
+                url: "{{ route('mainCategory.sort.products', $mainCategory->name) }}",
+                method: "GET",
+                data: {
+                    sort_by: sort_by
+                },
+                success: function(res) {
+                    $('.search-result').empty();
+                    $('.search-result').html(res);
+                }
+            });
+        });
+
+        $('#all_products').on('click', function() {
+            var sort_by = $('#all_products').val();
+            $.ajax({
+                url: "{{ route('mainCategory.all_products.search', $mainCategory->name) }}",
+                method: "GET",
+                data: {
+                    sort_by: sort_by
+                },
+                success: function(res) {
+                    $('.search-result').empty();
+                    $('.search-result').html(res);
+                }
+            });
+        });
+        $('#all_offers').on('click', function() {
+            var sort_by = $('#all_offers').val();
+            $.ajax({
+                url: "{{ route('mainCategory.all_offers.search', $mainCategory->name) }}",
+                method: "GET",
+                data: {
+                    sort_by: sort_by
+                },
+                success: function(res) {
+                    $('.search-result').empty();
+                    $('.search-result').html(res);
+                }
+            });
+        });
+
+
+        $('.priceRange').on('click', function() {
+            var minPrice = $('#minPriceInput').val();
+            var maxPrice = $('#maxPriceInput').val();
+
+            $.ajax({
+                url: "{{ route('mainCategory.search.products', $mainCategory->name) }}",
+                type: 'GET',
+                data: {
+                    minPrice: minPrice,
+                    maxPrice: maxPrice
+                },
+                success: function(res) {
+                    $('.search-result').empty();
+                    $('.search-result').html(res);
+                }
+            });
+        });
+
+
+        $('.brandloop').on('click', function() {
+            var brand = [];
+            $('.brandloop').each(function() {
+                if ($(this).is(":checked")) {
+                    brand.push($(this).val());
+                }
+            });
+            allBrand = brand.toString();
+            $.ajax({
+                url: "{{ route('mainCategory.brands.sort', $mainCategory->name) }}",
+                method: "GET",
+                data: "brand=" + allBrand,
+                success: function(res) {
+                    $('.search-result').empty();
+                    $('.search-result').html(res);
+                }
+            });
+        });
+
+
+        $('.pcColor').on('click' ,function(){
+
+            let color =  $(this).data('color')
+
+            $.ajax({
+                url:"{{ route('mainCategory.search.color' , $mainCategory->name) }}",
+                method:"GET",
+                data:{color:color},
+
+                success: function(res) {
+                        $('.search-result').empty();
+                        $('.search-result').html(res);
+                    }
+
+            })
+
+        })
+
+        $('input[name="size"]').on('click', function() {
+            let size = $(this).val();
+
+            $.ajax({
+                url: "{{ route('mainCategory.search.size', $mainCategory->name) }}",
+                method: "GET",
+                data: { size: size },
+                success: function(res) {
+                    $('.search-result').empty();
+                    $('.search-result').html(res);
+                }
+            });
+        });
+
+        $('.stars').on('click' , function(){
+            let star_rating = $(this).val();
+
+            $.ajax({
+                url:"{{ route('mainCategory.search.review.product' , $mainCategory->name) }}",
+                method:"GET",
+                data:{rating : star_rating},
+
+                success: function(res) {
+                    console.log("oer");
+                        $('.search-result').empty();
+                        $('.search-result').html(res);
+                    }
+            })
+        });
+    });
+</script>
+@endpush

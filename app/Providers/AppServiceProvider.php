@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Category;
 use App\Models\MainCategory;
 use App\Models\Product;
+use App\Models\ProductSetting;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
@@ -68,6 +69,14 @@ class AppServiceProvider extends ServiceProvider
             }
 
             $view->with('mainCategoriesSideBar', $mainCategoriesSideBar)->with('products', $products);
+        });
+        /////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        View::composer('*', function ($view) {
+            $productSetting = ProductSetting::first();
+
+            $view->with('productSetting', $productSetting);
         });
 
     }

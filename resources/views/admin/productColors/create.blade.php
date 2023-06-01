@@ -9,9 +9,12 @@
             <h1><i class="fa fa-th-list"></i> انشاء الوان منتج </h1>
         </div>
         <ul class="app-breadcrumb breadcrumb side">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-            <li class="breadcrumb-item"><a href="{{ route('colors.index') }}" title="انشاء الوان منتج">انشاء الوان منتج</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('colors.create') }}" title="انشاء الوان منتج">انشاء الوان منتج</a></li>
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a>
+            </li>
+            <li class="breadcrumb-item"><a href="{{ route('colors.index') }}" title="انشاء الوان منتج">انشاء الوان
+                    منتج</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('colors.create') }}" title="انشاء الوان منتج">انشاء
+                    الوان منتج</a></li>
         </ul>
     </div>
     <div class="row">
@@ -28,7 +31,8 @@
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">الاسم </label>
-                                <input class="form-control" id="exampleInputEmail1" name="name" value="{{old('name')}}" type="text" placeholder="اكتب الاسم ">
+                                <input class="form-control" id="exampleInputEmail1" name="name" value="{{old('name')}}"
+                                    type="text" placeholder="اكتب الاسم ">
                                 @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -38,8 +42,8 @@
                                 </label>
                                 <select name="product_id" class="select2 form-control">
                                     <optgroup label="من فضلك أختر المنتج ">
-                                        @if ($products && $products->count() > 0)
-                                        @foreach ($products as $product)
+                                        @if ($allProducts && $allProducts->count() > 0)
+                                        @foreach ($allProducts as $product)
                                         <option value="{{ $product->id }}">{{ $product->name }}</option>
                                         @endforeach
                                         @endif

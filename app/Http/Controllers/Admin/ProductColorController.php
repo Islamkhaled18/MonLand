@@ -17,7 +17,7 @@ class ProductColorController extends Controller
         // if (!Gate::allows('productColors')) {
         //     return view('admin.errors.notAllowed');
         // }
-        $colors = ProductColor::with('product')->paginate(5);
+        $colors = ProductColor::with('product')->get();
 
         return view('admin.productColors.index', compact('colors'));
     }
@@ -27,9 +27,9 @@ class ProductColorController extends Controller
         if (!Gate::allows('productColors.create')) {
             return view('admin.errors.notAllowed');
         }
-        $products = Product::select('id', 'name')->get();
+        $allProducts = Product::select('id', 'name')->get();
 
-        return view('admin.productColors.create', compact('products'));
+        return view('admin.productColors.create', compact('allProducts'));
     }
 
     public function store(Request $request)

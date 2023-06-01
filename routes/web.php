@@ -74,7 +74,7 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
 
     Route::get('vendor/{id}', [ProductController::class, 'getVendor'])->name('Site.getVendor');
 
-    //profile
+    ////////////////////////////////profile //////////////////////////////////////////////////////
     Route::get('profile/{firstName}', [ProfileController::class, 'getProfile'])->name('site.profile');
     Route::post('updateprofile/{id}', [ProfileController::class, 'updateProfile'])->name('site.profile.update');
     Route::post('updateprofilePassword/{id}', [ProfileController::class, 'updateprofilePassword'])->name('site.profile.password.update');
@@ -82,8 +82,8 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
     Route::get('profile/Add-Address/{id}', [ProfileController::class, 'addAddress'])->name('site.profile.address');
     Route::post('profile/Store-Address/{id}', [ProfileController::class, 'storeAddress'])->name('site.profile.storeAddress');
     Route::post('/profile/set-default-address', [ProfileController::class, 'setDefaultAddress'])->name('site.profile.setDefaultAddress');
-
     Route::get('profile/delete/{id}', [ProfileController::class, 'destroyAddress'])->name('site.profile.destroyAddress');
+    ////////////////////////////////profile //////////////////////////////////////////////////////
 
     ///////////////cart Controller/////////////////////
     Route::group(['prefix' => 'cart'], function () {
@@ -118,7 +118,6 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
 
 Route::group(['namespace' => 'Site', 'prefix' => 'Site'], function () {
 
-
     //all categories
     Route::get('AllCategories', [CategoryController::class, 'allCategory'])->name('Site.allCategory');
     // products belongs to main categories
@@ -126,8 +125,10 @@ Route::group(['namespace' => 'Site', 'prefix' => 'Site'], function () {
 
     //categories & products
     Route::get('category/{name}', [CategoryController::class, 'categoryProducts'])->name('Site.category');
+    //صفحة تفاصيل المنتج
     Route::get('product/{name}', [ProductController::class, 'productByName'])->name('Site.product');
 
+    //filter in categories products
     Route::get('category/{name}/search-products', [CategoryController::class, 'search_products_by_price'])->name('search.products');
     Route::get('category/{name}/sort-products', [CategoryController::class, 'search_products_by_created_at'])->name('sort.products');
     Route::get('category/{name}/all-products', [CategoryController::class, 'get_all_products'])->name('all_products.search');
@@ -136,6 +137,18 @@ Route::group(['namespace' => 'Site', 'prefix' => 'Site'], function () {
     Route::get('category/{name}/colors-products', [CategoryController::class, 'search_by_color'])->name('search.color');
     Route::get('category/{name}/sizes-products', [CategoryController::class, 'search_by_size'])->name('search.size');
     Route::get('category/{name}/review-products', [CategoryController::class, 'search_by_review_products'])->name('search.review.product');
+
+    //filter in main categories products
+    Route::get('mainCategory/{name}/sort-products', [MainCategoryController::class, 'search_products_by_created_at'])->name('mainCategory.sort.products');
+    Route::get('mainCategory/{name}/all-products', [MainCategoryController::class, 'get_all_products'])->name('mainCategory.all_products.search');
+    Route::get('mainCategory/{name}/flash-products', [MainCategoryController::class, 'get_flash_products'])->name('mainCategory.all_offers.search');
+    Route::get('mainCategory/{name}/search-products', [MainCategoryController::class, 'search_products_by_price'])->name('mainCategory.search.products');
+    Route::get('mainCategory/{name}/brands-products', [MainCategoryController::class, 'get_products_ByBrands'])->name('mainCategory.brands.sort');
+    Route::get('mainCategory/{name}/colors-products', [MainCategoryController::class, 'search_by_color'])->name('mainCategory.search.color');
+    Route::get('mainCategory/{name}/sizes-products', [MainCategoryController::class, 'search_by_size'])->name('mainCategory.search.size');
+
+
+    Route::get('mainCategory/{name}/review-products', [MainCategoryController::class, 'search_by_review_products'])->name('mainCategory.search.review.product');
 
     //wishlist
     Route::get('wishlist/products', [WishlistController::class, 'index'])->name('wishlist.products.index');

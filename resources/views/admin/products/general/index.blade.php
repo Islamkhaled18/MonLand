@@ -48,7 +48,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($products as $product)
+                            @foreach ($all_products as $product)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $product->name }}</td>

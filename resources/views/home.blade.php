@@ -218,12 +218,14 @@
                         </ul>
 
                     </div>
+
                     <div id="product-card-indicators" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators ">
                             <li data-target="#product-card-indicators" data-slide-to="0" class="active"></li>
                             <li data-target="#product-card-indicators" data-slide-to="1" class="border"></li>
                             <li data-target="#product-card-indicators" data-slide-to="2" class="border"></li>
                         </ol>
+
                         <div class="carousel-inner">
 
                             <div class="carousel-item active">
@@ -248,11 +250,11 @@
 
                 <div class="card-body mt-4">
 
-                    <p class="card-title">{{ $product->name }}
-
+                    <p class="card-title"><a href="{{ route('Site.product',$product->name ) }}">{{ $product->name}}</a>
                     </p>
                     <div class="d-flex row no-gutters justify-content-between">
-                        <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
+                        <span class="px-1 text-bold"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                $product->new_price }}</a> جنيه</span>
                         <div class="d-flex justify-content-end ">
                             <div class="star-rating d-flex align-items-center  text-small">
                                 <span id="rating-score">03</span>
@@ -263,7 +265,8 @@
                     </div>
 
                     <div id="before-price" class=" my-3 row">
-                        <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
+                        <span class="text-crossed  px-1"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                $product->old_price }}</a> جنيه</span>
 
                         <div class="text-success text-bold d-flex"><span>خصم</span>
                             <span id="save-quantity">{{ number_format((($product->old_price - $product->new_price) /
@@ -397,11 +400,12 @@
 
                 <div class="card-body mt-4">
 
-                    <p class="card-title">{{ $product->name }}
-
+                    <p class="card-title"> <a href="{{ route('Site.product',$product->name ) }}">{{ $product->name}}</a>
                     </p>
+
                     <div class="d-flex row no-gutters justify-content-between">
-                        <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
+                        <span class="px-1 text-bold"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                $product->new_price }}</a> جنيه</span>
                         <div class="d-flex justify-content-end ">
                             <div class="star-rating d-flex align-items-center  text-small">
                                 <span id="rating-score">03</span>
@@ -412,7 +416,8 @@
                     </div>
 
                     <div id="before-price" class=" my-3 row">
-                        <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
+                        <span class="text-crossed  px-1"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                $product->old_price }}</a> جنيه</span>
 
                         <div class="text-success text-bold d-flex"><span>خصم</span>
                             <span id="save-quantity">{{ number_format((($product->old_price - $product->new_price) /
@@ -457,7 +462,6 @@
         </div>
     </div>
 </div>
-
 
 
 <!-- Start Men Fashion -->
@@ -566,11 +570,12 @@
 
                 <div class="card-body mt-4">
 
-                    <p class="card-title">{{ $product->name }}
+                    <p class="card-title"><a href="{{ route('Site.product',$product->name ) }}">{{ $product->name }}</a>
 
                     </p>
                     <div class="d-flex row no-gutters justify-content-between">
-                        <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
+                        <span class="px-1 text-bold"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                $product->new_price }}</a> جنيه</span>
                         <div class="d-flex justify-content-end ">
                             <div class="star-rating d-flex align-items-center  text-small">
                                 <span id="rating-score">03</span>
@@ -581,7 +586,8 @@
                     </div>
 
                     <div id="before-price" class=" my-3 row">
-                        <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
+                        <span class="text-crossed  px-1"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                $product->old_price }}</a> جنيه</span>
 
                         <div class="text-success text-bold d-flex"><span>خصم</span>
                             <span id="save-quantity">{{ number_format((($product->old_price - $product->new_price) /
@@ -712,11 +718,12 @@
 
                 <div class="card-body mt-4">
 
-                    <p class="card-title">{{ $product->name }}
+                    <p class="card-title"><a href="{{ route('Site.product',$product->name ) }}">{{ $product->name }}</a>
 
                     </p>
                     <div class="d-flex row no-gutters justify-content-between">
-                        <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
+                        <span class="px-1 text-bold"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                $product->new_price }}</a> جنيه</span>
                         <div class="d-flex justify-content-end ">
                             <div class="star-rating d-flex align-items-center  text-small">
                                 <span id="rating-score">03</span>
@@ -727,7 +734,8 @@
                     </div>
 
                     <div id="before-price" class=" my-3 row">
-                        <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
+                        <span class="text-crossed  px-1"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                $product->old_price }}</a> جنيه</span>
 
                         <div class="text-success text-bold d-flex"><span>خصم</span>
                             <span id="save-quantity">{{ number_format((($product->old_price -
@@ -902,11 +910,12 @@
 
                 <div class="card-body mt-4">
 
-                    <p class="card-title">{{ $product->name }}
+                    <p class="card-title"><a href="{{ route('Site.product',$product->name ) }}">{{ $product->name }}</a>
 
                     </p>
                     <div class="d-flex row no-gutters justify-content-between">
-                        <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
+                        <span class="px-1 text-bold"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                $product->new_price }}</a> جنيه</span>
                         <div class="d-flex justify-content-end ">
                             <div class="star-rating d-flex align-items-center  text-small">
                                 <span id="rating-score">03</span>
@@ -917,7 +926,8 @@
                     </div>
 
                     <div id="before-price" class=" my-3 row">
-                        <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
+                        <span class="text-crossed  px-1"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                $product->old_price }}</a> جنيه</span>
 
                         <div class="text-success text-bold d-flex"><span>خصم</span>
                             <span id="save-quantity">{{ number_format((($product->old_price -
@@ -1019,11 +1029,12 @@
 
                 <div class="card-body mt-4">
 
-                    <p class="card-title">{{ $product->name }}
+                    <p class="card-title"><a href="{{ route('Site.product',$product->name ) }}">{{ $product->name }}</a>
 
                     </p>
                     <div class="d-flex row no-gutters justify-content-between">
-                        <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
+                        <span class="px-1 text-bold"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                $product->new_price }}</a> جنيه</span>
                         <div class="d-flex justify-content-end ">
                             <div class="star-rating d-flex align-items-center  text-small">
                                 <span id="rating-score">03</span>
@@ -1034,7 +1045,8 @@
                     </div>
 
                     <div id="before-price" class=" my-3 row">
-                        <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
+                        <span class="text-crossed  px-1"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                $product->old_price }}</a> جنيه</span>
 
                         <div class="text-success text-bold d-flex"><span>خصم</span>
                             <span id="save-quantity">{{ number_format((($product->old_price -
@@ -1053,10 +1065,7 @@
                 </div>
                 @endforeach
 
-
-
                 @endif
-
 
             </div>
         </div>
@@ -1167,11 +1176,12 @@
 
                 <div class="card-body mt-4">
 
-                    <p class="card-title">{{ $product->name }}
+                    <p class="card-title"><a href="{{ route('Site.product',$product->name ) }}">{{ $product->name }}</a>
 
                     </p>
                     <div class="d-flex row no-gutters justify-content-between">
-                        <span class="px-1 text-bold">{{ $product->new_price }} جنيه</span>
+                        <span class="px-1 text-bold"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                $product->new_price }}</a> جنيه</span>
                         <div class="d-flex justify-content-end ">
                             <div class="star-rating d-flex align-items-center  text-small">
                                 <span id="rating-score">03</span>
@@ -1182,7 +1192,8 @@
                     </div>
 
                     <div id="before-price" class=" my-3 row">
-                        <span class="text-crossed  px-1">{{ $product->old_price }} جنيه</span>
+                        <span class="text-crossed  px-1"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                $product->old_price }}</a> جنيه</span>
 
                         <div class="text-success text-bold d-flex"><span>خصم</span>
                             <span id="save-quantity">{{ number_format((($product->old_price -
@@ -1261,10 +1272,10 @@
 </div>
 
 
-{{--  //favorites  --}}
+{{-- //favorites --}}
 @include('site.includes.first_add_to_favorite_modal')
 @include('site.includes.exist_same_product_in_favorites_modal')
-{{--  //compares  --}}
+{{-- //compares --}}
 @include('site.includes.first_add_to_compare_modal')
 @include('site.includes.exist_same_product_in_compares_modal')
 @include('site.includes.max_products_in_compares')

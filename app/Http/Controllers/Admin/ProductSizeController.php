@@ -27,9 +27,9 @@ class ProductSizeController extends Controller
         if(!Gate::allows('productSizes.create')){
             return view('admin.errors.notAllowed');
         }
-        $products = Product::select('id','name')->get();
+        $allProducts = Product::select('id','name')->get();
 
-        return view('admin.productSizes.create', compact('products'));
+        return view('admin.productSizes.create', compact('allProducts'));
     }
 
     public function store(Request $request)

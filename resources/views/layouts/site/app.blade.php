@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('website_assets/pages-css/product/product-details.css') }}" />
     <link rel="stylesheet" href="{{ asset('website_assets/pages-css/fav.css') }}" />
     <link rel="stylesheet" href="{{ asset('website_assets/pages-css/account/orders.css') }}" />
+    <link rel="stylesheet" href="{{ asset('website_assets/pages-css/product/product-details.css') }}" />
 
     <!-- <link rel="stylesheet" href="{{ asset('website_assets/pages-css/account/orders.css') }}"> -->
 
@@ -94,7 +95,7 @@
     </style>
 </head>
 
-<body>
+<body class="search-result">
 
     <section>
         <!-- Start Navbar -->
@@ -309,6 +310,8 @@
     <script src="{{ asset('website_assets/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('website_assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('website_assets/pages-js/orders.js') }}"></script>
+    <script src="{{ asset('website_assets/pages-js/product-detailes.js') }}"></script>
+
     {{-- <script src="{{ asset('website_assets/js/pages.js') }}"></script> --}}
 
 

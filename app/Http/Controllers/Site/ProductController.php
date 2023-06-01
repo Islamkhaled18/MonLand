@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Models\Ad;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Option;
 use App\Models\Product;
@@ -19,54 +20,62 @@ class ProductController extends Controller
     public function productByName($name, $id = null)
     {
 
-        $product = Product::where('name', $name)->orwhere('id',$id)->first();
+        $productDetails = Product::where('name', $name)->orWhere('id',$id)->first();
 
-        $product_categories_ids =  $product->categories->pluck('id'); // [1,26,7] get all categories that product on it
+        $brand_name = Brand::where('id',$productDetails->id)->select('name')->first();
+
+        
+
+        $productSpecifications = $productDetails->specifications;
+
+
+        $product_categories_ids =  $productDetails->categories->pluck('id'); // [1,26,7] get all categories that product on it
 
         $related_products = Product::whereHas('categories', function ($cat) use ($product_categories_ids) {
             $cat->whereIn('categories.id', $product_categories_ids);
         })->limit(20)->latest()->get();
 
-        $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)->get();
+        $vendors_products = Product::with('Vendor')->where('vendor_id', $productDetails->vendor->id)->get();
 
-        $product_colors = ProductColor::with('product')->where('product_id', $product->id)->get();
-        $product_sizes = Productsize::with('product')->where('product_id', $product->id)->get();
-        $reviews = Product::with('reviews')->where('id',$product->id)->get();
+        $product_colors = ProductColor::with('product')->where('product_id', $productDetails->id)->get();
+        $product_sizes = Productsize::with('product')->where('product_id', $productDetails->id)->get();
+        $reviews = Product::with('reviews')->where('id',$productDetails->id)->get();
 
-        $reviewsCount = $product->reviews()->count();
+        $reviewsCount = $productDetails->reviews()->count();
 
         $progresseData =  [];
         if($reviewsCount > 0){
         $progresseData =  [
-    
-            '1' => $product->reviews()->where('star_rating', 1)->count() / $reviewsCount *100 ,
-            '2' => $product->reviews()->where('star_rating', 2)->count() / $reviewsCount *100,
-            '3' => $product->reviews()->where('star_rating', 3)->count() / $reviewsCount *100,
-            '4' => $product->reviews()->where('star_rating', 4)->count() / $reviewsCount *100,
-            '5' => $product->reviews()->where('star_rating', 5)->count() / $reviewsCount *100,
+
+            '1' => $productDetails->reviews()->where('star_rating', 1)->count() / $reviewsCount *100 ,
+            '2' => $productDetails->reviews()->where('star_rating', 2)->count() / $reviewsCount *100,
+            '3' => $productDetails->reviews()->where('star_rating', 3)->count() / $reviewsCount *100,
+            '4' => $productDetails->reviews()->where('star_rating', 4)->count() / $reviewsCount *100,
+            '5' => $productDetails->reviews()->where('star_rating', 5)->count() / $reviewsCount *100,
             ];
-    
+
         }else{
             $reviewsCount = 0;
         }
 
-        $average =  $reviewsCount ? round($product->reviews()->sum('star_rating') / $reviewsCount ,2) : 0;
-        $vendor = Vendor::where('id', $product->vendor_id)->first();
+        $average =  $reviewsCount ? round($productDetails->reviews()->sum('star_rating') / $reviewsCount ,2) : 0;
+        $vendor = Vendor::where('id', $productDetails->vendor_id)->first();
 
-        $productsWithRatingOne = $product->reviews()->where('star_rating', 1)->count();
-        $productsWithRatingTwo = $product->reviews()->where('star_rating', 2)->count();
-        $productsWithRatingThree = $product->reviews()->where('star_rating', 3)->count();
-        $productsWithRatingFour = $product->reviews()->where('star_rating', 4)->count();
-        $productsWithRatingFive = $product->reviews()->where('star_rating', 5)->count();
-
-
-        $review_details = Review::with(['product','user'])->where('product_id',$product->id)->get();
-
-     
+        $productsWithRatingOne = $productDetails->reviews()->where('star_rating', 1)->count();
+        $productsWithRatingTwo = $productDetails->reviews()->where('star_rating', 2)->count();
+        $productsWithRatingThree = $productDetails->reviews()->where('star_rating', 3)->count();
+        $productsWithRatingFour = $productDetails->reviews()->where('star_rating', 4)->count();
+        $productsWithRatingFive = $productDetails->reviews()->where('star_rating', 5)->count();
 
 
-        return view('site.categories.product', compact('product', 'related_products', 'vendors_products','product_colors','product_sizes','reviews','average','vendor','productsWithRatingOne',
-        'productsWithRatingTwo','productsWithRatingThree','productsWithRatingFour','productsWithRatingFive','review_details'
+        $review_details = Review::with(['product','user'])->where('product_id',$productDetails->id)->get();
+
+
+
+
+        return view('site.categories.product', compact('productDetails', 'related_products', 'vendors_products','product_colors','product_sizes','reviews','average','vendor','productsWithRatingOne',
+        'productsWithRatingTwo','productsWithRatingThree','productsWithRatingFour','productsWithRatingFive','review_details','brand_name',
+        'productSpecifications'
         ));
     }
 
@@ -93,24 +102,24 @@ class ProductController extends Controller
 
         $reviews = Vendor::with('reviews')->where('id',$vendor->id)->get();
 
-        
+
         $reviewsCount = $vendor->reviews()->count();
-        
+
         $progresseData =  [];
         if($reviewsCount > 0){
             $progresseData =  [
-                
+
                 '1' => $vendor->reviews()->where('star_rating', 1)->count() / $reviewsCount *100 ,
                 '2' => $vendor->reviews()->where('star_rating', 2)->count() / $reviewsCount *100,
                 '3' => $vendor->reviews()->where('star_rating', 3)->count() / $reviewsCount *100,
             '4' => $vendor->reviews()->where('star_rating', 4)->count() / $reviewsCount *100,
             '5' => $vendor->reviews()->where('star_rating', 5)->count() / $reviewsCount *100,
         ];
-        
+
     }else{
         $reviewsCount = 0;
     }
-        
+
     $average =  $reviewsCount ? (round($vendor->reviews()->sum('star_rating') / $reviewsCount ,2) ) : 0;
 
     // $productsWithReviews = Product::whereHas('reviews')->with('reviews')->with('reviews.user')->where('vendor_id', $vendor->id)->get();
@@ -137,13 +146,13 @@ class ProductController extends Controller
         ->paginate(4);
 
         $vendor = Vendor::where('id', $product->vendor_id)->first();
-        
+
         return view('site.categories.vendor_filter_products' , compact('product' , 'productColors' , 'productSizes' , 'vendors_products' , 'vendor' ))->render();
 
     }
 
     public function search_products_by_created_at(Request $request, $id){
-              
+
         $product = Product::where('id', $id)->first();
 
         $productColors = ProductColor::distinct()->get(['name']);
@@ -155,7 +164,7 @@ class ProductController extends Controller
         ->paginate(4);
 
         $vendor = Vendor::where('id', $product->vendor_id)->first();
-        
+
         return view('site.categories.vendor_filter_products' , compact('product' , 'productColors' , 'productSizes' , 'vendors_products' , 'vendor' ))->render();
 
 
@@ -173,7 +182,7 @@ class ProductController extends Controller
         $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)->paginate(4);
 
         $vendor = Vendor::where('id', $product->vendor_id)->first();
-        
+
         return view('site.categories.vendor_filter_products' , compact('product' , 'productColors' , 'productSizes' , 'vendors_products' , 'vendor' ))->render();
 
     }
@@ -182,26 +191,26 @@ class ProductController extends Controller
 
         $product = Product::where('id', $id)->first();
 
-      
+
 
         $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)
-        
+
          ->where('flash_sale', 1)
-        
+
         ->paginate(4);
 
         $vendor = Vendor::where('id', $product->vendor_id)->first();
-        
+
         return view('site.categories.vendor_filter_products' , compact('product'  , 'vendors_products' , 'vendor' ))->render();
 
     }
 
 
     public function get_products_ByBrands(Request $request, $id){
-             
+
         $product = Product::where('id', $id)->first();
 
-       
+
 
         $brand = $request->brand; //brand
         $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)
@@ -213,7 +222,7 @@ class ProductController extends Controller
 
 
     public function search_by_color(Request $request , $id){
-           
+
         $product = Product::where('id', $id)->first();
 
         $colors =  ProductColor::where("name" , $request->color)->pluck('product_id')->toArray();
@@ -223,7 +232,7 @@ class ProductController extends Controller
 
 
         $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)->whereIN("id" , $colorsArr)->paginate(4);
-       
+
         $vendor = Vendor::where('id', $product->vendor_id)->first();
 
         return view('site.categories.vendor_filter_products' , compact('product'  , 'vendors_products' , 'vendor' ))->render();
@@ -234,12 +243,12 @@ class ProductController extends Controller
     }
 
     public function search_by_size(Request $request , $id){
-           
+
         $product = Product::where('id', $id)->first();
 
         $sizes = Productsize::where('name' , $request->size)->pluck('product_id')->toArray();
 
-        $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)->whereIN("id" , $sizes)->paginate(4); 
+        $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)->whereIN("id" , $sizes)->paginate(4);
 
         $vendor = Vendor::where('id', $product->vendor_id)->first();
         return view('site.categories.vendor_filter_products' , compact('product'  , 'vendors_products' , 'vendor' ))->render();
@@ -253,7 +262,7 @@ class ProductController extends Controller
         $reviews = Review::where("star_rating" , $request->rating)->pluck('product_id')->toArray();
 
         $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)->whereIN("id" , $reviews)->paginate(4);
-        
+
         $vendor = Vendor::where('id', $product->vendor_id)->first();
 
         return view('site.categories.vendor_filter_products' , compact('product'  , 'vendors_products' , 'vendor' ))->render();
@@ -271,7 +280,7 @@ class ProductController extends Controller
     //     }
 
     //     return redirect()->back()->with('error', 'Product not found');
-        
+
     // }
 
 
@@ -289,7 +298,7 @@ class ProductController extends Controller
             $ads = Ad::paginate(1);
             return view('site.categories.products', compact('category', 'productColors', 'productSizes', 'products', 'allCategories', 'ads'));
         }
-    
+
         $name = $request->get('name');
         if (!empty($name)) {
             $product = Product::where('name', 'LIKE', '%' . $name . '%')->first();
@@ -299,40 +308,40 @@ class ProductController extends Controller
             $related_products = Product::whereHas('categories', function ($cat) use ($product_categories_ids) {
                 $cat->whereIn('categories.id', $product_categories_ids);
             })->limit(20)->latest()->get();
-    
+
             $vendors_products = Product::with('Vendor')->where('vendor_id', $product->vendor->id)->get();
-    
+
             $product_colors = ProductColor::with('product')->where('product_id', $product->id)->get();
             $product_sizes = Productsize::with('product')->where('product_id', $product->id)->get();
             $reviews = Product::with('reviews')->where('id',$product->id)->get();
-    
+
             $reviewsCount = $product->reviews()->count();
-    
+
             $progresseData =  [];
             if($reviewsCount > 0){
             $progresseData =  [
-        
+
                 '1' => $product->reviews()->where('star_rating', 1)->count() / $reviewsCount *100 ,
                 '2' => $product->reviews()->where('star_rating', 2)->count() / $reviewsCount *100,
                 '3' => $product->reviews()->where('star_rating', 3)->count() / $reviewsCount *100,
                 '4' => $product->reviews()->where('star_rating', 4)->count() / $reviewsCount *100,
                 '5' => $product->reviews()->where('star_rating', 5)->count() / $reviewsCount *100,
                 ];
-        
+
             }else{
                 $reviewsCount = 0;
             }
-    
+
             $average =  $reviewsCount ? round($product->reviews()->sum('star_rating') / $reviewsCount ,2) : 0;
             $vendor = Vendor::where('id', $product->vendor_id)->first();
-    
+
             $productsWithRatingOne = $product->reviews()->where('star_rating', 1)->count();
             $productsWithRatingTwo = $product->reviews()->where('star_rating', 2)->count();
             $productsWithRatingThree = $product->reviews()->where('star_rating', 3)->count();
             $productsWithRatingFour = $product->reviews()->where('star_rating', 4)->count();
             $productsWithRatingFive = $product->reviews()->where('star_rating', 5)->count();
-    
-    
+
+
             $review_details = Review::with(['product','user'])->where('product_id',$product->id)->get();
 
             if ($product) {
@@ -341,7 +350,7 @@ class ProductController extends Controller
                 ));
             }
         }
-    
+
         return redirect()->back()->with('error', 'Product or category not found');
     }
 
