@@ -14,6 +14,7 @@ use App\Http\Controllers\Site\MainCategoryController;
 use App\Http\Controllers\Site\ProductController;
 use App\Http\Controllers\Site\ProfileController;
 use App\Http\Controllers\Site\TermsConditionController;
+use App\Http\Controllers\Site\VendorController;
 use App\Http\Controllers\Site\WishlistController;
 use App\Mail\PasswordResetEmail;
 use Illuminate\Http\Request;
@@ -57,22 +58,6 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
     //contact us
     Route::get('contactUs', [ContactUsController::class, 'index'])->name('Site.contactUs');
     Route::post('store', [ContactUsController::class, 'store'])->name('Site.ContactUs.store');
-
-    //vendors
-    Route::get('product/vendor/{id}', [ProductController::class, 'vendorProducts'])->name('Site.product.vendorProducts');
-
-    Route::get('product/vendor/{id}/price-products', [ProductController::class, 'search_products_by_price'])->name('Site.vendor.price.products');
-
-    Route::get('product/vendor/{id}/sort-products', [ProductController::class, 'search_products_by_created_at'])->name('Site.vendor.sort.products');
-
-    Route::get('product/vendor/{id}/all-products', [ProductController::class, 'get_all_products'])->name('Site.vendor.all_products.search');
-    Route::get('product/vendor/{id}/flash-products', [ProductController::class, 'get_flash_products'])->name('Site.vendor.all_offers.search');
-    Route::get('product/vendor/{id}/brands-products', [ProductController::class, 'get_products_ByBrands'])->name('Site.vendor.brands.sort');
-    Route::get('product/vendor/{id}/colors-products', [ProductController::class, 'search_by_color'])->name('Site.vendor.search.color');
-    Route::get('product/vendor/{id}/sizes-products', [ProductController::class, 'search_by_size'])->name('Site.vendor.search.size');
-    Route::get('product/vendor/{id}/review-products', [ProductController::class, 'search_by_review_products'])->name('Site.vendor.search.review');
-
-    Route::get('vendor/{id}', [ProductController::class, 'getVendor'])->name('Site.getVendor');
 
     ////////////////////////////////profile //////////////////////////////////////////////////////
     Route::get('profile/{firstName}', [ProfileController::class, 'getProfile'])->name('site.profile');
@@ -147,7 +132,6 @@ Route::group(['namespace' => 'Site', 'prefix' => 'Site'], function () {
     Route::get('mainCategory/{name}/colors-products', [MainCategoryController::class, 'search_by_color'])->name('mainCategory.search.color');
     Route::get('mainCategory/{name}/sizes-products', [MainCategoryController::class, 'search_by_size'])->name('mainCategory.search.size');
 
-
     Route::get('mainCategory/{name}/review-products', [MainCategoryController::class, 'search_by_review_products'])->name('mainCategory.search.review.product');
 
     //wishlist
@@ -160,6 +144,23 @@ Route::group(['namespace' => 'Site', 'prefix' => 'Site'], function () {
     Route::get('compare/products', [CompareController::class, 'index'])->name('compare.products.index');
     Route::post('compare', [CompareController::class, 'store'])->name('compare.store');
     Route::delete('compare', [CompareController::class, 'destroy'])->name('compare.destroy');
+
+
+    //vendors
+    Route::get('product/vendor/{id}', [VendorController::class, 'vendorProducts'])->name('Site.product.vendorProducts');
+    Route::get('product/vendor/{id}/sort-products', [VendorController::class, 'search_products_by_created_at'])->name('Site.vendor.sort.products');
+    Route::get('product/vendor/{id}/price-products', [VendorController::class, 'search_products_by_price'])->name('Site.vendor.price.products');
+    Route::get('product/vendor/{id}/all-products', [VendorController::class, 'get_all_products'])->name('Site.vendor.all_products.search');
+    Route::get('product/vendor/{id}/flash-products', [VendorController::class, 'get_flash_products'])->name('Site.vendor.all_offers.search');
+    Route::get('product/vendor/{id}/brands-products', [VendorController::class, 'get_products_ByBrands'])->name('Site.vendor.brands.sort');
+    Route::get('product/vendor/{id}/colors-products', [VendorController::class, 'search_by_color'])->name('Site.vendor.search.color');
+    Route::get('product/vendor/{id}/sizes-products', [VendorController::class, 'search_by_size'])->name('Site.vendor.search.size');
+    Route::get('product/vendor/{id}/review-products', [VendorController::class, 'search_by_review_products'])->name('Site.vendor.search.review');
+
+
+    Route::get('vendor/{id}', [VendorController::class, 'getVendor'])->name('Site.getVendor');
+
+
 
     Route::get('reset-passord', function () {
         return view('auth.passwords.email');

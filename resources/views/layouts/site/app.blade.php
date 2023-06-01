@@ -92,6 +92,25 @@
             color: transparent !important;
             font-size: 0;
         }
+
+        .card-deck2 .card {
+            min-width: calc(33.33% - 12px) !important;
+            max-width: calc(33.33% - 12px) !important;
+        }
+
+        .page-item.active .page-link {
+            background-color: #7f0924;
+            color: #ffb300;
+            border: 0;
+            box-shadow: none !important;
+        }
+
+        .rad-btn:not(:checked) {
+            background-color: #f8f9fa;
+            /* Change the background color */
+            border: none;
+            /* Remove the border */
+        }
     </style>
 </head>
 

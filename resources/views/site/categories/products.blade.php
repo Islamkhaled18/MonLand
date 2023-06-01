@@ -54,7 +54,7 @@
                     <ul class="list-unstyled">
                         <li>
                             <i class="fa-solid fa-chevron-left"></i>
-                            ملابس
+
 
                             <ul class="pr-4 list-unstyled">
                                 <li>
@@ -378,11 +378,14 @@
 
                             <div class="card-body mt-4">
 
-                                <p class="card-title"><a href="{{ route('Site.product',$product->name ) }}">{{ $product->name }}</a>
+                                <p class="card-title"><a href="{{ route('Site.product',$product->name ) }}">{{
+                                        $product->name }}</a>
 
                                 </p>
                                 <div class="d-flex row no-gutters justify-content-between">
-                                    <span class="px-1 text-bold"><a href="{{ route('Site.product',$product->name ) }}">{{ $product->new_price }}</a> جنيه</span>
+                                    <span class="px-1 text-bold"><a
+                                            href="{{ route('Site.product',$product->name ) }}">{{ $product->new_price
+                                            }}</a> جنيه</span>
                                     <div class="d-flex justify-content-end ">
                                         <div class="star-rating d-flex align-items-center  text-small">
                                             <span id="rating-score">03</span>
@@ -393,7 +396,9 @@
                                 </div>
 
                                 <div id="before-price" class=" my-3 row">
-                                    <span class="text-crossed  px-1"><a href="{{ route('Site.product',$product->name ) }}">{{ $product->old_price }}</a> جنيه</span>
+                                    <span class="text-crossed  px-1"><a
+                                            href="{{ route('Site.product',$product->name ) }}">{{ $product->old_price
+                                            }}</a> جنيه</span>
 
                                     <div class="text-success text-bold d-flex"><span>خصم</span>
                                         <span id="save-quantity">{{ number_format((($product->old_price -
@@ -460,6 +465,17 @@
         </div>
 
 
+        {{--  favorites  --}}
+        @include('site.includes.first_add_to_favorite_modal')
+        @include('site.includes.exist_same_product_in_favorites_modal')
+        {{-- compares --}}
+        @include('site.includes.first_add_to_compare_modal')
+        @include('site.includes.exist_same_product_in_compares_modal')
+        @include('site.includes.max_products_in_compares')
+
+
+
+
 </section>
 
 @endsection
@@ -505,6 +521,7 @@
                     }
                 });
             });
+            
             $('#sort_by').on('change', function() {
                 var sort_by = $('#sort_by').val();
                 $.ajax({
