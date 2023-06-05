@@ -13,6 +13,8 @@ use App\Models\Review;
 use App\Models\Size;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
+
 
 class ProductController extends Controller
 {
@@ -59,9 +61,14 @@ class ProductController extends Controller
 
         $review_details = Review::with(['product', 'user'])->where('product_id', $productDetails->id)->get();
 
+
+        $shareUrl = URL::route('Site.product', ['name' => $productDetails->name]);
+
+
+
         return view('site.categories.product', compact('productDetails', 'related_products', 'vendors_products', 'product_colors', 'product_sizes', 'reviews', 'average', 'vendor', 'productsWithRatingOne',
             'productsWithRatingTwo', 'productsWithRatingThree', 'productsWithRatingFour', 'productsWithRatingFive', 'review_details', 'brand_name',
-            'productSpecifications'
+            'productSpecifications','shareUrl'
         ));
     }
 

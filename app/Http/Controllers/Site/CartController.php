@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
 use Throwable;
 use Yoeunes\Toastr\Facades\Toastr;
 
@@ -26,7 +25,6 @@ class CartController extends Controller
 
         $user = Auth::user();
 
-
         ///////////////////////////////////////////////////
         $products = Vendor::with(['carts' => function ($query) use ($user) {
             $query->where('carts.user_id', $user->id);
@@ -34,11 +32,10 @@ class CartController extends Controller
                 $products->get();
             }]);
         }])
-        ->whereHas('carts.products', function ($query) {
-            $query->whereNull('products.deleted_at');
-        })
-        ->get();
-
+            ->whereHas('carts.products', function ($query) {
+                $query->whereNull('products.deleted_at');
+            })
+            ->get();
 
         $vendors_cart_count = Vendor::with(['carts' => function ($query) use ($user) {
             $query->where('carts.user_id', $user->id);
@@ -46,35 +43,33 @@ class CartController extends Controller
                 $products->get();
             }]);
         }])
-        ->whereHas('carts.products', function ($query) {
-            $query->whereNull('products.deleted_at');
-        })
-        ->count();
-
+            ->whereHas('carts.products', function ($query) {
+                $query->whereNull('products.deleted_at');
+            })
+            ->count();
 
         $countProdcts = count($products);
 
         $addresses = Address::with('governorate')->where('user_id', auth()->user()->id)->first();
         if ($addresses == null || $addresses->governorate_id == null) {
             session()->flash('error', 'برجاء اكمال بياناتك الشخصيه واضافة عنوان خاص بك');
-                return redirect()->back();
-            }
+            return redirect()->back();
+        }
 
-        $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
+        $delivery_fees = Governorate::where('id', $addresses->governorate_id)->first();
 
-
-        return view('site.sale.cart', compact('products', 'countProdcts', 'addresses','delivery_fees','vendors_cart_count'));
+        return view('site.sale.cart', compact('products', 'countProdcts', 'addresses', 'delivery_fees', 'vendors_cart_count'));
     } //cart page
 
     public function countCart()
     {
         $user = Auth::user();
         $productsCount = Product::whereExists(function ($query) use ($user) {
-                $query->select(DB::raw(1))
-                      ->from('carts as c')
-                      ->whereRaw('products.id = c.product_id')
-                      ->where('c.user_id', $user->id);
-            })
+            $query->select(DB::raw(1))
+                ->from('carts as c')
+                ->whereRaw('products.id = c.product_id')
+                ->where('c.user_id', $user->id);
+        })
             ->with('vendor')
             ->count();
         return response()->json(['count' => $productsCount]);
@@ -82,32 +77,44 @@ class CartController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'product_id' => ['required', 'exists:products,id'],
-            'quantity' => ['int', 'min:1'],
-        ]);
 
-        $cart = Cart::where([
-            'product_id' => $request->post('product_id'),
-        ])->first();
+        $uuid = $this->getCartId();
+        $user_id = auth()->check() ? auth()->user()->id : null;
+        $size = $request->size; // Get the selected size from the request
+        $price = $request->price; // Get the selected price from the request
+        $selectedColor = $request->color;
 
-        if ($cart) {
-            Cart::where([
-                'product_id' => $request->post('product_id'),
-            ])->update([
-                'quantity' => $cart->quantity +  $request->post('quantity', 1),
-            ]);
-        } else {
+        if (!$uuid) {
+            $uuid = Str::uuid()->toString();
             $cart = Cart::create([
-                'product_id' => $request->post('product_id'),
-                'quantity' => $request->post('quantity', 1),
-                'user_id' => Auth::id(),
+                'uuid' => $uuid,
+                'product_id' => $request->product_id,
+                'user_id' => $user_id,
+                'quantity' => $request->quantity ?? 1,
             ]);
-        }
-        Toastr()->success('تم اضافة المنتج لسلة المشتريات بنجاح');
-        return redirect()->back();
-    } //store items in db to cart
 
+            return response()->json('added')->cookie('cart_uuid', $uuid, 60 * 24 * 7);
+        } else {
+            $cart = Cart::updateOrCreate([
+                'uuid' => $uuid,
+                'product_id' => $request->product_id,
+                'quantity' => $request->quantity ?? 1,
+
+            ], [
+                'user_id' => $user_id,
+                'size' => $size, // Update the selected size
+                'price' => $price, // Update the selected price
+                'color' => $selectedColor,
+            ]);
+
+            if ($cart->wasRecentlyCreated) {
+                return response()->json('added')->cookie('cart_uuid', $uuid, 60 * 24 * 7);
+            } else {
+                return response()->json('exists');
+            }
+        }
+
+    } //store items in db to cart
 
     public function update_cart(Request $request)
     {
@@ -142,29 +149,29 @@ class CartController extends Controller
             return redirect()->route('cart.index');
         }
 
-        if( strlen($request->pickedSize[0]) < count($products) || strlen($request->pickedColor[0]) < count($products)  ){
+        if (strlen($request->pickedSize[0]) < count($products) || strlen($request->pickedColor[0]) < count($products)) {
 
-            return back()->with("message" , "يجب اختيار اللون و المقاس لكل المنتجات في السلة لاتمام الطلب");
+            return back()->with("message", "يجب اختيار اللون و المقاس لكل المنتجات في السلة لاتمام الطلب");
         }
 
-        $Pickedcolors = explode(',' , $request->pickedColor[0]);
-        $pickedSizes = explode(',' , $request->pickedSize[0]);
+        $Pickedcolors = explode(',', $request->pickedColor[0]);
+        $pickedSizes = explode(',', $request->pickedSize[0]);
 
         DB::beginTransaction();
         try {
 
             $order = Order::Create([
-                'user_id'   => Auth::user()->id,
+                'user_id' => Auth::user()->id,
                 'status' => 'تم استلام الطلبيه والعمل عليها',
-                'total' =>  $request->total,
+                'total' => $request->total,
             ]);
 
-            for($i = 0 ; $i < count($products) ; $i++){
-               $order_products = $order->items()->create([
-                    'order_id'   => $order->id,
+            for ($i = 0; $i < count($products); $i++) {
+                $order_products = $order->items()->create([
+                    'order_id' => $order->id,
                     'product_id' => $products[$i]->product_id,
-                    'quantity'   => $products[$i]->quantity,
-                    'price'      => $products[$i]->products->price,
+                    'quantity' => $products[$i]->quantity,
+                    'price' => $products[$i]->products->price,
                     "product_color" => $Pickedcolors[$i],
                     "product_size" => $pickedSizes[$i],
 
@@ -189,9 +196,9 @@ class CartController extends Controller
             return redirect()->route('cart.orders', compact('order'));
         } catch (Throwable $e) {
             DB::rollBack();
-             return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->with('error', $e->getMessage());
 
-           // return $e->getMessage();
+            // return $e->getMessage();
         }
     } //end of checkout اتمام الشراء
 
@@ -211,17 +218,15 @@ class CartController extends Controller
                 $products->get();
             }]);
         }])
-        ->whereHas('carts.products', function ($query) {
-            $query->whereNull('products.deleted_at');
-        })
-        ->get();
+            ->whereHas('carts.products', function ($query) {
+                $query->whereNull('products.deleted_at');
+            })
+            ->get();
 
         $countProdcts = count($products);
         $addresses = Address::with('governorate')->where('user_id', auth()->user()->id)->first();
 
-
         $order = Order::where('user_id', Auth::id())->first();
-
 
         $vendors_cart_count = Vendor::with(['carts' => function ($query) use ($user) {
             $query->where('carts.user_id', $user->id);
@@ -229,15 +234,14 @@ class CartController extends Controller
                 $products->get();
             }]);
         }])
-        ->whereHas('carts.products', function ($query) {
-            $query->whereNull('products.deleted_at');
-        })
-        ->count();
-$delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
+            ->whereHas('carts.products', function ($query) {
+                $query->whereNull('products.deleted_at');
+            })
+            ->count();
+        $delivery_fees = Governorate::where('id', $addresses->governorate_id)->first();
 
-        return view('site.sale.orders', compact('products', 'countProdcts', 'addresses', 'order','vendors_cart_count','delivery_fees'));
+        return view('site.sale.orders', compact('products', 'countProdcts', 'addresses', 'order', 'vendors_cart_count', 'delivery_fees'));
     }
-
 
     public function updateOrder(Request $request, Order $order)
     {
@@ -251,7 +255,7 @@ $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
         $order = Order::where(['user_id' => Auth::id(), 'id' => $request->order_id])->first();
         if (!is_null($request->note)) {
             $order->update([
-                'note'  => $request->note,
+                'note' => $request->note,
             ]);
         }
         // $products = Vendor::with(['carts' => function ($query) use ($user) {
@@ -266,12 +270,11 @@ $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
                 $products->get();
             }]);
         }])
-        ->whereHas('carts.products', function ($query) {
-            $query->whereNull('products.deleted_at');
-        })
-        ->get();
+            ->whereHas('carts.products', function ($query) {
+                $query->whereNull('products.deleted_at');
+            })
+            ->get();
         $countProdcts = count($products);
-
 
         $addresses = Address::with('governorate')->where('user_id', auth()->user()->id)->first();
 
@@ -281,13 +284,13 @@ $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
                 $products->get();
             }]);
         }])
-        ->whereHas('carts.products', function ($query) {
-            $query->whereNull('products.deleted_at');
-        })
-        ->count();
-        $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
+            ->whereHas('carts.products', function ($query) {
+                $query->whereNull('products.deleted_at');
+            })
+            ->count();
+        $delivery_fees = Governorate::where('id', $addresses->governorate_id)->first();
 
-        return view('site.sale.order_status', compact('user', 'products', 'addresses', 'countProdcts', 'order','vendors_cart_count','delivery_fees'));
+        return view('site.sale.order_status', compact('user', 'products', 'addresses', 'countProdcts', 'order', 'vendors_cart_count', 'delivery_fees'));
     }
 
     public function showOrder($id)
@@ -307,11 +310,10 @@ $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
                 $products->get();
             }]);
         }])
-        ->whereHas('carts.products', function ($query) {
-            $query->whereNull('products.deleted_at');
-        })
-        ->get();
-
+            ->whereHas('carts.products', function ($query) {
+                $query->whereNull('products.deleted_at');
+            })
+            ->get();
 
         $countProdcts = count($products);
 
@@ -319,8 +321,8 @@ $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
 
         if ($addresses == null || $addresses->governorate_id == null) {
             session()->flash('error', 'برجاء اكمال بياناتك الشخصيه واضافة عنوان خاص بك');
-                return redirect()->back();
-            }
+            return redirect()->back();
+        }
 
         $vendors_cart_count = Vendor::with(['carts' => function ($query) use ($user) {
             $query->where('carts.user_id', $user->id);
@@ -328,17 +330,17 @@ $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
                 $products->get();
             }]);
         }])
-        ->whereHas('carts.products', function ($query) {
-            $query->whereNull('products.deleted_at');
-        })
-        ->count();
+            ->whereHas('carts.products', function ($query) {
+                $query->whereNull('products.deleted_at');
+            })
+            ->count();
 
-        $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
+        $delivery_fees = Governorate::where('id', $addresses->governorate_id)->first();
 
-        return view('site.sale.order_status', compact('user', 'products', 'addresses', 'countProdcts', 'order','vendors_cart_count','delivery_fees'));
+        return view('site.sale.order_status', compact('user', 'products', 'addresses', 'countProdcts', 'order', 'vendors_cart_count', 'delivery_fees'));
     }
 
-    public function reviewstore(Request $request )
+    public function reviewstore(Request $request)
     {
 
         $review = new Review();
@@ -354,5 +356,15 @@ $delivery_fees = Governorate::where('id',$addresses->governorate_id)->first();
 
     }
 
+    protected function getCartId()
+    {
+        $id = request()->cookie('cart_uuid');
+        if (!$id) {
+            $id = Str::uuid();
+            Cookie::queue('cart_id', $id, 60 * 24 * 7);
+        }
+
+        return $id;
+    }
 
 }

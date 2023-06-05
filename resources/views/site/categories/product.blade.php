@@ -92,23 +92,32 @@
                     </div>
 
                     <!-- Colors -->
-                    <div id="color-section " class="my-4">
+                    {{--  <div id="color-section" class="my-4">
                         <div class="normal-text my-2 ">الوان</div>
                         <div class="d-flex available-colors flex-nowrap">
                             @foreach ($product_colors as $color)
-                            <div style="background:{{ $color->name }}"></div>
+                            <div class="available-color" data-size="{{ $color->name }}" style="background:{{ $color->name }}"></div>
+                            @endforeach
+                        </div>
+                    </div>  --}}
+
+                    <div id="color-section" class="my-4">
+                        <div class="normal-text my-2">الوان</div>
+                        <div class="d-flex available-colors flex-nowrap">
+                            @foreach ($product_colors as $color)
+                            <div class="available-color" data-color="{{ $color->name }}" style="background:{{ $color->name }}"></div>
                             @endforeach
                         </div>
                     </div>
                     <!-- Sizes -->
-                    <div id="size-section " class="my-4">
+                    <div id="size-section" class="my-4">
                         <div class="normal-text my-2  d-flex justify-content-between">
                             المقاس
                             <a href="{{ route('sizeTable') }}" class="under-line text-dark"><u>جدول المقاسات</u></a>
                         </div>
                         <div class="d-flex available-sizes flex-nowrap">
                             @foreach ($product_sizes as $size)
-                            <div class="available-size active">{{ $size->name }}</div>
+                            <div class="available-size" data-size="{{ $size->name }}" data-price="{{ $size->price }}">{{ $size->name }}</div>
                             @endforeach
                         </div>
                     </div>
@@ -133,7 +142,8 @@
                             </div>
                             <!-- Add to card button -->
 
-                        </div> <button class="col-8 col-lg-9 bg-main text-white text-larger badge">
+                        </div> <button class="col-8 col-lg-9 bg-main text-white text-larger badge addToCart"
+                            data-product-id="{{ $productDetails->id }}">
                             أضف الي العربة
                         </button>
                     </div>
@@ -157,7 +167,9 @@
 
                                     <img src="{{ asset('website_assets/imgs/icons/shop.png') }}">
                                     <!-- <i class="fa-solid fa-arrow-rotate-left px-1 main-color"></i> -->
-                                    <span class="seller-name"> <a href="{{ route('Site.product.vendorProducts', $productDetails->vendor_id) }}"> اسم البائع : {{ $vendor->vendor_name }}</a> </span>
+                                    <span class="seller-name"> <a
+                                            href="{{ route('Site.product.vendorProducts', $productDetails->vendor_id) }}">
+                                            اسم البائع : {{ $vendor->vendor_name }}</a> </span>
                                 </span>
                                 <p class="seller-rate"><span class="number">70%</span> تقييم
                                     البائع</p>
@@ -534,16 +546,18 @@
 
     <div id="share-product" class="d-flex flex-column align-items-center pt-5">
         <h5>مشاركة هذا المنتج</h5>
-        <div> <a href class="text-decoration-none">
+        <div> <a href="https://wa.me/?text={{ urlencode($shareUrl) }}" class="text-decoration-none">
                 <img src="{{ asset('website_assets/imgs/icons/whatsapp.png') }}">
             </a>
-            <a href="#" onclick="shareProductOnFacebook(event)" class="text-decoration-none">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($shareUrl) }}" target="_blank"
+                class="text-decoration-none">
                 <img src="{{ asset('website_assets/imgs/icons/facebook.png') }}">
             </a>
-            <a href class="text-decoration-none">
+            <a href="https://www.instagram.com" class="text-decoration-none">
                 <img src="{{ asset('website_assets/imgs/icons/instagram.png') }}">
             </a>
-            <a href class="text-decoration-none">
+            <a href="https://twitter.com/intent/tweet?url={{ urlencode($shareUrl) }}&text=Check%20out%20this%20product"
+                target="_blank" class="text-decoration-none">
                 <img src="{{ asset('website_assets/imgs/icons/twitter.png') }}">
             </a>
         </div>
@@ -779,18 +793,20 @@
 
 
 
+                </div>
             </div>
         </div>
-    </div>
 
-    {{-- //favorites --}}
-    @include('site.includes.first_add_to_favorite_modal')
-    @include('site.includes.exist_same_product_in_favorites_modal')
-    {{-- //compares --}}
-    @include('site.includes.first_add_to_compare_modal')
-    @include('site.includes.exist_same_product_in_compares_modal')
-    @include('site.includes.max_products_in_compares')
-
+        {{-- //favorites --}}
+        @include('site.includes.first_add_to_favorite_modal')
+        @include('site.includes.exist_same_product_in_favorites_modal')
+        {{-- //compares --}}
+        @include('site.includes.first_add_to_compare_modal')
+        @include('site.includes.exist_same_product_in_compares_modal')
+        @include('site.includes.max_products_in_compares')
+        {{-- //carts --}}
+        @include('site.includes.first_add_to_cart_modal')
+        @include('site.includes.exist_same_product_in_carts_modal')
 
 
 
@@ -798,40 +814,3 @@
 
 
 @endsection
-@push('scripts')
-<script>
-    function shareProductOnFacebook(event) {
-        event.preventDefault();
-
-        var urlToShare = "{{ route('Site.product',$productDetails->name) }}"; // Replace with your actual product URL
-        FB.ui({
-            method: 'share',
-            href: urlToShare,
-        }, function(response) {
-            // Handle the response or perform any necessary actions after sharing
-            console.log(response);
-        });
-    }
-</script>
-
-
-<script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId: 'YOUR_APP_ID',
-        autoLogAppEvents: true,
-        xfbml: true,
-        version: 'v13.0'
-      });
-    };
-
-    (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v13.0&appId=YOUR_APP_ID&autoLogAppEvents=1";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
-
-@endpush

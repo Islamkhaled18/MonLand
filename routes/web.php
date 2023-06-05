@@ -70,18 +70,7 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
     Route::get('profile/delete/{id}', [ProfileController::class, 'destroyAddress'])->name('site.profile.destroyAddress');
     ////////////////////////////////profile //////////////////////////////////////////////////////
 
-    ///////////////cart Controller/////////////////////
-    Route::group(['prefix' => 'cart'], function () {
-        Route::get('/', [CartController::class, 'index'])->name('cart.index');
-        Route::post('store', [CartController::class, 'store'])->name('cart.store');
-        Route::get('delete/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
-        Route::post('update_cart', [CartController::class, 'update_cart'])->name('cart.update'); //upate product in cart list
-        Route::get('count-cart-prod', [CartController::class, 'countCart'])->name('cart.countCart');
 
-        /////////////////////////////////////// coupon //////////////////////////////////////////
-        Route::post('/coupon', [CouponController::class, 'store'])->name('site.coupon.store');
-        Route::delete('/coupon', [CouponController::class, 'destroy'])->name('site.coupon.destroy');
-    });
     ///////////////Checkout Controller/////////////////////
     Route::group(['prefix' => 'Checkout'], function () {
         Route::get('/', [CartController::class, 'orders'])->name('cart.orders');
@@ -144,6 +133,20 @@ Route::group(['namespace' => 'Site', 'prefix' => 'Site'], function () {
     Route::get('compare/products', [CompareController::class, 'index'])->name('compare.products.index');
     Route::post('compare', [CompareController::class, 'store'])->name('compare.store');
     Route::delete('compare', [CompareController::class, 'destroy'])->name('compare.destroy');
+
+
+      ///////////////cart Controller/////////////////////
+      Route::group(['prefix' => 'cart'], function () {
+        Route::get('/', [CartController::class, 'index'])->name('cart.index');
+        Route::post('store', [CartController::class, 'store'])->name('site.cart.store');
+        Route::get('delete/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+        Route::post('update_cart', [CartController::class, 'update_cart'])->name('cart.update'); //update product in cart list
+        Route::get('count-cart-prod', [CartController::class, 'countCart'])->name('cart.countCart');
+
+        /////////////////////////////////////// coupon //////////////////////////////////////////
+        Route::post('/coupon', [CouponController::class, 'store'])->name('site.coupon.store');
+        Route::delete('/coupon', [CouponController::class, 'destroy'])->name('site.coupon.destroy');
+    });
 
 
     //vendors

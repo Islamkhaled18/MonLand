@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Compare;
 use App\Models\Wishlist;
 use App\Providers\RouteServiceProvider;
@@ -47,6 +48,7 @@ class LoginController extends Controller
     {
         $wishlistUuid = $this->getCartIdFav();
         $compareUuid = $this->getCartIdCompare();
+        $cartUuid = $this->getCartId();
 
         if ($wishlistUuid) {
             Wishlist::where('uuid', $wishlistUuid)
@@ -60,16 +62,21 @@ class LoginController extends Controller
                 ->update(['user_id' => $user->id]);
         }
 
+        if ($cartUuid) {
+            Cart::where('uuid', $cartUuid)
+                ->whereNull('user_id')
+                ->update(['user_id' => $user->id]);
+        }
+
         return redirect()->intended($this->redirectPath());
     }
-
 
     protected function getCartIdFav()
     {
         $id = request()->cookie('favorite_uuid');
         if (!$id) {
             $id = Str::uuid();
-            Cookie::queue('cart_id', $id, 60 * 24 * 7);
+            Cookie::queue('favorite_id', $id, 60 * 24 * 7);
         }
 
         return $id;
@@ -77,10 +84,21 @@ class LoginController extends Controller
 
     protected function getCartIdCompare()
     {
-        $id = request()->cookie('favorite_uuid');
+        $id = request()->cookie('compare_id');
         if (!$id) {
             $id = Str::uuid();
-            Cookie::queue('cart_id', $id, 60 * 24 * 7);
+            Cookie::queue('compare_id', $id, 60 * 24 * 7);
+        }
+
+        return $id;
+    }
+
+    protected function getCartId()
+    {
+        $id = request()->cookie('cart_uuid');
+        if (!$id) {
+            $id = Str::uuid();
+            Cookie::queue('cart_uuid', $id, 60 * 24 * 7);
         }
 
         return $id;

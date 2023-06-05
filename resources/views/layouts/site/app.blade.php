@@ -522,6 +522,58 @@
             });
         });
 
+        $(document).ready(function() {
+            $('.available-size').click(function() {
+                var price = $(this).data('price');
+                var size = $(this).text();
+                $('#after-price .text-bold').text(price + ' جنيه');
+            });
+        });
+
+        $(document).on('click', '.available-color', function() {
+            $('.available-color').removeClass('active');
+            $(this).addClass('active');
+        });
+
+        $(document).on('click', '.addToCart', function(e) {
+            var product_id = $(this).data('product-id');
+            var selectedSize = $('.available-sizes .available-size.active').data('size');
+            var selectedPrice = $('.available-sizes .available-size.active').data('price');
+            var selectedColor = $('.available-colors .available-color.active').data('color');
+
+            e.preventDefault();
+            $.ajax({
+                type: 'post',
+                url: "{{ route('site.cart.store') }}",
+                data: {
+                    product_id: product_id,
+                    size: selectedSize,
+                    price: selectedPrice,
+                    color: selectedColor,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+
+                    if (response === 'added') {
+                        $('.cart-alert-modal-first').css('display', 'block');
+                        setTimeout(function() {
+                            $('.cart-alert-modal-first').css('display', 'none');
+                        }, 2500);
+                    } else if (response === 'exists') {
+                        $('.cart-alert-modal-exist').css('display', 'block');
+                        setTimeout(function() {
+                            $('.cart-alert-modal-exist').css('display', 'none');
+                        }, 2500);
+                    }
+                },
+                error: function(response) {
+                    alert('Error adding product to favorites!');
+                }
+            });
+        });
+
+
+
     </script>
 
     <script>
