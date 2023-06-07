@@ -65,6 +65,15 @@ class ProductController extends Controller
             'material' => 'nullable',
             'photo' => 'required|array|min:1',
             'photo.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'anotherInformation'=>'nullable|string|max:250',
+            'is_active' => 'nullable|in:0,1',
+            'featured'=> 'nullable|in:0,1',
+            'deal_of_the_day'=> 'nullable|in:0,1',
+            'flash_sale'=> 'nullable|in:0,1',
+            'quick_request'=> 'nullable|in:0,1',
+            'qty'=>'nullable|integer',
+            'vendor_id'=>'nullable|exists:vendors,id',
+            'mainCategory_id'=>'nullable|exists:main_categories,id'
 
         ]);
 

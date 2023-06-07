@@ -86,9 +86,21 @@
                                     </button>
                                 </div>
                                 <div class="row">
-                                    <button type="button" class="btn bg-main-color btn-dark my-1 col-5 col-lg-7">
-                                        اضف الي العربة
+
+                                    @if ($product->colors->count() > 0 || $product->sizes->count() > 0)
+
+                                    <button class="btn bg-main-color btn-dark my-1 col-5 col-lg-7">
+
+                                        <a href="{{ route('Site.product',$product->name) }}">اضف الى العربه</a>
                                     </button>
+                                    @else
+
+                                    <button class="btn bg-main-color btn-dark my-1 col-5 col-lg-7 addToCart"
+                                        data-product-id="{{ $product->id }}">
+                                        أضف إلى العربة
+                                    </button>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>

@@ -150,7 +150,7 @@
                                         <input type="file" class="form-control @error('photo') is-invalid @enderror"
                                             value="{{ old('photo') }}" id="photo" name="photo[]" multiple
                                             accept="image/*">
-                                        @error('file')
+                                        @error('photo[]')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -251,10 +251,11 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="projectinput1">  السعر القديم للمنتج
+                                            <label for="projectinput1"> السعر القديم للمنتج
                                             </label>
                                             <input type="text" id="old_price" class="form-control"
-                                                placeholder="السعر القديم للمنتج" value="{{ old('old_price') }}" name="old_price">
+                                                placeholder="السعر القديم للمنتج" value="{{ old('old_price') }}"
+                                                name="old_price">
                                             @error('old_price')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -267,7 +268,8 @@
                                             <label for="projectinput1">سعر المنتج الجديد
                                             </label>
                                             <input type="text" id="new_price" class="form-control"
-                                                placeholder="سعر المنتج الجديد " value="{{ old('new_price') }}" name="new_price">
+                                                placeholder="سعر المنتج الجديد " value="{{ old('new_price') }}"
+                                                name="new_price">
                                             @error('new_price')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -355,7 +357,8 @@
 
                             <div class="form-group">
                                 <label for="cover_image">صورة غلاف المنتج </label>
-                                <input class="form-control @error('cover_image') is-invalid @enderror" id="cover_image" name="cover_image" type="file">
+                                <input class="form-control @error('cover_image') is-invalid @enderror" id="cover_image"
+                                    name="cover_image" type="file">
                                 @error('file')
                                 <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror

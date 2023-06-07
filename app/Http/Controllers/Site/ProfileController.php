@@ -31,7 +31,6 @@ class ProfileController extends Controller
     public function updateProfile(Request $request, $id)
     {
 
-
         $this->validate($request, [
 
             'firstName' => 'max:255',
@@ -80,18 +79,18 @@ class ProfileController extends Controller
     public function storeAddress(Request $request, $id)
     {
 
-        // $this->validate($request, [
+        $this->validate($request, [
 
-        //     'Phone_2' => 'nullable|max:255',
-        //     'postal_code' => 'nullable|integer|max:255',
-        //     'address_details' => 'nullable',
-        //     'governorate_id' => 'nullable|integer',
-        //     'city_id' => 'nullable|integer',
-        //     'building_no' => 'nullable|integer',
-        //     'flat_no' => 'nullable|integer',
-        //     'apartment_no' => 'nullable|integer',
-        //     'special_mark' => 'nullable|max:255',
-        // ]);
+            'Phone_2' => 'required|numeric|digits:11',
+            'postal_code' => 'nullable|numeric|digits:5',
+            'address_details' => 'required|string|max:250',
+            'governorate_id' => 'required|integer|exists:governorates,id',
+            'city_id' => 'required|integer|exists:governorates,id',
+            'building_no' => 'required|integer|max:3',
+            'flat_no' => 'required|integer|max:3',
+            'apartment_no' => 'required|integer|max:3',
+            'special_mark' => 'required|string|max:250',
+        ]);
 
         $address = new Address();
         $address->user_id = auth()->user()->id;
@@ -131,8 +130,6 @@ class ProfileController extends Controller
 
         return response()->json(['success' => 'Default address set successfully']);
     }
-
-
 
     public function destroyAddress($id)
     {

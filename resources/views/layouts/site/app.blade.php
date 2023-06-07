@@ -535,11 +535,21 @@
             $(this).addClass('active');
         });
 
+        $(document).on('click', '.quantity-option', function(e) {
+            e.preventDefault();
+            var selectedQuantity = $(this).text(); // Get the selected quantity
+            $('#order-quantity').text(selectedQuantity); // Update the displayed quantity
+            $('.quantity-option').removeClass('active'); // Remove active class from all options
+            $(this).addClass('active'); // Add active class to the selected option
+        });
+
         $(document).on('click', '.addToCart', function(e) {
             var product_id = $(this).data('product-id');
             var selectedSize = $('.available-sizes .available-size.active').data('size');
             var selectedPrice = $('.available-sizes .available-size.active').data('price');
             var selectedColor = $('.available-colors .available-color.active').data('color');
+            var selectedQuantity = $('.dropdown-menu .dropdown-item.active').text(); // Get the selected quantity
+
 
             e.preventDefault();
             $.ajax({
@@ -550,6 +560,8 @@
                     size: selectedSize,
                     price: selectedPrice,
                     color: selectedColor,
+                    quantity: $('#order-quantity').text(), // Get the selected quantity
+
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {

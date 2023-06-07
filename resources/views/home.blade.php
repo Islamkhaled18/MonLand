@@ -118,25 +118,6 @@
                                 alt="{{$weekend_offer->name }}" height="155" class="w-100 m-3" />
                         </div>
                         @endforeach
-
-                        @else
-
-                        <div class="col-6">
-                            <img src=" {{ asset('website_assets/Design/Finished/404-ar.png') }}"
-                                class="w-100 h-100 m-3" />
-                        </div>
-                        <div class="col-6">
-                            <img src=" {{ asset('website_assets/Design/Finished/404-ar.png') }}"
-                                class="w-100 h-100 m-3" />
-                        </div>
-                        <div class="col-6 mt-4">
-                            <img src=" {{ asset('website_assets/Design/Finished/404-ar.png') }}"
-                                class="w-100 h-100 m-3" />
-                        </div>
-                        <div class="col-6 mt-4">
-                            <img src=" {{ asset('website_assets/Design/Finished/404-ar.png') }}"
-                                class="w-100 h-100 m-3" />
-                        </div>
                         @endif
 
                     </div>
@@ -156,13 +137,6 @@
                                 alt="{{$buy_your_mind_is_free->name }}" height="155" class="w-100 m-3" />
                         </div>
                         @endforeach
-
-                        @else
-
-                        <div class="col-6">
-                            <img src=" {{ asset('website_assets/Design/Finished/404-ar.png') }}"
-                                class="w-100 h-100 m-3" />
-                        </div>
 
                         @endif
 
@@ -441,9 +415,21 @@
                     <div class="  border-dotted p-2 text-bold">
                         {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }} </div>
                     </div>
+
+                    @if ($product->colors->count() > 0 || $product->sizes->count() > 0)
+
                     <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+
+                        <a href="{{ route('Site.product',$product->name) }}">اضف الى العربه</a>
+                    </button>
+                    @else
+
+                    <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2 addToCart"
+                        data-product-id="{{ $product->id }}">
                         أضف إلى العربة
                     </button>
+                    @endif
+
                 </div>
                 @endforeach
 
@@ -611,9 +597,20 @@
                     <div class="  border-dotted p-2 text-bold">
                         {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }} </div>
                     </div>
+
+                    @if ($product->colors->count() > 0 || $product->sizes->count() > 0)
+
                     <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+
+                        <a href="{{ route('Site.product',$product->name) }}">اضف الى العربه</a>
+                    </button>
+                    @else
+
+                    <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2 addToCart"
+                        data-product-id="{{ $product->id }}">
                         أضف إلى العربة
                     </button>
+                    @endif
                 </div>
                 @endforeach
 
@@ -760,9 +757,21 @@
                     <div class="  border-dotted p-2 text-bold">
                         {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }} </div>
                     </div>
+
+                    @if ($product->colors->count() > 0 || $product->sizes->count() > 0)
+
                     <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+
+                        <a href="{{ route('Site.product',$product->name) }}">اضف الى العربه</a>
+                    </button>
+                    @else
+
+                    <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2 addToCart"
+                        data-product-id="{{ $product->id }}">
                         أضف إلى العربة
                     </button>
+                    @endif
+
                 </div>
                 @endforeach
 
@@ -952,9 +961,19 @@
                     <div class="  border-dotted p-2 text-bold">
                         {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }} </div>
                     </div>
+                    @if ($product->colors->count() > 0 || $product->sizes->count() > 0)
+
                     <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+
+                        <a href="{{ route('Site.product',$product->name) }}">اضف الى العربه</a>
+                    </button>
+                    @else
+
+                    <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2 addToCart"
+                        data-product-id="{{ $product->id }}">
                         أضف إلى العربة
                     </button>
+                    @endif
                 </div>
                 @endforeach
                 @endif
@@ -1071,9 +1090,21 @@
                     <div class="  border-dotted p-2 text-bold">
                         {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }} </div>
                     </div>
+
+                    @if ($product->colors->count() > 0 || $product->sizes->count() > 0)
+
                     <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+
+                        <a href="{{ route('Site.product',$product->name) }}">اضف الى العربه</a>
+                    </button>
+                    @else
+
+                    <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2 addToCart"
+                        data-product-id="{{ $product->id }}">
                         أضف إلى العربة
                     </button>
+                    @endif
+
                 </div>
                 @endforeach
 
@@ -1218,9 +1249,21 @@
                     <div class="  border-dotted p-2 text-bold">
                         {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }} </div>
                     </div>
+
+                    @if ($product->colors->count() > 0 || $product->sizes->count() > 0)
+
                     <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2">
+
+                        <a href="{{ route('Site.product',$product->name) }}">اضف الى العربه</a>
+                    </button>
+                    @else
+
+                    <button class=" btn bg-main text-white text-bold mx-2 my-3  py-1 px-2 addToCart"
+                        data-product-id="{{ $product->id }}">
                         أضف إلى العربة
                     </button>
+                    @endif
+
                 </div>
                 @endforeach
 
@@ -1314,7 +1357,7 @@
 
     });
 
-  
+
 
 
     function generateUUID() {

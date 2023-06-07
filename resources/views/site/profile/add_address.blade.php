@@ -26,6 +26,7 @@
                 <span class="text-danger">*</span>
                 <input type="text" class="form-control ml-5 py-4 input-background mt-2" id="inputName" disabled
                     value="{{auth()->user()->firstName}} {{auth()->user()->lastName}}">
+
             </div>
 
             <div class="form-group col-md-6">
@@ -41,6 +42,9 @@
                 <span class="text-danger">*</span>
                 <input type="text" class="form-control ml-5 py-4 input-background mt-2" name="Phone_2"
                     value="{{old('Phone_2')}}" id="inputName" placeholder="يرجى كتابة رقم الهاتف بالإنجليزى">
+                @error('Phone_2')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="form-group col-md-12 offset-md-1 mb-4">
@@ -48,6 +52,10 @@
                 <span class="text-danger">*</span>
                 <input type="text" class="form-control ml-5 py-4 input-background mt-2" name="postal_code"
                     value="{{old('postal_code')}}" id="inputName" placeholder="مثال 13621">
+
+                @error('postal_code')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="form-group col-md-12 offset-md-1 mb-4">
@@ -55,6 +63,9 @@
                 <span class="text-danger">*</span>
                 <input type="text" class="form-control ml-5 py-4 input-background mt-2" name="address_details"
                     value="{{old('address_details')}}" id="inputName" placeholder="برجى كتابة عنوانك بالتفصيل">
+                @error('address_details')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="form-group col-md-6">
@@ -69,7 +80,9 @@
                     @endif
 
                 </select>
-
+                @error('governorate_id')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             <div class="form-group col-md-6">
                 <label for="inputPhone">المدينة</label>
@@ -83,6 +96,9 @@
                     @endif --}}
 
                 </select>
+                @error('city_id')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="form-group col-md-6 mb-4">
@@ -93,6 +109,9 @@
                 <input type="text" name="building_no" value="{{old('building_no')}}"
                     class="form-control ml-5 py-4 input-background mt-2" id="inputName"
                     placeholder="مثال : عمارة رقم 8">
+                @error('building_no')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="form-group col-md-6 mb-4">
@@ -103,6 +122,9 @@
                 <input type="text" name="flat_no" value="{{old('flat_no')}}"
                     class="form-control ml-5 py-4 input-background mt-2" id="inputName"
                     placeholder="مثال : الدور الثانى">
+                @error('flat_no')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
 
@@ -113,6 +135,9 @@
                 <span class="text-danger">*</span>
                 <input type="text" name="apartment_no" value="{{old('apartment_no')}}"
                     class="form-control ml-5 py-4 input-background mt-2" id="inputName" placeholder="مثال : شقة رقم 3">
+                @error('apartment_no')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="form-group col-md-6 mb-4">
@@ -123,6 +148,9 @@
                 <input type="text" name="special_mark" value="{{old('special_mark')}}"
                     class="form-control ml-5 py-4 input-background mt-2" id="inputName"
                     placeholder="مثال :  مساجد أو فرع فودافون">
+                @error('special_mark')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
         </div>
 

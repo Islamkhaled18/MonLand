@@ -7,7 +7,8 @@
 @section('content')
 
 <!-- my Cart -->
-@if ($compare_products && $compare_products->count() > 0 && $compare_products->count() <= 1) <div class="container mt-4 mb-5">
+@if ($compare_products && $compare_products->count() > 0 && $compare_products->count() <= 1) <div
+    class="container mt-4 mb-5">
     <div class="page-nav row">
         <a href="/" class="text-dark pl-2">
             <i class="fa-solid fa-house-chimney"></i>
@@ -51,8 +52,23 @@
                     <tr>
                         <td>العربة</td>
                         <td>
-                            <button class="btn btn-dark w-75 py-2">أضف الى العربة</button>
+                            {{-- <button class="btn btn-dark w-75 py-2">أضف الى العربة</button> --}}
+                            @if ($product->colors->count() > 0 || $product->sizes->count() > 0)
+
+                            <button class="btn btn-dark w-75 py-2">
+
+                                <a href="{{ route('Site.product',$product->name) }}">اضف الى العربه</a>
+                            </button>
+                            @else
+
+                            <button class="btn btn-dark w-75 py-2 addToCart" data-product-id="{{ $product->id }}">
+                                أضف إلى العربة
+                            </button>
+                            @endif
                         </td>
+
+
+
 
                     </tr>
                     {{-- <tr>
@@ -90,20 +106,21 @@
         </div>
 
     </div>
-    @elseif ($compare_products && $compare_products->count() > 1 && $compare_products->count() <= 2) <div class="container">
+    @elseif ($compare_products && $compare_products->count() > 1 && $compare_products->count() <= 2) <div
+        class="container">
         <table class="table table-bordered font-weight-bold">
             <thead>
                 <tr>
                     <td>المنتج</td>
                     <td class="p-4"><img
                             src="{{ $compare_products[0]->products->images[0]->photo ? asset($compare_products[0]->products->images[0]->photo) : asset('images/default.png') }}"
-                            alt="{{ $compare_products[0]->products->name }}" title="{{ $compare_products[0]->products->name }}"
-                            class="w-50" /> </td>
+                            alt="{{ $compare_products[0]->products->name }}"
+                            title="{{ $compare_products[0]->products->name }}" class="w-50" /> </td>
 
                     <td class="p-4"><img
                             src="{{ $compare_products[1]->products->images[0]->photo ? asset($compare_products[1]->products->images[0]->photo) : asset('images/default.png') }}"
-                            alt="{{ $compare_products[1]->products->name }}" title="{{ $compare_products[1]->products->name }}"
-                            class="w-50" /> </td>
+                            alt="{{ $compare_products[1]->products->name }}"
+                            title="{{ $compare_products[1]->products->name }}" class="w-50" /> </td>
                 </tr>
             </thead>
             <tbody>
@@ -114,8 +131,10 @@
                 </tr>
                 <tr>
                     <td>السعر</td>
-                    <td>{{ $compare_products[0]->products->new_price ?? $compare_products[0]->products->old_price }} جنيه</td>
-                    <td>{{ $compare_products[1]->products->new_price ?? $compare_products[1]->products->old_price }} جنيه</td>
+                    <td>{{ $compare_products[0]->products->new_price ?? $compare_products[0]->products->old_price }}
+                        جنيه</td>
+                    <td>{{ $compare_products[1]->products->new_price ?? $compare_products[1]->products->old_price }}
+                        جنيه</td>
 
                 </tr>
                 <tr>
@@ -163,9 +182,11 @@
                 </tr>
                 <tr>
                     <td>حذف</td>
-                    <td><a class="removeFromcomparelist" href="#" data-product-id="{{ $compare_products[0]->products->id }}"><i
+                    <td><a class="removeFromcomparelist" href="#"
+                            data-product-id="{{ $compare_products[0]->products->id }}"><i
                                 class="fas fa-trash-alt"></a></i></td>
-                    <td><a class="removeFromcomparelist" href="#" data-product-id="{{ $compare_products[1]->products->id }}"><i
+                    <td><a class="removeFromcomparelist" href="#"
+                            data-product-id="{{ $compare_products[1]->products->id }}"><i
                                 class="fas fa-trash-alt"></a></i></td>
                 </tr>
             </tbody>
@@ -204,4 +225,10 @@
         {{-- //favorites --}}
         @include('site.includes.first_add_to_favorite_modal')
         @include('site.includes.exist_same_product_in_favorites_modal')
+
+        {{-- //carts --}}
+        @include('site.includes.first_add_to_cart_modal')
+        @include('site.includes.exist_same_product_in_carts_modal')
+
+
         @endsection

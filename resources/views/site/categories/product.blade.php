@@ -92,20 +92,12 @@
                     </div>
 
                     <!-- Colors -->
-                    {{--  <div id="color-section" class="my-4">
-                        <div class="normal-text my-2 ">الوان</div>
-                        <div class="d-flex available-colors flex-nowrap">
-                            @foreach ($product_colors as $color)
-                            <div class="available-color" data-size="{{ $color->name }}" style="background:{{ $color->name }}"></div>
-                            @endforeach
-                        </div>
-                    </div>  --}}
-
                     <div id="color-section" class="my-4">
                         <div class="normal-text my-2">الوان</div>
                         <div class="d-flex available-colors flex-nowrap">
                             @foreach ($product_colors as $color)
-                            <div class="available-color" data-color="{{ $color->name }}" style="background:{{ $color->name }}"></div>
+                            <div class="available-color" data-color="{{ $color->name }}"
+                                style="background:{{ $color->name }}"></div>
                             @endforeach
                         </div>
                     </div>
@@ -117,7 +109,8 @@
                         </div>
                         <div class="d-flex available-sizes flex-nowrap">
                             @foreach ($product_sizes as $size)
-                            <div class="available-size" data-size="{{ $size->name }}" data-price="{{ $size->price }}">{{ $size->name }}</div>
+                            <div class="available-size" data-size="{{ $size->name }}" data-price="{{ $size->price }}">{{
+                                $size->name }}</div>
                             @endforeach
                         </div>
                     </div>
@@ -135,14 +128,16 @@
                                 aria-expanded="false">
                                 <span id="order-quantity" class="border-left px-2">1</span>
                             </button>
-                            <div id="order-quantity-list" class="dropdown-menu ">
-                                <a class="dropdown-item" href="#">1</a>
-                                <a class="dropdown-item" href="#">2</a>
-                                <a class="dropdown-item" href="#">3</a>
+                            <div id="order-quantity-list" class="dropdown-menu">
+                                <a class="dropdown-item quantity-option" href="#" id="quantity-1">1</a>
+                                <a class="dropdown-item quantity-option" href="#" id="quantity-2">2</a>
+                                <a class="dropdown-item quantity-option" href="#" id="quantity-3">3</a>
                             </div>
+
                             <!-- Add to card button -->
 
-                        </div> <button class="col-8 col-lg-9 bg-main text-white text-larger badge addToCart"
+                        </div>
+                        <button class="col-8 col-lg-9 bg-main text-white text-larger badge addToCart"
                             data-product-id="{{ $productDetails->id }}">
                             أضف الي العربة
                         </button>
