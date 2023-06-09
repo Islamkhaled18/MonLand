@@ -11,9 +11,8 @@
 
     <ul class="app-menu">
 
-        <li><a class="app-menu__item" href="{{ route('admin.dashboard') }}"><i class="app-menu__icon fa fa-home"></i> <span
-                    class="app-menu__label">الرئيسية</span></a></li>
-
+        <li><a class="app-menu__item" href="{{ route('admin.dashboard') }}"><i class="app-menu__icon fa fa-home"></i>
+                <span class="app-menu__label">الرئيسية</span></a></li>
 
 
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
@@ -56,8 +55,8 @@
                         المنتجات </a></li>
 
 
-                <li><a class="treeview-item" href="{{ route('size.index') }}"><i
-                            class="app-menu__icon fa fa-user"></i> <span class="app-menu__label"> جدول المقاسات
+                <li><a class="treeview-item" href="{{ route('size.index') }}"><i class="app-menu__icon fa fa-user"></i>
+                        <span class="app-menu__label"> جدول المقاسات
                         </span></a></li>
             </ul>
         </li>
@@ -68,8 +67,7 @@
             <ul class="treeview-menu">
 
 
-                <li><a class="treeview-item" href="{{ route('order.index') }}"><i
-                            class="app-menu__icon fa fa-user"></i>
+                <li><a class="treeview-item" href="{{ route('order.index') }}"><i class="app-menu__icon fa fa-user"></i>
                         <span class="app-menu__label">طلبات العملاء</span></a></li>
                 <li><a class="treeview-item" href="{{ route('exchanges.index') }}"><i
                             class="app-menu__icon fa fa-user"></i>
@@ -80,26 +78,17 @@
             </ul>
         </li>
 
-
-
-
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
                     class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label"> الاعدادات
                     والسياسات</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
 
-
-
                 <li><a class="treeview-item" href="{{ route('settings.index') }}"><i
                             class="app-menu__icon fa fa-user"></i>
                         <span class="app-menu__label">الاعدادات</span></a></li>
 
-
-
-                <li><a class="treeview-item" href="{{ route('terms.index') }}"><i
-                            class="app-menu__icon fa fa-user"></i>
+                <li><a class="treeview-item" href="{{ route('terms.index') }}"><i class="app-menu__icon fa fa-user"></i>
                         <span class="app-menu__label">الشروط والاحكام </span></a></li>
-
 
                 <li><a class="treeview-item" href="{{ route('DeliveryPolicy.index') }}"><i
                             class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">سياسة
@@ -108,82 +97,60 @@
         </li>
 
 
-
-
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
                     class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label"> التواصل</span><i
                     class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
 
-
                 <li><a class="treeview-item" href="{{ route('emailUs.index') }}"><i
                             class="app-menu__icon fa fa-user"></i>
                         <span class="app-menu__label">ايميلات العملاء</span></a></li>
 
-
                 @can('contactus')
-                    <li><a class="treeview-item" href="{{ route('ContactUs.index') }}"><i
-                                class="app-menu__icon fa fa-user"></i>
-                            <span class="app-menu__label">رسائل المستخدمين او الزوار</span></a></li>
+                <li><a class="treeview-item" href="{{ route('ContactUs.index') }}"><i
+                            class="app-menu__icon fa fa-user"></i>
+                        <span class="app-menu__label">رسائل المستخدمين او الزوار</span></a></li>
+                @endcan
+            </ul>
+        </li>
+
+
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
+                    class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label"> البائعين والمحافظات
+                    </span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+
+                @can('vendors')
+                <li><a class="treeview-item" href="{{ route('vendors.index') }}"><i
+                            class="app-menu__icon fa fa-user"></i>
+                        <span class="app-menu__label">البائعين</span></a></li>
+                @endcan
+
+                @can('governorate')
+                <li><a class="treeview-item" href="{{ route('governorate.index') }}"><i
+                            class="app-menu__icon fa fa-user"></i>
+                        <span class="app-menu__label">المحافظات</span></a></li>
+                @endcan
+
+                @can('vendors')
+                <li><a class="treeview-item" href="{{ route('deliveryPrice.index') }}"><i
+                            class="app-menu__icon fa fa-user"></i>
+                        <span class="app-menu__label">سعر التوصيل للمحافظات</span></a></li>
                 @endcan
 
             </ul>
         </li>
 
-
-
-
         <li><a class="app-menu__item" href="{{ route('brands.index') }}"><i class="app-menu__icon fa fa-user"></i>
                 <span class="app-menu__label">الماركات</span></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <li><a class="app-menu__item" href="{{ route('vendors.index') }}"><i class="app-menu__icon fa fa-user"></i>
-                <span class="app-menu__label">البائعين واسعار الشحن </span></a></li>
-
-
-
-
 
 
         <li><a class="app-menu__item" href="{{ route('ads.index') }}"><i class="app-menu__icon fa fa-user"></i>
                 <span class="app-menu__label">الاعلانات</span></a></li>
 
-        <li><a class="app-menu__item" href="{{ route('governorate.index') }}"><i
-                    class="app-menu__icon fa fa-user"></i>
-                <span class="app-menu__label">المحافظات</span></a></li>
+
         <li><a class="app-menu__item" href="{{ route('coupon.index') }}"><i class="app-menu__icon fa fa-user"></i>
                 <span class="app-menu__label">كوبونات الخصم</span></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     </ul>
 </aside>

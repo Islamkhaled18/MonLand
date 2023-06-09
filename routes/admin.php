@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DeliveryPolicyController;
+use App\Http\Controllers\Admin\DeliveryPriceController;
 use App\Http\Controllers\Admin\EmailUsController;
 use App\Http\Controllers\Admin\ExchangeController;
 use App\Http\Controllers\Admin\GovernorateController;
@@ -235,6 +236,19 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
         // Route::post('update/{id}', [OrderController::class, 'update'])->name('order.update');
         Route::get('delete/{id}', [ExchangeController::class, 'destroy'])->name('exchanges.destroy');
     });
+
+
+        ///////////////Delivery-price Controller/////////////////////
+        Route::group(['prefix' => 'Delivery-price'], function () {
+            Route::get('/', [DeliveryPriceController::class, 'index'])->name('deliveryPrice.index');
+            Route::get('create', [DeliveryPriceController::class, 'create'])->name('deliveryPrice.create');
+            Route::post('store', [DeliveryPriceController::class, 'store'])->name('deliveryPrice.store');
+            Route::get('edit/{id}', [DeliveryPriceController::class, 'edit'])->name('deliveryPrice.edit');
+            Route::post('update/{id}', [DeliveryPriceController::class, 'update'])->name('deliveryPrice.update');
+            Route::get('delete/{id}', [DeliveryPriceController::class, 'destroy'])->name('deliveryPrice.destroy');
+        });
+
+
 }); // routes for authenticated admins
 
 Route::group(['namespace' => 'Admin', 'middleware' => 'guest:admin', 'prefix' => 'admin'], function () {
