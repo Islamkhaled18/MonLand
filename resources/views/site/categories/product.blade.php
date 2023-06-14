@@ -61,11 +61,11 @@
                         <div class="d-flex mx-2">
 
                             <div class="star-rating  ">
-                                <span id="rating-score">03</span>
+                                <span id="rating-score">{{ $averageStarRating }}</span>
                                 <i class="fa-solid fa-star"></i>
                             </div>
                             <span id="product-review-count" class="mx-4 text-success">(اراء
-                                العملاء 180)</span>
+                                العملاء {{ $reviewsCount }})</span>
 
                         </div>
                     </div>
@@ -166,15 +166,15 @@
                                             href="{{ route('Site.product.vendorProducts', $productDetails->vendor_id) }}">
                                             اسم البائع : {{ $vendor->vendor_name }}</a> </span>
                                 </span>
-                                <p class="seller-rate"><span class="number">70%</span> تقييم
+                                <p class="seller-rate"><span class="number">{{ $average }}%</span> تقييم
                                     البائع</p>
                             </div>
-                            <div class="d-flex flex-column justify-content-end  align-items-end">
+                            {{-- <div class="d-flex flex-column justify-content-end  align-items-end">
                                 <button class="subscribe-btn px-3">تابع</button>
                                 <p class="seller-subscribers"><span class="number">117525</span>
                                     المتابعين</p>
 
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class=" pt-3 pb-4">
@@ -185,8 +185,9 @@
                                 <span class="text-large text-simi-bold pr-2">شحن موثوق به</span>
                             </div>
 
-                            <p class="pr-5">كل شحنه لها مصاريف شحن خاصة بها علي حسب عروض
-                                البائع</p>
+                            <p class="pr-5">
+                                {{ $vendor->exhange_status }}
+                            </p>
 
                         </div>
 
@@ -273,9 +274,10 @@
                                         <div class="mask half">
                                             <div class="fill"></div>
                                         </div>
-                                        <div class="inside-circle ">
+                                        <div class="inside-circle">
                                             <div id="generail-review-rating"
-                                                class="  position-absolute total-rate text-success">4.2</div>
+                                                class="  position-absolute total-rate text-success">{{
+                                                $averageStarRating }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -287,33 +289,33 @@
                                 <div class="col no-gutters">
                                     <div class="d-flex">5
                                         <div class="bar-container m-1 ">
-                                            <div class="bar bar-5"></div>
+                                            <div class="bar bar-{{ $productsWithRatingFive }}"></div>
                                         </div>
-                                        (127)
+                                        ({{ $productsWithRatingFive }})
                                     </div>
                                     <div class="d-flex">4
                                         <div class="bar-container m-1 ">
-                                            <div class="bar bar-4"></div>
+                                            <div class="bar bar-{{ $productsWithRatingFour }}"></div>
                                         </div>
-                                        (73)
+                                        ({{ $productsWithRatingFour }})
                                     </div>
                                     <div class="d-flex">3
                                         <div class="bar-container m-1 ">
-                                            <div class="bar bar-3"></div>
+                                            <div class="bar bar-{{ $productsWithRatingThree }}"></div>
                                         </div>
-                                        (13)
+                                        ({{ $productsWithRatingThree }})
                                     </div>
                                     <div class="d-flex">2
                                         <div class="bar-container m-1 ">
-                                            <div class="bar bar-2"></div>
+                                            <div class="bar bar-{{ $productsWithRatingTwo }}"></div>
                                         </div>
-                                        (50)
+                                        ({{ $productsWithRatingTwo }})
                                     </div>
                                     <div class="d-flex">1
                                         <div class="bar-container m-1 ">
-                                            <div class="bar bar-1"></div>
+                                            <div class="bar bar-{{ $productsWithRatingOne }}"></div>
                                         </div>
-                                        (43)
+                                        ({{ $productsWithRatingOne }})
                                     </div>
 
                                 </div>
@@ -334,31 +336,40 @@
                                 اشترو المنتج وكتبو تقييم</div>
 
                         </div>
-                        <!-- <button class=" text-warning py-1 px-2 mx-4 align-items-center">
 
-              <span>لايوجد تعليق من العملاء و 300 تقييم.</span>
-            </button> -->
                         <!-- reviews postes -->
-                        <div class="w-100 text-normal">
+                        <div id="users-review-details" class="w-100 text-normal">
 
                             <!-- review comment start -->
+
+                            @include('site.partials.users_review_details')
+                            {{-- @foreach ($users_review_details as $review )
                             <div class=" d-flex flex-wrap d-flex review my-4 justify-content-center text-start  ">
 
                                 <div class="col-3 col-md-1 d-flex justify-content-center align-items-center mr-3">
-                                    <img src="../imgs/productdetails/gir.jpg" alt class="rounded-circle review-image">
+                                    <img src="{{ asset('website_assets/imgs/productdetails/gir.jpg') }}" alt
+                                        class="rounded-circle review-image">
                                 </div>
                                 <div class="col-12 col-md-7 px-3 align-content-center align-content-md-start">
-                                    <div class="review-customer-name py-2 ">اسم العميل</div>
+                                    <div class="review-customer-name py-2 ">{{ $review->user->firstName . '
+                                        ' .
+                                        $review->user->lastName }}</div>
+
                                     <div class="text-success">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star-half-stroke flip"></i>
+                                        @for ($i = 1; $i <= 5; $i++) @if ($i <=$review->star_rating)
+                                            <i class="fa-solid fa-star"></i>
+                                            @elseif ($i - 0.5 === $review->star_rating)
+                                            <i class="fa-solid fa-star-half-stroke flip"></i>
+                                            @else
+                                            <i class="fa-regular fa-star"></i>
+                                            @endif
+                                            @endfor
                                     </div>
-                                    <div class="review-customer-review py-1">خامة جميله
-                                        بالنسبه لسعره قصة مناسبه ومقاس مظبوط</div>
-                                    <div class="review-date text-muted text-xsmall">2021-5-22</div>
+
+                                    <div class="review-customer-review py-1"> {{ $review->comments }}
+                                    </div>
+                                    <div class="review-date text-muted text-xsmall">{{
+                                        $review->created_at->format('Y-m-d') }}</div>
                                 </div>
                                 <div class="col-12 col-md d-flex justify-content-end align-items-end">
                                     <div class="review-customer-name text-success ">
@@ -367,136 +378,28 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- review comment ens -->
-                            <!-- review comment start -->
-                            <div class=" d-flex flex-wrap d-flex review my-4 justify-content-center text-start  ">
 
-                                <div class="col-3 col-md-1 d-flex justify-content-center align-items-center mr-3">
-                                    <img src="../imgs/productdetails/gir.jpg" alt class="rounded-circle review-image">
-                                </div>
-                                <div class="col-12 col-md-7 px-3 align-content-center align-content-md-start">
-                                    <div class="review-customer-name py-2 ">اسم العميل</div>
-                                    <div class="text-success">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star-half-stroke flip"></i>
-                                    </div>
-                                    <div class="review-customer-review py-1">خامة جميله
-                                        بالنسبه لسعره قصة مناسبه ومقاس مظبوط</div>
-                                    <div class="review-date text-muted text-xsmall">2021-5-22</div>
-                                </div>
-                                <div class="col-12 col-md d-flex justify-content-end align-items-end">
-                                    <div class="review-customer-name text-success ">
-                                        <i class="fa-solid fa-circle-check "></i>
-                                        طلبية مؤكدة
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach --}}
                             <!-- review comment ens -->
-                            <!-- review comment start -->
-                            <div class=" d-flex flex-wrap d-flex review my-4 justify-content-center text-start  ">
 
-                                <div class="col-3 col-md-1 d-flex justify-content-center align-items-center mr-3">
-                                    <img src="../imgs/productdetails/gir.jpg" alt class="rounded-circle review-image">
-                                </div>
-                                <div class="col-12 col-md-7 px-3 align-content-center align-content-md-start">
-                                    <div class="review-customer-name py-2 ">اسم العميل</div>
-                                    <div class="text-success">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star-half-stroke flip"></i>
-                                    </div>
-                                    <div class="review-customer-review py-1">خامة جميله
-                                        بالنسبه لسعره قصة مناسبه ومقاس مظبوط</div>
-                                    <div class="review-date text-muted text-xsmall">2021-5-22</div>
-                                </div>
-                                <div class="col-12 col-md d-flex justify-content-end align-items-end">
-                                    <div class="review-customer-name text-success ">
-                                        <i class="fa-solid fa-circle-check "></i>
-                                        طلبية مؤكدة
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- review comment ens -->
-                            <!-- review comment start -->
-                            <div class=" d-flex flex-wrap d-flex review my-4 justify-content-center text-start  ">
-
-                                <div class="col-3 col-md-1 d-flex justify-content-center align-items-center mr-3">
-
-                                    <img src="../imgs/productdetails/gir.jpg" alt class="rounded-circle review-image">
-                                </div>
-                                <div class="col-12 col-md-7 px-3 align-content-center align-content-md-start">
-                                    <div class="review-customer-name py-2 ">اسم العميل</div>
-                                    <div class="text-success">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star-half-stroke flip"></i>
-                                    </div>
-                                    <div class="review-customer-review py-1">خامة جميله
-                                        بالنسبه لسعره قصة مناسبه ومقاس مظبوط</div>
-                                    <div class="review-date text-muted text-xsmall">2021-5-22</div>
-                                </div>
-                                <div class="col-12 col-md d-flex justify-content-end align-items-end">
-                                    <div class="review-customer-name text-success ">
-                                        <i class="fa-solid fa-circle-check "></i>
-                                        طلبية مؤكدة
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- review comment ens -->
-                            <!-- review comment start -->
-                            <div class=" d-flex flex-wrap d-flex review my-4 justify-content-center text-start  ">
-
-                                <div class="col-3 col-md-1 d-flex justify-content-center align-items-center mr-3">
-                                    <img src="../imgs/productdetails/gir.jpg" alt class="rounded-circle review-image">
-                                </div>
-                                <div class="col-12 col-md-7 px-3 align-content-center align-content-md-start">
-                                    <div class="review-customer-name py-2 ">اسم العميل</div>
-                                    <div class="text-success">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star-half-stroke flip"></i>
-                                    </div>
-                                    <div class="review-customer-review py-1">خامة جميله
-                                        بالنسبه لسعره قصة مناسبه ومقاس مظبوط</div>
-                                    <div class="review-date text-muted text-xsmall">2021-5-22</div>
-                                </div>
-                                <div class="col-12 col-md d-flex justify-content-end align-items-end">
-                                    <div class="review-customer-name text-success ">
-                                        <i class="fa-solid fa-circle-check "></i>
-                                        طلبية مؤكدة
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- review comment ens -->
 
                         </div>
                         <!-- review pagination controllers -->
                         <div class="text-small d-flex justify-content-center align-content-center w-100 mt-5 px-3">
                             <div class="d-flex  justify-content-center mt-5 pt-3">
-                                <button class="px-5 py-2  bg-transparent border">
+                                @if ($users_review_details->hasMorePages())
+                                <button id="load-more-btn" class="px-5 py-2 bg-transparent border">
                                     <i class="fas fa-chevron-right ml-2"></i>
-                                    الصفحة السابقة
-
+                                    مشاهدة تقييمات اكثر
                                 </button>
-                                <button class="mx-3 px-5 py-2  bg-transparent border">
+                                @endif
+                                {{-- <button class="mx-3 px-5 py-2  bg-transparent border">
                                     الصفحة الجاية
                                     <i class="fas fa-chevron-left mr-2"></i>
-                                </button>
+                                </button> --}}
                             </div>
 
-                            <!--
-              <a href="#" class="main-color ">
-                عرض الكل
-                <i class="fa-solid fa-angle-down"></i></a> -->
+
                         </div>
 
                     </div>
@@ -573,6 +476,11 @@
                 @if($vendors_products)
 
                 @foreach ($vendors_products as $product)
+                @php
+                $reviewsCount = $product->reviews()->count();
+                $averageStarRating = $product->reviews()->avg('star_rating');
+                $averageStarRating = round($averageStarRating, 2);
+                @endphp
                 <div class="card mt-4 text-start">
                     <div class="position-relative">
                         <div class="position-absolute w-100 p-3 item-assets ">
@@ -639,10 +547,10 @@
                                     $product->new_price }}</a> جنيه</span>
                             <div class="d-flex justify-content-end ">
                                 <div class="star-rating d-flex align-items-center  text-small">
-                                    <span id="rating-score">03</span>
+                                    <span id="rating-score">{{ $averageStarRating ?? 0 }}</span>
                                     <i class="fa-solid text-smaller fa-star"></i>
                                 </div>
-                                <span id="product-review-count" class="mx-1">(180)</span>
+                                <span id="product-review-count" class="mx-1">({{ $reviewsCount ?? 0 }})</span>
                             </div>
                         </div>
 
@@ -689,6 +597,11 @@
                 @if($related_products)
 
                 @foreach ($related_products as $product)
+                @php
+                $reviewsCount = $product->reviews()->count();
+                $averageStarRating = $product->reviews()->avg('star_rating');
+                $averageStarRating = round($averageStarRating, 2);
+                @endphp
                 <div class="card mt-4 text-start">
                     <div class="position-relative">
                         <div class="position-absolute w-100 p-3 item-assets ">
@@ -755,12 +668,14 @@
                                     $product->new_price }}</a> جنيه</span>
                             <div class="d-flex justify-content-end ">
                                 <div class="star-rating d-flex align-items-center  text-small">
-                                    <span id="rating-score">03</span>
+                                    <span id="rating-score">{{ $averageStarRating ?? 0 }}</span>
                                     <i class="fa-solid text-smaller fa-star"></i>
                                 </div>
-                                <span id="product-review-count" class="mx-1">(180)</span>
+                                <span id="product-review-count" class="mx-1">({{ $reviewsCount ?? 0 }})</span>
                             </div>
                         </div>
+
+
 
                         <div id="before-price" class=" my-3 row">
                             <span class="text-crossed  px-1"><a href="{{ route('Site.product',$product->name ) }}">{{
@@ -809,3 +724,34 @@
 
 
 @endsection
+
+@push('scripts')
+<script>
+    // تحميل ريفيوهات اكتر في صفحة المنتج نفسه
+    var nextPage = {{ $users_review_details->currentPage() + 1 }};
+    var lastPage = {{ $users_review_details->lastPage() }};
+    var loadMoreBtn = document.getElementById('load-more-btn');
+    var usersReviewDetailsContainer = document.getElementById('users-review-details');
+
+    loadMoreBtn.addEventListener('click', function() {
+        if (nextPage <= lastPage) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '?page=' + nextPage, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var response = xhr.responseText;
+                    var parser = new DOMParser();
+                    var newContent = parser.parseFromString(response, 'text/html');
+                    var newReviews = newContent.getElementById('users-review-details').innerHTML;
+                    usersReviewDetailsContainer.innerHTML += newReviews;
+                    nextPage++;
+                    if (nextPage > lastPage) {
+                        loadMoreBtn.style.display = 'none';
+                    }
+                }
+            };
+            xhr.send();
+        }
+    });
+</script>
+@endpush

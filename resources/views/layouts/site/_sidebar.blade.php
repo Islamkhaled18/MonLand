@@ -21,7 +21,11 @@
 
         <li class="font-weight-bold">
             <i class="fa-solid fa-paper-plane ml-2"></i>
-            <a href="./account/orders.html"> الطلبات</a>
+            @guest
+            <a href="{{route('login')}}"> الطلبات </a>
+            @else
+            <a href="{{ route('site.profile', auth()->user()->id) }}"> الطلبات </a>
+            @endguest
         </li>
         <li class="font-weight-bold">
             <i class="fa-solid fa-location-dot ml-2"></i>

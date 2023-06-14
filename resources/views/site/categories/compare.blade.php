@@ -27,6 +27,10 @@
             @foreach ($compare_products as $compare )
             @php
             $product = $compare->products;
+            $reviewsCount = $product->reviews()->count();
+            $averageStarRating = $product->reviews()->avg('star_rating');
+            $averageStarRating = round($averageStarRating, 2);
+
             @endphp
             <table class="table table-bordered font-weight-bold">
                 <thead>
@@ -140,7 +144,7 @@
                 <tr>
                     <td>العربة</td>
                     <td>
-                        <form action="{{ route('cart.store') }}" method="POST">
+                        <form action="{{ route('site.cart.store') }}" method="POST">
                             @csrf
 
                             <button type="submit" name="product_id" value="{{ $compare_products[0]->products->id }}"
@@ -148,7 +152,7 @@
                         </form>
                     </td>
                     <td>
-                        <form action="{{ route('cart.store') }}" method="POST">
+                        <form action="{{ route('site.cart.store') }}" method="POST">
                             @csrf
 
                             <button type="submit" name="product_id" value="{{ $compare_products[1]->products->id }}"
@@ -157,8 +161,15 @@
                     </td>
 
                 </tr>
-                <tr>
+                {{--  <tr>
                     <td>التقييم</td>
+                    @php
+                    $reviewsCount_one = $product->reviews()->count();
+                    $averageStarRating_one = $product->reviews()->avg('star_rating');
+                    $averageStarRating_one = round($averageStarRating, 2);
+                    @endphp
+
+
                     <td>
                         <div class="star-rating">
                             <i class="fa-solid fa-star-half-stroke"></i>
@@ -179,7 +190,7 @@
 
                         </div>
                     </td>
-                </tr>
+                </tr>  --}}
                 <tr>
                     <td>حذف</td>
                     <td><a class="removeFromcomparelist" href="#"

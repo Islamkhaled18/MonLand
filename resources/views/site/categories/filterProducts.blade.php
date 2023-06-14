@@ -1,5 +1,12 @@
 @if($categoryProducts && count($categoryProducts) >= 1)
 @foreach ($categoryProducts as $product )
+
+@php
+$reviewsCount = $product->reviews()->count();
+$averageStarRating = $product->reviews()->avg('star_rating');
+$averageStarRating = round($averageStarRating, 2);
+@endphp
+
 <div class="card mt-4 text-start">
     <div class="position-relative">
         <div class="position-absolute w-100 p-3 item-assets ">
@@ -67,12 +74,13 @@
             <span class="px-1 text-bold">{{ $product->old_price }} جنيه</span>
             <div class="d-flex justify-content-end ">
                 <div class="star-rating d-flex align-items-center  text-small">
-                    <span id="rating-score">03</span>
+                    <span id="rating-score">{{ $averageStarRating ?? 0 }}</span>
                     <i class="fa-solid text-smaller fa-star"></i>
                 </div>
-                <span id="product-review-count" class="mx-1">(180)</span>
+                <span id="product-review-count" class="mx-1">({{ $reviewsCount ?? 0 }})</span>
             </div>
         </div>
+   
 
         <div id="before-price" class=" my-3 row">
             <span class="text-crossed  px-1">{{ $product->new_price }} جنيه</span>
@@ -89,7 +97,7 @@
 
             {{ $product->created_at->diffInDays(now()) < 10 ? 'جديد' : 'موجود منذ فتره' }} </div>
         </div>
-   
+
 
         @if ($product->colors->count() > 0 || $product->sizes->count() > 0)
 

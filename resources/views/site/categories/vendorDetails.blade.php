@@ -1,7 +1,7 @@
 @extends('layouts.site.app')
 
 @section('title')
-- منتجات البائع
+- البائع
 @endsection
 
 @section('content')
@@ -14,13 +14,11 @@
                         إسم البائع : {{ $vendor->vendor_name }}
                     </p>
                     <p class="mt-2">
-                        74% تقييم البائع
+                        {{ $average }}% تقييم البائع
                     </p>
                 </div>
                 <div class="d-flex align-items-end flex-column">
-                    <div class="secondary-color">
-                        <a href="{{ route('Site.getVendor',$vendor->id) }}">مشاهدة الملف الشخصى</a>
-                    </div>
+
                     <div class="d-flex align-items-center">
                         <p>
                             3556 المتابعين
@@ -88,7 +86,7 @@
                         <i class="fa-solid fa-star star-rating"></i>
                         <span class="mr-1">
                             البيع على كيان:
-                            <span>{{ \Carbon\Carbon::parse($vendor->created_at)->format('Y') }} البدايه كانت : </span>
+                            <span>{{ \Carbon\Carbon::parse($vendor->created_at)->format('Y') }}  </span>
                         </span>
                     </li>
                     <li class="my-3">
@@ -121,177 +119,15 @@
                 <div class="row p-2 text-white card-deck-title">
                     <p>
                         تقييمات العملاء
-                        (456)
+                        ({{ $reviewsCount }})
                     </p>
                 </div>
 
                 <div class="row">
-                    <div class="col-12 text-right">
+                    <div id="users-review-details" class="col-12 text-right">
 
-                        <div class="card d-flex flex-row special-card border-0 my-3">
-                            <img class="card-img-top" src="../imgs/fav/fav-card-img.jpg" alt="Card image cap" />
+                     @include('site.partials.users_review_details_in_vendor')
 
-                            <div class="card-body d-flex flex-column justify-content-between">
-                                <div>
-                                    <h5>إسم المنتج</h5>
-                                    <div class="star-rating my-3">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star text-light2"></i>
-                                    </div>
-
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                        Sit, aut!
-                                    </p>
-                                </div>
-
-                                <div class="d-flex justify-content-between det-element">
-                                    <p class="date">
-                                        12-5-2022 سارة
-                                    </p>
-
-                                    <p class="text-success">
-                                        <i class="far fa-check-circle"></i>
-                                        طلبية مؤكدة
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card d-flex flex-row special-card border-0 my-3">
-                            <img class="card-img-top" src="../imgs/fav/fav-card-img.jpg" alt="Card image cap" />
-
-                            <div class="card-body d-flex flex-column justify-content-between">
-                                <div>
-                                    <h5>إسم المنتج</h5>
-                                    <div class="star-rating my-3">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star text-light2"></i>
-                                    </div>
-
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                        Sit, aut!
-                                    </p>
-                                </div>
-
-                                <div class="d-flex justify-content-between det-element">
-                                    <p class="date">
-                                        12-5-2022 سارة
-                                    </p>
-
-                                    <p class="text-success">
-                                        <i class="far fa-check-circle"></i>
-                                        طلبية مؤكدة
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card d-flex flex-row special-card border-0 my-3">
-                            <img class="card-img-top" src="../imgs/fav/fav-card-img.jpg" alt="Card image cap" />
-
-                            <div class="card-body d-flex flex-column justify-content-between">
-                                <div>
-                                    <h5>إسم المنتج</h5>
-                                    <div class="star-rating my-3">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star text-light2"></i>
-                                    </div>
-
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                        Sit, aut!
-                                    </p>
-                                </div>
-
-                                <div class="d-flex justify-content-between det-element">
-                                    <p class="date">
-                                        12-5-2022 سارة
-                                    </p>
-
-                                    <p class="text-success">
-                                        <i class="far fa-check-circle"></i>
-                                        طلبية مؤكدة
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card d-flex flex-row special-card border-0 my-3">
-                            <img class="card-img-top" src="../imgs/fav/fav-card-img.jpg" alt="Card image cap" />
-
-                            <div class="card-body d-flex flex-column justify-content-between">
-                                <div>
-                                    <h5>إسم المنتج</h5>
-                                    <div class="star-rating my-3">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star text-light2"></i>
-                                    </div>
-
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                        Sit, aut!
-                                    </p>
-                                </div>
-
-                                <div class="d-flex justify-content-between det-element">
-                                    <p class="date">
-                                        12-5-2022 سارة
-                                    </p>
-
-                                    <p class="text-success">
-                                        <i class="far fa-check-circle"></i>
-                                        طلبية مؤكدة
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card d-flex flex-row special-card border-0 my-3">
-                            <img class="card-img-top" src="../imgs/fav/fav-card-img.jpg" alt="Card image cap" />
-
-                            <div class="card-body d-flex flex-column justify-content-between">
-                                <div>
-                                    <h5>إسم المنتج</h5>
-                                    <div class="star-rating my-3">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star text-light2"></i>
-                                    </div>
-
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                        Sit, aut!
-                                    </p>
-                                </div>
-
-                                <div class="d-flex justify-content-between det-element">
-                                    <p class="date">
-                                        12-5-2022 سارة
-                                    </p>
-
-                                    <p class="text-success">
-                                        <i class="far fa-check-circle"></i>
-                                        طلبية مؤكدة
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
 
                     </div>
                 </div>
@@ -300,18 +136,50 @@
         </div>
 
         <div class="d-flex  justify-content-center mt-5 pt-3">
-            <button class="px-5 py-2  bg-transparent border">
+            @if ($users_review_details->hasMorePages())
+            <button id="load-more-btn" class="px-5 py-2 bg-transparent border">
                 <i class="fas fa-chevron-right ml-2"></i>
-                الصفحة السابقة
-
+                مشاهدة تقييمات اكثر
             </button>
-            <button class="mx-3 px-5 py-2  bg-transparent border">
+            @endif
+            {{--  <button class="mx-3 px-5 py-2  bg-transparent border">
                 الصفحة الجاية
                 <i class="fas fa-chevron-left mr-2"></i>
-            </button>
+            </button>  --}}
         </div>
 
     </div>
 
 </section>
 @endsection
+
+@push('scripts')
+<script>
+    // تحميل ريفيوهات اكتر في صفحة المنتج نفسه
+    var nextPage = {{ $users_review_details->currentPage() + 1 }};
+    var lastPage = {{ $users_review_details->lastPage() }};
+    var loadMoreBtn = document.getElementById('load-more-btn');
+    var usersReviewDetailsContainer = document.getElementById('users-review-details');
+
+    loadMoreBtn.addEventListener('click', function() {
+        if (nextPage <= lastPage) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '?page=' + nextPage, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var response = xhr.responseText;
+                    var parser = new DOMParser();
+                    var newContent = parser.parseFromString(response, 'text/html');
+                    var newReviews = newContent.getElementById('users-review-details').innerHTML;
+                    usersReviewDetailsContainer.innerHTML += newReviews;
+                    nextPage++;
+                    if (nextPage > lastPage) {
+                        loadMoreBtn.style.display = 'none';
+                    }
+                }
+            };
+            xhr.send();
+        }
+    });
+</script>
+@endpush

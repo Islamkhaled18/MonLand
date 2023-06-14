@@ -16,6 +16,12 @@ class DeliveryPrice extends Model
         'price',
     ];
 
+
+
+    // protected $casts = [
+    //     'price' => 'double'
+    // ];
+
     public function vendor()
     {
         return $this->belongsTo(Vendor::class, 'vendor_id')->withDefault();

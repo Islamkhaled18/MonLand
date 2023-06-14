@@ -11,9 +11,8 @@ class OrderController extends Controller
     public function index()
     {
         // $orders = Order::with(['items', 'user'])->get();
-        
+
         $orders = Order::with(['items', 'user.addresses.governorate'])->get();
-        return $orders;
         return view('admin.orders.index', compact('orders'));
     }
 

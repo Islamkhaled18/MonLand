@@ -97,7 +97,7 @@
                             <div class="order-img "> <i class="fa-solid fa-file-invoice-dollar "></i>
                             </div>
                             <div class=" col">
-                                <div class="my-1"> طلب رقم #{{ $order->id }}</div>
+                                <div class="my-1"> طلب رقم **{{ $order->id }}**</div>
                             </div>
                         </div>
                         <div class="my-2  col-12  col-lg-5 d-flex flex-row justify-content-end px-0">

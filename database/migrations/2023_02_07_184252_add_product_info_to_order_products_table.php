@@ -14,8 +14,8 @@ class AddProductInfoToOrderProductsTable extends Migration
     public function up()
     {
         Schema::table('order_products', function (Blueprint $table) {
-            $table->unsignedInteger("product_color")->after("price");
-            $table->unsignedInteger("product_size")->after("product_color");
+            $table->string("product_color")->after("price");
+            $table->string("product_size")->after("product_color");
         });
     }
 

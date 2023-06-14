@@ -70,11 +70,10 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
     Route::get('profile/delete/{id}', [ProfileController::class, 'destroyAddress'])->name('site.profile.destroyAddress');
     ////////////////////////////////profile //////////////////////////////////////////////////////
 
-
     ///////////////Checkout Controller/////////////////////
     Route::group(['prefix' => 'Checkout'], function () {
         Route::get('/', [CartController::class, 'orders'])->name('cart.orders');
-        Route::post('Checkout', [CartController::class, 'checkout'])->name('checkout.store');
+        Route::post('Checkout', [CartController::class, 'checkout'])->name('site.checkout.store');
         Route::post('order', [CartController::class, 'updateOrder'])->name('checkout.updateOrder');
         Route::get('order/{id}', [CartController::class, 'showOrder'])->name('order.show');
     });
@@ -82,7 +81,7 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
     ///////////////Exchange Controller/////////////////////
     Route::group(['prefix' => 'Exchange'], function () {
         Route::get('/', [ExchangeController::class, 'create'])->name('exchange.create');
-        Route::post('store', [ExchangeController::class, 'store'])->name('exchange.store');
+        Route::post('store', [ExchangeController::class, 'store'])->name('site.exchange.store');
     });
     ///////////////Review Controller/////////////////////
     Route::group(['prefix' => 'Review'], function () {
@@ -134,9 +133,8 @@ Route::group(['namespace' => 'Site', 'prefix' => 'Site'], function () {
     Route::post('compare', [CompareController::class, 'store'])->name('compare.store');
     Route::delete('compare', [CompareController::class, 'destroy'])->name('compare.destroy');
 
-
-      ///////////////cart Controller/////////////////////
-      Route::group(['prefix' => 'cart'], function () {
+    ///////////////cart Controller/////////////////////
+    Route::group(['prefix' => 'cart'], function () {
         Route::get('/', [CartController::class, 'index'])->name('cart.index');
         Route::post('store', [CartController::class, 'store'])->name('site.cart.store');
         Route::get('delete/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
@@ -147,7 +145,6 @@ Route::group(['namespace' => 'Site', 'prefix' => 'Site'], function () {
         Route::post('/coupon', [CouponController::class, 'store'])->name('site.coupon.store');
         Route::delete('/coupon', [CouponController::class, 'destroy'])->name('site.coupon.destroy');
     });
-
 
     //vendors
     Route::get('product/vendor/{id}', [VendorController::class, 'vendorProducts'])->name('Site.product.vendorProducts');
@@ -160,10 +157,7 @@ Route::group(['namespace' => 'Site', 'prefix' => 'Site'], function () {
     Route::get('product/vendor/{id}/sizes-products', [VendorController::class, 'search_by_size'])->name('Site.vendor.search.size');
     Route::get('product/vendor/{id}/review-products', [VendorController::class, 'search_by_review_products'])->name('Site.vendor.search.review');
 
-
-    Route::get('vendor/{id}', [VendorController::class, 'getVendor'])->name('Site.getVendor');
-
-
+    Route::get('vendor/{id}', [VendorController::class, 'getVendor'])->name('Site.vendor.getVendor');
 
     Route::get('reset-passord', function () {
         return view('auth.passwords.email');

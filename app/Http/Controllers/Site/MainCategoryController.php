@@ -37,7 +37,8 @@ class MainCategoryController extends Controller
 
         return view('site.mainCategory.products', compact('mainCategory', 'mainCategoryProducts', 'banners',
             'all_offers', 'weekend_offers', 'buy_your_mind_is_frees', 'mainCategoryProductsCount', 'productColors', 'productSizes'
-            , 'electronics_products_photos', 'brand_slide'));
+            , 'electronics_products_photos', 'brand_slide'
+        ));
     }
 
     public function search_products_by_created_at(Request $request, $name)

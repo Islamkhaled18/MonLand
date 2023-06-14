@@ -15,14 +15,15 @@ use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 
-
 class ProductController extends Controller
 {
     public function productByName($name, $id = null)
     {
 
         $productDetails = Product::where('name', $name)->orWhere('id', $id)->first();
-        $brand_name = Brand::where('id', $productDetails->id)->select('name')->first();
+
+        $brand_name = Brand::where('id', $productDetails->brand_id)->select('name')->first();
+
         $productSpecifications = $productDetails->specifications;
         $product_categories_ids = $productDetails->categories->pluck('id'); // [1,26,7] get all categories that product on it
         $related_products = Product::whereHas('categories', function ($cat) use ($product_categories_ids) {
@@ -31,27 +32,17 @@ class ProductController extends Controller
         $vendors_products = Product::with('Vendor')->where('vendor_id', $productDetails->vendor->id)->get();
         $product_colors = ProductColor::with('product')->where('product_id', $productDetails->id)->get();
         $product_sizes = Productsize::with('product')->where('product_id', $productDetails->id)->get();
+
         $reviews = Product::with('reviews')->where('id', $productDetails->id)->get();
-
         $reviewsCount = $productDetails->reviews()->count();
+        $averageStarRating = $productDetails->reviews()->avg('star_rating');
+        $averageStarRating = round($averageStarRating, 2);
 
-        $progresseData = [];
-        if ($reviewsCount > 0) {
-            $progresseData = [
-
-                '1' => $productDetails->reviews()->where('star_rating', 1)->count() / $reviewsCount * 100,
-                '2' => $productDetails->reviews()->where('star_rating', 2)->count() / $reviewsCount * 100,
-                '3' => $productDetails->reviews()->where('star_rating', 3)->count() / $reviewsCount * 100,
-                '4' => $productDetails->reviews()->where('star_rating', 4)->count() / $reviewsCount * 100,
-                '5' => $productDetails->reviews()->where('star_rating', 5)->count() / $reviewsCount * 100,
-            ];
-
-        } else {
-            $reviewsCount = 0;
-        }
-
-        $average = $reviewsCount ? round($productDetails->reviews()->sum('star_rating') / $reviewsCount, 2) : 0;
         $vendor = Vendor::where('id', $productDetails->vendor_id)->first();
+
+        $reviewsCountVendor = $vendor->reviews()->count();
+
+        $average = $reviewsCountVendor ? round(($vendor->reviews()->sum('star_rating') / ($reviewsCountVendor * 5)) * 100, 2) : 0;
 
         $productsWithRatingOne = $productDetails->reviews()->where('star_rating', 1)->count();
         $productsWithRatingTwo = $productDetails->reviews()->where('star_rating', 2)->count();
@@ -59,19 +50,15 @@ class ProductController extends Controller
         $productsWithRatingFour = $productDetails->reviews()->where('star_rating', 4)->count();
         $productsWithRatingFive = $productDetails->reviews()->where('star_rating', 5)->count();
 
-        $review_details = Review::with(['product', 'user'])->where('product_id', $productDetails->id)->get();
-
+        $users_review_details = Review::with(['product', 'user'])->where('product_id', $productDetails->id)->paginate(5);
 
         $shareUrl = URL::route('Site.product', ['name' => $productDetails->name]);
 
-
-
-        return view('site.categories.product', compact('productDetails', 'related_products', 'vendors_products', 'product_colors', 'product_sizes', 'reviews', 'average', 'vendor', 'productsWithRatingOne',
-            'productsWithRatingTwo', 'productsWithRatingThree', 'productsWithRatingFour', 'productsWithRatingFive', 'review_details', 'brand_name',
-            'productSpecifications','shareUrl'
+        return view('site.categories.product', compact('productDetails', 'related_products', 'vendors_products', 'product_colors', 'product_sizes', 'reviews', 'vendor', 'productsWithRatingOne',
+            'productsWithRatingTwo', 'productsWithRatingThree', 'productsWithRatingFour', 'productsWithRatingFive', 'users_review_details', 'brand_name',
+            'productSpecifications', 'shareUrl', 'reviewsCount', 'averageStarRating','average'
         ));
     }
-
 
     // public function search(Request $request){
 

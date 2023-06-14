@@ -26,6 +26,7 @@
         @foreach ( $favorite_products as $wishlist )
         @php
         $product = $wishlist->products;
+        
         @endphp
 
 

@@ -156,14 +156,18 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-right"> عروضنا المفضلة</h2>
-            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                تسوق الأن
-            </button>
+
         </div>
 
         <div class="owl-carousel owl-theme todayDeal mt-4">
             @if ($dealOfDay_products)
             @foreach ($dealOfDay_products as $product )
+
+            @php
+            $reviewsCount = $product->reviews()->count();
+            $averageStarRating = $product->reviews()->avg('star_rating');
+            $averageStarRating = round($averageStarRating, 2);
+            @endphp
 
             <div class="card mt-4 text-start">
                 <div class="position-relative">
@@ -231,10 +235,10 @@
                                 $product->new_price }}</a> جنيه</span>
                         <div class="d-flex justify-content-end ">
                             <div class="star-rating d-flex align-items-center  text-small">
-                                <span id="rating-score">03</span>
+                                <span id="rating-score">{{ $averageStarRating ?? 0 }}</span>
                                 <i class="fa-solid text-smaller fa-star"></i>
                             </div>
-                            <span id="product-review-count" class="mx-1">(180)</span>
+                            <span id="product-review-count" class="mx-1">({{ $reviewsCount ?? 0 }})</span>
                         </div>
                     </div>
 
@@ -289,8 +293,12 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-right"> الكترونيات</h2>
+            @php
+            $main_category = \App\Models\MainCategory::where('name','إلكترونيات')->first();
+            @endphp
             <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                عرض الكل
+                <a href="{{ route('mainCategory.products',$main_category->name) }}">عرض الكل</a>
+
             </button>
         </div>
         <div class="overflow-auto">
@@ -320,14 +328,26 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-right"> عروضنا الألكترونيات</h2>
+            @php
+            $main_category = \App\Models\MainCategory::where('name','إلكترونيات')->first();
+            @endphp
             <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                تسوق الأن
+                <a href="{{ route('mainCategory.products',$main_category->name) }}">عرض الكل</a>
+
             </button>
+
         </div>
         <div class="owl-carousel owl-theme todayDeal mt-4">
 
             @if ($electronics_products)
             @foreach ($electronics_products as $product )
+
+            @php
+            $reviewsCount = $product->reviews()->count();
+            $averageStarRating = $product->reviews()->avg('star_rating');
+            $averageStarRating = round($averageStarRating, 2);
+            @endphp
+
 
             <div class="card mt-4 text-start">
                 <div class="position-relative">
@@ -394,10 +414,10 @@
                                 $product->new_price }}</a> جنيه</span>
                         <div class="d-flex justify-content-end ">
                             <div class="star-rating d-flex align-items-center  text-small">
-                                <span id="rating-score">03</span>
+                                <span id="rating-score">{{ $averageStarRating ?? 0 }}</span>
                                 <i class="fa-solid text-smaller fa-star"></i>
                             </div>
-                            <span id="product-review-count" class="mx-1">(180)</span>
+                            <span id="product-review-count" class="mx-1">({{ $reviewsCount ?? 0 }})</span>
                         </div>
                     </div>
 
@@ -468,9 +488,14 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-right"> أزياء الرجال</h2>
+            @php
+            $main_category = \App\Models\MainCategory::where('name','أزياء الرجال')->first();
+            @endphp
             <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                عرض الكل
+                <a href="{{ route('mainCategory.products',$main_category->name) }}">عرض الكل</a>
+
             </button>
+
         </div>
 
         <div class="overflow-auto">
@@ -503,13 +528,23 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-right"> عروض أزياء الرجال </h2>
+            @php
+            $main_category = \App\Models\MainCategory::where('name','أزياء الرجال')->first();
+            @endphp
             <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                تسوق الأن
+                <a href="{{ route('mainCategory.products',$main_category->name) }}">عرض الكل</a>
+
             </button>
         </div>
         <div class="owl-carousel owl-theme todayDeal mt-4">
             @if ($men_products)
             @foreach ($men_products as $product )
+
+            @php
+            $reviewsCount = $product->reviews()->count();
+            $averageStarRating = $product->reviews()->avg('star_rating');
+            $averageStarRating = round($averageStarRating, 2);
+            @endphp
 
             <div class="card mt-4 text-start">
                 <div class="position-relative">
@@ -576,12 +611,13 @@
                                 $product->new_price }}</a> جنيه</span>
                         <div class="d-flex justify-content-end ">
                             <div class="star-rating d-flex align-items-center  text-small">
-                                <span id="rating-score">03</span>
+                                <span id="rating-score">{{ $averageStarRating }}</span>
                                 <i class="fa-solid text-smaller fa-star"></i>
                             </div>
-                            <span id="product-review-count" class="mx-1">(180)</span>
+                            <span id="product-review-count" class="mx-1">({{ $reviewsCount }})</span>
                         </div>
                     </div>
+
 
                     <div id="before-price" class=" my-3 row">
                         <span class="text-crossed  px-1"><a href="{{ route('Site.product',$product->name ) }}">{{
@@ -627,8 +663,12 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-right"> أزياء نسائية</h2>
+            @php
+            $main_category = \App\Models\MainCategory::where('name','أزياء النساء')->first();
+            @endphp
             <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                عرض الكل
+                <a href="{{ route('mainCategory.products',$main_category->name) }}">عرض الكل</a>
+
             </button>
         </div>
 
@@ -662,13 +702,23 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-right"> عروضنا الأزياء النسائية</h2>
+            @php
+            $main_category = \App\Models\MainCategory::where('name','أزياء النساء')->first();
+            @endphp
             <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                تسوق الأن
+                <a href="{{ route('mainCategory.products',$main_category->name) }}">عرض الكل</a>
+
             </button>
         </div>
         <div class="owl-carousel owl-theme todayDeal mt-4">
             @if ($women_products)
             @foreach ($women_products as $product )
+
+            @php
+            $reviewsCount = $product->reviews()->count();
+            $averageStarRating = $product->reviews()->avg('star_rating');
+            $averageStarRating = round($averageStarRating, 2);
+            @endphp
 
             <div class="card mt-4 text-start">
                 <div class="position-relative">
@@ -735,12 +785,13 @@
                                 $product->new_price }}</a> جنيه</span>
                         <div class="d-flex justify-content-end ">
                             <div class="star-rating d-flex align-items-center  text-small">
-                                <span id="rating-score">03</span>
+                                <span id="rating-score">{{ $averageStarRating ?? 0 }}</span>
                                 <i class="fa-solid text-smaller fa-star"></i>
                             </div>
-                            <span id="product-review-count" class="mx-1">(180)</span>
+                            <span id="product-review-count" class="mx-1">({{ $reviewsCount ?? 0 }})</span>
                         </div>
                     </div>
+
 
                     <div id="before-price" class=" my-3 row">
                         <span class="text-crossed  px-1"><a href="{{ route('Site.product',$product->name ) }}">{{
@@ -791,8 +842,12 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-right"> الجمال </h2>
+            @php
+            $main_category = \App\Models\MainCategory::where('name','الجمال')->first();
+            @endphp
             <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                عرض الكل
+                <a href="{{ route('mainCategory.products',$main_category->name) }}">عرض الكل</a>
+
             </button>
         </div>
         <div class="overflow-auto">
@@ -826,8 +881,12 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-right"> اكسسوارات </h2>
+            @php
+            $main_category = \App\Models\MainCategory::where('name','اكسسوارات')->first();
+            @endphp
             <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                عرض الكل
+                <a href="{{ route('mainCategory.products',$main_category->name) }}">عرض الكل</a>
+
             </button>
         </div>
         <div class="overflow-auto">
@@ -862,14 +921,24 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-right"> عروض اكسسوارات </h2>
+            @php
+            $main_category = \App\Models\MainCategory::where('name','اكسسوارات')->first();
+            @endphp
             <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                تسوق الأن
+                <a href="{{ route('mainCategory.products',$main_category->name) }}">عرض الكل</a>
+
             </button>
         </div>
         <div class="owl-carousel owl-theme todayDeal mt-4">
 
             @if ($accessories_products)
             @foreach ($accessories_products as $product )
+
+            @php
+            $reviewsCount = $product->reviews()->count();
+            $averageStarRating = $product->reviews()->avg('star_rating');
+            $averageStarRating = round($averageStarRating, 2);
+            @endphp
 
             <div class="card mt-4 text-start">
                 <div class="position-relative">
@@ -939,12 +1008,13 @@
                                 $product->new_price }}</a> جنيه</span>
                         <div class="d-flex justify-content-end ">
                             <div class="star-rating d-flex align-items-center  text-small">
-                                <span id="rating-score">03</span>
+                                <span id="rating-score">{{ $averageStarRating ??0 }}</span>
                                 <i class="fa-solid text-smaller fa-star"></i>
                             </div>
-                            <span id="product-review-count" class="mx-1">(180)</span>
+                            <span id="product-review-count" class="mx-1">({{ $reviewsCount ?? 0 }})</span>
                         </div>
                     </div>
+
 
                     <div id="before-price" class=" my-3 row">
                         <span class="text-crossed  px-1"><a href="{{ route('Site.product',$product->name ) }}">{{
@@ -991,14 +1061,19 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-right"> الأكثر مبيعا </h2>
-            <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                تسوق الأن
-            </button>
+
         </div>
         <div class="owl-carousel owl-theme todayDeal mt-4">
 
             @if ($best_sellings)
             @foreach ($best_sellings as $product )
+
+
+            @php
+            $reviewsCount = $product->reviews()->count();
+            $averageStarRating = $product->reviews()->avg('star_rating');
+            $averageStarRating = round($averageStarRating, 2);
+            @endphp
 
             <div class="card mt-4 text-start">
                 <div class="position-relative">
@@ -1068,12 +1143,13 @@
                                 $product->new_price }}</a> جنيه</span>
                         <div class="d-flex justify-content-end ">
                             <div class="star-rating d-flex align-items-center  text-small">
-                                <span id="rating-score">03</span>
+                                <span id="rating-score">{{ $averageStarRating ?? 0 }}</span>
                                 <i class="fa-solid text-smaller fa-star"></i>
                             </div>
-                            <span id="product-review-count" class="mx-1">(180)</span>
+                            <span id="product-review-count" class="mx-1">({{ $reviewsCount ?? 0 }})</span>
                         </div>
                     </div>
+
 
                     <div id="before-price" class=" my-3 row">
                         <span class="text-crossed  px-1"><a href="{{ route('Site.product',$product->name ) }}">{{
@@ -1122,8 +1198,12 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-right"> البيت والمطبخ </h2>
+            @php
+            $main_category = \App\Models\MainCategory::where('name','البيت والمطبخ')->first();
+            @endphp
             <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                عرض الكل
+                <a href="{{ route('mainCategory.products',$main_category->name) }}">عرض الكل</a>
+
             </button>
         </div>
         <div class="overflow-auto">
@@ -1154,13 +1234,24 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-right"> عروض البيت والمطبخ</h2>
+            @php
+            $main_category = \App\Models\MainCategory::where('name','البيت والمطبخ')->first();
+            @endphp
             <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                تسوق الأن
+                <a href="{{ route('mainCategory.products',$main_category->name) }}">عرض الكل</a>
+
             </button>
         </div>
         <div class="owl-carousel owl-theme todayDeal mt-4">
             @if ($home_products)
             @foreach ($home_products as $product )
+
+
+            @php
+            $reviewsCount = $product->reviews()->count();
+            $averageStarRating = $product->reviews()->avg('star_rating');
+            $averageStarRating = round($averageStarRating, 2);
+            @endphp
 
             <div class="card mt-4 text-start">
                 <div class="position-relative">
@@ -1227,12 +1318,13 @@
                                 $product->new_price }}</a> جنيه</span>
                         <div class="d-flex justify-content-end ">
                             <div class="star-rating d-flex align-items-center  text-small">
-                                <span id="rating-score">03</span>
+                                <span id="rating-score">{{ $averageStarRating ?? 0 }}</span>
                                 <i class="fa-solid text-smaller fa-star"></i>
                             </div>
-                            <span id="product-review-count" class="mx-1">(180)</span>
+                            <span id="product-review-count" class="mx-1">({{ $reviewsCount ?? 0 }})</span>
                         </div>
                     </div>
+
 
                     <div id="before-price" class=" my-3 row">
                         <span class="text-crossed  px-1"><a href="{{ route('Site.product',$product->name ) }}">{{
@@ -1282,8 +1374,10 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-right"> فئات أكثر </h2>
+
             <button class=" btn bg-main text-white text-bold mx-2 my-3  py-2 px-4">
-                عرض الكل
+                <a href="{{ route('Site.allCategory') }}">عرض الكل</a>
+
             </button>
         </div>
         <div class="overflow-auto">

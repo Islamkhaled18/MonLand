@@ -17,21 +17,21 @@
                         إسم البائع : {{ $vendor->vendor_name }}
                     </p>
                     <p class="mt-2">
-                        74% تقييم البائع
+                        {{ $average }}% تقييم البائع
                     </p>
                 </div>
                 <div class="d-flex align-items-end flex-column">
                     <div class="secondary-color">
-                        <a href="{{ route('Site.getVendor',$vendor->id) }}">مشاهدة الملف الشخصى</a>
+                        <a href="{{ route('Site.vendor.getVendor',$vendor->id) }}">مشاهدة الملف الشخصى</a>
                     </div>
-                    <div class="d-flex align-items-center">
+                    {{--  <div class="d-flex align-items-center">
                         <p>
                             3556 المتابعين
                         </p>
                         <button class="mt-2 mx-3 text-white px-3 special-btn-style  rounded">
                             تابع
                         </button>
-                    </div>
+                    </div>  --}}
                 </div>
             </div>
 
@@ -55,7 +55,7 @@
                         <div class="border-top border-secondary d-block text-start p-3">
                             <p class="text-large">شحن موثوق به</p>
                             <p>{{ $vendor->delivery_status }}</p>
-                            <a href="#" class="main-color font-weight-bold">معرفه المزيد</a>
+                            {{--  <a href="#" class="main-color font-weight-bold">معرفه المزيد</a>  --}}
                         </div>
                     </div>
 
@@ -340,9 +340,7 @@
                             <p>
                                 إسم البائع : {{ $vendor->vendor_name }}
                             </p>
-                            <p class="mt-2">
-                                إجمالى المنتجات 4534
-                            </p>
+                          
                         </div>
 
                         <div class="d-flex align-items-center">

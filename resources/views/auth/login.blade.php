@@ -23,11 +23,13 @@
                 </span>
             </button>
 
-            <select style="appearance: none; -webkit-appearance: none" class="form-control border-0"
+            <div id='google_translate_element'></div>
+            
+            {{--  <select style="appearance: none; -webkit-appearance: none" class="form-control border-0"
                 id="exampleFormControlSelect1">
                 <option>العربية</option>
                 <option>English</option>
-            </select>
+            </select>  --}}
         </div>
 
         <div class="d-flex wrapper">
@@ -130,6 +132,23 @@
     <script src="{{ asset('website_assets/js/popper.min.js') }}"></script>
     <script src="{{ asset('website_assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('website_assets/js/script.js') }}"></script>
+    <script>
+        function googleTranslateElementInit() {
+
+            new google.translate.TranslateElement({
+
+                autoDisplay: 'true',
+
+                includedLanguages: 'ar,en'
+                , layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+
+            }, 'google_translate_element');
+
+        }
+
+    </script>
+
+    <script src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'></script>
 </body>
 
 </html>

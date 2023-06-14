@@ -18,7 +18,7 @@ class Review extends Model
     }
     public function vendor()
     {
-        return $this->belongsTo(vendor::class);
+        return $this->belongsTo(vendor::class,'vendor_id');
     }
     public function user()
     {

@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="{{ asset('website_assets/pages-css/fav.css') }}" />
     <link rel="stylesheet" href="{{ asset('website_assets/pages-css/account/orders.css') }}" />
     <link rel="stylesheet" href="{{ asset('website_assets/pages-css/product/product-details.css') }}" />
+    <link rel="stylesheet" href="{{ asset('website_assets/pages-css/cart/cart.css') }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
     <!-- <link rel="stylesheet" href="{{ asset('website_assets/pages-css/account/orders.css') }}"> -->
 
@@ -398,7 +401,6 @@
             });
         });
 
-
         $(document).on('click', '.removeFromWishlist', function(e) {
             e.preventDefault();
             var favorite_uuid = 'favorite_uuid';
@@ -584,6 +586,69 @@
             });
         });
 
+        function activate_deactivate_btn(increase, decrease, value) {
+            if (value >= 10) {
+                increase.addClass("deactive-btn")
+                decrease.removeClass("deactive-btn")
+            } else if (value <= 1) {
+                decrease.addClass("deactive-btn")
+                increase.removeClass("deactive-btn")
+            } else {
+                decrease.removeClass("deactive-btn")
+                increase.removeClass("deactive-btn")
+            }
+        }
+        $(document).ready(function() {
+            $('.increment-btn').click(function(e) {
+                e.preventDefault();
+                var inc_value = $(this).parents('.quantity-counter').find('.quantity-count').text();
+                var value = parseInt(inc_value, 10);
+                value = isNaN(value) ? 0 : value;
+                if (value < 10) {
+                    value++;
+                    $(this).parents('.quantity-counter').find('.quantity-count').text(value);
+                }
+                activate_deactivate_btn($(this), $(this).parents('.quantity-counter').find(
+                    '.decrement-btn'), value)
+            });
+            $('.decrement-btn').click(function(e) {
+                e.preventDefault();
+                var dec_value = $(this).parents('.quantity-counter').find('.quantity-count').text();
+                var value = parseInt(dec_value, 10);
+                value = isNaN(value) ? 0 : value;
+                if (value > 1) {
+                    value--;
+                    dec_value = $(this).parents('.quantity-counter').find('.quantity-count').text(value);
+                }
+                activate_deactivate_btn($(this).parents('.quantity-counter').find('.increment-btn'), $(
+                    this), value)
+            });
+
+            $('.changQuantity').click(function(e) {
+                e.preventDefault();
+                var product_id = $(this).parents('.quantity-counter').find('.product_id').val();
+                var quantity = $(this).parents('.quantity-counter').find('.quantity-count').text();
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                data = {
+                    'product_id': product_id,
+                    'quantity': quantity
+                }
+
+
+                $.ajax({
+                    method: 'POST',
+                    url: "{{ Route('cart.update') }}",
+                    data: data,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    success: function(response) {
+                        console.log('updated')
+                    }
+                });
+            });
+        });
+
 
 
     </script>
@@ -605,6 +670,8 @@
     </script>
 
     <script src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'></script>
+
+   
 
 </body>
 
