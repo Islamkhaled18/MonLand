@@ -74,7 +74,7 @@
 
                     <!-- cart item -->
                     <?php
-                    $subTotal = 0;
+                    $productSubTotal = 0;
                     ?>
                     @foreach ($product->carts as $cart)
                     <div class="row mt-3 mx-3 cart-item rounded">
@@ -112,9 +112,9 @@
                         </div>
                         <div
                             class="col-12 col-lg-3 d-flex  flex-lg-column  justify-content-between justify-content-lg-start">
-                            <span class="mb-4 mt-5 text-center text-large">{{$cart->price ?? $cart->products->new_price
-                                ??
-                                $cart->products->old_price }} جنيه</span>
+                            <span class="mb-4 mt-5 text-center text-large">
+                                {{$cart->price ?? $cart->products->new_price ?? $cart->products->old_price }} جنيه
+                            </span>
                             <div
                                 class=" quantity-counter d-flex flex-nowrap justify-content-center align-items-center ">
 
@@ -134,9 +134,12 @@
                     </div>
 
                     <?php
-                        $subTotal += $cart->price ??  $cart->products->new_price ?? $cart->products->old_price * $cart->quantity;
+                    $productSubTotal += ($cart->price ?? $cart->products->new_price ?? $cart->products->old_price) * $cart->quantity;
                     ?>
                     @endforeach
+                    <?php
+                    $subTotal += $productSubTotal;
+                    ?>
 
 
                     <hr class>
@@ -146,7 +149,7 @@
                         <div class="d-flex flex-row justify-content-between ">
                             <span class=" d-block align-self-start ">المجموع الفرعي اللشحنة
                             </span>
-                            <div class="col col-md-2 text-start">
+                            <div id="subtotal" class="col col-md-2 text-start">
                                 <span>{{ $subTotal }}</span>
                                 <span>جنية</span>
 
@@ -157,7 +160,7 @@
                         <div class="d-flex flex-row justify-content-between ">
 
                             <div>رسوم التوصيل </div>
-                            <div class="col col-md-2 no-gutters text-start">
+                            <div class="col col-md-2 no-gutters text-start deliveryFee">
 
                                 @guest
                                 <span><a href="{{route('login')}}">حسب العنوان</a></span>
@@ -182,7 +185,7 @@
 
                                 @endphp
 
-                                <span class="d-flex flex-row text-large"> المجموع الكلي للشحنة 1
+                                <span id="total" class="d-flex flex-row text-large"> المجموع الكلي للشحنة
                                     {{ $product['total'] }}</span>
                             </div>
 
@@ -229,18 +232,17 @@
                     $total = 0;
                     @endphp
                     @foreach ($cart_products as $product)
-                    <div>
+                    <div data-price="{{ $product['total'] }}">
                         <span> إجمالي شحنة </span>
-                        <span class="px-1">
-                            {{ $loop->iteration }}هو
+                        <span id="summary" class="px-1" oninput="calculateTotal()">
                             {{ $product['total'] }}
                             @php
-
                             $total += $product['total'];
                             @endphp
                         </span>
                     </div>
                     @endforeach
+
 
                     @if (session()->get('code'))
                     <div class="text-large text-bold py-1">الخصم: ({{ session()->get('value') }})
@@ -263,46 +265,48 @@
                         $total = $total - session()->get('value');
 
                         @endphp
-                        <div class="text-large text-bold"> المجموع الكلي : {{ $total }}
-                        </div>
+                        <div class="text-large text-bold" id="total"> المجموع الكلي : {{ $total }} </div>
 
-                    </span>
-                    @else
-                    <div class="text-large text-bold"> المجموع الكلي : {{ $total }} </div>
-                    @endif
+                </div>
+
+                </span>
+                @else
+                <div class="text-large text-bold" id="total"> المجموع الكلي : {{ $total }} </div>
+
+                @endif
 
 
 
-                    <div class> يتم التوصيل الي </div>
-                    <div class=" py-1"><a class="main-color border-bottom border-main-color"
-                            href="{{ route('site.profile', auth()->user()->id) }}"> <i
-                                class="fa-solid fa-location-dot px-1 "></i>
-                            أضف
-                            العنوان</a>
-                    </div>
+                <div class> يتم التوصيل الي </div>
+                <div class=" py-1"><a class="main-color border-bottom border-main-color"
+                        href="{{ route('site.profile', auth()->user()->id) }}"> <i
+                            class="fa-solid fa-location-dot px-1 "></i>
+                        أضف
+                        العنوان</a>
+                </div>
 
-                    @guest
+                @guest
+                <div class="d-flex justify-content-center my-3">
+                    <button type="button" disabled
+                        class="bg-add-to-cart text-white text-larger text-center col-8 my-2 py-3 px-5 rounded justify-self-center">
+                        اتمام الشراء
+                    </button>
+                </div>
+                @else
+                <form action="{{ route('site.checkout.store') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="total" value="{{ $total }}">
                     <div class="d-flex justify-content-center my-3">
-                        <button type="button" disabled
+                        <button type="submit"
                             class="bg-add-to-cart text-white text-larger text-center col-8 my-2 py-3 px-5 rounded justify-self-center">
                             اتمام الشراء
                         </button>
                     </div>
-                    @else
-                    <form action="{{ route('site.checkout.store') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="total" value="{{ $total }}">
-                        <div class="d-flex justify-content-center my-3">
-                            <button type="submit"
-                                class="bg-add-to-cart text-white text-larger text-center col-8 my-2 py-3 px-5 rounded justify-self-center">
-                                اتمام الشراء
-                            </button>
-                        </div>
-                    </form>
-                    @endguest
-                </div>
-
+                </form>
+                @endguest
             </div>
+
+        </div>
         </div>
 
         <!-- samiler products -->
@@ -340,7 +344,41 @@
 
     @endif
 
-
-
-
     @endsection
+
+
+    @push('scripts')
+
+    <script>
+        function updateTotalValue() {
+                // Calculate the new total value based on the updated quantity
+                var totalQuantity = 0;
+                $('.quantity-count').each(function() {
+                    var quantity = parseInt($(this).text(), 10);
+                    totalQuantity += isNaN(quantity) ? 0 : quantity;
+                });
+                var totalDeliveryFee = 0;
+                $('.deliveryFee').each(function() {
+                    var deliveryFee = parseInt($(this).text(), 10);
+                    totalDeliveryFee += isNaN(deliveryFee) ? 0 : deliveryFee;
+                });
+                var newTotal = totalQuantity * ({{ $cart->price ?? $cart->products->new_price ?? $cart->products->old_price }}) + totalDeliveryFee ;
+
+                // Update the total value
+                $('#total').text('المجموع الكلي للشحنة  ' + newTotal);
+                $('#summary').text(newTotal);
+
+            }
+    </script>
+    <script>
+        function calculateTotal() {
+            var total = 0;
+            var summaryElement = document.getElementById('summary');
+            total += parseInt(summaryElement.innerText);
+            document.getElementById('total').innerText = 'المجموع الكلي : ' + total;
+        }
+
+        calculateTotal();
+    </script>
+
+    @endpush

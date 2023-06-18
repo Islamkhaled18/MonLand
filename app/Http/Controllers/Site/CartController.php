@@ -394,6 +394,10 @@ class CartController extends Controller
     public function reviewstore(Request $request)
     {
 
+        $request->validate([
+            'comments' => 'required', 'max:255',
+        ]);
+
         $review = new Review();
         $review->user_id = auth()->user()->id;
         $review->product_id = $request->product_id;

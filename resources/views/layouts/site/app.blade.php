@@ -610,6 +610,7 @@
                 }
                 activate_deactivate_btn($(this), $(this).parents('.quantity-counter').find(
                     '.decrement-btn'), value)
+                    updateTotalValue();
             });
             $('.decrement-btn').click(function(e) {
                 e.preventDefault();
@@ -622,7 +623,10 @@
                 }
                 activate_deactivate_btn($(this).parents('.quantity-counter').find('.increment-btn'), $(
                     this), value)
+                    updateTotalValue();
             });
+
+
 
             $('.changQuantity').click(function(e) {
                 e.preventDefault();
@@ -634,7 +638,7 @@
                     'quantity': quantity
                 }
 
-
+                // Send an AJAX request to update the cart
                 $.ajax({
                     method: 'POST',
                     url: "{{ Route('cart.update') }}",
@@ -643,7 +647,16 @@
                         'X-CSRF-TOKEN': csrfToken
                     },
                     success: function(response) {
-                        console.log('updated')
+                        // Recalculate the subtotal
+                        var newSubtotal = 0;
+                        $('.cart-item').each(function() {
+                            var price = $(this).find('.col-lg-3 .mb-4').text().trim();
+                            var quantity = $(this).find('.quantity-count').text().trim();
+                            newSubtotal += parseFloat(price) * parseInt(quantity);
+                        });
+
+                        // Update the subtotal display
+                        $('#subtotal span:first-child').text(newSubtotal.toFixed(2));
                     }
                 });
             });
@@ -671,7 +684,7 @@
 
     <script src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'></script>
 
-   
+
 
 </body>
 

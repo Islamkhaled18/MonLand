@@ -19,9 +19,6 @@ class ContactUsController extends Controller
         return view('admin.contactus.index',compact('contactUs'));
     }//end of index
 
-    
-
-
     public function destroy(Request $request, $id)
     {
         if(!Gate::allows('contactus.destroy')){

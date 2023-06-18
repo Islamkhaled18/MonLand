@@ -30,11 +30,12 @@ class CategoryController extends Controller
         return view('admin.categories.create',compact('categories','mainCategories'));
     }//end of create
 
-    public function store(Request $request, Category $category)
+    public function store(Request $request)
     {
 
         $this->validate($request, [
             'name' => 'required',
+            'parent_id'=>'nullable|exists:categories,id',
             'image'=>'mimes:png,jpg,bmp,jpeg,webp',
 
         ]);
@@ -77,6 +78,7 @@ class CategoryController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
+            'parent_id'=>'nullable|exists:categories,id',
             'image'=>'mimes:png,jpg,bmp,jpeg,webp',
 
         ]);

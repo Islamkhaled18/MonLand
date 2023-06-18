@@ -73,18 +73,15 @@ class HomeController extends Controller
         $new_products = Product::paginate(6);
         $ads = Ad::select('image')->get();
 
-
-
         $flash_products = Product::where('flash_sale', true)->paginate(6);
         $featured_products = Product::where('featured', true)->paginate(6);
         $childrens_products = Product::where('mainCategory_id', 3)->paginate(6);
 
-
         return view('home', compact('brand_slides', 'category_slides', 'all_offers', 'weekend_offers', 'buy_your_mind_is_frees',
-            'dealOfDay_products', 'electronics_products_photos', 'electronics_products','banners','men_products_photos',
-            'men_products','women_products_photos','women_products','beauty_products_photos','accessories_products_photos',
-            'accessories_products','best_sellings','home_products_photos','home_products','new_products','ads',
+            'dealOfDay_products', 'electronics_products_photos', 'electronics_products', 'banners', 'men_products_photos',
+            'men_products', 'women_products_photos', 'women_products', 'beauty_products_photos', 'accessories_products_photos',
+            'accessories_products', 'best_sellings', 'home_products_photos', 'home_products', 'new_products', 'ads',
             'flash_products',
-              'childrens_products',  'featured_products', 'dealOfDay_products'));
+            'childrens_products', 'featured_products', 'dealOfDay_products'));
     }
 }

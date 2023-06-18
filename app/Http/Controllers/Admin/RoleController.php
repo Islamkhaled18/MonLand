@@ -29,17 +29,17 @@ class RoleController extends Controller
 
     public function store(Request $request){
         $request->validate([
-            'name' =>'required'
+            'name' =>'required|string|max:191'
         ]);
 
         $role = new Role();
         $role->name = $request->name;
         $role->save();
-         
+
         foreach($request->post('permissions', []) as $permission ){
 
             $role->permissions()->create([
-               'permission' => $permission 
+               'permission' => $permission
             ]);
         }
 
@@ -53,13 +53,13 @@ class RoleController extends Controller
             return view('admin.errors.notAllowed');
         }
         $role = Role::findOrFail($id);
-        
+
         return view('admin.roles.edit',[
             'role'=> $role,
         ]);
     }//end of edit
 
-  
+
     public function update(Request $request,$id)
     {
 
@@ -67,18 +67,18 @@ class RoleController extends Controller
         $this->validate($request, [
             'name'=>'required',
         ]);
-        
+
         $role->update([
             'name'  => $request->name,
-            
+
         ]);
 
         $role->permissions()->delete();
-        
+
         foreach($request->post('permissions', []) as $permission){
 
             $role->permissions()->create([
-                'permission' => $permission 
+                'permission' => $permission
             ]);
         }
 

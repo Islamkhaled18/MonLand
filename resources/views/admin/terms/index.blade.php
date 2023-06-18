@@ -13,11 +13,9 @@
             <li class="breadcrumb-item active"><a href="{{ route('DeliveryPolicy.index') }}" title="الشروط والحكام">الشروط والحكام</a></li>
         </ul>
     </div>
-    {{-- @can('DeliveryPolicy.create') --}}
     <div>
         <a class="btn btn-primary btn-sm" href="{{ route('terms.create') }}" title="انشاء شروط واحكام جديده">انشاء شروط واحكام جديده</a>
     </div>
-    {{-- @endcan --}}
 
     <div class="row">
         <div class="col-md-12">
@@ -39,17 +37,14 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $term->name }}</td>
                                 <td>
-                                    {{-- @can('DeliveryPolicy.edit') --}}
                                     <a class="btn btn-sm btn-dark" href="{{ route('terms.edit', ['id' => $term->id]) }}" title="تعديل">تعديل</a>
-                                    {{-- @endcan --}}
-                                    {{-- @can('DeliveryPolicy.destroy') --}}
+
                                     <form action="{{ route('terms.destroy', $term->id) }}" title="حذف" method="post" style="display: inline-block">
                                         @csrf
                                         @method('GET')
                                         <button type="'submit" class="btn btn-danger delete btn-sm"><i class="fa fa-trash"></i>حذف</button>
 
                                     </form>
-                                    {{-- @endcan --}}
 
                                 </td>
                             </tr>

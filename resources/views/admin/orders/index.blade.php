@@ -9,8 +9,10 @@
             <h1><i class="fa fa-th-list"></i> طلبات الشراء </h1>
         </div>
         <ul class="app-breadcrumb breadcrumb side">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('order.index') }}" title="طلبات الشراء">طلبات الشراء</a></li>
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a>
+            </li>
+            <li class="breadcrumb-item active"><a href="{{ route('order.index') }}" title="طلبات الشراء">طلبات
+                    الشراء</a></li>
         </ul>
     </div>
     <div class="row">
@@ -34,19 +36,23 @@
                             <tr>
 
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $order->user->firstName }} {{ $order->user->lastName }}</td>
+                                <td>{{ $order->user->firstName . ' ' . $order->user->lastName }}</td>
                                 <td>{{ $order->status }}</td>
                                 <td>{{ $order->total }}</td>
                                 <td>{{ $order->note ?? 'لا يوجد ملاحظات' }}</td>
                                 <td>
                                     {{-- @can('attributes.edit') --}}
-                                    <a class="btn btn-sm btn-dark" href="{{ route('order.edit', ['id' => $order->id]) }}" title="معرفة الطلبيه">معرفة الطلبيه</a>
+                                    <a class="btn btn-sm btn-dark"
+                                        href="{{ route('order.edit', ['id' => $order->id]) }}"
+                                        title="معرفة الطلبيه">معرفة الطلبيه</a>
                                     {{-- @endcan --}}
                                     {{-- @can('attributes.destroy') --}}
-                                    <form action="{{ route('order.destroy', $order->id) }}" title="حذف" method="post" style="display: inline-block">
+                                    <form action="{{ route('order.destroy', $order->id) }}" title="حذف" method="post"
+                                        style="display: inline-block">
                                         @csrf
                                         @method('GET')
-                                        <button type="'submit" class="btn btn-danger delete btn-sm"><i class="fa fa-trash"></i>حذف</button>
+                                        <button type="'submit" class="btn btn-danger delete btn-sm"><i
+                                                class="fa fa-trash"></i>حذف</button>
 
                                     </form>
                                     {{-- @endcan --}}

@@ -141,6 +141,7 @@ Route::group(['namespace' => 'Site', 'prefix' => 'Site'], function () {
         Route::post('update_cart', [CartController::class, 'update_cart'])->name('cart.update'); //update product in cart list
         Route::get('count-cart-prod', [CartController::class, 'countCart'])->name('cart.countCart');
 
+
         /////////////////////////////////////// coupon //////////////////////////////////////////
         Route::post('/coupon', [CouponController::class, 'store'])->name('site.coupon.store');
         Route::delete('/coupon', [CouponController::class, 'destroy'])->name('site.coupon.destroy');

@@ -34,6 +34,8 @@ class VendorController extends Controller
         $request->validate([
             'vendor_name'=>'required|max:255',
             'vendor_price'=>'required|max:255',
+            'exhange_status'=>'required|max:255',
+            'delivery_status'=>'required|max:255',
         ]);
 
         $vendor = new Vendor();
@@ -66,12 +68,13 @@ class VendorController extends Controller
     public function update(Request $request,$id)
     {
         $vendor = Vendor::findOrFail($id);
-        $this->validate($request, [
-
+        $request->validate([
             'vendor_name'=>'required|max:255',
             'vendor_price'=>'required|max:255',
-
+            'exhange_status'=>'required|max:255',
+            'delivery_status'=>'required|max:255',
         ]);
+
 
         $vendor->update([
             'vendor_name'  => $request->vendor_name,

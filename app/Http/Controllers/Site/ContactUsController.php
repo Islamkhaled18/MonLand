@@ -22,7 +22,9 @@ class ContactUsController extends Controller
 
     public function store(Request $request){
 
-        // return $request;
+        $request->validate([
+            'subject' => 'required', 'max:255',
+        ]);
 
         $contactUs = new ContactUs();
         $contactUs->user_id = Auth::user()->id;

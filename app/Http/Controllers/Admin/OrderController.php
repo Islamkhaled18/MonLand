@@ -39,7 +39,6 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
         $order->delete();
 
-
         return redirect()->route('order.index');
     }
 }

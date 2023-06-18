@@ -175,6 +175,36 @@ class ProductController extends Controller
 
     public function update($id, Request $request)
     {
+        $request->validate([
+            'name' => 'nullable|max:100',
+            'slug' => 'nullable|unique:products,slug',
+            'description' => 'nullable|max:1000',
+            'short_description' => 'nullable|max:500',
+            'categories' => 'array|min:1',
+            'categories.*' => 'numeric|exists:categories,id',
+            'brand_id' => 'nullable|exists:brands,id',
+            'old_price' => 'nullable',
+            'new_price' => 'nullable',
+            'sku' => 'nullable|min:3|max:10',
+            'manage_stock' => 'nullable|in:0,1',
+            'in_stock' => 'nullable|in:0,1',
+            'cover_image' => 'mimes:png,jpg,bmp,jpeg,webp',
+            'weight' => 'nullable',
+            'dimension' => 'nullable',
+            'material' => 'nullable',
+            'photo' => 'nullable|array|min:1',
+            'photo.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'anotherInformation'=>'nullable|string|max:250',
+            'is_active' => 'nullable|in:0,1',
+            'featured'=> 'nullable|in:0,1',
+            'deal_of_the_day'=> 'nullable|in:0,1',
+            'flash_sale'=> 'nullable|in:0,1',
+            'quick_request'=> 'nullable|in:0,1',
+            'qty'=>'nullable|integer',
+            'vendor_id'=>'nullable|exists:vendors,id',
+            'mainCategory_id'=>'nullable|exists:main_categories,id'
+
+        ]);
 
         $product = Product::findOrFail($id);
 

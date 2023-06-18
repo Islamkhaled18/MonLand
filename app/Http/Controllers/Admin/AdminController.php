@@ -33,8 +33,16 @@ class AdminController extends Controller
         return view('admin.admins.create', compact('roles'));
     } //end of create
 
-    public function store(AdminRequest $request)
+    public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required', 'max:255',
+            'email' => 'required', 'email', 'unique:admins,email',
+            'password' => 'required',
+            'phone' => 'required',
+            'role_id' => 'required|exists:roles,id',
+
+        ]);
 
         $admin = new Admin();
         $admin->name = $request->name;
@@ -70,8 +78,8 @@ class AdminController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|unique:admins,email,' . $id,
             'phone' => 'required',
-            'old_password' => ['required', new MatchOldPassword],
-            'password' => ['required'],
+            'old_password' => 'nullable', new MatchOldPassword,
+            'password' => 'nullable',
             "role_id" => 'required|numeric|exists:roles,id',
         ]);
 

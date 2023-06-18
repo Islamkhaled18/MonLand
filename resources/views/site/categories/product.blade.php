@@ -132,6 +132,13 @@
                                 <a class="dropdown-item quantity-option" href="#" id="quantity-1">1</a>
                                 <a class="dropdown-item quantity-option" href="#" id="quantity-2">2</a>
                                 <a class="dropdown-item quantity-option" href="#" id="quantity-3">3</a>
+                                <a class="dropdown-item quantity-option" href="#" id="quantity-4">4</a>
+                                <a class="dropdown-item quantity-option" href="#" id="quantity-5">5</a>
+                                <a class="dropdown-item quantity-option" href="#" id="quantity-6">6</a>
+                                <a class="dropdown-item quantity-option" href="#" id="quantity-7">7</a>
+                                <a class="dropdown-item quantity-option" href="#" id="quantity-8">8</a>
+                                <a class="dropdown-item quantity-option" href="#" id="quantity-9">9</a>
+                                <a class="dropdown-item quantity-option" href="#" id="quantity-10">10</a>
                             </div>
 
                             <!-- Add to card button -->
