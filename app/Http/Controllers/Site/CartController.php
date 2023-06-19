@@ -55,26 +55,27 @@ class CartController extends Controller
         $countProdcts = count($cart_products);
 
         $user_address = Address::with('governorate')->where('user_id', auth()->user()->id)->where('is_default', true)->first();
+
         if ($user_address == null || $user_address->governorate_id == null) {
             session()->flash('error', 'برجاء اكمال بياناتك الشخصيه واضافة عنوان خاص بك');
             return redirect()->back();
         }
 
         // Loop through each vendor
-        foreach ($cart_products as $vendor) {
-            // Get the vendor's ID
-            $vendorId = $vendor->id;
+        // foreach ($cart_products as $vendor) {
+        //     // Get the vendor's ID
+        //     $vendorId = $vendor->id;
 
-            // Query the delivery_prices table to retrieve the price based on the user's governorate ID and the vendor's ID
-            $deliveryPrice = DeliveryPrice::where('governorate_id', $user_address->governorate_id)
-                ->where('vendor_id', $vendorId)
-                ->select('price')->first();
+        //     // Query the delivery_prices table to retrieve the price based on the user's governorate ID and the vendor's ID
+        //     $deliveryPrice = DeliveryPrice::where('governorate_id', $user_address->governorate_id)
+        //         ->where('vendor_id', $vendorId)
+        //         ->select('price')->first();
 
-            $deliveryFee = $deliveryPrice ? $deliveryPrice->price : 0;
+        //     $deliveryFee = $deliveryPrice ? $deliveryPrice->price : 0;
 
-        }
+        // }
 
-        return view('site.sale.cart', compact('cart_products', 'deliveryFee', 'deliveryPrice', 'countProdcts', 'vendors_cart_count'));
+        return view('site.sale.cart', compact('cart_products', 'countProdcts', 'user_address', 'vendors_cart_count'));
     } //cart page
 
     public function store(Request $request)
@@ -146,6 +147,8 @@ class CartController extends Controller
     public function checkout(Request $request)
     {
 
+        // $deliveryFee = $request->input('deliveryFee');
+
         $cart_products = Cart::with('products')->where('user_id', Auth::user()->id)->get();
 
         if (!$cart_products) {
@@ -155,37 +158,41 @@ class CartController extends Controller
         DB::beginTransaction();
         try {
 
+            $existingOrder = Order::where('user_id', Auth::user()->id)
+                ->where('status', 'تم استلام الطلبيه والعمل عليها')
+                ->first();
+
+            if ($existingOrder) {
+                // Compare the existing cart items with the products being checked out
+                $matchingItems = $existingOrder->items()->whereIn('product_id', $cart_products->pluck('product_id'))
+                    ->get();
+
+                if ($matchingItems->count() === count($cart_products)) {
+                    // All cart items match existing order items, so delete the existing order and its items
+                    $existingOrder->items()->delete();
+                    $existingOrder->delete();
+                }
+            }
+            $deliveryFees = $request->input('deliveryFee');
+
             $order = Order::Create([
                 'user_id' => Auth::user()->id,
                 'status' => 'تم استلام الطلبيه والعمل عليها',
                 'total' => $request->total,
             ]);
 
-            for ($i = 0; $i < count($cart_products); $i++) {
-                $order_products = $order->items()->create([
+            foreach ($cart_products as $index => $item) {
+                $orderItem = $order->items()->create([
                     'order_id' => $order->id,
-                    'product_id' => $cart_products[$i]->product_id,
-                    'quantity' => $cart_products[$i]->quantity,
-                    'price' => $cart_products[$i]->price ?? $cart_products[$i]->products->price,
-                    'product_color' => $cart_products[$i]->color,
-                    'product_size' => $cart_products[$i]->size,
+                    'product_id' => $item->product_id,
+                    'quantity' => $item->quantity,
+                    'price' => $item->price ?? $item->products->new_price ?? $item->products->old_price,
+                    'deliveryPrice' => $deliveryFees[$index] ?? null,
+                    'product_color' => $item->color,
+                    'product_size' => $item->size,
                 ]);
-
             }
-            // foreach ($products as $item) {
 
-            //     $order->items()->create([
-            //         'order_id'   => $order->id,
-            //         'product_id' => $item->product_id,
-            //         'quantity'   => $item->quantity,
-            //         'price'      => $item->products->price,
-            //         "product_color" => $request->pickedColor,
-            //         "product_size" => $request->pickedSize,
-
-            //     ]);
-            // } //end of foreach
-
-            // Cart::with('products')->where('user_id', Auth::user()->id)->delete();
             DB::commit();
             return redirect()->route('cart.orders', compact('order'));
         } catch (Throwable $e) {
@@ -274,6 +281,7 @@ class CartController extends Controller
                 'note' => $request->note,
             ]);
         }
+        Cart::where('user_id', Auth::user()->id)->delete();
 
         $cart_products = Vendor::with(['carts' => function ($query) use ($user) {
             if ($user) {
@@ -322,9 +330,6 @@ class CartController extends Controller
             'cart_products',
             'vendors_cart_count',
             'user_address',
-            'vendorId',
-            'deliveryPrice',
-            'deliveryFee',
             'countProdcts'
         ));
     }

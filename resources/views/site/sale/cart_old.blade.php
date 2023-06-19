@@ -343,6 +343,7 @@
                         <?php
                         $subTotal = 0;
                         ?>
+                        
                         @if ($products)
                             @foreach ($products as $product)
                                 <div class=" border-with-raduis mb-4">
@@ -650,7 +651,7 @@
             increase.removeClass("deactive-btn")
         }
     }
-    
+
     $(document).ready(function() {
         $('.increment-btn').click(function(e) {
             e.preventDefault();

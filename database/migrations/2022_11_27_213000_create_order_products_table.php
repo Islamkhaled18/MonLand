@@ -20,7 +20,8 @@ class CreateOrderProductsTable extends Migration
             $table->bigInteger('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->smallInteger('quantity');
-            $table->float('price');
+            $table->float('price')->nullable();
+            $table->double('deliveryPrice')->nullable();
             $table->timestamps();
         });
     }
