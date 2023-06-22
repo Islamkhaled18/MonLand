@@ -48,6 +48,7 @@ class ProductController extends Controller
         // return $request;
         $request->validate([
             'name' => 'required|max:100',
+            'model' => 'nullable|max:100',
             'slug' => 'required|unique:products,slug',
             'description' => 'required|max:1000',
             'short_description' => 'nullable|max:500',
@@ -131,15 +132,11 @@ class ProductController extends Controller
         $product->weight = $request->weight;
         $product->dimension = $request->dimension;
         $product->material = $request->material;
-        // Save cover image if uploaded
-        // if ($request->hasFile('cover_image')) {
-        //     $path = $request->file('cover_image')->store('public/images');
-        //     $product->cover_image = $path;
-        // }
+        $product->model = $request->model;
 
-        if( $request->hasFile('image') && $request->file('image')->isValid()){
-            $image = $request->file('image');
-            $product['image'] = $image->store('my_files','images');
+        if( $request->hasFile('cover_image') && $request->file('cover_image')->isValid()){
+            $cover_image = $request->file('cover_image');
+            $product['cover_image'] = $cover_image->store('products','images');
         }
 
         $product->save();
@@ -177,6 +174,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'nullable|max:100',
+            'model' => 'nullable|max:100',
             'slug' => 'nullable|unique:products,slug',
             'description' => 'nullable|max:1000',
             'short_description' => 'nullable|max:500',
@@ -223,15 +221,21 @@ class ProductController extends Controller
             }
         }
 
-        $product->update($request->except('_token', 'categories', 'photo'));
+        $old_image = $product->cover_image;
+        $data = $request->except('_token', 'categories', 'photo');
+        if( $request->hasFile('cover_image') && $request->file('cover_image')->isValid()){
+            $cover_image = $request->file('cover_image');
+            $product['cover_image'] = $cover_image->store('products','images');
+        }
+
+        $product->update($data);
+
+        if($old_image && isset($data['cover_image'])){
+            Storage::disk('images')->delete($old_image);
+        }
+
         $product->categories()->sync($request->categories);
 
-        // Update cover image if uploaded
-        if ($request->hasFile('cover_image')) {
-            $path = $request->file('cover_image')->store('public/images');
-            $product->cover_image = $path;
-            $product->save();
-        }
 
         Toastr()->success('تم التحديث بنجاح');
         return redirect()->route('products.index');

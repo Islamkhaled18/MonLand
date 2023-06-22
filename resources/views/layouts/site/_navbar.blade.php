@@ -8,8 +8,8 @@
             </a>
         </div>
 
-        <div class="input-group w-50 p-0 d-none d-md-flex">
-            {{-- <form action="{{ route('site.search') }}" method="GET"> --}}
+        <form action="{{ route('site.search') }}" method="GET">
+            <div class="input-group p-0 d-none d-md-flex">
                 <input type="text" name="name" class="form-control" placeholder="عن ماذا تبحث ؟ ">
                 <div class="input-group-prepend">
                     <div class="input-group-text p-0">
@@ -18,9 +18,9 @@
                         </button>
                     </div>
                 </div>
-                {{--
-            </form> --}}
-        </div>
+
+            </div>
+        </form>
 
         <ul class="list-unstyled d-flex special-list m-0 align-items-center">
             <li>
@@ -42,20 +42,20 @@
                     <i class="fa fa-user" aria-hidden="true"></i>
                 </a>
                 @else
-                {{--  <a href="{{route('logout')}}" class="d-block text-decoration-none">
+                {{-- <a href="{{route('logout')}}" class="d-block text-decoration-none">
                     تسجيل الخروج
                     <i class="fa fa-user" aria-hidden="true"></i>
-                </a>  --}}
+                </a> --}}
 
-                <a class="dropdown-item" href="page-login.html" class="d-block text-decoration-none" href="{{ route('logout') }}"
-                onclick="event.preventDefault();document.getElementById('logout-form_site').submit();">
-                <i class="fa fa-user" aria-hidden="true"></i>
-                تسجيل الخروج
-                <form id="logout-form_site" action="{{ route('logout') }}" method="post"
-                    style="display: none;">
-                    @csrf
-                </form>
-            </a>
+                <a class="dropdown-item" href="page-login.html" class="d-block text-decoration-none"
+                    href="{{ route('logout') }}"
+                    onclick="event.preventDefault();document.getElementById('logout-form_site').submit();">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    تسجيل الخروج
+                    <form id="logout-form_site" action="{{ route('logout') }}" method="post" style="display: none;">
+                        @csrf
+                    </form>
+                </a>
 
 
                 @endguest

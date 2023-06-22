@@ -23,7 +23,7 @@
         <!-- image cursoul -->
         <div id=" imgs-section" class="col-md-4 no-gutters pl-4">
             <div class="row">
-                <img id="featured" class="w-100" src="{{ asset('storage/'.$productDetails->cover_image) }}" />
+                <img id="featured" class="w-100" src="{{ $productDetails->image_url }}" />
             </div>
             <!-- Slider Nav imgs -->
             <div id="slide" class="d-flex justify-content-between flex-wrap mt-2 py-2">

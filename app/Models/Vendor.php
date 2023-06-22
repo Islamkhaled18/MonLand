@@ -10,8 +10,10 @@ class Vendor extends Model
     use HasFactory;
 
     protected $table = "vendors";
-    protected $fillable = ['vendor_name', 'vendor_price','exhange_status','delivery_status'];
- 
+    protected $fillable = ['vendor_name', 'exhange_status', 'delivery_status', 'country', 'delivery_time',
+
+    ];
+
     public function products()
     {
         return $this->hasMany(Product::class);

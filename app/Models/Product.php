@@ -159,7 +159,7 @@ class Product extends Model
     public function getImageUrlAttribute()
     {
         if ($this->cover_image) {
-            return asset('images/' . $this->image);
+            return asset('images/' . $this->cover_image);
         }
         return asset('images/default.png');
     }

@@ -38,10 +38,18 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">سعر الشحن</label>
-                                    <input class="form-control" id="exampleInputEmail1" name="vendor_price"
-                                        value="{{ $vendor->vendor_price }}" type="text">
-                                    @error('vendor_price')
+                                    <label for="exampleInputEmail1"> بلد البائع</label>
+                                    <input class="form-control" id="exampleInputEmail1" name="country"
+                                        value="{{ $vendor->country }}" type="text">
+                                    @error('country')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">موعيد توصيل منتجاته</label>
+                                    <input class="form-control" id="exampleInputEmail1" name="delivery_time"
+                                        value="{{ $vendor->delivery_time }}" type="text">
+                                    @error('delivery_time')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>

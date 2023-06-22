@@ -53,7 +53,6 @@ Route::group(['prefix' => 'Site/Terms-Conditions'], function () {
 
 Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Site'], function () {
 
-    Route::get('search', [ProductController::class, 'search'])->name('site.search');
 
     //contact us
     Route::get('contactUs', [ContactUsController::class, 'index'])->name('Site.contactUs');
@@ -90,6 +89,10 @@ Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Si
 }); // routes for authenticated users
 
 Route::group(['namespace' => 'Site', 'prefix' => 'Site'], function () {
+
+    //search
+    Route::get('search', [ProductController::class, 'search'])->name('site.search');
+
 
     //all categories
     Route::get('AllCategories', [CategoryController::class, 'allCategory'])->name('Site.allCategory');

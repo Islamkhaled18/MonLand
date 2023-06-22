@@ -89,13 +89,13 @@
                             <span>{{ \Carbon\Carbon::parse($vendor->created_at)->format('Y') }}  </span>
                         </span>
                     </li>
-                    <li class="my-3">
+                    {{--  <li class="my-3">
                         <i class="fa-solid fa-star star-rating"></i>
                         <span class="mr-1">
                             عدد المبيعات الناجحة:
                             <span>+10000</span>
                         </span>
-                    </li>
+                    </li>  --}}
                     <li>
                         <i class="fa-solid fa-star star-rating"></i>
                         <span class="mr-1">

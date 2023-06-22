@@ -28,7 +28,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>البائع</th>
-                                    <th>سعر التوصيل</th>
+                                    <th>موعد توصيل منتجاته</th>
                                     <th>العمليات</th>
 
                                 </tr>
@@ -39,7 +39,7 @@
 
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $vendor->vendor_name }}</td>
-                                        <td>{{ $vendor->vendor_price }}</td>
+                                        <td>{{ $vendor->delivery_time }}</td>
                                         <td>
                                             @can('vendors.edit')
                                                 <a class="btn btn-sm btn-dark" title="تعديل"

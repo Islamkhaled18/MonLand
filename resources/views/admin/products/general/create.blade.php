@@ -180,6 +180,14 @@
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleInputEmail1">  رقم الموديل </label>
+                                        <input class="form-control" id="exampleInputEmail1" name="model"
+                                            value="{{ old('model') }}" type="text" placeholder=' رقم الموديل '>
+                                        @error('model')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
 

@@ -33,14 +33,16 @@ class VendorController extends Controller
     {
         $request->validate([
             'vendor_name'=>'required|max:255',
-            'vendor_price'=>'required|max:255',
+            'country'=>'nullable|max:255',
+            'delivery_time'=>'nullable',
             'exhange_status'=>'required|max:255',
             'delivery_status'=>'required|max:255',
         ]);
 
         $vendor = new Vendor();
         $vendor->vendor_name = $request->vendor_name;
-        $vendor->vendor_price = $request->vendor_price;
+        $vendor->country = $request->country;
+        $vendor->delivery_time = $request->delivery_time;
         $vendor->exhange_status = $request->exhange_status;
         $vendor->delivery_status = $request->delivery_status;
         $vendor->save();
@@ -70,15 +72,17 @@ class VendorController extends Controller
         $vendor = Vendor::findOrFail($id);
         $request->validate([
             'vendor_name'=>'required|max:255',
-            'vendor_price'=>'required|max:255',
+            'country'=>'nullable|max:255',
+            'delivery_time'=>'nullable',
             'exhange_status'=>'required|max:255',
             'delivery_status'=>'required|max:255',
         ]);
-
+    
 
         $vendor->update([
             'vendor_name'  => $request->vendor_name,
-            'vendor_price'  => $request->vendor_price,
+            'country'  => $request->country,
+            'delivery_time'  => $request->delivery_time,
             'exhange_status'=> $request->exhange_status,
             'delivery_status' => $request->delivery_status,
             ]);

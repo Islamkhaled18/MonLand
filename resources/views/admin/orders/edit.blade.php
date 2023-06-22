@@ -17,7 +17,6 @@
                 </a></li>
         </ul>
     </div>
-    <div class="row">
         <div class="col-md-12">
 
             <div class="tile">
@@ -47,11 +46,11 @@
                             @endphp
 
                             @if($defaultAddress )
-                            {{--  @foreach ($defaultAddress as $address)  --}}
+                            {{-- @foreach ($defaultAddress as $address) --}}
                             <div class="form-group">
                                 <label for="exampleInputEmail1">رقم تليفون ثاني للعميل </label>
-                                <input class="form-control" id="exampleInputEmail1" value="{{ $defaultAddress->Phone_2 }}"
-                                    type="text" disabled>
+                                <input class="form-control" id="exampleInputEmail1"
+                                    value="{{ $defaultAddress->Phone_2 }}" type="text" disabled>
 
                             </div>
                             <div class="form-group">
@@ -62,14 +61,14 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1"> رقم العماره </label>
-                                <input class="form-control" id="exampleInputEmail1" value="{{ $defaultAddress->building_no }}"
-                                    type="text" disabled>
+                                <input class="form-control" id="exampleInputEmail1"
+                                    value="{{ $defaultAddress->building_no }}" type="text" disabled>
 
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1"> رقم الشقه </label>
-                                <input class="form-control" id="exampleInputEmail1" value="{{ $defaultAddress->flat_no }}"
-                                    type="text" disabled>
+                                <input class="form-control" id="exampleInputEmail1"
+                                    value="{{ $defaultAddress->flat_no }}" type="text" disabled>
 
                             </div>
                             <div class="form-group">
@@ -85,14 +84,14 @@
 
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">  علامه مميزه </label>
+                                <label for="exampleInputEmail1"> علامه مميزه </label>
                                 <input class="form-control" id="exampleInputEmail1"
                                     value="{{ $defaultAddress->special_mark}}" type="text" disabled>
 
                             </div>
 
 
-                            {{--  @endforeach  --}}
+                            {{-- @endforeach --}}
                             @endif
 
                             <div class="form-group">
@@ -137,6 +136,7 @@
                                                         <th>السعر</th>
                                                         <th>اللون</th>
                                                         <th>المقاس</th>
+                                                        <th>صورة المنتج</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -146,9 +146,19 @@
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $item->product->name }}</td>
                                                         <td>{{ $item->quantity }}</td>
-                                                        <td>{{ $item->price }}</td>
+                                                        <td>{{ $item->price ?? $item->product->new_price ??
+                                                            $item->product->old_price }}</td>
                                                         <td>{{ $item->product_color }}</td>
                                                         <td>{{ $item->product_size }}</td>
+                                                        <td>
+                                                            <div
+                                                                class="col-12 col-lg-2 no-gutters  d-flex justify-content-start">
+                                                                <img class="product-img"
+                                                                    src="{{ $item->product->images[1]->photo ? asset($item->product->images[1]->photo) : asset('images/default.png') }}"
+                                                                    width="60" height="60"
+                                                                    alt="{{ $item->product->name }}">
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                     @endforeach
                                                     @endforeach
@@ -165,7 +175,6 @@
                         </form>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 

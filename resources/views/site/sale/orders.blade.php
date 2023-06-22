@@ -134,7 +134,7 @@
 
                         <div class="col"><img src="{{ asset('website_assets/imgs/icons/output-onlinepngtools.png') }}"
                                 alt> التوصيل في
-                            خلال {{$product->delivery_days ?? $product->vendor_name }} أيام عمل
+                            خلال {{$product->delivery_time ?? $product->vendor_name }} أيام عمل
                         </div>
 
                     </div>

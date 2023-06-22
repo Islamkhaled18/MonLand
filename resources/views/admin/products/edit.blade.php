@@ -153,10 +153,18 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="exampleInputEmail1"> الماود المصنوعه </label>
+                                    <label for="exampleInputEmail1"> المواد المصنوعه </label>
                                     <input class="form-control" id="exampleInputEmail1" name="material"
                                         value="{{ $product->material }}" type="text" placeholder='معلومات اخرى'>
                                     @error('material')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="exampleInputEmail1"> رقم الموديل </label>
+                                    <input class="form-control" id="exampleInputEmail1" name="model"
+                                        value="{{ $product->model }}" type="text" placeholder='رقم الموديل'>
+                                    @error('model')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
