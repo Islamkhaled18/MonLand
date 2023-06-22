@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\OrderStatusUpdated;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
+
 
 class OrderController extends Controller
 {
@@ -15,7 +18,6 @@ class OrderController extends Controller
         $orders = Order::with(['items', 'user.addresses.governorate'])->get();
         return view('admin.orders.index', compact('orders'));
     }
-
 
     public function edit($id)
     {
@@ -28,11 +30,16 @@ class OrderController extends Controller
     {
 
         $order = Order::with(['items', 'user'])->findOrFail($id);
+        $previousStatus = $order->status;
         $order->update($request->only('status'));
+
+        // Fire the event if the status has changed
+        if ($order->status !== $previousStatus) {
+            Event::dispatch(new OrderStatusUpdated($order, $order->status));
+        }
 
         return redirect()->route('order.index');
     }
-
 
     public function destroy($id)
     {

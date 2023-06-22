@@ -129,7 +129,7 @@
                         <div class="col"><img src="{{ asset('website_assets/imgs/icons/delivery-truck.png') }}" alt>
                             شحنة {{ $loop->iteration }} من {{ $countProdcts }}</div>
 
-                        <div class="col"><img src=" {{ asset('website_assets/imgs/icons/shop.png') }}" alt>{{
+                        <div class="col"><img src="{{ asset('website_assets/imgs/icons/shop.png') }}" alt>{{
                             $product->vendor_name }}</div>
 
                         <div class="col"><img src="{{ asset('website_assets/imgs/icons/output-onlinepngtools.png') }}"
@@ -159,17 +159,8 @@
                                 {{ $cart->size ?? '--' }}
                             </span>
 
-                            <form action="{{ route('cart.destroy', $cart->products->id) }}" method="POST"
-                                style="color: rgb(31, 27, 27)">
-                                @csrf
-                                @method('GET')
-                                <button type="submit" style="color: rgb(24, 20, 20)"><i
-                                        class="fa-solid fa-trash-can px-1"></i>حذف</button>
-
-                            </form>
-
                             <span class="main-color">
-                                <img src="../imgs/icons/product-return.png" alt>
+                                <img src="{{ asset('website_assets/imgs/icons/product-return.png') }}" alt>
                                 <span>{{ $cart->products->anotherInformation }}</span>
                             </span>
                         </div>
@@ -183,21 +174,16 @@
 
                                 <input type="hidden" class="product_id" value="{{ $cart->product_id }}">
 
-                                {{--  <a class="changQuantity decrement-btn {{ $cart->quantity <= 1 ? 'deactive-btn' : '' }}">
-                                    <i class="fa-solid fa-circle-minus "></i></a>  --}}
 
                                 <div name="quantity" class="quantity-count text-large text-bold px-2"
                                     value="{{ $cart->quantity }}">{{ $cart->quantity }}</div>
 
-                                {{--  <a
-                                    class="changQuantity increment-btn {{ $cart->quantity >= 10 ? 'deactive-btn' : '' }}">
-                                    <i class="fa-solid fa-circle-plus "></i></a>  --}}
                             </div>
                         </div>
                     </div>
 
                     <?php
-                        $subTotal += $cart->price ??  $cart->products->new_price ?? $cart->products->old_price * $cart->quantity;
+                        $subTotal += ($cart->price ??  $cart->products->new_price ?? $cart->products->old_price) * $cart->quantity;
                     ?>
                     @endforeach
 
@@ -221,14 +207,39 @@
 
                             <div>رسوم التوصيل </div>
                             <div class="col col-md-2 no-gutters text-start">
-
                                 @guest
                                 <span><a href="{{route('login')}}">حسب العنوان</a></span>
                                 @else
+                                @php
+                                // Get the vendor's ID
+                                $vendorId = $product->id;
+
+
+                                $deliveryPrice = \App\Models\DeliveryPrice::where('governorate_id',
+                                $user_address->governorate_id)
+                                ->where('vendor_id', $vendorId)
+                                ->select('price')
+                                ->first();
+
+                                // Retrieve the delivery price for the vendor, or set it to 0 if not found
+                                if ($deliveryPrice) {
+                                $deliveryFee = $deliveryPrice->price;
+                                $disableButton = false;
+                                } else {
+                                $deliveryFee = null;
+                                $errorMessage = 'البائع لا يقوم بالتوصيل لهذه المنطقة حتى الان برجاء حذفه';
+                                $disableButton = true;
+                                }
+                                @endphp
+
+                                @if ($deliveryFee)
                                 <span>{{ $deliveryFee }}</span>
+                                @else
+                                <span class="bg-yellow" style="background-color: yellow; padding: 5px;">{{ $errorMessage
+                                    }}</span>
+                                @endif
 
                                 @endguest
-
                             </div>
                         </div>
 

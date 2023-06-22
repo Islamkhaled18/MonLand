@@ -9,6 +9,7 @@ use App\Models\MainCategory;
 use App\Models\Product;
 use App\Models\ProductColor;
 use App\Models\Productsize;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class MainCategoryController extends Controller
@@ -30,7 +31,7 @@ class MainCategoryController extends Controller
         // $mainCategoryProducts =  Product::where('mainCategory_id',$mainCategory->id)->get();
         if ($mainCategory) {
 
-            $mainCategoryProducts = $mainCategory->products()->paginate(12);
+            $mainCategoryProducts = $mainCategory->products()->get();
 
             $mainCategoryProductsCount = $mainCategory->products->count();
         }
@@ -236,6 +237,33 @@ class MainCategoryController extends Controller
         }
 
         return view('site.mainCategory.products', compact('banners', 'all_offers', 'weekend_offers', 'buy_your_mind_is_frees', 'electronics_products_photos', 'brand_slide', 'productColors', 'productSizes', 'mainCategory', 'mainCategoryProducts',
-            'mainCategoryProductsCount', 'brand'))->render();}
+            'mainCategoryProductsCount', 'brand'))->render();
+    }
+
+    public function search_by_review_products(Request $request, $name)
+    {
+
+        $productColors = ProductColor::distinct()->get(['name']);
+        $productSizes = Productsize::distinct()->get(['name']);
+        $mainCategory = MainCategory::where('name', $name)->first();
+
+        $reviews = Review::where("star_rating", $request->rating)->pluck('product_id')->toArray();
+
+        if ($mainCategory) {
+
+            $mainCategoryProducts = $mainCategory->products()
+                ->whereIN("id", $reviews)->get();
+            $mainCategoryProductsCount = $mainCategory->products->count();
+
+        }
+
+        return view('site.mainCategory.products', compact('productColors',
+            'productSizes',
+            'mainCategory',
+            'reviews',
+            'mainCategoryProducts',
+            'mainCategoryProductsCount'))->render();
+
+    }
 
 }

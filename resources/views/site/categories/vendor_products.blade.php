@@ -210,7 +210,20 @@
                     <hr />
                     <form>
                         <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="four-stars" class="position-relative" />
+                            <input value="5" type="radio" name="rating" id="five-stars" class="position-relative starsVendor rating-input" />
+                            <label for="five-stars" class="mr-2 d-flex justify-content-between">
+                                <div class="star-rating ml-3">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <span>أو أعلى</span>
+                            </label>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <input value="4" type="radio" name="rating" id="four-stars" class="position-relative starsVendor rating-input" />
                             <label for="four-stars" class="mr-2 d-flex justify-content-between">
                                 <div class="star-rating ml-3">
                                     <i class="fa-solid fa-star"></i>
@@ -222,9 +235,8 @@
                                 <span>أو أعلى</span>
                             </label>
                         </div>
-
                         <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="three-stars" class="position-relative" />
+                            <input value="3" type="radio" name="rating" id="three-stars" class="position-relative starsVendor rating-input" />
                             <label for="three-stars" class="mr-2 d-flex justify-content-between">
                                 <div class="star-rating ml-3">
                                     <i class="fa-solid fa-star"></i>
@@ -236,9 +248,8 @@
                                 <span>أو أعلى</span>
                             </label>
                         </div>
-
                         <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="two-stars" class="position-relative" />
+                            <input value="2" type="radio" name="rating" id="two-stars" class="position-relative starsVendor rating-input" />
                             <label for="two-stars" class="mr-2 d-flex justify-content-between">
                                 <div class="star-rating ml-3">
                                     <i class="fa-solid fa-star"></i>
@@ -250,9 +261,8 @@
                                 <span>أو أعلى</span>
                             </label>
                         </div>
-
                         <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="one-stars" class="position-relative" />
+                            <input value="1" type="radio" name="rating" id="one-stars" class="position-relative starsVendor rating-input" />
                             <label for="one-stars" class="mr-2 d-flex justify-content-between">
                                 <div class="star-rating ml-3">
                                     <i class="fa-solid fa-star"></i>
@@ -264,73 +274,10 @@
                                 <span>أو أعلى</span>
                             </label>
                         </div>
-
                     </form>
                 </div>
 
-                <div>
-                    <h6 class="font-weight-bold">نسبة الخصم</h6>
-                    <hr />
-                    <form>
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="all-dis" class="position-relative" />
-                            <label for="all-dis" class="mr-2">الكل </label>
-                        </div>
 
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="five-dis" class="position-relative" />
-                            <label for="five-dis" class="mr-2">50% أو أكثر </label>
-                        </div>
-
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="four-dis" class="position-relative" />
-                            <label for="four-dis" class="mr-2">40% أو أكثر </label>
-                        </div>
-
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="twenty-dis" class="position-relative" />
-                            <label for="twenty-dis" class="mr-2">20% أو أكثر </label>
-                        </div>
-
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="ten-dis" class="position-relative" />
-                            <label for="ten-dis" class="mr-2">10% أو أكثر </label>
-                        </div>
-
-                    </form>
-                </div>
-
-                <div class="my-4">
-                    <h6 class="font-weight-bold">تقييم البائع </h6>
-                    <hr />
-                    <form>
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="all-seller-rates" class="position-relative" />
-                            <label for="all-seller-rates" class="mr-2">الكل </label>
-                        </div>
-
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="eight-rates" class="position-relative" />
-                            <label for="eight-rates" class="mr-2">80% أو أكثر </label>
-                        </div>
-
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="six-rates" class="position-relative" />
-                            <label for="six-rates" class="mr-2">60% أو أكثر </label>
-                        </div>
-
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="four-rates" class="position-relative" />
-                            <label for="four-rates" class="mr-2">40% أو أكثر </label>
-                        </div>
-
-                        <div class="d-flex align-items-center">
-                            <input type="radio" name="brand" id="twenty-rates" class="position-relative" />
-                            <label for="twenty-rates" class="mr-2">20% أو أكثر </label>
-                        </div>
-
-                    </form>
-                </div>
             </div>
             <div class="col-12 col-md-9">
                 <div class="row">
@@ -340,7 +287,7 @@
                             <p>
                                 إسم البائع : {{ $vendor->vendor_name }}
                             </p>
-                          
+
                         </div>
 
                         <div class="d-flex align-items-center">
@@ -367,9 +314,9 @@
 
         </div>
 
-        <div class="d-flex justify-content-center mt-5 pt-3">
+        {{--  <div class="d-flex justify-content-center mt-5 pt-3">
             {{ $vendors_products->links('vendor.pagination.default') }}
-        </div>
+        </div>  --}}
 
     </div>
 
@@ -520,7 +467,7 @@
             })
         })
 
-        $('.stars').on('click', function() {
+        $('.starsVendor').on('click', function() {
             let star_rating = $(this).val();
 
             $.ajax({

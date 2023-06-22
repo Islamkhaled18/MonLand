@@ -183,7 +183,7 @@ class VendorController extends Controller
         $vendor = Vendor::where('id', $id)->first();
         $reviews = Review::where("star_rating", $request->rating)->pluck('product_id')->toArray();
 
-        $vendors_products = Product::with('Vendor')->where('vendor_id', $vendor->id)->whereIN("id", $reviews)->paginate(4);
+        $vendors_products = Product::with('Vendor')->where('vendor_id', $vendor->id)->whereIN("id", $reviews)->get();
 
 
         return view('site.categories.vendor_filter_products', compact('vendors_products', 'vendor'))->render();

@@ -18,7 +18,6 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('status')->default('تم استلام الطلبيه والعمل عليها');
-            // $table->enum('status',['processing','received','cancelledByAdmin','rejected'])->default('processing');
             $table->float('total')->default(0);
             $table->longText('note')->nullable();
             $table->timestamps();

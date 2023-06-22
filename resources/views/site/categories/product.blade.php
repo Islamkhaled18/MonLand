@@ -114,106 +114,108 @@
                             @endforeach
                         </div>
                     </div>
-                    <div id="remaining-section" class="main-color text-bold">
+                    @if ($productDetails->qty <= 20 )
+                     <div id="remaining-section" class="main-color text-bold">
                         <span>باقي</span>
                         <span id="remaining-quantity">{{ $productDetails->qty }}</span>
                         <span>قطع فقط</span>
 
                     </div>
+                    @endif
 
-                    <!-- order quantity and add to card -->
-                    <div class="row my-3">
-                        <div id="order-quantity-dropdown" class="dropdown  ml-1">
-                            <button class="btn py-3 border-dark dropdown-toggle" type="button" data-toggle="dropdown"
-                                aria-expanded="false">
-                                <span id="order-quantity" class="border-left px-2">1</span>
-                            </button>
-                            <div id="order-quantity-list" class="dropdown-menu">
-                                <a class="dropdown-item quantity-option" href="#" id="quantity-1">1</a>
-                                <a class="dropdown-item quantity-option" href="#" id="quantity-2">2</a>
-                                <a class="dropdown-item quantity-option" href="#" id="quantity-3">3</a>
-                                <a class="dropdown-item quantity-option" href="#" id="quantity-4">4</a>
-                                <a class="dropdown-item quantity-option" href="#" id="quantity-5">5</a>
-                                <a class="dropdown-item quantity-option" href="#" id="quantity-6">6</a>
-                                <a class="dropdown-item quantity-option" href="#" id="quantity-7">7</a>
-                                <a class="dropdown-item quantity-option" href="#" id="quantity-8">8</a>
-                                <a class="dropdown-item quantity-option" href="#" id="quantity-9">9</a>
-                                <a class="dropdown-item quantity-option" href="#" id="quantity-10">10</a>
-                            </div>
-
-                            <!-- Add to card button -->
-
-                        </div>
-                        <button class="col-8 col-lg-9 bg-main text-white text-larger badge addToCart"
-                            data-product-id="{{ $productDetails->id }}">
-                            أضف الي العربة
+                <!-- order quantity and add to card -->
+                <div class="row my-3">
+                    <div id="order-quantity-dropdown" class="dropdown  ml-1">
+                        <button class="btn py-3 border-dark dropdown-toggle" type="button" data-toggle="dropdown"
+                            aria-expanded="false">
+                            <span id="order-quantity" class="border-left px-2">1</span>
                         </button>
+                        <div id="order-quantity-list" class="dropdown-menu">
+                            <a class="dropdown-item quantity-option" href="#" id="quantity-1">1</a>
+                            <a class="dropdown-item quantity-option" href="#" id="quantity-2">2</a>
+                            <a class="dropdown-item quantity-option" href="#" id="quantity-3">3</a>
+                            <a class="dropdown-item quantity-option" href="#" id="quantity-4">4</a>
+                            <a class="dropdown-item quantity-option" href="#" id="quantity-5">5</a>
+                            <a class="dropdown-item quantity-option" href="#" id="quantity-6">6</a>
+                            <a class="dropdown-item quantity-option" href="#" id="quantity-7">7</a>
+                            <a class="dropdown-item quantity-option" href="#" id="quantity-8">8</a>
+                            <a class="dropdown-item quantity-option" href="#" id="quantity-9">9</a>
+                            <a class="dropdown-item quantity-option" href="#" id="quantity-10">10</a>
+                        </div>
+
+                        <!-- Add to card button -->
+
                     </div>
+                    <button class="col-8 col-lg-9 bg-main text-white text-larger badge addToCart"
+                        data-product-id="{{ $productDetails->id }}">
+                        أضف الي العربة
+                    </button>
                 </div>
+            </div>
 
-                <!-- info -->
-                <div class="col-12 col-md-4 no-gutters">
+            <!-- info -->
+            <div class="col-12 col-md-4 no-gutters">
 
-                    <div class="info-section border-right px-3 text-start  d-flex flex-column  flex-wrap">
+                <div class="info-section border-right px-3 text-start  d-flex flex-column  flex-wrap">
 
-                        <div class=" pt-3 pb-4">
+                    <div class=" pt-3 pb-4">
 
-                            <img src="{{ asset('website_assets/imgs/icons/product-return.png') }}">
-                            <!-- <i class="fa-solid fa-arrow-rotate-left px-1 main-color"></i> -->
-                            <span>لا يمكن استبدال او ارجاع هذا المنتج</span>
-                        </div>
+                        <img src="{{ asset('website_assets/imgs/icons/product-return.png') }}">
+                        <!-- <i class="fa-solid fa-arrow-rotate-left px-1 main-color"></i> -->
+                        <span>لا يمكن استبدال او ارجاع هذا المنتج</span>
+                    </div>
 
-                        <div id="seller-info" class="  d-flex justify-content-between text-start pt-3 pb-4">
-                            <div class>
-                                <span>
+                    <div id="seller-info" class="  d-flex justify-content-between text-start pt-3 pb-4">
+                        <div class>
+                            <span>
 
-                                    <img src="{{ asset('website_assets/imgs/icons/shop.png') }}">
-                                    <!-- <i class="fa-solid fa-arrow-rotate-left px-1 main-color"></i> -->
-                                    <span class="seller-name"> <a
-                                            href="{{ route('Site.product.vendorProducts', $productDetails->vendor_id) }}">
-                                            اسم البائع : {{ $vendor->vendor_name }}</a> </span>
-                                </span>
-                                <p class="seller-rate"><span class="number">{{ $average }}%</span> تقييم
-                                    البائع</p>
-                            </div>
-                            {{-- <div class="d-flex flex-column justify-content-end  align-items-end">
-                                <button class="subscribe-btn px-3">تابع</button>
-                                <p class="seller-subscribers"><span class="number">117525</span>
-                                    المتابعين</p>
-
-                            </div> --}}
-                        </div>
-
-                        <div class=" pt-3 pb-4">
-                            <div>
-
-                                <img src="{{ asset('website_assets/imgs/icons/delivery-truck.png') }}">
+                                <img src="{{ asset('website_assets/imgs/icons/shop.png') }}">
                                 <!-- <i class="fa-solid fa-arrow-rotate-left px-1 main-color"></i> -->
-                                <span class="text-large text-simi-bold pr-2">شحن موثوق به</span>
-                            </div>
+                                <span class="seller-name"> <a
+                                        href="{{ route('Site.product.vendorProducts', $productDetails->vendor_id) }}">
+                                        اسم البائع : {{ $vendor->vendor_name }}</a> </span>
+                            </span>
+                            <p class="seller-rate"><span class="number">{{ $average }}%</span> تقييم
+                                البائع</p>
+                        </div>
+                        {{-- <div class="d-flex flex-column justify-content-end  align-items-end">
+                            <button class="subscribe-btn px-3">تابع</button>
+                            <p class="seller-subscribers"><span class="number">117525</span>
+                                المتابعين</p>
 
-                            <p class="pr-5">
-                                {{ $vendor->exhange_status }}
-                            </p>
+                        </div> --}}
+                    </div>
 
+                    <div class=" pt-3 pb-4">
+                        <div>
+
+                            <img src="{{ asset('website_assets/imgs/icons/delivery-truck.png') }}">
+                            <!-- <i class="fa-solid fa-arrow-rotate-left px-1 main-color"></i> -->
+                            <span class="text-large text-simi-bold pr-2">شحن موثوق به</span>
                         </div>
 
-                        <div class=" pt-3 pb-4">
-                            <div>
+                        <p class="pr-5">
+                            {{ $vendor->exhange_status }}
+                        </p>
 
-                                <img src="{{ asset('website_assets/imgs/icons/encrypted.png') }}">
-                                <span class="text-large text-simi-bold pr-2">تسوق امن</span>
-                            </div>
+                    </div>
 
-                            <p class="pr-5">بياناتك محمية دائما</p>
+                    <div class=" pt-3 pb-4">
+                        <div>
 
+                            <img src="{{ asset('website_assets/imgs/icons/encrypted.png') }}">
+                            <span class="text-large text-simi-bold pr-2">تسوق امن</span>
                         </div>
+
+                        <p class="pr-5">بياناتك محمية دائما</p>
+
                     </div>
                 </div>
-
             </div>
 
         </div>
+
+    </div>
 
     </div>
 

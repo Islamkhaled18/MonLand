@@ -55,10 +55,11 @@ $order->status == 'تم الالغاء من العميل')
         <div class="col-12 col-lg-8 mb-4 no-gutters cart">
             <!-- card box -->
             <?php
-                        $subTotal = 0;
-                        ?>
+            $total = 0;
+            ?>
             @if ($cart_products)
             @foreach ($cart_products as $product)
+
 
             @if ($order->status == 'تم استلام الطلبيه والعمل عليها')
             <div class="text-muted text-xlarge text-center mb-3  order-recived-text">
@@ -84,75 +85,60 @@ $order->status == 'تم الالغاء من العميل')
                         شحنة {{ $loop->iteration }} من {{ $countProdcts }}</div>
 
                     <div class="col"><img src=" {{ asset('website_assets/imgs/icons/shop.png') }}" alt>{{
-                        $product->vendor_name }}</div>
+                        $product['vendor_name'] }}</div>
 
                     <div class="col"><img src="{{ asset('website_assets/imgs/icons/output-onlinepngtools.png') }}" alt>
                         التوصيل في
-                        خلال {{$product->delivery_days ?? $product->vendor_name }} أيام عمل
+                        خلال {{$product['delivery_days'] ?? $product['vendor_name'] }} أيام عمل
                     </div>
 
                 </div>
 
                 <!-- cart item -->
                 <?php
-                            $subTotal = 0;
-                            ?>
-                @foreach ($product->carts as $cart)
+                $subTotal = 0;
+                ?>
+                @foreach ($product['order_products'] as $cart)
                 <div class="row mt-3 mx-3 cart-item rounded">
                     <div class="col-12 col-lg-2 no-gutters  d-flex justify-content-start"><img class="product-img"
-                            src="{{ $cart->products->images[1]->photo ? asset($cart->products->images[1]->photo) : asset('images/default.png') }}"
-                            width="120" height="120" alt="{{ $cart->products->name }}">
+                            src="{{ $cart['product']->images[1]->photo ? asset($cart['product']->images[1]->photo) : asset('images/default.png') }}"
+                            width="120" height="120" alt="{{ $cart['product']->name }}">
                     </div>
                     <div class="col-12 col-lg-7 text-start cart-item-details d-flex flex-column text-large">
-                        <span class="py-2 "> {{ $cart->products->name }}</span>
+                        <span class="py-2 "> {{ $cart['product']->name }}</span>
                         <span class>اللون :
-                            {{ $cart->color ?? '--' }}
+                            {{ $cart['color'] ?? '--' }}
 
                         </span>
                         <span class>المقاس :
-                            {{ $cart->size ?? '--' }}
+                            {{ $cart['size'] ?? '--' }}
                         </span>
 
-                        <form action="{{ route('cart.destroy', $cart->products->id) }}" method="POST"
-                            style="color: rgb(31, 27, 27)">
-                            @csrf
-                            @method('GET')
-                            <button type="submit" style="color: rgb(24, 20, 20)"><i
-                                    class="fa-solid fa-trash-can px-1"></i>حذف</button>
-
-                        </form>
-
                         <span class="main-color">
-                            <img src="../imgs/icons/product-return.png" alt>
-                            <span>{{ $cart->products->anotherInformation }}</span>
+                            <img src="{{ asset('website_assets/imgs/icons/product-return.png') }}" alt>
+                            <span>{{ $cart['product']->anotherInformation }}</span>
                         </span>
                     </div>
                     <div
                         class="col-12 col-lg-3 d-flex  flex-lg-column  justify-content-between justify-content-lg-start">
-                        <span class="mb-4 mt-5 text-center text-large">{{$cart->price ?? $cart->products->new_price
+                        <span class="mb-4 mt-5 text-center text-large">{{$cart['price'] ??$cart['product']->new_price
                             ??
-                            $cart->products->old_price }} جنيه</span>
+                            $cart['product']->old_price }} جنيه</span>
                         <div class=" quantity-counter d-flex flex-nowrap justify-content-center align-items-center ">
 
-                            <input type="hidden" class="product_id" value="{{ $cart->product_id }}">
+                            <input type="hidden" class="product_id" value="{{ $cart['product_id'] }}">
 
-                            {{-- <a
-                                class="changQuantity decrement-btn {{ $cart->quantity <= 1 ? 'deactive-btn' : '' }}">
-                                <i class="fa-solid fa-circle-minus "></i></a> --}}
 
                             <div name="quantity" class="quantity-count text-large text-bold px-2"
-                                value="{{ $cart->quantity }}">{{ $cart->quantity }}</div>
+                                value="{{ $cart['quantity'] }}">{{ $cart['quantity'] }}</div>
 
-                            {{-- <a
-                                class="changQuantity increment-btn {{ $cart->quantity >= 10 ? 'deactive-btn' : '' }}">
-                                <i class="fa-solid fa-circle-plus "></i></a> --}}
                         </div>
                     </div>
                 </div>
 
                 <?php
-                                $subTotal += $cart->price ??  $cart->products->new_price ?? $cart->products->old_price * $cart->quantity;
-                            ?>
+                    $subTotal += ($cart['price'] ??  $cart['product']->new_price ?? $cart['product']->old_price) * $cart['quantity'];
+                ?>
                 @endforeach
 
 
@@ -179,7 +165,7 @@ $order->status == 'تم الالغاء من العميل')
                             @guest
                             <span><a href="{{route('login')}}">حسب العنوان</a></span>
                             @else
-                            <span>{{ $deliveryFee }}</span>
+                            <span>{{ $cart['deliveryPrice'] }} </span>
 
                             @endguest
 
@@ -195,11 +181,12 @@ $order->status == 'تم الالغاء من العميل')
                         <div class="ml-2">
                             @php
 
-                            $product['total'] = $subTotal + (float) $deliveryFee;
+                            $product['total'] = $subTotal + (float) $cart['deliveryPrice'];
+                            $total += $product['total'];
 
                             @endphp
 
-                            <span class="d-flex flex-row text-large"> المجموع الكلي للشحنة 1
+                            <span class="d-flex flex-row text-large"> المجموع الكلي للشحنة
                                 {{ $product['total'] }}</span>
                         </div>
 
@@ -210,28 +197,36 @@ $order->status == 'تم الالغاء من العميل')
             @endforeach
             @endif
 
-
         </div>
-
-
-
 
         <!-- cart summary  -->
         <div class="cart-summary col-12 pr-4 col-lg-4 align-self-start align-content-start text-start ">
             <div class="payment-info p-3 border border-secondary mb-5">
 
-
-
                 <div class="text-large text-bold py-1">عدد الشحنات : {{ $countProdcts }}</div>
-
                 @php
                 $total = 0;
                 @endphp
                 @foreach ($cart_products as $product)
-                <div>
+
+                <?php
+                $subTotal = 0;
+                ?>
+                @foreach ($product['order_products'] as $cart)
+
+                <?php
+                    $subTotal += ($cart['price'] ??  $cart['product']->new_price ?? $cart['product']->old_price) * $cart['quantity'];
+                ?>
+                @endforeach
+                @php
+
+                $product['total'] = $subTotal + (float) $cart['deliveryPrice'];
+
+
+                @endphp
+                <div class="">
                     <span> إجمالي شحنة </span>
-                    <span class="px-1">
-                        {{ $loop->iteration }}هو
+                    <span class="px-1">{{ $loop->iteration }}هو
                         {{ $product['total'] }}
                         @php
 
@@ -346,85 +341,74 @@ $order->status == 'تم الالغاء من العميل')
                 <!-- order-box -->
                 <div class="order-box mb-5">
                     <?php
-                        $subTotal = 0;
+                    $total = 0;
                     ?>
                     @if ($cart_products)
                     @foreach ($cart_products as $product)
+
                     <!-- cart-box -->
                     <div class="border-with-raduis ">
                         <div
-                            class="d-flex flex-row align-items-center text-start main-color border-bottom border-dark py-2">
-                            <div class="col">
-                                <i class="fas fa-shipping-fast"></i>شحنة {{ $loop->iteration }} من
-                                {{ $countProdcts }}
-                            </div>
+                            class="cart-item-card d-flex flex-row align-items-center text-start main-color border-bottom border-dark py-2">
+
+                            <div class="col"><img src="{{ asset('website_assets/imgs/icons/delivery-truck.png') }}" alt>
+                                شحنة {{ $loop->iteration }} من {{ $countProdcts }}</div>
 
                             <div class="col"><img src=" {{ asset('website_assets/imgs/icons/shop.png') }}" alt>{{
-                                $product->vendor_name }}</div>
+                                $product['vendor_name'] }}</div>
 
                             <div class="col"><img
                                     src="{{ asset('website_assets/imgs/icons/output-onlinepngtools.png') }}" alt>
                                 التوصيل في
-                                خلال {{$product->delivery_days ?? $product->vendor_name }} أيام عمل
+                                خلال {{$product['delivery_days'] ?? $product['vendor_name'] }} أيام عمل
                             </div>
+
                         </div>
                         <!-- cart item -->
                         <?php
-                            $subTotal = 0;
+                        $subTotal = 0;
                         ?>
-                        @foreach ($product->carts as $cart)
+                        @foreach ($product['order_products'] as $cart)
                         <div class="row mt-3 mx-3 cart-item rounded">
                             <div class="col-12 col-lg-2 no-gutters d-flex justify-content-start">
                                 <img class="product-img img-fluid"
-                                    src="{{ $cart->products->images[1]->photo ? asset($cart->products->images[1]->photo) : asset('images/default.png') }}" />
+                                    src="{{ $cart['product']->images[1]->photo ? asset($cart['product']->images[1]->photo) : asset('images/default.png') }}"
+                                    width="120" height="120" alt="{{ $cart['product']->name }}" />
                             </div>
                             <div class="col-12 col-lg-7 text-start cart-item-details d-flex flex-column text-large">
-                                <span class="py-2"> {{ $cart->products->name }}</span>
+
+                                <span class="py-2"> {{ $cart['product']->name }}</span>
                                 <span class>اللون :
-                                    {{ $cart->color ?? '--' }}
+                                    {{ $cart['color'] ?? '--' }}
 
                                 </span>
                                 <span class>المقاس :
-                                    {{ $cart->size ?? '--' }}
+                                    {{ $cart['size'] ?? '--' }}
                                 </span>
-                                {{-- <form action="{{ route('cart.destroy', $cart->products->id) }}" method="POST"
-                                    style="color: rgb(31, 27, 27)">
-                                    @csrf
-                                    @method('GET')
-                                    <button type="submit" style="color: rgb(24, 20, 20)"><i
-                                            class="fa-solid fa-trash-can px-1"></i>حذف</button>
 
-                                </form> --}}
                                 <span class="main-color">
                                     <i class="fa-solid fa-arrow-rotate-left px-1"></i>
-                                    <span>{{ $cart->products->anotherInformation }}</span>
+                                    <span>{{ $cart['product']->anotherInformation }}</span>
                                 </span>
                             </div>
                             <div class="col-12 col-lg-3 d-flex flex-column justify-content-between  no-gutters pb-3 ">
-                                <span class="mb-4 mt-4 text-end text-large">{{$cart->price ??
-                                    $cart->products->new_price
+                                <span class="mb-4 mt-4 text-end text-large">{{$cart['price']
+                                    ??$cart['product']->new_price
                                     ??
-                                    $cart->products->old_price }}
+                                    $cart['product']->old_price }}
                                     جنيه</span>
                                 <div
                                     class=" quantity-counter d-flex flex-nowrap justify-content-center align-items-center ">
 
-                                    <input type="hidden" class="product_id" value="{{ $cart->product_id }}">
-
-                                    {{-- <a
-                                        class="changQuantity decrement-btn {{ $cart->quantity <= 1 ? 'deactive-btn' : '' }}">
-                                        <i class="fa-solid fa-circle-minus "></i></a> --}}
+                                    <input type="hidden" class="product_id" value="{{ $cart['product_id'] }}">
 
                                     <div name="quantity" class="quantity-count text-large text-bold px-2"
-                                        value="{{ $cart->quantity }}">{{ $cart->quantity }}</div>
+                                        value="{{ $cart['quantity'] }}">{{ $cart['quantity'] }}</div>
 
-                                    {{-- <a
-                                        class="changQuantity increment-btn {{ $cart->quantity >= 10 ? 'deactive-btn' : '' }}">
-                                        <i class="fa-solid fa-circle-plus "></i></a> --}}
                                 </div>
 
                                 <button data-toggle="modal" data-target="#showmodal"
-                                    data-product="{{ $cart->products->id }}"
+                                    data-product="{{ $cart['product']->id }}"
                                     class="bg-main text-warning px-3 py-2 w-100  text-larger align-self-end product">
                                     اكتب تقيم المنتج
                                 </button>
@@ -432,7 +416,7 @@ $order->status == 'تم الالغاء من العميل')
                             </div>
                         </div>
                         <?php
-                        $subTotal += $cart->price ??  $cart->products->new_price ?? $cart->products->old_price * $cart->quantity;
+                            $subTotal += ($cart['price'] ??  $cart['product']->new_price ?? $cart['product']->old_price) * $cart['quantity'];
                         ?>
                         @endforeach
 
@@ -456,7 +440,7 @@ $order->status == 'تم الالغاء من العميل')
                                     @guest
                                     <span><a href="{{route('login')}}">حسب العنوان</a></span>
                                     @else
-                                    <span>{{ $deliveryFee }}</span>
+                                    <span>{{ $cart['deliveryPrice'] }} </span>
 
                                     @endguest
 
@@ -471,9 +455,11 @@ $order->status == 'تم الالغاء من العميل')
 
                                     @php
 
-                                    $product['total'] = $subTotal + (float) $deliveryFee;
+                                    $product['total'] = $subTotal + (float) $cart['deliveryPrice'];
+                                    $total += $product['total'];
 
                                     @endphp
+
                                     <span class="d-flex flex-row text-large"> المجموع الكلي للشحنة
                                         {{ $product['total'] }}</span>
                                 </div>
@@ -482,7 +468,7 @@ $order->status == 'تم الالغاء من العميل')
                     </div>
 
                     <button class="col-6 bg-main text-warning px-3 py-2 align-self-end vendor" data-toggle="modal"
-                        data-vendorid="{{ $product->id }}" data-target="#seemodal">
+                        data-vendorid="{{ $product['id'] }}" data-target="#seemodal">
                         اكتب تقيم للبائع
                     </button>
                     @endforeach
@@ -574,7 +560,7 @@ $order->status == 'تم الالغاء من العميل')
                             <form id="form-review-vendor" method="post" action="{{ route('review.store') }}">
                                 @csrf
 
-                                <input type="hidden" name="vendor_id" value="{{ $product->id }}">
+                                <input type="hidden" name="vendor_id" value="{{ $product['id'] }}">
                                 <div class="col-12 d-flex align-items-center my-4">
                                     <h4>
                                         قييم البائع
@@ -696,7 +682,7 @@ $order->status == 'تم الالغاء من العميل')
                             </div>
                             <form id="form-review" method="post" action="{{ route('review.store') }}">
                                 @csrf
-                                <input type="hidden" name="product_id" value="{{ $cart->products->id }}">
+                                <input type="hidden" name="product_id" value="{{ $cart['product']->id }}">
                                 <div class="col-12 d-flex align-items-center my-4">
                                     <h4>
                                         قيم المنتج
@@ -749,10 +735,25 @@ $order->status == 'تم الالغاء من العميل')
                 $total = 0;
                 @endphp
                 @foreach ($cart_products as $product)
-                <div>
+
+                <?php
+                $subTotal = 0;
+                ?>
+                @foreach ($product['order_products'] as $cart)
+
+                <?php
+                    $subTotal += ($cart['price'] ??  $cart['product']->new_price ?? $cart['product']->old_price) * $cart['quantity'];
+                ?>
+                @endforeach
+                @php
+
+                $product['total'] = $subTotal + (float) $cart['deliveryPrice'];
+
+
+                @endphp
+                <div class="">
                     <span> إجمالي شحنة </span>
-                    <span class="px-1">
-                        {{ $loop->iteration }}هو
+                    <span class="px-1">{{ $loop->iteration }}هو
                         {{ $product['total'] }}
                         @php
 
@@ -837,7 +838,7 @@ $order->status == 'تم الالغاء من العميل')
 @endsection
 @push('scripts')
 <script>
-        $('.button-review').on('click', function(e) {
+    $('.button-review').on('click', function(e) {
             $("#form-review").submit()
         })
         $("#form-review").on('submit', function(e) {

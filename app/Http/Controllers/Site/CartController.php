@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\Cart;
 use App\Models\DeliveryPrice;
 use App\Models\Order;
+use App\Models\OrderProduct;
 use App\Models\Review;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
@@ -61,19 +62,6 @@ class CartController extends Controller
             return redirect()->back();
         }
 
-        // Loop through each vendor
-        // foreach ($cart_products as $vendor) {
-        //     // Get the vendor's ID
-        //     $vendorId = $vendor->id;
-
-        //     // Query the delivery_prices table to retrieve the price based on the user's governorate ID and the vendor's ID
-        //     $deliveryPrice = DeliveryPrice::where('governorate_id', $user_address->governorate_id)
-        //         ->where('vendor_id', $vendorId)
-        //         ->select('price')->first();
-
-        //     $deliveryFee = $deliveryPrice ? $deliveryPrice->price : 0;
-
-        // }
 
         return view('site.sale.cart', compact('cart_products', 'countProdcts', 'user_address', 'vendors_cart_count'));
     } //cart page
@@ -146,8 +134,6 @@ class CartController extends Controller
 
     public function checkout(Request $request)
     {
-
-        // $deliveryFee = $request->input('deliveryFee');
 
         $cart_products = Cart::with('products')->where('user_id', Auth::user()->id)->get();
 
@@ -283,117 +269,54 @@ class CartController extends Controller
         }
         Cart::where('user_id', Auth::user()->id)->delete();
 
-        $cart_products = Vendor::with(['carts' => function ($query) use ($user) {
-            if ($user) {
-                $query->where('user_id', $user->id);
-            }
-            $query->orWhere('uuid', $this->getCartId());
-            $query->with(['products' => function ($products) {
-                $products->whereNull('products.deleted_at');
-            }]);
-        }])->whereHas('carts.products', function ($query) {
-            $query->whereNull('products.deleted_at');
-        })->get();
+        return redirect()->route('order.show', ['id' => $order->id]);
 
-        $countProdcts = count($cart_products);
-
-        $vendors_cart_count = Vendor::with(['carts' => function ($query) use ($user) {
-            if ($user) {
-                $query->where('user_id', $user->id);
-            }
-            $query->orWhere('uuid', $this->getCartId());
-            $query->with(['products' => function ($products) {
-                $products->get();
-            }]);
-        }])
-            ->whereHas('carts.products', function ($query) {
-                $query->whereNull('products.deleted_at');
-            })
-            ->count();
-        $user_address = Address::with('governorate')->where('user_id', auth()->user()->id)->where('is_default', true)->first();
-
-        // Loop through each vendor
-        foreach ($cart_products as $vendor) {
-            // Get the vendor's ID
-            $vendorId = $vendor->id;
-
-            // Query the delivery_prices table to retrieve the price based on the user's governorate ID and the vendor's ID
-            $deliveryPrice = DeliveryPrice::where('governorate_id', $user_address->governorate_id)
-                ->where('vendor_id', $vendorId)
-                ->select('price')->first();
-
-            $deliveryFee = $deliveryPrice ? $deliveryPrice->price : 0;
-
-        }
-
-        return view('site.sale.order_status', compact('order',
-            'cart_products',
-            'vendors_cart_count',
-            'user_address',
-            'countProdcts'
-        ));
     }
 
     public function showOrder($id)
     {
-        $order = Order::where('user_id', Auth::id())->findOrFail($id);
-        $user = Auth::user();
-        ///////////////////////////////////////////////////
+        $order = Order::with(['items.product.vendor'])->where('user_id', Auth::id())
+            ->findOrFail($id);
 
-        $cart_products = Vendor::with(['carts' => function ($query) use ($user) {
-            if ($user) {
-                $query->where('user_id', $user->id);
-            }
-            $query->orWhere('uuid', $this->getCartId());
-            $query->with(['products' => function ($products) {
-                $products->whereNull('products.deleted_at');
-            }]);
-        }])->whereHas('carts.products', function ($query) {
-            $query->whereNull('products.deleted_at');
-        })->get();
+        $vendors = $order->items->groupBy('product.vendor_id')->map(function ($items) {
+            $vendor = $items->first()->product->vendor;
+            $orderProducts = $items->map(function ($item) {
+                $orderProduct = OrderProduct::find($item->id);
 
-        $vendors_cart_count = Vendor::with(['carts' => function ($query) use ($user) {
-            if ($user) {
-                $query->where('user_id', $user->id);
-            }
-            $query->orWhere('uuid', $this->getCartId());
-            $query->with(['products' => function ($products) {
-                $products->get();
-            }]);
-        }])
-            ->whereHas('carts.products', function ($query) {
-                $query->whereNull('products.deleted_at');
-            })
-            ->count();
+                return [
+                    'id' => $orderProduct->id,
+                    'order_id' => $orderProduct->order_id,
+                    'product_id' => $orderProduct->product_id,
+                    'quantity' => $orderProduct->quantity,
+                    'price' => $orderProduct->price,
+                    'color' => $orderProduct->product_color,
+                    'size' => $orderProduct->product_size,
+                    'deliveryPrice' => $orderProduct->deliveryPrice,
+                    'created_at' => $orderProduct->created_at,
+                    'updated_at' => $orderProduct->updated_at,
+                    'product' => $item->product,
+                ];
+            });
 
-        $countProdcts = count($cart_products);
+            return [
+                'id' => $vendor->id,
+                'vendor_name' => $vendor->vendor_name,
+                'vendor_price' => $vendor->vendor_price,
+                'exchange_status' => $vendor->exchange_status,
+                'delivery_status' => $vendor->delivery_status,
+                'created_at' => $vendor->created_at,
+                'updated_at' => $vendor->updated_at,
+                'order_products' => $orderProducts,
+            ];
+        });
 
-        $user_address = Address::with('governorate')->where('user_id', auth()->user()->id)->where('is_default', true)->first();
-        // Loop through each vendor
-        foreach ($cart_products as $vendor) {
-            // Get the vendor's ID
-            $vendorId = $vendor->id;
+        $cart_products = $vendors->values();
 
-            // Query the delivery_prices table to retrieve the price based on the user's governorate ID and the vendor's ID
-            $deliveryPrice = DeliveryPrice::where('governorate_id', $user_address->governorate_id)
-                ->where('vendor_id', $vendorId)
-                ->select('price')->first();
+        // return $cart_products ;
 
-            $deliveryFee = $deliveryPrice ? $deliveryPrice->price : 0;
+        $countProdcts = $vendors->values()->count();
 
-        }
-
-        return view('site.sale.order_status', compact(
-            'order',
-            'user',
-            'cart_products',
-            'vendors_cart_count',
-            'countProdcts',
-            'user_address',
-            'vendorId',
-            'deliveryPrice',
-            'deliveryFee',
-        ));
+        return view('site.sale.order_status', compact('cart_products', 'countProdcts', 'order'));
     }
 
     public function reviewstore(Request $request)
