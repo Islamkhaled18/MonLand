@@ -15,12 +15,12 @@
                     title="اعدادات المنتجات">اعدادات المنتجات</a></li>
         </ul>
     </div>
-    @can('products.create')
-    <div>
-        <a class="btn btn-primary btn-sm" title="انشاء اعدادات منتج جديد"
-            href="{{ route('productSetting.create') }}">انشاء اعدادات منتج جديد</a>
-    </div>
-    @endcan
+    <!--@can('products.create')-->
+    <!--<div>-->
+    <!--    <a class="btn btn-primary btn-sm" title="انشاء اعدادات منتج جديد"-->
+    <!--        href="{{ route('productSetting.create') }}">انشاء اعدادات منتج جديد</a>-->
+    <!--</div>-->
+    <!--@endcan-->
 
     <div class="row">
         <div class="col-md-12">

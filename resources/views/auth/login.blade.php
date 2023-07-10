@@ -24,7 +24,7 @@
             </button>
 
             <div id='google_translate_element'></div>
-            
+
             {{--  <select style="appearance: none; -webkit-appearance: none" class="form-control border-0"
                 id="exampleFormControlSelect1">
                 <option>العربية</option>
@@ -110,7 +110,11 @@
                         </li>
 
                         <li>
-                            <a href="{{route('auth.provider.redirect' , 'facebook')}}" class="border">
+                            {{--  <a href="{{route('auth.provider.redirect' , 'facebook')}}" class="border">
+                                Sign in with facebook
+                                <i class="fa fa-facebook mr-1 fa-lg"></i>
+                            </a>  --}}
+                            <a href="{{route('auth.facebook')}}" class="border">
                                 Sign in with facebook
                                 <i class="fa fa-facebook mr-1 fa-lg"></i>
                             </a>

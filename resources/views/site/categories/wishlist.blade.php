@@ -26,7 +26,7 @@
         @foreach ( $favorite_products as $wishlist )
         @php
         $product = $wishlist->products;
-        
+
         @endphp
 
 
@@ -55,7 +55,7 @@
                             </li>
                         </ul>
                     </div>
-                    <img src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
+                    <img src="{{ isset($product->images[0]) ? asset($product->images[0]->photo) : asset('images/default.png') }}"
                         alt="{{ $product->name }}" title="{{ $product->name }}" class="card-img img-fluid" />
                 </div>
                 <div class="col-lg-10">
@@ -77,7 +77,7 @@
                         </div>
                         <div class="row">
                             <p class="card-text col-lg-7">
-                                {{ $product->description }}
+                                {!! $product->description !!}
                             </p>
                             <div class="col-12 col-lg-5 button-col d-flex flex-column justify-content-end">
                                 <div class="row">

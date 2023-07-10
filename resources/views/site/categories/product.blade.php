@@ -246,7 +246,7 @@
                 <!-- generail view Tab -->
                 <div class="tab-pane fade" id="description" role="tabpanel" aria-labelledby="description-tab">
                     <div id="description-text" class=" d-flex flex-wrap py-4 text-bold text-start">
-                        {{ $productDetails->description }}
+                        {!! $productDetails->description !!}
                     </div>
                 </div>
                 <!--  Description Tab -->
@@ -526,19 +526,19 @@
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
                                     <img class="card-img-top"
-                                        src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
+                                        src="{{ isset($product->images[0]) ? asset($product->images[0]->photo) : asset('images/default.png') }}"
                                         alt="{{ $product->name }}" title="{{ $product->name }}" />
 
                                 </div>
                                 <div class="carousel-item">
                                     <img class="card-img-top"
-                                        src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
+                                        src="{{ isset($product->images[1]) ? asset($product->images[1]->photo) : asset('images/default.png') }}"
                                         alt="{{ $product->name }}" title="{{ $product->name }}" />
 
                                 </div>
                                 <div class="carousel-item">
                                     <img class="card-img-top"
-                                        src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
+                                        src="{{ isset($product->images[2]) ? asset($product->images[2]->photo) : asset('images/default.png') }}"
                                         alt="{{ $product->name }}" title="{{ $product->name }}" />
 
                                 </div>
@@ -647,19 +647,19 @@
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
                                     <img class="card-img-top"
-                                        src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
+                                        src="{{ isset($product->images[0]) ? asset($product->images[0]->photo) : asset('images/default.png') }}"
                                         alt="{{ $product->name }}" title="{{ $product->name }}" />
 
                                 </div>
                                 <div class="carousel-item">
                                     <img class="card-img-top"
-                                        src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
+                                        src="{{ isset($product->images[1]) ? asset($product->images[1]->photo) : asset('images/default.png') }}"
                                         alt="{{ $product->name }}" title="{{ $product->name }}" />
 
                                 </div>
                                 <div class="carousel-item">
                                     <img class="card-img-top"
-                                        src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
+                                        src="{{ isset($product->images[2]) ? asset($product->images[2]->photo) : asset('images/default.png') }}"
                                         alt="{{ $product->name }}" title="{{ $product->name }}" />
 
                                 </div>
@@ -707,10 +707,6 @@
                     </div>
                     @endforeach
                     @endif
-
-
-
-
 
                 </div>
             </div>

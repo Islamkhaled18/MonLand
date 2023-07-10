@@ -266,4 +266,24 @@ class MainCategoryController extends Controller
 
     }
 
+    public function loadMoreCategories(Request $request)
+    {
+        $page = $request->input('page', 1);
+        $perPage = 3;
+        $mainCategoriesSideBar = MainCategory::paginate($perPage, ['*'], 'page', $page);
+
+        $categoriesHtml = '';
+        foreach ($mainCategoriesSideBar as $mainCategory) {
+            $categoriesHtml .= '<li><a href="' . route('mainCategory.products', $mainCategory->name) . '" class="py-2" style="font-weight: 400">' . $mainCategory->name . '</a></li>';
+        }
+
+        $hasMoreCategories = $mainCategoriesSideBar->hasMorePages();
+
+        return response()->json([
+            'success' => true,
+            'categories' => $categoriesHtml,
+            'hasMoreCategories' => $hasMoreCategories,
+        ]);
+    }
+
 }

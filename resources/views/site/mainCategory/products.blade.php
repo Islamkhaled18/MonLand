@@ -39,7 +39,7 @@
     @foreach ($electronics_products_photos as $electronics_products_photo)
 
     <div class="col-md-4 col-12">
-        <img src="{{ $electronics_products_photo->images[0]->photo ? asset($electronics_products_photo->images[0]->photo) : asset('images/default.png') }}"
+        <img src="{{ isset($electronics_products_photo->images[0]) ? asset($electronics_products_photo->images[0]->photo) : asset('images/default.png') }}"
             alt="{{ $electronics_products_photo->name }}" title="{{ $electronics_products_photo->name }}" height="250"
             class="w-100">
     </div>
@@ -377,18 +377,18 @@
 
                                         <div class="carousel-item active">
                                             <img class="card-img-top"
-                                                src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
+                                                src="{{ isset($product->images[0]) ? asset($product->images[0]->photo) : asset('images/default.png') }}"
                                                 alt="{{ $product->name }}" title="{{ $product->name }}" />
                                         </div>
-
+                                                
                                         <div class="carousel-item">
                                             <img class="card-img-top"
-                                                src="{{ $product->images[1]->photo ? asset($product->images[1]->photo) : asset('images/default.png') }}"
+                                                src="{{ isset($product->images[1]) ? asset($product->images[1]->photo) : asset('images/default.png') }}"
                                                 alt="{{ $product->name }}" title="{{ $product->name }}" />
                                         </div>
                                         <div class="carousel-item">
                                             <img class="card-img-top"
-                                                src="{{ $product->images[2]->photo ? asset($product->images[2]->photo) : asset('images/default.png') }}"
+                                                src="{{ isset($product->images[2]) ? asset($product->images[2]->photo) : asset('images/default.png') }}"
                                                 alt="{{ $product->name }}" title="{{ $product->name }}" />
                                         </div>
                                     </div>

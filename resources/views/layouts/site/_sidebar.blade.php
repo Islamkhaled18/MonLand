@@ -36,22 +36,6 @@
             @endguest
         </li>
 
-        <li>
-            <i class=" fa-solid fa-heart ml-2"></i>
-            <a href="{{ route('wishlist.products.index') }}">المفضله</a>
-        </li>
-
-        <li>
-            <i class="fa fa-exchange ml-2"></i>
-
-            <a href="{{ route('compare.products.index') }}">قارن</a>
-        </li>
-
-        <li class="my-2">
-            <i class="fa-solid fa-house ml-2"></i>
-            <a href="./fav/fav.html" style="font-size: 20px">صفحة كيان
-                الرئيسية</a>
-        </li>
     </ul>
 
     <h5>عامة</h5>
@@ -84,19 +68,21 @@
     </ul> --}}
 
     <h5> الأقسام</h5>
-    <ul class="list-unstyled">
+    <ul id="mainCategoriesList" class="list-unstyled">
         @foreach ($mainCategoriesSideBar as $mainCategory)
         <li>
-            <a href="{{ route('mainCategory.products', $mainCategory->name) }}" class="py-2 " style="font-weight: 400">
-                {{
-                $mainCategory->name }}</a>
+            <a href="{{ route('mainCategory.products', $mainCategory->name) }}" class="py-2" style="font-weight: 400">
+                {{ $mainCategory->name }}</a>
         </li>
         @endforeach
     </ul>
 
-    <a class="main-color h6" href="{{ route('Site.allCategory') }}">
+    <a id="loadMoreCategories" class="main-color h6" href="{{ route('Site.allCategory') }}">
         المزيد من الأقسام
         <i class="fa-solid fa-caret-down"></i>
     </a>
+
+
+
 </div>
 <!-- end sidebar -->

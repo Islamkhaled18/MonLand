@@ -26,7 +26,7 @@
 
         @foreach ($terms as $term)
             <div class="env-border mb-5">
-                {{ $term->name }}
+                {!! $term->name !!}
 
             </div>
         @endforeach

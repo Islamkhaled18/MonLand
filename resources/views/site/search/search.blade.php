@@ -49,7 +49,7 @@
 
         <div id="text-section" class="col-md-8 px-md-5">
             <h3 id="product-title">
-                {{ $product->description }}
+                {!! $product->description !!}
             </h3>
             <!-- Rating Start-->
             <?php

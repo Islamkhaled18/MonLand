@@ -37,7 +37,7 @@
                             <tr>
 
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $deliveryPolicy->policy }}</td>
+                                <td>{!! $deliveryPolicy->policy !!}</td>
                                 <td>
                                     @can('DeliveryPolicy.edit')
                                     <a class="btn btn-sm btn-dark" href="{{ route('DeliveryPolicy.edit', ['id' => $deliveryPolicy->id]) }}" title="تعديل">تعديل</a>

@@ -30,15 +30,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+
 Auth::routes();
 
 Route::get('/sizes', [ProductController::class, 'sizeTable'])->name('sizeTable');
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+
 
 Route::get('social/{provider}', [SocialAuthController::class, "redirect"])->name('auth.provider.redirect');
 
 Route::get('social/{provider}/callback', [SocialAuthController::class, "callBack"]);
+
+
+
+Route::get('auth/facebook', [SocialAuthController::class, 'redirectToFB'])->name('auth.facebook');
+Route::get('callback/facebook', [SocialAuthController::class, 'handleCallback']);
+
+
 
 Route::group(['prefix' => 'emailUs'], function () {
     Route::post('store', [EmailUsController::class, 'store'])->name('emailUs.store');
@@ -52,6 +60,9 @@ Route::group(['prefix' => 'Site/Terms-Conditions'], function () {
 });
 
 Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Site'], function () {
+
+
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
     //contact us
@@ -115,6 +126,10 @@ Route::group(['namespace' => 'Site', 'prefix' => 'Site'], function () {
     Route::get('category/{name}/review-products', [CategoryController::class, 'search_by_review_products'])->name('search.review.product');
 
     //filter in main categories products
+
+    Route::get('/load-more-categories', [MainCategoryController::class, 'loadMoreCategories'])->name('Site.loadMoreCategories');
+
+
     Route::get('mainCategory/{name}/sort-products', [MainCategoryController::class, 'search_products_by_created_at'])->name('mainCategory.sort.products');
     Route::get('mainCategory/{name}/all-products', [MainCategoryController::class, 'get_all_products'])->name('mainCategory.all_products.search');
     Route::get('mainCategory/{name}/flash-products', [MainCategoryController::class, 'get_flash_products'])->name('mainCategory.all_offers.search');

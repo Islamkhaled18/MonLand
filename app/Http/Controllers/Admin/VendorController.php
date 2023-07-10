@@ -34,7 +34,7 @@ class VendorController extends Controller
         $request->validate([
             'vendor_name'=>'required|max:255',
             'country'=>'nullable|max:255',
-            'delivery_time'=>'nullable',
+            'delivery_time'=>'nullable|numeric',
             'exhange_status'=>'required|max:255',
             'delivery_status'=>'required|max:255',
         ]);
@@ -73,11 +73,11 @@ class VendorController extends Controller
         $request->validate([
             'vendor_name'=>'required|max:255',
             'country'=>'nullable|max:255',
-            'delivery_time'=>'nullable',
+            'delivery_time'=>'nullable|numeric',
             'exhange_status'=>'required|max:255',
             'delivery_status'=>'required|max:255',
         ]);
-    
+
 
         $vendor->update([
             'vendor_name'  => $request->vendor_name,

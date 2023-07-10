@@ -37,7 +37,7 @@
                     <tr>
                         <td>المنتج</td>
                         <td class="p-4"><img
-                                src="{{ $product->images[0]->photo ? asset($product->images[0]->photo) : asset('images/default.png') }}"
+                                src="{{ isset($product->images[0]) ? asset($product->images[0]->photo) : asset('images/default.png') }}"
                                 alt="{{ $product->name }}" title="{{ $product->name }}" class="w-50" /> </td>
 
                     </tr>
@@ -45,7 +45,7 @@
                 <tbody>
                     <tr>
                         <td>الوصف</td>
-                        <td>{{ $product->description }}</td>
+                        <td>{!! $product->description !!}</td>
 
                     </tr>
                     <tr>
@@ -117,12 +117,12 @@
                 <tr>
                     <td>المنتج</td>
                     <td class="p-4"><img
-                            src="{{ $compare_products[0]->products->images[0]->photo ? asset($compare_products[0]->products->images[0]->photo) : asset('images/default.png') }}"
+                            src="{{ isset($compare_products[0]->products->images[0]) ? asset($compare_products[0]->products->images[0]->photo) : asset('images/default.png') }}"
                             alt="{{ $compare_products[0]->products->name }}"
                             title="{{ $compare_products[0]->products->name }}" class="w-50" /> </td>
 
                     <td class="p-4"><img
-                            src="{{ $compare_products[1]->products->images[0]->photo ? asset($compare_products[1]->products->images[0]->photo) : asset('images/default.png') }}"
+                            src="{{ isset($compare_products[1]->products->images[0]) ? asset($compare_products[1]->products->images[0]->photo) : asset('images/default.png') }}"
                             alt="{{ $compare_products[1]->products->name }}"
                             title="{{ $compare_products[1]->products->name }}" class="w-50" /> </td>
                 </tr>
@@ -130,8 +130,8 @@
             <tbody>
                 <tr>
                     <td>الوصف</td>
-                    <td>{{ $compare_products[0]->products->description }}</td>
-                    <td>{{ $compare_products[1]->products->description }}</td>
+                    <td>{!! $compare_products[0]->products->description !!}</td>
+                    <td>{!! $compare_products[1]->products->description !!}</td>
                 </tr>
                 <tr>
                     <td>السعر</td>

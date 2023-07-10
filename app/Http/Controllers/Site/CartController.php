@@ -55,15 +55,22 @@ class CartController extends Controller
 
         $countProdcts = count($cart_products);
 
-        $user_address = Address::with('governorate')->where('user_id', auth()->user()->id)->where('is_default', true)->first();
+        if($user){
 
-        if ($user_address == null || $user_address->governorate_id == null) {
-            session()->flash('error', 'برجاء اكمال بياناتك الشخصيه واضافة عنوان خاص بك');
-            return redirect()->back();
+            $user_address = Address::with('governorate')->where('user_id', $user->id)->where('is_default', true)->first();
         }
 
+        // if ($user_address == null || $user_address->governorate_id == null) {
+        //     session()->flash('error', 'برجاء اكمال بياناتك الشخصيه واضافة عنوان خاص بك');
+        //     return redirect()->back();
+        // }
 
-        return view('site.sale.cart', compact('cart_products', 'countProdcts', 'user_address', 'vendors_cart_count'));
+        if($user){
+
+            return view('site.sale.cart', compact('cart_products', 'countProdcts', 'user_address', 'vendors_cart_count'));
+        }
+
+        return view('site.sale.cart', compact('cart_products', 'countProdcts', 'vendors_cart_count'));
     } //cart page
 
     public function store(Request $request)

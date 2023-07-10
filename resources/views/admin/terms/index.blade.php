@@ -35,7 +35,8 @@
                             <tr>
 
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $term->name }}</td>
+                                <td>{!! $term->name !!}</td>
+
                                 <td>
                                     <a class="btn btn-sm btn-dark" href="{{ route('terms.edit', ['id' => $term->id]) }}" title="تعديل">تعديل</a>
 

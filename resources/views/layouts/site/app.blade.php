@@ -114,6 +114,22 @@
             border: none;
             /* Remove the border */
         }
+
+        .sidebar::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
     </style>
 </head>
 
@@ -211,12 +227,20 @@
                     </li>
                     <li class="my-2 font-weight-bold">
                         <i class="fas fa-caret-left ml-2 main-color"></i>
-                        <a href="../account/orders.html">طلباتى</a>
+                        @guest
+                        <a href="{{route('login')}}">  طلباتي</a>
+                        @else
+                        <a href="{{ route('site.profile', auth()->user()->id) }}"> طلباتي</a>
+                        @endguest
 
                     </li>
                     <li class="font-weight-bold">
                         <i class="fas fa-caret-left ml-2 main-color"></i>
-                        <a href="../account/orders.html">عناوينى</a>
+                        @guest
+                        <a href="{{route('login')}}">  عناويني</a>
+                        @else
+                        <a href="{{ route('site.profile', auth()->user()->id) }}"> عناويني</a>
+                        @endguest
 
                     </li>
                     <li class="my-2 font-weight-bold">
@@ -246,27 +270,19 @@
                     <h4 class="mb-4">
                         خدمة العملاء
                     </h4>
-
-                    <li class="my-2 font-weight-bold">
-                        <i class="fas fa-caret-left ml-2 main-color"></i>
-
-                        <a href="#">كيفية عمل طلب شراء</a>
-                    </li>
                     <li class="font-weight-bold">
                         <i class="fas fa-caret-left ml-2 main-color"></i>
 
-                        <a href="../talab-Estragah/talab-Estragah.html">عمل طلب الاستبدال
+
+                        <a href="{{ route('exchange.create') }}">عمل طلب الاستبدال
                             والاسترجاع</a>
                     </li class="font-weight-bold">
                     <li class="my-2 font-weight-bold">
                         <i class="fas fa-caret-left ml-2 main-color"></i>
-                        @guest
+
 
                         <a href="{{ route('exchange.create') }}">سياسة الاستبدال والاسترجاع</a>
-                        @else
-                        <a href="{{ route('login') }}">سياسة الاستبدال والاسترجاع</a>
 
-                        @endguest
                     </li>
                     <li class="font-weight-bold">
                         <i class="fas fa-caret-left ml-2 main-color"></i>
@@ -299,14 +315,14 @@
 
             <div class="d-flex justify-content-center main-color text-bold col-12">
                 <ul class="list-unstyled d-flex flex-wrap">
-                    <li class="m-2">
+                    {{--  <li class="m-2">
                         <a href="#" class="footer-link">عن المنظمه</a>
-                    </li>
+                    </li>  --}}
                     <li class="m-2">
                         <a href="{{route('site.DeliveryPolicy.index')}}" class="footer-link">سياسة الشحن</a>
                     </li>
                     <li class="m-2">
-                        <a href="#" class="footer-link">سياسة الخصوصية</a>
+                        <a href="{{route('site.DeliveryPolicy.index')}}" class="footer-link">سياسة الشحن</a>
                     </li>
                     <li class="m-2">
                         <a href="{{route('site.terms.index')}}" class="footer-link">الشروط والأحكام</a>
@@ -587,7 +603,6 @@
         });
 
 
-ئ
 
 
     </script>
@@ -610,8 +625,49 @@
 
     <script src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'></script>
 
+    <script>
+        $(document).ready(function() {
+            var page = 2; // Initialize the page number to load additional categories
 
+            // Function to load more categories
+            function loadMoreCategories() {
+                $.ajax({
+                    url: '{{ route("Site.loadMoreCategories") }}', // Replace with the actual route for loading more categories
+                    method: 'GET',
+                    data: {
+                        page: page
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            var mainCategoriesList = $('#mainCategoriesList');
+                            var loadMoreCategoriesBtn = $('#loadMoreCategories');
 
+                            // Append the new categories to the existing list
+                            mainCategoriesList.append(response.categories);
+
+                            // Check if there are more categories to load
+                            if (response.hasMoreCategories) {
+                                page++; // Increment the page number for the next request
+                            } else {
+                                loadMoreCategoriesBtn.remove(); // Remove the "Load More" button
+                            }
+                        } else {
+                            console.log('Error loading categories');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+
+            // Event listener for clicking the "Load More" button
+            $('#loadMoreCategories').on('click', function(e) {
+                e.preventDefault();
+                loadMoreCategories();
+            });
+        });
+        </script>
 </body>
 
 </html>

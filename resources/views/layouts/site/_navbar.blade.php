@@ -3,7 +3,7 @@
     <div class="container d-flex flex-nowrap justify-content-between">
         <div class="logo d-lg-flex align-items-center
                         align-items-center">
-            <a href="{{ route('home') }}" class="d-flex align-items-center h-100">
+            <a href="{{ auth()->check() ? url('Site/home') : url('/') }}" class="d-flex align-items-center h-100">
                 <img src="{{ asset('website_assets/imgs/logo/logo.png') }}" class="w-100" />
             </a>
         </div>
