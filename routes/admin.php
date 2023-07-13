@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AboutusController;
 use App\Http\Controllers\Admin\AdController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminProfileController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Admin\GovernorateController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\MainCategoryController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\privacyPolicyController;
 use App\Http\Controllers\Admin\ProductColorController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductSettingController;
@@ -237,17 +239,35 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
         Route::get('delete/{id}', [ExchangeController::class, 'destroy'])->name('exchanges.destroy');
     });
 
+    ///////////////Delivery-price Controller/////////////////////
+    Route::group(['prefix' => 'Delivery-price'], function () {
+        Route::get('/', [DeliveryPriceController::class, 'index'])->name('deliveryPrice.index');
+        Route::get('create', [DeliveryPriceController::class, 'create'])->name('deliveryPrice.create');
+        Route::post('store', [DeliveryPriceController::class, 'store'])->name('deliveryPrice.store');
+        Route::get('edit/{id}', [DeliveryPriceController::class, 'edit'])->name('deliveryPrice.edit');
+        Route::post('update/{id}', [DeliveryPriceController::class, 'update'])->name('deliveryPrice.update');
+        Route::get('delete/{id}', [DeliveryPriceController::class, 'destroy'])->name('deliveryPrice.destroy');
+    });
 
-        ///////////////Delivery-price Controller/////////////////////
-        Route::group(['prefix' => 'Delivery-price'], function () {
-            Route::get('/', [DeliveryPriceController::class, 'index'])->name('deliveryPrice.index');
-            Route::get('create', [DeliveryPriceController::class, 'create'])->name('deliveryPrice.create');
-            Route::post('store', [DeliveryPriceController::class, 'store'])->name('deliveryPrice.store');
-            Route::get('edit/{id}', [DeliveryPriceController::class, 'edit'])->name('deliveryPrice.edit');
-            Route::post('update/{id}', [DeliveryPriceController::class, 'update'])->name('deliveryPrice.update');
-            Route::get('delete/{id}', [DeliveryPriceController::class, 'destroy'])->name('deliveryPrice.destroy');
-        });
+    ///////////////privacy-policy Controller/////////////////////
+    Route::group(['prefix' => 'privacy-policy'], function () {
+        Route::get('/', [privacyPolicyController::class, 'index'])->name('privacyPolicy.index');
+        Route::get('create', [privacyPolicyController::class, 'create'])->name('privacyPolicy.create');
+        Route::post('store', [privacyPolicyController::class, 'store'])->name('privacyPolicy.store');
+        Route::get('edit/{id}', [privacyPolicyController::class, 'edit'])->name('privacyPolicy.edit');
+        Route::post('update/{id}', [privacyPolicyController::class, 'update'])->name('privacyPolicy.update');
+        Route::get('delete/{id}', [privacyPolicyController::class, 'destroy'])->name('privacyPolicy.destroy');
+    });
 
+    ///////////////AboutUs Controller/////////////////////
+    Route::group(['prefix' => 'AboutUs'], function () {
+        Route::get('/', [AboutusController::class, 'index'])->name('about_us.index');
+        Route::get('create', [AboutusController::class, 'create'])->name('about_us.create');
+        Route::post('store', [AboutusController::class, 'store'])->name('about_us.store');
+        Route::get('edit/{id}', [AboutusController::class, 'edit'])->name('about_us.edit');
+        Route::post('update/{id}', [AboutusController::class, 'update'])->name('about_us.update');
+        Route::get('delete/{id}', [AboutusController::class, 'destroy'])->name('about_us.destroy');
+    });
 
 }); // routes for authenticated admins
 

@@ -64,29 +64,47 @@
                 <div class="col-5">
                     <div class="form-group ">
                         <label for="inputName">الاسم الاول</label>
-                        <input type="text" disabled value="{{auth()->user()->firstName}}" name="user_id" class="form-control ml-5 bg-light" id="inputName">
+                        <input type="text" value="{{old('first_name')}}" name="first_name"
+                            class="form-control ml-5 bg-light" id="inputName" placeholder="الاسم الاول">
+                        @error('first_name')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="form-group ">
                         <label for="inputName">الاسم الثانى</label>
-                        <input type="text" disabled value="{{auth()->user()->lastName}}" name="user_id" class="form-control ml-5 bg-light" id="inputName">
+                        <input type="text" value="{{old('last_name')}}" name="last_name"
+                            class="form-control ml-5 bg-light" id="inputName" placeholder="الاسم الثانى">
+                        @error('last_name')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="form-group ">
                         <label for="inputName">
                             عنوان البريد الالكترونى
                         </label>
-                        <input type="email" disabled value="{{auth()->user()->email}}" name="user_id" class="form-control ml-5 bg-light" id="inputName">
+                        <input type="email" value="{{old('email')}}" name="email" class="form-control ml-5 bg-light"
+                            id="inputName" placeholder="البريد الالكترونى">
+                        @error('email')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="form-group ">
                         <label for="inputName">رقم الهاتف </label>
-                        <input type="text" disabled value="{{auth()->user()->phone}}" name="user_id" class="form-control ml-5 bg-light" id="inputName">
+                        <input type="text" value="{{old('phone')}}" name="phone" class="form-control ml-5 bg-light"
+                            id="inputName" placeholder="رقم الهاتف">
+                        @error('phone')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="col-7">
                     <div class="form-group ">
                         <label for="inputPhone">الموضوع</label>
                         <textarea name="subject" class=" w-100 h-100 bg-light form-control" rows="11">
-
                         </textarea>
+                        @error('subject')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
             </div>

@@ -93,6 +93,14 @@
                 <li><a class="treeview-item" href="{{ route('DeliveryPolicy.index') }}"><i
                             class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">سياسة
                             الشحن</span></a></li>
+
+                <li><a class="treeview-item" href="{{ route('about_us.index') }}"><i
+                            class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">
+                            عن المنظمة</span></a></li>
+
+                <li><a class="treeview-item" href="{{ route('privacyPolicy.index') }}"><i
+                            class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">
+                            سياسة الخصوصية</span></a></li>
             </ul>
         </li>
 
@@ -117,7 +125,7 @@
 
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
                     class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label"> البائعين والمحافظات
-                    </span><i class="treeview-indicator fa fa-angle-right"></i></a>
+                </span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
 
                 @can('vendors')

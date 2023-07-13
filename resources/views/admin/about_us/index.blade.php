@@ -1,17 +1,20 @@
 @extends('layouts.admin.app')
 @section('title')
-رسائل المستخدمين
+ عن المنظمة
 @endsection
 @section('content')
 <main class="app sidebar-mini rtl">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-th-list"></i> رسائل المستخدمين </h1>
+            <h1><i class="fa fa-th-list"></i>عن المنظمة</h1>
         </div>
         <ul class="app-breadcrumb breadcrumb side">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('ContactUs.index') }}" title="رسائل المستخدمين">رسائل المستخدمين</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('about_us.index') }}" title="عن المنظمة">عن المنظمة</a></li>
         </ul>
+    </div>
+    <div>
+        <a class="btn btn-primary btn-sm" href="{{ route('about_us.create') }}" title="انشاء جديد">انشاء جديد</a>
     </div>
 
     <div class="row">
@@ -22,34 +25,26 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>الاسم الاول</th>
-                                <th>الاسم الثاني</th>
-                                <th>البريد الالكتروني</th>
-                                <th>الهاتف المحمول</th>
-                                <th>الموضوع</th>
+                                <th>عن المنظمة</th>
                                 <th>العمليات</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($contactUs as $contact)
+                            @foreach ($about_us as $about)
                             <tr>
 
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $contact->first_name }}</td>
-                                <td>{{ $contact->last_name }}</td>
-                                <td>{{ $contact->email }}</td>
-                                <td>{{ $contact->phone }}</td>
-                                <td>{{ $contact->subject }}</td>
+                                <td>{!! $about->text !!}</td>
                                 <td>
-                                    @can('contactus.destroy')
-                                    <form action="{{ route('ContactUs.destroy', $contact->id) }}" title="حذف" method="post" style="display: inline-block">
+                                    <a class="btn btn-sm btn-dark" href="{{ route('about_us.edit', ['id' => $about->id]) }}" title="تعديل">تعديل</a>
+
+                                    <form action="{{ route('about_us.destroy', $about->id) }}" title="حذف" method="post" style="display: inline-block">
                                         @csrf
                                         @method('GET')
                                         <button type="'submit" class="btn btn-danger delete btn-sm"><i class="fa fa-trash"></i>حذف</button>
 
                                     </form>
-                                    @endcan
 
                                 </td>
                             </tr>

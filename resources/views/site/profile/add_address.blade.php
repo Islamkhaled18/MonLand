@@ -24,16 +24,24 @@
             <div class="form-group col-md-12 offset-md-1 mb-4">
                 <label for="inputName">الإسم بالكامل</label>
                 <span class="text-danger">*</span>
-                <input type="text" class="form-control ml-5 py-4 input-background mt-2" id="inputName" disabled
-                    value="{{auth()->user()->firstName}} {{auth()->user()->lastName}}">
+                <input type="text" class="form-control ml-5 py-4 input-background mt-2" id="inputName"
+                    value="{{old('full_name')}}" name="full_name" placeholder="الاسم بالكامل">
+
+                @error('full_name')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
 
             </div>
 
             <div class="form-group col-md-6">
-                <label for="inputPhone">يرجى كتابة رقم الهاتف بالإنجليزى</label>
+                <label for="inputPhone">  رقم الهاتف الاساسي</label>
                 <span class="text-danger">*</span>
-                <input type="text" class="form-control ml-5 py-4 input-background mt-2" disabled id="inputName"
-                    value="{{auth()->user()->phone}}">
+                <input type="text" class="form-control ml-5 py-4 input-background mt-2" id="inputName"
+                    value="{{old('Phone_1')}}" name="Phone_1" placeholder="يرجى كتابة رقم الهاتف بالإنجليزى">
+
+                @error('Phone_1')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             <div class="form-group col-md-6">
                 <label for="inputPhone">

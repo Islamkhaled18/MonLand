@@ -21,12 +21,10 @@ class VendorTableSeeder extends Seeder
             [
             'id' => 1,
             'vendor_name' => 'مصنع الكفراوى',
-            'vendor_price' => 50,
             ],
             [
             'id' => 2,
             'vendor_name' => 'مصنع الجميزي',
-            'vendor_price' => 40,
             ]
 
         ];

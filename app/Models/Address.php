@@ -10,6 +10,8 @@ class Address extends Model
     use HasFactory;
     protected $table = "addresses";
     protected $fillable = [
+        'full_name',
+        'Phone_1',
         'user_id',
         'Phone_2',
         'postal_code',
@@ -20,9 +22,8 @@ class Address extends Model
         'flat_no',
         'apartment_no',
         'special_mark',
-        'is_default'
+        'is_default',
     ];
-
 
     protected $casts = [
         'is_default' => 'boolean',
@@ -33,10 +34,12 @@ class Address extends Model
         return $this->belongsTo(User::class)->withDefault();
     }
 
-    public function governorate(){
+    public function governorate()
+    {
         return $this->belongsTo(Governorate::class)->withDefault();
     }
-    public function city(){
+    public function city()
+    {
         return $this->belongsTo(Governorate::class)->withDefault();
     }
 }

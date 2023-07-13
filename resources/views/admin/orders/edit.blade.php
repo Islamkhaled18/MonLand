@@ -48,6 +48,20 @@
                             @if($defaultAddress )
                             {{-- @foreach ($defaultAddress as $address) --}}
                             <div class="form-group">
+                                <label for="exampleInputEmail1">اسم العميل بالكامل </label>
+                                <input class="form-control" id="exampleInputEmail1"
+                                    value="{{ $defaultAddress->full_name }}" type="text" disabled>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">رقم تليفون اول للعميل </label>
+                                <input class="form-control" id="exampleInputEmail1"
+                                    value="{{ $defaultAddress->Phone_1 }}" type="text" disabled>
+
+                            </div>
+
+
+                            <div class="form-group">
                                 <label for="exampleInputEmail1">رقم تليفون ثاني للعميل </label>
                                 <input class="form-control" id="exampleInputEmail1"
                                     value="{{ $defaultAddress->Phone_2 }}" type="text" disabled>

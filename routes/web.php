@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\EmailUsController;
 use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Site\AboutusController;
 use App\Http\Controllers\Site\CartController;
 use App\Http\Controllers\Site\CategoryController;
 use App\Http\Controllers\Site\CompareController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Site\CouponController;
 use App\Http\Controllers\Site\DeliveryPolicyController;
 use App\Http\Controllers\Site\ExchangeController;
 use App\Http\Controllers\Site\MainCategoryController;
+use App\Http\Controllers\Site\privacyPolicyController;
 use App\Http\Controllers\Site\ProductController;
 use App\Http\Controllers\Site\ProfileController;
 use App\Http\Controllers\Site\TermsConditionController;
@@ -59,15 +61,24 @@ Route::group(['prefix' => 'Site/Terms-Conditions'], function () {
     Route::get('/', [TermsConditionController::class, 'index'])->name('site.terms.index');
 });
 
+//////////////////////////////////////
+
+Route::group(['prefix' => 'Site/AboutUs'], function () {
+    Route::get('/', [AboutusController::class, 'index'])->name('site.AboutUs.index');
+});
+
+
+Route::group(['prefix' => 'Site/PrivacyPolicy'], function () {
+    Route::get('/', [privacyPolicyController::class, 'index'])->name('site.PrivacyPolicy.index');
+});
+
+
+///////////////////////////////////////////
+
 Route::group(['namespace' => 'Site', 'middleware' => 'auth:web', 'prefix' => 'Site'], function () {
 
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-
-    //contact us
-    Route::get('contactUs', [ContactUsController::class, 'index'])->name('Site.contactUs');
-    Route::post('store', [ContactUsController::class, 'store'])->name('Site.ContactUs.store');
 
     ////////////////////////////////profile //////////////////////////////////////////////////////
     Route::get('profile/{firstName}', [ProfileController::class, 'getProfile'])->name('site.profile');
@@ -240,4 +251,12 @@ Route::group(['namespace' => 'Site', 'prefix' => 'Site'], function () {
         return view('auth.passwords.password-reset-success', ['newPassword' => $request->newPassword]);
     })->name('password.success');
 
+
+
+
+    //contact us
+    Route::get('contactUs', [ContactUsController::class, 'index'])->name('Site.contactUs');
+    Route::post('store', [ContactUsController::class, 'store'])->name('Site.ContactUs.store');
+
+    
 }); // routes for un-authenticated users

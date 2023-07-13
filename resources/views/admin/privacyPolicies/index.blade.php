@@ -1,17 +1,20 @@
 @extends('layouts.admin.app')
 @section('title')
-رسائل المستخدمين
+  سياسة الخصوصية
 @endsection
 @section('content')
 <main class="app sidebar-mini rtl">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-th-list"></i> رسائل المستخدمين </h1>
+            <h1><i class="fa fa-th-list"></i> سياسة الخصوصية</h1>
         </div>
         <ul class="app-breadcrumb breadcrumb side">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i><a href="{{ route('admin.dashboard') }}"></a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('ContactUs.index') }}" title="رسائل المستخدمين">رسائل المستخدمين</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('privacyPolicy.index') }}" title=" سياسة الخصوصية"> سياسة الخصوصية</a></li>
         </ul>
+    </div>
+    <div>
+        <a class="btn btn-primary btn-sm" href="{{ route('privacyPolicy.create') }}" title="انشاء سياسة خصوصية جديده">انشاء سياسة خصوصية جديده</a>
     </div>
 
     <div class="row">
@@ -22,34 +25,26 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>الاسم الاول</th>
-                                <th>الاسم الثاني</th>
-                                <th>البريد الالكتروني</th>
-                                <th>الهاتف المحمول</th>
-                                <th>الموضوع</th>
+                                <th> سياسة الخصوصية</th>
                                 <th>العمليات</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($contactUs as $contact)
+                            @foreach ($privacyPolicies as $privacyPolicy)
                             <tr>
 
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $contact->first_name }}</td>
-                                <td>{{ $contact->last_name }}</td>
-                                <td>{{ $contact->email }}</td>
-                                <td>{{ $contact->phone }}</td>
-                                <td>{{ $contact->subject }}</td>
+                                <td>{!! $privacyPolicy->text !!}</td>
                                 <td>
-                                    @can('contactus.destroy')
-                                    <form action="{{ route('ContactUs.destroy', $contact->id) }}" title="حذف" method="post" style="display: inline-block">
+                                    <a class="btn btn-sm btn-dark" href="{{ route('privacyPolicy.edit', ['id' => $privacyPolicy->id]) }}" title="تعديل">تعديل</a>
+
+                                    <form action="{{ route('privacyPolicy.destroy', $privacyPolicy->id) }}" title="حذف" method="post" style="display: inline-block">
                                         @csrf
                                         @method('GET')
                                         <button type="'submit" class="btn btn-danger delete btn-sm"><i class="fa fa-trash"></i>حذف</button>
 
                                     </form>
-                                    @endcan
 
                                 </td>
                             </tr>

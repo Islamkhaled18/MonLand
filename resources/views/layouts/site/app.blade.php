@@ -315,14 +315,14 @@
 
             <div class="d-flex justify-content-center main-color text-bold col-12">
                 <ul class="list-unstyled d-flex flex-wrap">
-                    {{--  <li class="m-2">
-                        <a href="#" class="footer-link">عن المنظمه</a>
-                    </li>  --}}
+                    <li class="m-2">
+                        <a href="{{route('site.AboutUs.index')}}" class="footer-link">عن المنظمه</a>
+                    </li>
                     <li class="m-2">
                         <a href="{{route('site.DeliveryPolicy.index')}}" class="footer-link">سياسة الشحن</a>
                     </li>
                     <li class="m-2">
-                        <a href="{{route('site.DeliveryPolicy.index')}}" class="footer-link">سياسة الشحن</a>
+                        <a href="{{route('site.PrivacyPolicy.index')}}" class="footer-link">سياسة الخصوصية</a>
                     </li>
                     <li class="m-2">
                         <a href="{{route('site.terms.index')}}" class="footer-link">الشروط والأحكام</a>

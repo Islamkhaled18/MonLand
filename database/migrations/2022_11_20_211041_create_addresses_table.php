@@ -17,6 +17,8 @@ class CreateAddressesTable extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('full_name')->nullable();
+            $table->string('Phone_1')->nullable();
             $table->string('Phone_2')->nullable();
             $table->integer('postal_code')->nullable();
             $table->string('address_details')->nullable();
@@ -28,7 +30,7 @@ class CreateAddressesTable extends Migration
             $table->integer('flat_no')->nullable();
             $table->integer('apartment_no')->nullable();
             $table->string('special_mark')->nullable();
-            $table->boolean('is_default')->default(0);
+            $table->boolean('is_default')->default(1);
             $table->timestamps();
         });
     }

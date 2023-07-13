@@ -190,7 +190,11 @@
                             <div class="ml-2">
                                 @php
 
+                                if (isset($deliveryFee)) {
                                 $product['total'] = $subTotal + (float) $deliveryFee;
+                                } else {
+                                $product['total'] = $subTotal;
+                                }
 
                                 @endphp
 
@@ -276,18 +280,33 @@
                     @endif
 
 
-                    <div class> يتم التوصيل الي </div>
+                    {{-- <div class> يتم التوصيل الي </div>
+                    <div class=" py-1"><a href="{{ route('site.profile', auth()->user()->id) }}"
+                            class="main-color border-bottom border-main-color">
+                            <i class="fa-solid fa-location-dot px-1 "></i>
+                            أضف العنوان</a>
+                    </div> --}}
+
+
+                    @guest
+                    <div class=" py-1"><a href="{{route('login')}}"
+                            class="main-color border-bottom border-main-color">
+                            <i class="fa-solid fa-location-dot px-1 "></i>
+                            أضف العنوان</a>
+                    </div>
+                    @else
                     <div class=" py-1"><a href="{{ route('site.profile', auth()->user()->id) }}"
                             class="main-color border-bottom border-main-color">
                             <i class="fa-solid fa-location-dot px-1 "></i>
                             أضف العنوان</a>
                     </div>
+                    @endguest
 
                     @guest
                     <div class="d-flex justify-content-center my-3">
                         <button type="button" disabled
                             class="bg-add-to-cart text-white text-larger text-center col-8 my-2 py-3 px-5 rounded justify-self-center">
-                            اتمام الشراء
+                            <a href="{{route('login')}}">اتمام الشراء</a>
                         </button>
                     </div>
                     @else

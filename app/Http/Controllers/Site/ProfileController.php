@@ -81,19 +81,30 @@ class ProfileController extends Controller
 
         $this->validate($request, [
 
-            'Phone_2' => 'required|numeric|digits:11',
+            'full_name' => 'required|string|max:100',
+            'Phone_1' => 'required|numeric|digits:11',
+            'Phone_2' => 'nullable|numeric|digits:11',
             'postal_code' => 'nullable|numeric|digits:5',
             'address_details' => 'required|string|max:250',
             'governorate_id' => 'required|integer|exists:governorates,id',
             'city_id' => 'required|integer|exists:governorates,id',
-            'building_no' => 'required|integer|max:3',
-            'flat_no' => 'required|integer|max:3',
-            'apartment_no' => 'required|integer|max:3',
+            'building_no' => 'required|integer',
+            'flat_no' => 'required|integer',
+            'apartment_no' => 'required|integer',
             'special_mark' => 'required|string|max:250',
         ]);
 
+        $user = auth()->user()->id;
+
+        // Set all existing addresses of the user to is_default = 0
+        Address::where('user_id', $user)->update(['is_default' => 0]);
+        // $user->addresses()->update(['is_default' => 0]);
+
+
         $address = new Address();
         $address->user_id = auth()->user()->id;
+        $address->full_name = $request->full_name;
+        $address->Phone_1 = $request->Phone_1;
         $address->Phone_2 = $request->Phone_2;
         $address->postal_code = $request->postal_code;
         $address->address_details = $request->address_details;
@@ -103,6 +114,7 @@ class ProfileController extends Controller
         $address->flat_no = $request->flat_no;
         $address->apartment_no = $request->apartment_no;
         $address->special_mark = $request->special_mark;
+        $address->is_default = 1;
         $address->save();
 
         return redirect()->route('site.profile', auth()->user()->id);
